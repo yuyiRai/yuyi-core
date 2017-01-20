@@ -1,0 +1,15 @@
+{
+  "extends": "../yuyi-core-env/tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "moduleResolution": "node",
+    "target": "es5",
+    "module":"esnext",
+    "declarationDir": "types",
+    "outDir": "lib",
+    "typeRoots": ["**/*.d.ts", "node_modules/@types", "../../node_modules/@types", "../../node_modules/@types"]
+  },
+  "include": [
+    "src", "node_modules/@types", "../../node_modules/@types"
+  ]
+}
