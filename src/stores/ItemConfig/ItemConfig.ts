@@ -42,7 +42,7 @@ export class ItemConfig {
       ['refConfig', 'code', 'label', 'required', 'hidden', 'rule', 'remoteMethod', 'loading', 'options', 'isViewOnly']
     )
   }
-  constructor(initModel: any, form: any, componentProps: any) {
+  constructor(initModel: any, form: any = {}, componentProps: any = {}) {
     // this.reaction(()=>this.remoteOptions, options=>{
     //   console.log('remoteOptions change', this.i.label, options, this)
     // })

@@ -1,6 +1,5 @@
 /* eslint-disable */
-import { castArray, filter, find, isArray, isEqual, isFunction, isNil, isRegExp, isString, join, map, some } from 'lodash';
-import request from '../request';
+import { castArray, filter, find, isArray, isEqual, isFunction, isNil, isRegExp, join, map, some } from 'lodash';
 import { isNotEmptyArray, isNotEmptyArrayStrict, isNotEmptyValue, typeFilterUtils } from '../TypeLib';
 import { Utils } from '../Utils';
 
@@ -173,38 +172,8 @@ export function optionsSelectedMatch<T, K>(option: T[], searchName: SearchKey<K>
 
 
 export type RemoteSearcher = (key: string, isSearch?: boolean) => Promise<Option[]>
-/**
- * 
- * @param codeType 
- * @param valueLabel 
- * @param valueKey 
- */
-export function getCodeListByKey(codeType: Option[] | string, valueLabel = false, valueKey = false): RemoteSearcher {
-  const { isStringFilter: isStrF, isArrayFilter } = typeFilterUtils
-  if (isArray(codeType)) {
-    return async function (keyWord: string, isOnlySearch?: boolean) {
-      if (isOnlySearch && !Utils.isNotEmptyString(keyWord)) {
-        return codeType
-      }
-      return castArray(getOptionsByKey(codeType, new RegExp(keyWord)))
-    }
-  } else if (isString(codeType)) {
-    return async function (keyWord: string, isOnlySearch?: boolean) {
-      const res = await request({
-        url: `support/${Utils.isNotEmptyString(keyWord) ? 'findCodeListByName' : 'findListByCodeType'}`,
-        params: {
-          codeType,
-          codeName: (isStrF(keyWord, '') || '').replace(/\[(.*?)\]/, '')
-        }
-      });
-      return map(isArrayFilter(res, []) || [],
-        ({ codeCode: value, codeName: label, label: nativeLabel }, index) =>
-          ({ label: isStrF(label, nativeLabel), value: valueLabel ? label : value, key: valueKey ? value : index })
-      );
-    }
-  }
-  return async function () { return [] }
-}
+export type OptionSearcher = (key?: string) => Promise<Option>
+
 
 /**
  * 
@@ -262,17 +231,36 @@ export function labelsToValues(options: Option[], label: SearchKey<string>, join
   ))
   return !isNil(joinKey) ? join(result, joinKey) : result
 }
-export function getCodeListByTranslate(codeType: any, valueLabel: boolean = false, valueKey: boolean = false) {
-  const getter = getCodeListByKey(codeType, valueLabel, valueKey);
-  return async function (codeCode: string) {
-    const codeName: string = await request({ url: 'support/codeTranslate', params: { codeType, codeCode } });
-    return getter(codeName);
-  };
+
+/**
+ * 
+ * @param codeType 
+ * @param valueLabel 
+ * @param valueKey 
+ */
+export function getCodeListByKey(codeType: Option[] | OptionSearcher, valueLabel = false, valueKey = false): RemoteSearcher {
+  const { isStringFilter: isStrF, isArrayFilter } = typeFilterUtils
+  if (isArray(codeType)) {
+    return async function (keyWord: string, isOnlySearch?: boolean) {
+      if (isOnlySearch && !Utils.isNotEmptyString(keyWord)) {
+        return codeType
+      }
+      return castArray(getOptionsByKey(codeType, new RegExp(keyWord)))
+    }
+  } else if (isFunction(codeType)) {
+    return async function (keyWord: string, isOnlySearch?: boolean) {
+      const res = await codeType(keyWord);
+      return map(isArrayFilter(res, []) || [],
+        ({ codeCode: value, codeName: label, label: nativeLabel }, index) =>
+          ({ label: isStrF(label, nativeLabel), value: valueLabel ? label : value, key: valueKey ? value : index })
+      );
+    }
+  }
+  return async function () { return [] }
 }
 
 export default {
   getCodeListByKey,
-  getCodeListByTranslate,
   getOptionsByLabel,
   getOptionsByValue,
   isOptionsItemSelected,

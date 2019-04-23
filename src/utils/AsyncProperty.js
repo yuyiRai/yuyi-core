@@ -2,7 +2,7 @@
 
 import { observable, computed, action, runInAction, reaction, extendObservable, remove } from 'mobx'
 import { Utils } from './Utils'
-import { ItemConfig } from '../components/FormPage/input-Item/ItemConfig';
+import { ItemConfig } from '../stores/ItemConfig';
 import { cpus } from 'os';
 import { autobind } from 'core-decorators';
 

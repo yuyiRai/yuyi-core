@@ -1,6 +1,6 @@
 import { difference, keys, forEach, toArray, isNil } from 'lodash';
 import { action, computed, extendObservable, observable, ObservableMap } from 'mobx';
-import { Utils } from 'src/utils/Utils';
+import { Utils } from '../../utils/Utils';
 export class FormStore {
   static formMap: WeakMap<any, FormStore> = new WeakMap<any, FormStore>();
   static registerForm(form: any) {

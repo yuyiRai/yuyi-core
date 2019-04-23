@@ -60,7 +60,9 @@ export const typeUtils = {
   isArrayLike,
   isArray,
   isBoolean,
-  isObject,
+  isObject<T extends object>(value?: any): value is T {
+    return isObject(value) && !isArray(value)
+  },
   isNumber,
   isString,
   isEmptyData,
@@ -99,6 +101,7 @@ export const typeUtils = {
 
 import { assign, reduce } from 'lodash';
 export type FilterFunction<T = any> = (...key: (any | T)[]) => T | undefined
+export type FilterArrayFunction = <T = any>(...key: any[]) => Array<T> | undefined
 export type FilterFunctionGroup = IKeyValueMap<FilterFunction>
 export function todoFilter(handler: (v: any) => boolean): FilterFunction {
   function Filter<T>(...values: any[]): T | undefined {
@@ -116,9 +119,9 @@ export interface ITypeFilterUtils {
   isNumberFilter: FilterFunction<number>;
   isStringFilter: FilterFunction<string>;
   isNotEmptyStringFilter: FilterFunction<string>;
-  isArrayFilter: FilterFunction<any[]>; 
+  isArrayFilter: FilterArrayFunction; 
   isObjectFilter: FilterFunction<{[key: string]: any}>; 
-  isNotEmptyArrayFilter: FilterFunction<any[]>;  
+  isNotEmptyArrayFilter: FilterArrayFunction;  
   isNotEmptyValueFilter: FilterFunction<boolean | string | number | any>;
   isFunctionFilter: FilterFunction<Function>
 }

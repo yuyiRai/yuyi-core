@@ -62,7 +62,7 @@ window.___timeBufferValueMap = ___timeBufferValueMap;
  * @param {number} time 时间
  * @param {boolean} isDeepDiff 
  */
-export function simpleTimeBufferInput(key, value, callback, time, isDeepDiff) {
+export function simpleTimeBufferInput(key, value, callback, time, isDeepDiff = false) {
   /**
    * @type { [EventEmitter, Promise, number] }
    */
@@ -102,7 +102,7 @@ export function simpleTimeBufferInput(key, value, callback, time, isDeepDiff) {
  * @param {number} time 时间
  * @param {boolean} isDeepDiff 
  */
-export function createSimpleTimeBufferInput(callback, instance = this, time, isDeepDiff) {
+export function createSimpleTimeBufferInput(callback, instance = this, time, isDeepDiff = false) {
   // console.log(instance)
   return (value) => simpleTimeBufferInput(instance, value, callback, time, isDeepDiff);
 }

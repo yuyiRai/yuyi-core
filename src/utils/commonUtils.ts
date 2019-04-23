@@ -1,7 +1,9 @@
 /* eslint-disable */
-import { castArray, cloneDeep, filter, forEach, isEqual, isFunction, isRegExp, isString, keys, last, map, property, reduce, stubArray, takeRight, toArray, toString, values } from 'lodash';
+import { castArray, cloneDeep, filter, forEach, isEqual, isFunction, 
+  isRegExp, concat, isString, keys, last, map, property, reduce, 
+  stubArray, takeRight, toArray, toString, values } from 'lodash';
 import { EventEmitter } from './EventEmitter';
-import request, { request as nativeRequst } from './request';
+import { HttpBox } from './HttpBox';
 import Utils from '.';
 import { typeFilterUtils } from './TypeLib';
 
@@ -315,13 +317,13 @@ export default {
       }
     })
   },
-  request,
-  nativeRequst,
+  HttpBox,
   testEmitter: new EventEmitter(),
   last,
   cloneDeep,
   toArray,
   isEqual,
   reduce,
-  forEach
+  forEach,
+  concat
 }
