@@ -244,9 +244,6 @@ export class ItemConfig {
     if (Utils.isFunction(remoteMethod)) {
       this.setLoading(true)
       if (multiple) {
-        if (Utils.isString(keyWord)) {
-          keyWord = keyWord.split(',')
-        }
         const keyWordArr = Utils.zipEmptyData(Utils.castArray(keyWord));
         if (keyWordArr.length > 0) {
           await Promise.all(map(keyWordArr, async keyWord => {
