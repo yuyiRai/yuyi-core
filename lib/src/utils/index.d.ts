@@ -5,4 +5,5 @@ export * from './OptionsUtils';
 export * from './TimeBuffer';
 export * from './TypeLib';
 export * from './AsyncProperty';
+export { Utils };
 export default Utils;
