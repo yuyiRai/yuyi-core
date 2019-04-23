@@ -2,8 +2,8 @@
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "lib",
-    "allowJs": false,
-    "declaration": true,
+    // "allowJs": false,
+    // "declaration": true,
     "module": "esnext",
     "target": "es5",
     "baseUrl": ".",

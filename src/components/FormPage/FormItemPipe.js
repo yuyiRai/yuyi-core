@@ -4,7 +4,7 @@ import { debounceTime, filter, map, takeUntil, tap, distinctUntilKeyChanged, dis
 // import 'Reflect-metadata';
 
 import { observable, computed, action, autorun, extendObservable, reaction, trace } from 'mobx';
-import { ItemConfig } from './input-Item/ItemConfig';
+import { ItemConfig } from '../../stores';
 import CommonDto from '../../utils/CommonDto'
 import EventEmitter from '../../utils/EventEmitter';
 import getFilter from './input-Item/CommonFilter';
