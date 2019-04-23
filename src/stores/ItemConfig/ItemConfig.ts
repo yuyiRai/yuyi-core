@@ -478,9 +478,9 @@ export class ItemConfig {
   }
 
   @Utils.timebuffer(0)
-  @autobind async optionsMatcher(r: any, values: string, callback: any) {
+  @autobind async optionsMatcher(r: any, values: any, callback: any) {
     const options = await this.getOptionsSafe()
-    for (const value of values.split(',')) {
+    for (const value of Utils.isStringFilter(values, '').split(',')) {
       if (Utils.isNotEmptyValue(value) && (Utils.isArrayFilter(Utils.getOptionsByValue(options, value)) || []).length === 0) {
         // console.error(this.label, '选择项匹配失败，请重新选择！', options, this.form, values, this)
         return callback(new Error(`[${this.label}]数据异常，请重新输入选择！`))

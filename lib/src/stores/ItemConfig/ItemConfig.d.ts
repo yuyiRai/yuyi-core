@@ -73,7 +73,7 @@ export declare class ItemConfig {
         (): void;
     }) => any;
     getRuleList(i: IKeyValueMap<any>, componentProps: IKeyValueMap<any>): any[] | undefined;
-    optionsMatcher(r: any, values: string, callback: any): Promise<any>;
+    optionsMatcher(r: any, values: any, callback: any): Promise<any>;
     getOptionsSafe(): any[] | Promise<any[]>;
     readonly defaultRule: {
         phone: {
