@@ -1,0 +1,26 @@
+{
+  "name": "yuyi-core",
+  "version": "0.0.0",
+  "description": "yuyi",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuyiRai/yuyi-core.git"
+  },
+  "author": "yuyiRai",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yuyiRai/yuyi-core/issues"
+  },
+  "homepage": "https://github.com/yuyiRai/yuyi-core#readme",
+  "dependencies": {
+    "react": "^16.8.6",
+    "webpack": "^4.30.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.4.4"
+  }
+}
