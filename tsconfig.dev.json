@@ -5,6 +5,7 @@
     "allowJs": false,
     "declaration": true,
     "module": "esnext",
+    "target": "es5",
     "baseUrl": ".",
     "watch": true
   }
