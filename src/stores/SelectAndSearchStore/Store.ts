@@ -44,7 +44,7 @@ export class SelectAndSearchStore {
     this.optionsStore.setShadowOptionByValue(value, source)
   }
 
-  @computed get displayOptions() {
+  @computed get displayOptions(): Option[] {
     return this.optionsStore.displayOptions || []
   }
 

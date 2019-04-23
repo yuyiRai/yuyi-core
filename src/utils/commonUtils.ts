@@ -23,7 +23,7 @@ if (!Object.values) {
   Object.values = values
 }
 
-export function jsxIf(bool: any, when: any, elseValue: any) {
+export function jsxIf(bool: any, when: any, elseValue?: any) {
   if ((Utils.isFunctionFilter(bool) || Utils.stubFunction)()) {
     return when;
   } else {
