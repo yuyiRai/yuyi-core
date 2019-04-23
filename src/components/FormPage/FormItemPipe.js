@@ -5,7 +5,7 @@ import { debounceTime, filter, map, takeUntil, tap, distinctUntilKeyChanged, dis
 
 import { observable, computed, action, autorun, extendObservable, reaction, trace } from 'mobx';
 import { ItemConfig } from './input-Item/ItemConfig';
-import CommonDto from '@/utils/Utils/CommonDto.js'
+import CommonDto from '../../utils/CommonDto'
 import EventEmitter from '../../utils/EventEmitter';
 import getFilter from './input-Item/CommonFilter';
 import { autobind } from 'core-decorators';

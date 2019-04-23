@@ -227,7 +227,7 @@ export class SelectAndSearchStore {
         label,
         remove: () => {
           console.log('close', this.value, this.labelsToValues(label))
-          this.onChange(_.pullAll([...this.value], this.labelsToValues(label)))
+          this.onChange(_.pullAll([...Utils.castArray(this.value)], this.labelsToValues(label)))
         }
       }
     })

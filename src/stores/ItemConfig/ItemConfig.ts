@@ -12,7 +12,7 @@ import { Option } from '../../utils';
 @EventStoreInject(['options-change'])
 export class ItemConfig {
   [key: string]: any;
-  destorySet: Set<IReactionDisposer> = new Set()
+  destorySet: Set<IReactionDisposer> = new Set<IReactionDisposer>()
   @observable.ref i: IKeyValueMap = {};
   @observable.ref iKeys: string[] = []
   /**
