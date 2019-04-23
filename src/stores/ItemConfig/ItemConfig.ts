@@ -246,17 +246,16 @@ export class ItemConfig {
       if (multiple) {
         const keyWordArr = Utils.zipEmptyData(Utils.castArray(keyWord));
         if (keyWordArr.length > 0) {
-          await Promise.all(map(keyWordArr, async keyWord => {
-            // console.log('keyWord', keyWord)
-            try {
+          try{
+            await Promise.all(map(keyWordArr, async keyWord => {
+              // console.log('keyWord', keyWord)
               const data = await remoteMethod(keyWord, this.form);
               Utils.arrayPush(nextOptions, data)
               return data
-            } catch (e) {
-              Utils.$message.error(e.message || e)
-            }
-            return false
-          })) //.concat([Utils.waitingPromise(100, true)]))
+            })) //.concat([Utils.waitingPromise(100, true)]))
+          } catch(e) {
+            throw e;
+          }
           // console.log('resList', keyWordArr, this.i.label, resList)
           this.optionsInited = Utils.isNotEmptyArray(nextOptions)
         }
