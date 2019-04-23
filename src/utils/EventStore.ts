@@ -1,4 +1,4 @@
-import { EventEmitter } from "src/utils/EventEmitter";
+import { EventEmitter } from "./EventEmitter";
 import { autobind } from "core-decorators";
 import { filter } from "rxjs/operators";
 import { IKeyValueMap } from "mobx";

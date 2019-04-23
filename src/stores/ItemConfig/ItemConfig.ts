@@ -2,12 +2,12 @@
 import { autobind } from 'core-decorators';
 import { difference, isNil, forEach, map, set, trim, isRegExp, keys, isError, toString } from 'lodash';
 import { action, computed, extendObservable, isComputedProp, observable, observe, reaction, IKeyValueMap, IReactionDisposer, IReactionOptions, IReactionPublic } from 'mobx';
-import { EventStoreInject } from 'src/utils/EventStore';
-import { asyncComputed } from 'src/utils/AsyncProperty';
-import { Utils } from 'src/utils/Utils';
-import { DisplayConfig } from '../../FormItemPipe';
-import { getDefaultRules } from '../DatePickerItem.js';
-import { Option } from 'src/utils';
+import { EventStoreInject } from '../../utils/EventStore';
+import { asyncComputed } from '../../utils/AsyncProperty';
+import { Utils } from '../../utils/Utils';
+import { DisplayConfig } from '../../components/FormPage/FormItemPipe';
+import { getDefaultRules } from '../../components/FormPage/input-Item/DatePickerItem.js';
+import { Option } from '../../utils';
 
 @EventStoreInject(['options-change'])
 export class ItemConfig {

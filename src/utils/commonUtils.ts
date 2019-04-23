@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { castArray, cloneDeep, filter, forEach, isEqual, isFunction, isRegExp, isString, keys, last, map, property, reduce, stubArray, takeRight, toArray, toString, values } from 'lodash';
-import { EventEmitter } from 'src/utils/EventEmitter';
-import request, { request as nativeRequst } from 'src/utils/request';
+import { EventEmitter } from './EventEmitter';
+import request, { request as nativeRequst } from './request';
 import Utils from '.';
 import { typeFilterUtils } from './TypeLib';
 

@@ -72,4 +72,13 @@ export class EventEmitter<T> extends Observable<T> {
     public getLastValue(){
         return this.lastValue;
     }
+    
+    public toPromise() {
+      return new Promise(r => {
+        const sub = this.subscribe(data => {
+          r(data);
+          sub.unsubscribe()
+        })
+      })
+    }
 }

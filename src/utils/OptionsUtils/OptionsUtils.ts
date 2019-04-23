@@ -1,8 +1,8 @@
 /* eslint-disable */
 import { castArray, filter, find, isArray, isEqual, isFunction, isNil, isRegExp, isString, join, map, some } from 'lodash';
-import request from 'src/utils/request';
-import { isNotEmptyArray, isNotEmptyArrayStrict, isNotEmptyValue, typeFilterUtils } from 'src/utils/TypeLib';
-import { Utils } from 'src/utils/Utils';
+import request from '../request';
+import { isNotEmptyArray, isNotEmptyArrayStrict, isNotEmptyValue, typeFilterUtils } from '../TypeLib';
+import { Utils } from '../Utils';
 
 export type SearchKey<T = any> = keyMatcher | RegExp | T[] | T
 export type keyMatcher = (key?: string, arg1?: any, arg2?: any) => boolean;

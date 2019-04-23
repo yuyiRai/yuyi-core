@@ -1,6 +1,6 @@
 /* eslint-disable */
 import FormComponent from './FormPage'
-import Utils from 'src/utils/index'
+import Utils from '../utils/index'
 import { forEach } from 'lodash'
 import * as _ from 'lodash'
 import './index'
