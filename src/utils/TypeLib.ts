@@ -60,9 +60,10 @@ export const typeUtils = {
   isArrayLike,
   isArray,
   isBoolean,
-  isObject<T extends object>(value?: any): value is T {
-    return isObject(value) && !isArray(value)
-  },
+  isObject,
+  // isObject<T extends object>(value?: any): value is T {
+  //   return isObject(value); // && !isArray(value)
+  // },
   isNumber,
   isString,
   isEmptyData,

@@ -38,7 +38,7 @@ export declare const typeUtils: {
         <T>(value?: any): value is any[];
     };
     isBoolean: (value?: any) => value is boolean;
-    isObject<T extends object>(value?: any): value is T;
+    isObject: (value?: any) => value is object;
     isNumber: typeof isNumber;
     isString: (value?: any) => value is string;
     isEmptyData: typeof isEmptyData;

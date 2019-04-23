@@ -151,7 +151,7 @@ export class OptionsStore {
     for (const item of Utils.isArrayFilter(options) || []) {
       if (!Utils.isNil(item)) {
         const index: number = next.length;
-        next.push(Utils.isObject<Option>(item) ? (item.__key == null ? { ...item, __key: OptionsStore.getOptionsKey(item, index) } : item) : {
+        next.push(Utils.isObject(item) ? ((item as any).__key == null ? { ...item, __key: OptionsStore.getOptionsKey(item, index) } : item) : {
             __key: OptionsStore.getOptionsKey(item, index),
             value: item
           });
