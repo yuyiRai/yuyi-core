@@ -43,7 +43,7 @@ export declare class ItemConfig {
     readonly remoteMethod: ((keyWord: any, form?: any) => Promise<any>) | (() => void);
     readonly remoteOptions: Promise<any[]> | any[];
     remoteSearchBySearchName(keyWordStr: string): Promise<any>;
-    remoteSearch(keyWord: string[]): Promise<any[]>;
+    remoteSearch(keyWord: string[]): Promise<Option[]>;
     readonly rule: any[];
     setRule(v: any): void;
     validateHandler: (value: any) => Promise<{}>;

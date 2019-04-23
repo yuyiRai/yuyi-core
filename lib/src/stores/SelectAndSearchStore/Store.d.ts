@@ -43,7 +43,7 @@ export declare class SelectAndSearchStore {
     readonly placeholder: any;
     readonly isSearch: boolean;
     readonly hasNameCode: any;
-    readonly useEmpty: (options: any[]) => boolean;
+    readonly useEmpty: (options: Option[]) => boolean;
     readonly isCenter: boolean;
     readonly popperClass: "" | "center";
     /**

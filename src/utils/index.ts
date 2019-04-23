@@ -7,4 +7,3 @@ export * from './TimeBuffer'
 export * from './TypeLib'
 export * from './AsyncProperty'
 export default Utils
-window.Utils = Utils

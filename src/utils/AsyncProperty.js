@@ -114,7 +114,6 @@ export class AsyncLoadProperty {
     }
   }
 }
-window.AsyncLoadProperty = AsyncLoadProperty
 
 /**
  * @return { PropertyDecorator }
@@ -220,5 +219,3 @@ export class OptionsPipeStore {
     return joinKey !== false ? result.join(joinKey) : result
   }
 }
-
-window.ItemConfig = ItemConfig
