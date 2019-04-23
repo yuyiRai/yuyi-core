@@ -1,9 +1,11 @@
 /* eslint-disable */
-import { parseTime } from '../../../utils/index'
+import { parseTime } from '../../../utils/ParseUtils'
+import Utils from '../../../utils';
 
+export type FilterType = 'group' | 'check' | 'checkOne' | 'dateTime' | 'dateToDate'
 export class CommonValueFilter {
-  type;
-  constructor(type) {
+  type: FilterType;
+  constructor(type: FilterType) {
     this.type = type
   }
   get filter() {
@@ -13,14 +15,14 @@ export class CommonValueFilter {
       case 'check':
         return this.groupFilter
       case 'checkOne':
-        return (v) => v === '1';
+        return (v: any) => v === '1';
       case 'dateTime': 
-        return (v) => _.isDate(v) ? v : 
+        return (v: any) => Utils.isDate(v) ? v : 
                 (Utils.isNotEmptyString(v) 
                   ? (v.length<11?(v+" 00:00:00"):v) 
                   : undefined);
       case 'dateToDate':
-        return (v) => Utils.isArrayFilter(v, []).filter((i) => Utils.isNotEmptyValue(i))
+        return (v: any) => Utils.isArrayFilter(v, []).filter((i) => Utils.isNotEmptyValue(i))
     }
     return this.normalFilter
   }
@@ -31,16 +33,16 @@ export class CommonValueFilter {
       case 'check':
         return this.groupFilterToValue
       case 'checkOne':
-        return (v) => {
+        return (v: any) => {
           return v===true ? '1' : '0'
         }
       case 'dateTime': 
-        return (v) => _.isDate(v) ? v : 
+        return (v: any) => Utils.isDate(v) ? v : 
                 (Utils.isNotEmptyString(v) 
                   ? (v.length<11?(v+" 00:00:00"):v) 
                   : undefined)
       case 'dateToDate':
-        return (v) => {
+        return (v: any) => {
           const [s,e] = Utils.isArrayFilter(v, []).filter((i) => Utils.isNotEmptyValue(i))
           if(Utils.isNotEmptyValue(s) && Utils.isNotEmptyValue(e)){
             return [`${s}${s.length<11?' 00:00:00':''}`, `${s.length<11?parseTime(new Date(new Date(e).setTime(new Date(e+' 00:00:00').getTime()-1))):''}`]
@@ -51,18 +53,18 @@ export class CommonValueFilter {
     return this.normalFilter
   }
 
-  normalFilter(value) {
+  normalFilter(value: any) {
     return Utils.isNotEmptyValueFilter(value, null)
   }
-  groupFilter(string) {
-    return Utils.isNotEmptyString(string) ? string.split(',').filter(i=>Utils.isNotEmptyString(i)) : [] 
+  groupFilter(string: any) {
+    return Utils.isNotEmptyString(string) ? string.split(',').filter((i: string)=>Utils.isNotEmptyString(i)) : [] 
   }
-  groupFilterToValue(array) {
+  groupFilterToValue(array: any) {
     return Utils.isArrayFilter(array, []).filter(i=>Utils.isNotEmptyString(i)).join(',')
   }
   
 }
 
-export default function getFilter(type) {
+export default function getFilter(type: FilterType) {
   return new CommonValueFilter(type);
 }

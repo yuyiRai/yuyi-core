@@ -1,22 +1,22 @@
 /* eslint-disable */
 
-import { observable, computed, action, runInAction, reaction, extendObservable, remove } from 'mobx'
-import { Utils } from './Utils'
-import { ItemConfig } from '../stores/index';
-import { cpus } from 'os';
 import { autobind } from 'core-decorators';
+import { last } from 'lodash';
+import { action, computed, extendObservable, observable, reaction, runInAction } from 'mobx';
+import { Utils } from './Utils';
 
-export class AsyncLoadProperty {
-  @observable.ref type;
-  @observable.ref defaultValue;
-  @observable.ref currentValue;
+export class AsyncLoadProperty<V = any> {
+  @observable.ref type: any;
+  @observable.ref defaultValue: V;
+  @observable.ref currentValue: V;
+  lastParam: any;
   @observable.ref loading = true;
-  @observable isInited;
-  @observable.ref getterFunc = () => this.defaultValue
-  timeBuffer = false;
-  @observable.ref emitter = null;
+  @observable isInited: boolean;
+  @observable.ref getterFunc: Function = () => this.defaultValue
+  timeBuffer: number = 0;
+  @observable.ref emitter: any = null;
 
-  constructor(type, getter, defaultValue = null, timeBuffer = 0) {
+  constructor(type: any, getter: any, defaultValue: V = null, timeBuffer = 0) {
     this.type = type;
     this.reset(defaultValue, true)
     if (timeBuffer > 0) {
@@ -35,7 +35,7 @@ export class AsyncLoadProperty {
   }
 
 
-  getValue = (param) => {
+  getValue = (param: any) => {
     if (param === this.lastParam) {
       return this.currentValue;
     }
@@ -44,7 +44,7 @@ export class AsyncLoadProperty {
     return this.defaultValue
   }
 
-  @action.bound reset(nextDefaultValue, force) {
+  @action.bound reset(nextDefaultValue: V, force: boolean) {
     if (this.isTypedValue(nextDefaultValue)) {
       this.defaultValue = nextDefaultValue
       this.currentValue = this.defaultValue
@@ -55,7 +55,7 @@ export class AsyncLoadProperty {
     return this;
   }
 
-  @action.bound async updateValue(nextValue) {
+  @action.bound async updateValue(nextValue: V) {
     const value = await nextValue
     if (this.isTypedValue(value)) {
       this.currentValue = value
@@ -65,13 +65,13 @@ export class AsyncLoadProperty {
       this.loadingEnd()
     }
   }
-  @action.bound registerGetter(getter) {
+  @action.bound registerGetter(getter: any) {
     this.getterFunc = Utils.isFunctionFilter(getter, this.getterFunc);
   }
   @computed.struct get valueGetter() {
     if (this.timeBuffer > 0) {
       const emitter = Utils.createSimpleTimeBufferInput((resList) => {
-        this.updateValue(this.getterFunc(_.last(resList)))
+        this.updateValue(this.getterFunc(last(resList)))
       }, this, this.timeBuffer, true)
       return action((param) => {
         runInAction(async () => {
@@ -97,44 +97,45 @@ export class AsyncLoadProperty {
       this.loading = false
   }
 
-  @autobind isTypedValue(value) {
+  @autobind isTypedValue(value: any) {
     if (value == null) {
       return true
     } else if (Utils.isFunction(this.type)) {
       return this.type(value)
     } else {
-      const { Type } = this
-      switch (Type) {
+      const { type } = this
+      switch (type) {
         case String: return Utils.isString(value)
         case Boolean: return Utils.isBoolean(value)
         case Array: return Utils.isArray(value)
         case Number: return Utils.isNumber(value)
-        default: return value instanceof Type
+        default: return value instanceof type
       }
     }
   }
 }
 
+export type AsyncComputedConfig<V> = { type: any, defaultValue: V, watcher: any, time: number }
 /**
  * @return { PropertyDecorator }
  */
-export function asyncComputed({ type, defaultValue, resetFrom, watcher, time }) {
+export function asyncComputed<V = any>({ type, defaultValue, watcher, time }: AsyncComputedConfig<V>): PropertyDecorator {
   /**
    * @type {PropertyDecorator}
    * @param { * } target 
    * @param { string } propertyName 
    * @param { PropertyDescriptor } descriptor
    */
-  function Async(target, propertyName, descriptor) {
+  function Async(target: any, propertyName: string, descriptor: TypedPropertyDescriptor<V>) {
     const asyncName = `$${propertyName}Async`
-    const { get: getter, set, ...other } = descriptor
+    const { get: getter } = descriptor
     if (getter) {
       descriptor.get = function() {
         let sourceInstance = this;
         if (!this[asyncName]) {
           const asyncNpm = new AsyncLoadProperty(
             type,
-            param => Reflect.apply(getter, sourceInstance, []),
+            () => Reflect.apply(getter, sourceInstance, []),
             defaultValue,
             time
           )
@@ -144,7 +145,7 @@ export function asyncComputed({ type, defaultValue, resetFrom, watcher, time }) 
             }
           })
 
-          if (!_.isNil(watcher)) {
+          if (!Utils.isNil(watcher)) {
             reaction(
               () => this[watcher],
               trigger => {
@@ -159,63 +160,5 @@ export function asyncComputed({ type, defaultValue, resetFrom, watcher, time }) 
     }
     return computed.struct(target, propertyName, descriptor);
   }
-  return Async;
-}
-
-export class OptionsPipeStore {
-  @observable itemConfig;
-  @action.bound setItemConfig(itemConfig) {
-    this.itemConfig = itemConfig
-  }
-  /**
-   * 至今为止选择过的optionList
-   * @type { Array }
-   */
-  @observable.ref selectedOptions = [];
-
-  @action.bound patchSelectedOption(optionsList) {
-    this.selectedOptions = _.concat(this.selectedOptions,
-      _.filter(optionsList,
-        item => !_.some(this.selectedOptions, option => option.value === item.value)
-      )
-    )
-  }
-  @action.bound patchSelectedOptionByValues(valueList, options) {
-    this.selectedOptions = _.concat(this.selectedOptions,
-      _.filter(Utils.getOptionsByValue(options, valueList),
-        item => !_.some(this.selectedOptions, option => option.value === item.value)
-      )
-    )
-  }
-
-  nextOptionsWillUpdateValue(nextOptions, keyWordArr, lastValue) {
-    const selectedOptions = Utils.getOptionsByLabel(nextOptions, keyWordArr)
-    if (selectedOptions.length > 0) {
-      const selectValue = multiple
-        ? Utils.zipEmptyData(_.concat(lastValue, _.map(selectedOptions, 'value')), true)
-        : _.get(selectedOptions, '[0].value')
-      if (!Utils.likeArray(selectValue, lastValue))
-        true
-    }
-    return false
-  }
-
-  @computed labelsToValues() {
-    return (label) => {
-      return Utils.arrayMapToKeysDive(Utils.getOptionsByLabel(this.isSearch ? this.selectedOptions : this.itemConfig.options, label), 'value')
-    }
-  }
-
-  valuesToLabels = (value, joinKey = false) => {
-    const result = Utils.isArrayFilter(
-      Utils.arrayMapToKeysDive(
-        Utils.getOptionsByValue(
-          Utils.isArrayFilter(this.isSearch ? this.selectedOptions : this.itemConfig.options),
-          value
-        ),
-        'label'
-      ), []
-    )
-    return joinKey !== false ? result.join(joinKey) : result
-  }
+  return Async as any;
 }

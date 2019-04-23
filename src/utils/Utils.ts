@@ -4,6 +4,7 @@ import * as OptionsUtils from './OptionsUtils';
 import CustomUtils from './CustomUtils';
 import TimeBufferUtils from './TimeBuffer';
 import { typeFilterUtils, typeUtils } from "./TypeLib";
+import * as ParseUtils from "./ParseUtils";
 
 export const Utils: typeof CustomUtils & typeof OptionsUtils & typeof typeUtils & typeof CommonUtils & typeof TimeBufferUtils & typeof typeFilterUtils = {
   ...CommonUtils,
@@ -11,6 +12,7 @@ export const Utils: typeof CustomUtils & typeof OptionsUtils & typeof typeUtils 
   ...TimeBufferUtils,
   ...typeUtils,
   ...typeFilterUtils,
-  ...CustomUtils
+  ...CustomUtils,
+  ...ParseUtils
 };
 

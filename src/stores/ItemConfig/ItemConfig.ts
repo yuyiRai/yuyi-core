@@ -5,8 +5,8 @@ import { action, computed, extendObservable, isComputedProp, observable, observe
 import { EventStoreInject } from '../../utils/EventStore';
 import { asyncComputed } from '../../utils/AsyncProperty';
 import { Utils } from '../../utils/Utils';
-import { DisplayConfig } from '../../components/FormPage/FormItemPipe';
-import { getDefaultRules } from '../../components/FormPage/input-Item/DatePickerItem.js';
+import { DisplayConfig } from './ItemDisplayConfig';
+import { getDefaultRules } from './input/Date';
 import { Option } from '../../utils';
 
 @EventStoreInject(['options-change'])
@@ -226,8 +226,7 @@ export class ItemConfig {
     type: Array,
     defaultValue: [],
     time: 100,
-    watcher: 'searchName',
-    resetFrom: 'form'
+    watcher: 'searchName'
   }) get remoteOptions(): Promise<any[]> | any[] {
     return this.remoteMethod ? this.remoteSearchBySearchName(this.searchName) : []
   }

@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { EventEmitter } from './EventEmitter';
-import { filter, isArray, isBoolean, isArrayLike, isEmpty, isFunction, isNaN, isNil, 
+import { filter, isArray, isBoolean, isArrayLike, isEmpty, isFunction, isNaN, isNil,isDate, 
   isNumber as isNumberLodash, isObject, isString, map, values } from 'lodash';
 import { toJS, IKeyValueMap } from 'mobx';
 // Array.prototype.map = ()
@@ -80,6 +80,7 @@ export const typeUtils = {
     return !isFunction(func);
   },
   isNil,
+  isDate,
   isNaN,
   isNotNaN(v: any): boolean {
     return !isNaN(v);
