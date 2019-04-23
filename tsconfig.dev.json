@@ -4,8 +4,8 @@
     "outDir": "lib",
     // "allowJs": false,
     // "declaration": true,
-    "module": "esnext",
-    "target": "esnext",
+    "module": "commonJS",
+    "target": "es5",
     "baseUrl": ".",
     "watch": true
   }
