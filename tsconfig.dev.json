@@ -7,6 +7,7 @@
     "module": "commonJS",
     "target": "es5",
     "baseUrl": ".",
-    "watch": true
+    "watch": true,
+    "noImplicitAny": false,
   }
 }

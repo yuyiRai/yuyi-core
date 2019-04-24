@@ -23,6 +23,7 @@
     "@types/node": "^11.13.7",
     "async-validator": "^1.11.2",
     "core-decorators": "^0.20.0",
+    "element-react": "^1.4.33",
     "lodash": "^4.17.11",
     "lodash-decorators": "^6.0.1",
     "mobx": "^4.9.4",

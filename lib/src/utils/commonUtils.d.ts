@@ -22,7 +22,7 @@ declare const _default: {
     castString(value: any): string;
     argShifter(todoFunc: any, startIndex?: number): (...args: any[]) => any;
     modelValidator<T>(fieldName: any, validator: any): (model: T) => any;
-    getTestArray(length: number): number[];
+    getTestArray(length: number): any[];
     arrayMap(array: any[], iteratee: any): any[];
     arrayMap2(array: any[], iteratee: any): any[];
     arrayMap3(array: any[], iteratee: any): any[];
@@ -31,7 +31,6 @@ declare const _default: {
     arrayForEachDive(array: any[], iteratee: any): void;
     arrayPush(array: any[], values: any[]): any[];
     arrayPushDive(arrayTarget: any[], array: any[]): void;
-    test(length: number, pi?: number): void;
     arrayFilter(array: any[], predicate: any): any[];
     arrayFilterDive(array: any[], iteratee: any): any[];
     validateModelField(model: any, fieldName: any, validator: any): any;

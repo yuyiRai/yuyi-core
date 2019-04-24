@@ -1,15 +1,15 @@
 /* eslint-disable */
-import { castArray, cloneDeep, filter, forEach, isEqual, isFunction, 
-  isRegExp, concat, isString, keys, last, map, property, reduce, 
+import { castArray, cloneDeep, forEach, isEqual, isFunction, 
+  isRegExp, concat, isString, keys, last, property, reduce, 
   stubArray, takeRight, toArray, toString, values } from 'lodash';
 import { EventEmitter } from './EventEmitter';
 import { HttpBox } from './HttpBox';
 import Utils from '.';
 import { typeFilterUtils } from './TypeLib';
 
-const _ = {
-  filter,map,forEach
-}
+// const _ = {
+//   filter,map,forEach
+// }
 
 if (!Object.keys) {
   Object.keys = keys
@@ -175,67 +175,67 @@ export default {
       pLength-=8
     }
   },
-  test(length: number, pi = 8) {
-    var test = Utils.getTestArray(length)
-    var test2 = (item: any, index: any) => item > length / 2
-    var test3 = (item: any, index: any) => Utils.arrayMapDive(test, test2)
-    setTimeout(() => {
-      console.time('arrayMap')
-      Utils.arrayMap(test, test3)
-      console.timeEnd('arrayMap')
-    }, 0)
-    setTimeout(() => {
-      console.time('arrayMap2')
-      Utils.arrayMap2(test, test3)
-      console.timeEnd('arrayMap2')
-    }, 0)
-    setTimeout(() => {
-      console.time('arrayMap3')
-      Utils.arrayMap3(test, test3)
-      console.timeEnd('arrayMap3')
-    }, 0)
-    setTimeout(() => {
-      console.time('arrayMapDive')
-      Utils.arrayMapDive(test, test3)
-      console.timeEnd('arrayMapDive')
-    }, 0)
-    setTimeout(() => {
-      console.time('_.map')
-      _.map(test, test3)
-      console.timeEnd('_.map')
-    }, 0)
-    setTimeout(() => {
-      console.time('arrayFilter')
-      Utils.arrayFilter(test, test3)
-      console.timeEnd('arrayFilter')
-    }, 0)
-    setTimeout(() => {
-      console.time('arrayFilterDive')
-      Utils.arrayFilterDive(test, test3)
-      console.timeEnd('arrayFilterDive')
-    }, 0)
-    setTimeout(() => {
-      console.time('_.filter')
-      _.filter(test, test3)
-      console.timeEnd('_.filter')
-    }, 0)
-    setTimeout(() => {
-      console.time('arrayForEachDive')
-      var r8 = []
-      Utils.arrayForEachDive(test, (item: any, index: any) => {
-        r8.push(test3(item, index))
-      })
-      console.timeEnd('arrayForEachDive')
-    }, 0)
-    setTimeout(() => {
-      console.time('_.forEach')
-      var r8 = []
-      _.forEach(test, (item, index) => {
-        r8.push(test3(item, index))
-      })
-      console.timeEnd('_.forEach')
-    }, 0)
-  },
+  // test(length: number, pi = 8) {
+  //   var test = Utils.getTestArray(length)
+  //   var test2 = (item: any, index: any) => item > length / 2
+  //   var test3 = (item: any, index: any) => Utils.arrayMapDive(test, test2)
+  //   setTimeout(() => {
+  //     console.time('arrayMap')
+  //     Utils.arrayMap(test, test3)
+  //     console.timeEnd('arrayMap')
+  //   }, 0)
+  //   setTimeout(() => {
+  //     console.time('arrayMap2')
+  //     Utils.arrayMap2(test, test3)
+  //     console.timeEnd('arrayMap2')
+  //   }, 0)
+  //   setTimeout(() => {
+  //     console.time('arrayMap3')
+  //     Utils.arrayMap3(test, test3)
+  //     console.timeEnd('arrayMap3')
+  //   }, 0)
+  //   setTimeout(() => {
+  //     console.time('arrayMapDive')
+  //     Utils.arrayMapDive(test, test3)
+  //     console.timeEnd('arrayMapDive')
+  //   }, 0)
+  //   setTimeout(() => {
+  //     console.time('_.map')
+  //     _.map(test, test3)
+  //     console.timeEnd('_.map')
+  //   }, 0)
+  //   setTimeout(() => {
+  //     console.time('arrayFilter')
+  //     Utils.arrayFilter(test, test3)
+  //     console.timeEnd('arrayFilter')
+  //   }, 0)
+  //   setTimeout(() => {
+  //     console.time('arrayFilterDive')
+  //     Utils.arrayFilterDive(test, test3)
+  //     console.timeEnd('arrayFilterDive')
+  //   }, 0)
+  //   setTimeout(() => {
+  //     console.time('_.filter')
+  //     _.filter(test, test3)
+  //     console.timeEnd('_.filter')
+  //   }, 0)
+  //   setTimeout(() => {
+  //     console.time('arrayForEachDive')
+  //     var r8 = []
+  //     Utils.arrayForEachDive(test, (item: any, index: any) => {
+  //       r8.push(test3(item, index))
+  //     })
+  //     console.timeEnd('arrayForEachDive')
+  //   }, 0)
+  //   setTimeout(() => {
+  //     console.time('_.forEach')
+  //     var r8 = []
+  //     _.forEach(test, (item, index) => {
+  //       r8.push(test3(item, index))
+  //     })
+  //     console.timeEnd('_.forEach')
+  //   }, 0)
+  // },
   arrayFilter(array: any[], predicate: any) {
     let length = array.length
     const result = [];
