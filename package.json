@@ -31,6 +31,7 @@
     "mobx-vue": "^2.0.8",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-hot-loader": "^4.8.4",
     "rxjs": "^6.5.0",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
