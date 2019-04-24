@@ -8,6 +8,6 @@
     "target": "es5",
     "baseUrl": ".",
     "watch": true,
-    "noImplicitAny": false,
+    "skipLibCheck": true
   }
 }

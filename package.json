@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/yuyiRai/yuyi-core#readme",
   "dependencies": {
+    "@types/styled-components": "^4.1.14",
     "antd": "^3.16.5",
     "async-validator": "^1.11.2",
     "core-decorators": "^0.20.0",
@@ -33,6 +34,7 @@
     "react-dom": "^16.8.6",
     "react-hot-loader": "^4.8.4",
     "rxjs": "^6.5.0",
+    "styled-components": "^4.2.0",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",
     "vue-property-decorator": "^8.1.0",

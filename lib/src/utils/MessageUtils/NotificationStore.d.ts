@@ -1,6 +1,6 @@
 import { ArgsProps, IconType, NotificationPlacement } from 'antd/lib/notification';
 import 'antd/lib/notification/style/css';
-import './Notification';
+import './style/index.css';
 import React from 'react';
 export interface INotificationStoreConfigBase {
     title?: React.ReactNode;
@@ -23,6 +23,7 @@ export interface INotificationStoreConfig<T = any> extends INotificationStoreCon
 export interface INotificationStoreConfigGroup<T = any> extends INotificationStoreConfigBase {
     msg: T[];
 }
+export declare const Container: () => void;
 export declare function $notify<V = any>(config: INotificationStoreConfig<V>, instance: any, time?: number): Promise<NotificationStore>;
 export declare class NotificationStore {
     key: string;

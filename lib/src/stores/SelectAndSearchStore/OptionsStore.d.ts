@@ -7,7 +7,7 @@ export declare class OptionsStore {
     __optionMap: WeakMap<object, any>;
     constructor(itemConfig: ItemConfig);
     shadowOption: any;
-    readonly shadowOptionMode: "text" | "code";
+    readonly shadowOptionMode: "code" | "text";
     /**
      * 录入值的自动转化
      * @param { string } value
