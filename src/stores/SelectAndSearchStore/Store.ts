@@ -90,7 +90,7 @@ export class SelectAndSearchStore {
    */
   @autobind searchMethods(key: string | string[]) {
     const keyArr = Utils.castArray(key);
-    console.log('keyword list', keyArr, this.selectedLables)
+    // console.log('keyword list', keyArr, this.selectedLables, key)
     if (Utils.isNotEmptyArray(keyArr) && (keyArr!== this.selectedLables) && !Utils.likeArray(keyArr, this.selectedLables)) {
       if (this.itemConfig.allowInput) {
         // debugger
@@ -136,8 +136,9 @@ export class SelectAndSearchStore {
     const { itemConfig } = this;
     // // this.itemConfig.label=="受伤部位" && console.log(this.itemConfig.remoteMethod)
     const { remoteSearch, multiple, setOptions, label } = itemConfig;
-    console.log('尝试搜索', label, keyWord, typeof keyWord)
     const keyWordArr = Utils.zipEmptyData(Utils.castArray(keyWord));
+    console.log('尝试搜索', label, keyWord, typeof keyWord, keyWordArr)
+    // debugger
     const lastValue = Utils.cloneDeep(this.value)
     runInAction(async () => {
       if (Utils.isFunction(setOptions) && Utils.isFunction(remoteSearch)) {
@@ -166,7 +167,7 @@ export class SelectAndSearchStore {
 
   @action.bound onChangeWithLabel(label: string) {
     const value = this.optionsStore.labelToValue(label);
-    // console.log('onBlur', label, value, this.value)
+    console.log('onBlur', label, value, this.value)
     // if(Utils.isEqual(value, this.value)) {
     //   return
     // }
@@ -179,13 +180,16 @@ export class SelectAndSearchStore {
   
   @action.bound onChange(value: string | string[]) {
     if (!Utils.isEqual(value, this.value)) {
-      const { options, nameCode, allowCreate } = this.itemConfig;
+      const { options, label, nameCode, allowCreate } = this.itemConfig;
+      // 原始选项中是否选中
       const selectedObj = Utils.getOptionsByValue(options, value)
       // const { pull: pullList, push: pushList } = Utils.getListDifferent(this.value, value)
       // this.patchSelectedOption(pushList)
-      // console.log('onChange', label, value, this.value)
       // this.value = value
-      const isAllowCreateOption = allowCreate && selectedObj.length === 0 && Utils.isNotEmptyValue(value) && this.isValidShadowOption
+      const isSelected = selectedObj.length > 0
+      const isAllowCreateOption = allowCreate && !isSelected && Utils.isNotEmptyValue(value) && this.optionsStore.isValidShadowOption
+
+      console.log('onChange', label, value, this.value, 'allow-create:',isAllowCreateOption)
       if (isAllowCreateOption) {
         const additionOption = Utils.isFunctionFilter(allowCreate, this.defaultCreater)(value)
         if (Utils.getOptionsByValue(options, additionOption.value || additionOption).length == 0) {
@@ -196,8 +200,10 @@ export class SelectAndSearchStore {
           this.itemConfig.setOptions(options)
         }
         // this.itemConfig.setOptions(options.concat([{label: value, value}]))
+      } else if(!isSelected && Utils.getOptionsByValue([this.shadowOption], value)){
+        selectedObj.push(this.shadowOption)
       }
-      debugger
+      // debugger
       if (Utils.isNotEmptyString(nameCode)) {
         // this.itemConfig.label=="受伤部位" && console.log('change-with', label, selectedObj)
         this.$emit('change-with', _.map(selectedObj, 'label').join(','), nameCode)
@@ -216,12 +222,13 @@ export class SelectAndSearchStore {
   }
 
   @computed get selectedLables() {
-    return Utils.zipEmptyData(Utils.isNotEmptyArrayFilter(this.valuesToLabels(this.value), [this.shadowOption.label]))
+    return Utils.zipEmptyData(Utils.isNotEmptyArrayFilter(this.valuesToLabels(this.value)) || [this.shadowOption.label])
   }
   @computed get selectedLablesStr() {
     return this.selectedLables.join(',')
   }
   @computed get selectedLablesConfig() {
+    console.log(this.selectedLables)
     return _.map(this.selectedLables, (label) => {
       return {
         label,

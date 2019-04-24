@@ -3,7 +3,7 @@ import { EventStoreInject } from '../../utils/EventStore';
 import { ItemConfig } from '../ItemConfig';
 import { autobind } from 'core-decorators';
 import Utils, { Option } from '../../utils';
-import { findIndex } from 'lodash'
+import { findIndex, cloneDeep } from 'lodash'
 
 
 @EventStoreInject(['change', 'change-with', 'options-change'], { itemConfig: ItemConfig })
@@ -47,7 +47,7 @@ export class OptionsStore {
     // if(this.itemConfig.label==='交强险承保单位')
     //   debugger
     const label = Utils.isStringFilter(Utils.valueToLabel(options, value), this.itemConfig.searchName);
-    this.shadowUpdateDispatcher(label, value, source);
+    this.shadowUpdateDispatcher(label, value, source + 'byvaue');
   }
   /**
    * 录入值的自动转化
@@ -67,20 +67,21 @@ export class OptionsStore {
   }
 
   @autobind async shadowUpdateDispatcher(label: any, value: any, source: any) {
-    // console.log(`setShadowOption by ${source} mode: ${this.shadowOptionMode}, value: ${value}, label: ${label}`, _.cloneDeep(this.displayOptions), _.cloneDeep(this.itemConfig.options))
+    console.log(`setShadowOption by ${source} mode: ${this.shadowOptionMode}, value: ${value}, label: ${label}`, {
+      options: cloneDeep(this.displayOptions), config: this.itemConfig, options1: cloneDeep(this.itemConfig.options)
+    })
     try {
-      if (Utils.isNotEmptyString(value)) {
-        await this.itemConfig.validateHandler(value);
-        // console.log(result, value)
-      }
-      else {
-        throw new Error();
-      }
+      await this.itemConfig.validateHandler(value);
+      // if (Utils.isNotEmptyString(value)) {
+      //   // console.log(result, value)
+      // } else {
+      //   throw new Error();
+      // }
       // console.error('shadowOption result', result, value)
       runInAction(() => this.updateShadowOption(value, label));
     }
     catch (error) {
-      // console.log('shadowOption', error)
+      console.log('shadowOption', error)
       if (this.shadowOption.label !== value) {
         this.shadowOption.value = value;
         this.shadowOption.label = label;
@@ -145,16 +146,18 @@ export class OptionsStore {
   }
 
   @computed get __optionArr(): Option[] {
-    const { options } = this.itemConfig;
-    const next = [];
+    const options = Utils.isArrayFilter(this.itemConfig.options) || []
     // this.arrayMap(this.__optionArr, this.toConvertedOption)
-    for (const item of Utils.isArrayFilter(options) || []) {
+    const length = Math.min(options.length, 100);
+    const next = Array(length);
+    let index = -1
+    while(++index < length) {
+      const item = options[index]
       if (!Utils.isNil(item)) {
-        const index: number = next.length;
-        next.push(Utils.isObject(item) ? ((item as any).__key == null ? { ...item, __key: OptionsStore.getOptionsKey(item, index) } : item) : {
-            __key: OptionsStore.getOptionsKey(item, index),
-            value: item
-          });
+        next[index] = (Utils.isObject(item) ? ((item as any).__key == null ? { ...item, __key: OptionsStore.getOptionsKey(item, index) } : item) : {
+          __key: OptionsStore.getOptionsKey(item, index),
+          value: item
+        });
       }
     }
     return next;

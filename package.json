@@ -5,7 +5,8 @@
   "main": "lib/src/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "tsc --project tsconfig.dev.json"
+    "dev": "tsc --project tsconfig.dev.json",
+    "dev2": "tsc --project tsconfig.prod.json"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   "homepage": "https://github.com/yuyiRai/yuyi-core#readme",
   "dependencies": {
     "@types/lodash": "^4.14.123",
+    "async-validator": "^1.11.2",
     "core-decorators": "^0.20.0",
     "lodash": "^4.17.11",
     "mobx": "^4.9.4",

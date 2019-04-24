@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { autobind } from 'core-decorators';
 import { difference, isNil, forEach, map, set, trim, isRegExp, keys, isError, toString } from 'lodash';
-import { action, computed, extendObservable, isComputedProp, observable, observe, reaction, IKeyValueMap, IReactionDisposer, IReactionOptions, IReactionPublic } from 'mobx';
+import { action, computed, extendObservable, isComputedProp, observable, observe, reaction, IKeyValueMap, IReactionDisposer, IReactionOptions, IReactionPublic, IObservableValue, IComputedValue, IValueDidChange, Lambda } from 'mobx';
 import { EventStoreInject } from '../../utils/EventStore';
 import { asyncComputed } from '../../utils/AsyncProperty';
 import { Utils } from '../../utils/Utils';
@@ -9,10 +9,23 @@ import { DisplayConfig } from './ItemDisplayConfig';
 import { getDefaultRules } from './input/Date';
 import { Option } from '../../utils';
 
+export type ValidatorCallback = (error?: string | Error) => void
+export type RuleConfig<T = any> = {
+  validator?(rules: any, value: T, callback: ValidatorCallback): void,
+  strict?: boolean | undefined,
+  trigger?: 'change' | 'blur' | Array<'change' | 'blur'>,
+  message?: string,
+  pattern?: RegExp,
+  required?: boolean
+}
+export type RuleConfigList<T = any> = Array<RuleConfig<T>>
+export type RuleConfigGetter<T = any> = (...args: any[]) => RuleConfig<T> | RuleConfigList<T>
+export type RuleConfigMap<T = any> = { [k: string]: RuleConfig<T> | RuleConfigList<T> | RuleConfigGetter<T> }
+
 @EventStoreInject(['options-change'])
 export class ItemConfig {
   [key: string]: any;
-  destorySet: Set<IReactionDisposer> = new Set<IReactionDisposer>()
+  destorySet: Set<IReactionDisposer | Lambda> = new Set<IReactionDisposer | Lambda>()
   @observable.ref i: IKeyValueMap = {};
   @observable.ref iKeys: string[] = []
   /**
@@ -54,16 +67,16 @@ export class ItemConfig {
       for (const name of ['loading', 'options']) {
         this.registerKey(i, name)
       }
-      observe(i, (e: any) => {
+      this.observe(i, (e: any) => {
         this.$version++
         // console.log(e)
         if (e.name === '$$core_options') {
-          // console.log(`${e.name}: ${e.oldValue} => ${e.newValue}`, {config: i, event: e})
+          this.label ==='诊断名称' && console.log(`${e.name}: ${e.oldValue} => ${e.newValue}`, { config: i, event: e })
           this.$emit('options-change', e.newValue)
         }
         // console.log(`${e.name}: ${e.oldValue} => ${e.newValue}`, {config: i, event: e})
       })
-      this.$emit('options-change', this.options)
+      // this.$emit('options-change', this.options)
       // this.reaction(() => i.loading, value => {
       //   // this.loading = value
       //   console.log('i loading change', this.i.label, value)
@@ -77,8 +90,12 @@ export class ItemConfig {
   }
 
   @autobind reaction(source: (r: IReactionPublic) => {}, callback: (arg: {}, r: IReactionPublic) => void, options?: IReactionOptions) {
-    this.destorySet.add(reaction(source, callback, options ))
+    this.destorySet.add(reaction(source, callback, options))
   }
+  @autobind observe<T = any>(value: IObservableValue<T> | IComputedValue<T>, listener: (change: IValueDidChange<T>) => void, fireImmediately?: boolean) {
+    this.destorySet.add(observe(value, listener, fireImmediately))
+  }
+
 
   @action.bound registerObservables(baseConfig: any) {
     for (const key of this.otherKey) {
@@ -214,12 +231,20 @@ export class ItemConfig {
 
   @computed get remoteMethod() {
     if (Utils.isFunction(this.i.remoteMethod)) {
-      return async (keyWord: any, form?: any) => {
+      return async (keyWord: string, form?: any) => {
         const r = await this.i.remoteMethod(keyWord, this.form, this)
+        // console.log('remoteSearch get', keyWord, r, this.i.remoteMethod)
         return r
       }
+    } else if (this.type === 'search') {
+      return async (keyWord: string, form?: any) => {
+        return this.options
+      }
+    } else {
+      return async (keyWord: string, form?: any) => {
+        return this.options
+      }
     }
-    return function(){}
   }
 
   @asyncComputed({
@@ -228,7 +253,7 @@ export class ItemConfig {
     time: 100,
     watcher: 'searchName'
   }) get remoteOptions(): Promise<any[]> | any[] {
-    return this.remoteMethod ? this.remoteSearchBySearchName(this.searchName) : []
+    return this.remoteMethod ? this.remoteSearchBySearchName(this.searchName) : this.options
   }
 
   @autobind async remoteSearchBySearchName(keyWordStr: string) {
@@ -243,16 +268,17 @@ export class ItemConfig {
     if (Utils.isFunction(remoteMethod)) {
       this.setLoading(true)
       if (multiple) {
-        const keyWordArr = Utils.zipEmptyData(Utils.castArray(keyWord));
+        const keyWordArr: string[] = Utils.zipEmptyData(Utils.castArray(keyWord));
         if (keyWordArr.length > 0) {
-          try{
+          try {
             await Promise.all(map(keyWordArr, async keyWord => {
               // console.log('keyWord', keyWord)
+              // console.log('remoteSearch start', keyWord)
               const data = await remoteMethod(keyWord, this.form);
               Utils.arrayPush(nextOptions, data)
               return data
             })) //.concat([Utils.waitingPromise(100, true)]))
-          } catch(e) {
+          } catch (e) {
             throw e;
           }
           // console.log('resList', keyWordArr, this.i.label, resList)
@@ -280,26 +306,29 @@ export class ItemConfig {
   // }
 
 
-  @computed.struct get rule() {
+  @computed.struct get rule(): RuleConfigList {
     const { i, componentProps: componentProps } = this
     return this.isViewOnly ? [] : this.getRuleList(i, componentProps)
   }
-  @action.bound setRule(v: any) {
+  @action.bound setRule(v: RuleConfigList) {
     if (this.i.rule !== v)
       this.i.rule = v
   }
 
-  validateHandler = (value: any) => {
+  validateHandler = (value: any, strict: boolean = false) => {
     return new Promise((resolve, reject) => {
       const resultList = []
-      if ((Utils.isArrayFilter(this.rule) || []).length === 0) {
+      const ruleList = this.rule.filter((rule) => (rule.strict && strict) || (!rule.strict && !strict))
+      // console.log('validateHandler start', ruleList)
+      if ((Utils.isArrayFilter(ruleList) || []).length === 0) {
         return resolve(true)
       }
-      if(this.rule){
-        const length = this.rule.length
-        for (const rule of this.rule) {
+      // console.log('validateHandler', ruleList)
+      const length = ruleList.length
+      for (const rule of ruleList) {
+        if ((rule.strict && strict) || (!rule.strict && !strict)) {
           const validator = Utils.isFunctionFilter(rule.validator) || ((a: any, b: any, c: (arg0: boolean) => void) => c(true))
-          validator(this.rule, value, (e: Error | undefined) => {
+          validator(ruleList, value, (e: Error | undefined) => {
             resultList.push(rule)
             if (isError(e)) {
               reject(e.message || rule.message)
@@ -320,17 +349,20 @@ export class ItemConfig {
     this.i.loading = v
     // this.updateVersion()
   }
+  @computed get allowCreate(): boolean | ((data: any, form?: any) => Option) {
+    return this.getComputedValue('allowCreate') || false
+  }
   /**
    * @type { Array } 配置项Array
    */
   @computed get options(): Option[] {
     // trace()
-    // this.label==='伤者类型' && console.log('伤者类型 get options', Utils.isArrayFilter(this.$version, this.getComputedValue('options'), []))
+    this.label === '归属车辆' && console.log('伤者类型 get options', Utils.isArrayFilter(this.$version, this.getComputedValue('options'), []))
     return Utils.isArrayFilter(this.$version, this.i.options, this.getComputedValue('options')) || []
   }
   @action.bound setOptions(v: any) {
     if (!Utils.likeArray(this.i.options, v)) {
-      // console.log('设置Option', this.i.label, v)
+      this.label === '归属车辆' && console.log('设置Option', this.i.label, v)
       this.i.options = v
       this.updateVersion()
       // console.log('setOptions', v)
@@ -379,14 +411,14 @@ export class ItemConfig {
       return {
         required: true,
         validator: this.shadowRuleRegister(
-          Utils.isFunctionFilter(this.required, 
+          Utils.isFunctionFilter(this.required,
             (rule: any, value: any, callback: any) => {
-          // value = Utils.isNotEmptyValueFilter(value, this.form[this.code])
-          if (Utils.isEmptyData(trim(value)) || (this.type === 'number' && value == 0)) {
-            return callback(new Error(this.requiredMessage || `[${this.label}]不能为${this.type === 'number' ? '0' : '空'}！`))
-          }
-          return callback();
-        })),
+              // value = Utils.isNotEmptyValueFilter(value, this.form[this.code])
+              if (Utils.isEmptyData(trim(value)) || (this.type === 'number' && value == 0)) {
+                return callback(new Error(this.requiredMessage || `[${this.label}]不能为${this.type === 'number' ? '0' : '空'}！`))
+              }
+              return callback();
+            })),
         trigger: this.i.type === 'check' ? 'none' : (this.i.type == 'select' ? 'change' : 'blur') //i.type == 'select' ? 'blur' : 'change'
       }
     }
@@ -410,7 +442,7 @@ export class ItemConfig {
     }
   }
 
-  @autobind getRuleList(i: IKeyValueMap<any>, componentProps: IKeyValueMap<any>): any[] | undefined {
+  @autobind getRuleList(i: IKeyValueMap<any>, componentProps: IKeyValueMap<any>): RuleConfigList | undefined {
     const iRules = []
     // if (this.required) {
     if (Utils.isNumber(this.$version) && this.requiredRule) {
@@ -467,10 +499,13 @@ export class ItemConfig {
     //       })
     //     }
     // })
-    if (['select', 'search'].includes(this.i.type)) {
+    if (this.i.type=='select' || this.i.type==='search') {
       iRules.push({
         validator: this.optionsMatcher,
-        trigger: 'change'
+        trigger: 'change',
+        get strict(): boolean {
+          return true;
+        }
       })
     }
     // i.code === 'planDischargeDate' && console.log('get rule', this, $version, iRules)
@@ -479,11 +514,13 @@ export class ItemConfig {
 
   @Utils.timebuffer(0)
   @autobind async optionsMatcher(r: any, values: any, callback: any) {
-    const options = await this.getOptionsSafe()
-    for (const value of Utils.isStringFilter(values, '').split(',')) {
-      if (Utils.isNotEmptyValue(value) && (Utils.isArrayFilter(Utils.getOptionsByValue(options, value)) || []).length === 0) {
-        // console.error(this.label, '选择项匹配失败，请重新选择！', options, this.form, values, this)
-        return callback(new Error(`[${this.label}]数据异常，请重新输入选择！`))
+    if (!this.allowCreate) {
+      const options = await this.getOptionsSafe()
+      for (const value of Utils.isStringFilter(values, '').split(',')) {
+        if (Utils.isNotEmptyValue(value) && (Utils.isArrayFilter(Utils.getOptionsByValue(options, value)) || []).length === 0) {
+          console.error(this.label, '选择项匹配失败，请重新选择！', options, this.form, values, this)
+          return callback(new Error(`[${this.label}]数据异常，请重新输入选择！`))
+        }
       }
     }
     // console.log(this.label, '选择项匹配成功！', options, this.form, values, this)
@@ -508,9 +545,9 @@ export class ItemConfig {
   @computed get defaultRule() {
     return this.$version > -1 && Object.assign(ItemConfig.getDefaultRules(this, this.componentProps.$store.state.taskDispatcher), getDefaultRules(this))
   }
-  static getDefaultRules(itemConfig: ItemConfig, configStore: any) {
+  static getDefaultRules(itemConfig: ItemConfig, configStore: any): RuleConfigMap {
     return {
-      phone: [{
+      phone: {
         validator: (rule: any, value: any, callback: any) => {
           // value = Utils.isNotEmptyValueFilter(value, this.form[this.code])
           // console.log('check', value)
@@ -528,7 +565,7 @@ export class ItemConfig {
         // pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
         trigger: 'blur',
         message: '请录入正确的手机号！'
-      }],
+      },
       'chejiahao': [{
         validator: (rule: any, value: any, callback: any) => {
           if (Utils.isEmptyValue(value)) {

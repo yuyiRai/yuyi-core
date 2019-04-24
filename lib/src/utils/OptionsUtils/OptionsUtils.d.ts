@@ -1,3 +1,5 @@
+import { ArrayIterator } from 'lodash';
+import { IKeyValueMap } from 'mobx';
 export declare type SearchKey<T = any> = keyMatcher | RegExp | T[] | T;
 export declare type keyMatcher = (key?: string, arg1?: any, arg2?: any) => boolean;
 export declare type Option = {
@@ -63,8 +65,8 @@ export declare function isOptionsItemSelected<T, K>(option: T[], searchName: Sea
  * @param searchName
  */
 export declare function optionsSelectedMatch<T, K>(option: T[], searchName: SearchKey<K>): keyMatcher;
-export declare type RemoteSearcher = (key: string, isSearch?: boolean) => Promise<Option[]>;
-export declare type OptionSearcher = (key?: string) => Promise<Option>;
+export declare type RemoteSearcher = (key: string, isOnlySearch?: boolean) => Promise<Option[]>;
+export declare type OptionSearcher = (key?: string, isOnlySearch?: boolean) => Promise<Option[]>;
 /**
  *
  * @param optionList
@@ -81,13 +83,8 @@ export declare function valuesToLabels(options: Option[], value: SearchKey<strin
 export declare function valuesToLabels(options: Option[], value: SearchKey<string>, joinKey: string): string[];
 export declare function labelsToValues(options: Option[], label: SearchKey<string>): string[];
 export declare function labelsToValues(options: Option[], label: SearchKey<string>, joinKey: string): string;
-/**
- *
- * @param codeType
- * @param valueLabel
- * @param valueKey
- */
-export declare function getCodeListByKey(codeType: Option[] | OptionSearcher, valueLabel?: boolean, valueKey?: boolean): RemoteSearcher;
+export declare function getCodeListByKey(codeType: Option[]): RemoteSearcher;
+export declare function getCodeListByKey(codeType: OptionSearcher, optionFactory?: ArrayIterator<IKeyValueMap, Option>): RemoteSearcher;
 declare const _default: {
     getCodeListByKey: typeof getCodeListByKey;
     getOptionsByLabel: typeof getOptionsByLabel;

@@ -1,7 +1,8 @@
 /* eslint-disable */
-import { castArray, filter, find, isArray, isEqual, isFunction, isNil, isRegExp, join, map, some } from 'lodash';
+import { castArray, filter, find, isArray, isEqual, isFunction, isNil, isRegExp, join, map, some, ArrayIterator } from 'lodash';
 import { isNotEmptyArray, isNotEmptyArrayStrict, isNotEmptyValue, typeFilterUtils } from '../TypeLib';
 import { Utils } from '../Utils';
+import { IKeyValueMap } from 'mobx';
 
 export type SearchKey<T = any> = keyMatcher | RegExp | T[] | T
 export type keyMatcher = (key?: string, arg1?: any, arg2?: any) => boolean;
@@ -171,8 +172,8 @@ export function optionsSelectedMatch<T, K>(option: T[], searchName: SearchKey<K>
 }
 
 
-export type RemoteSearcher = (key: string, isSearch?: boolean) => Promise<Option[]>
-export type OptionSearcher = (key?: string) => Promise<Option>
+export type RemoteSearcher = (key: string, isOnlySearch?: boolean) => Promise<Option[]>
+export type OptionSearcher = (key?: string, isOnlySearch?: boolean) => Promise<Option[]>
 
 
 /**
@@ -232,28 +233,29 @@ export function labelsToValues(options: Option[], label: SearchKey<string>, join
   return !isNil(joinKey) ? join(result, joinKey) : result
 }
 
+
+
+export function getCodeListByKey(codeType: Option[]): RemoteSearcher
+export function getCodeListByKey(codeType: OptionSearcher, optionFactory?: ArrayIterator<IKeyValueMap, Option>): RemoteSearcher
 /**
  * 
  * @param codeType 
  * @param valueLabel 
  * @param valueKey 
  */
-export function getCodeListByKey(codeType: Option[] | OptionSearcher, valueLabel = false, valueKey = false): RemoteSearcher {
-  const { isStringFilter: isStrF, isArrayFilter } = typeFilterUtils
+export function getCodeListByKey(codeType: Option[] | OptionSearcher, optionFactory?: ArrayIterator<IKeyValueMap, Option>): RemoteSearcher {
+  const { isArrayFilter } = typeFilterUtils
   if (isArray(codeType)) {
-    return async function (keyWord: string, isOnlySearch?: boolean) {
+    return async function (keyWord: string, isOnlySearch?: boolean): Promise<Option[]> {
       if (isOnlySearch && !Utils.isNotEmptyString(keyWord)) {
         return codeType
       }
       return castArray(getOptionsByKey(codeType, new RegExp(keyWord)))
     }
   } else if (isFunction(codeType)) {
-    return async function (keyWord: string, isOnlySearch?: boolean) {
-      const res = await codeType(keyWord);
-      return map(isArrayFilter(res, []) || [],
-        ({ codeCode: value, codeName: label, label: nativeLabel }, index) =>
-          ({ label: isStrF(label, nativeLabel), value: valueLabel ? label : value, key: valueKey ? value : index })
-      );
+    return async function (keyWord: string, isOnlySearch?: boolean): Promise<Option[]> {
+      const res = isArrayFilter(await codeType(keyWord, isOnlySearch)) || [];
+      return optionFactory ? map(res, optionFactory): res
     }
   }
   return async function () { return [] }

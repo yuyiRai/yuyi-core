@@ -43,7 +43,7 @@ export class EventStore extends EventEmitter<any> implements IEventStore {
    * @param {string[]} args 参数
    */
   @autobind $emit(eventName: string, ...args: any[]) {
-    console.log('log $emit', this.eventNames.includes(eventName), eventName, ...args)
+    // console.log('log $emit', this.eventNames.includes(eventName), eventName, ...args)
     if(this.eventNames.includes(eventName)) {
       this.emit({
         type: eventName, 
@@ -115,12 +115,12 @@ export function EventStoreInject<V = any>(eventNames: string[], extendTarget?: a
                   configurable: true,
                   writable: false
                 })
-                console.log(validEventNames, allowExtendKey)
+                // console.log(validEventNames, allowExtendKey)
                 forEach(allowExtendKey, (value, key) => {
                   if(this[key] && this[key].$on) {
                     forEach(value, name => {
                       this[key].$on(name, (...args: any) => {
-                        console.log('on register', name, args)
+                        // console.log('on register', name, args)
                         this.$emit(name, ...args)
                       })
                       // console.log(`this.${key}.$on('${name}', this.$emit.bind(this, '${name}'))`)

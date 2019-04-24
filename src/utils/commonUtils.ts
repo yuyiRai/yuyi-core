@@ -24,7 +24,7 @@ if (!Object.values) {
 }
 
 export function jsxIf(bool: any, when: any, elseValue?: any) {
-  if ((Utils.isFunctionFilter(bool) || Utils.stubFunction)()) {
+  if ( ( Utils.isFunctionFilter(bool) || (()=>bool) )()) {
     return when;
   } else {
     return elseValue
