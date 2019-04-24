@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/yuyiRai/yuyi-core#readme",
   "dependencies": {
+    "antd": "^3.16.5",
     "async-validator": "^1.11.2",
     "core-decorators": "^0.20.0",
     "element-react": "^1.4.33",

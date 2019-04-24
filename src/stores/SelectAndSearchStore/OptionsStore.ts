@@ -16,7 +16,7 @@ export class OptionsStore {
   constructor(itemConfig: ItemConfig) {
     this.itemConfig = itemConfig;
     if (this.itemConfig.allowInput) {
-      console.log(this);
+      // console.log(this);
       this.$on('options-change', (options: Option[]) => {
         console.log(options, this.lastOptions, this.shadowOption)
         this.lastOptions = cloneDeep(options)

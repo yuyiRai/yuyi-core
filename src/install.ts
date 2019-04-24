@@ -11,8 +11,8 @@ export default function install(Vue: VueConstructor) {
   // locale.i18n(opts.i18n);
 
   forEach(components, (component, key) => {
-    Vue.component(component.name || key, component);
-  });
+    Vue.component(component.name || key, component)
+  })
 
   // Vue.use(Loading.directive);
 
@@ -39,7 +39,7 @@ export default function install(Vue: VueConstructor) {
   // Vue.prototype.$alert = MessageBox.alert;
   // Vue.prototype.$confirm = MessageBox.confirm;
   // Vue.prototype.$prompt = MessageBox.prompt;
-  Vue.prototype.$notify = Notification;
+  // Vue.prototype.$notify = Notification;
   Vue.prototype.$message = Message;
 
 };
