@@ -1,6 +1,5 @@
 import * as components from './components'
 import Utils from './utils'
-import { Notification } from 'element-react'
 import { Message } from 'element-react'
 import { forEach } from 'lodash'
 import { VueConstructor } from 'vue';
@@ -11,7 +10,7 @@ export default function install(Vue: VueConstructor) {
   // locale.i18n(opts.i18n);
 
   forEach(components, (component, key) => {
-    Vue.component(component.name || key, component)
+    Vue.component(key, component)
   })
 
   // Vue.use(Loading.directive);

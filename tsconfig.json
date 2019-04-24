@@ -32,7 +32,8 @@
   "files": [
     "src/global/index.ts",
     "src/index.ts",
-    "./src/stores/SelectAndSearchStore/OptionsStore.ts"
+    "./src/stores/SelectAndSearchStore/OptionsStore.ts",
+    "./src/utils/MessageUtils/NotificationStore.tsx"
   ],
   "exclude": [
     "node_modules",
@@ -46,6 +47,7 @@
   ],
   "include": [
     "src/**/*.ts",
+    "src/**/*.css",
     "src/**/*.d.ts",
     "src/**/*.tsx"
   ]
