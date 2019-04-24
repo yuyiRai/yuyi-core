@@ -1,7 +1,7 @@
 import * as components from './components'
 import Utils from './utils'
-import Notification from 'element-react'
-import Message from 'element-react'
+import { Notification } from 'element-react'
+import { Message } from 'element-react'
 import { forEach } from 'lodash'
 import { VueConstructor } from 'vue';
 // export * from './TablePage'
