@@ -4,6 +4,7 @@ import { ItemConfig } from '../ItemConfig';
 import { autobind, } from 'core-decorators';
 import { OptionsStore } from './OptionsStore';
 import Utils, { Option } from '../../utils';
+import { Debounce } from 'lodash-decorators';
 
 import { last, toString, pullAllBy, some, pullAll, map, filter, concat, get } from 'lodash'
 const _ = {
@@ -177,7 +178,8 @@ export class SelectAndSearchStore {
   defaultCreater(value: string) {
     return ({ label: value, value })
   }
-  
+
+  @Debounce(10)
   @action.bound onChange(value: string | string[], source?: 'options patch' | 'options delete' | 'options' | 'blur' | 'select') {
     if (!Utils.isEqual(value, this.value)) {
       const { options, label, nameCode, allowCreate } = this.itemConfig;

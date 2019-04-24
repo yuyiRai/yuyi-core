@@ -23,6 +23,7 @@
     "async-validator": "^1.11.2",
     "core-decorators": "^0.20.0",
     "lodash": "^4.17.11",
+    "lodash-decorators": "^6.0.1",
     "mobx": "^4.9.4",
     "mobx-vue": "^2.0.8",
     "react": "^16.8.6",
