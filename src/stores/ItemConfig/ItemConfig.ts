@@ -539,13 +539,14 @@ export class ItemConfig implements IItemConfig {
   @autobind async getOptionsSafe(): Promise<Option[]> {
     if (this.type === 'search' && (this.options.length === 0 || !this.optionsInited)) {
       if (!Utils.isArrayFilter(this.remoteOptions)) {
-        console.log('safe start', this.label, this.remoteOptions, this.options)
+        console.log('safe start', this.label, this.searchName, this.remoteOptions, this.options)
         const b = reaction(() => this.remoteOptions, options => {
-          console.log('safe end', this.label, options)
+          console.log('safe end', this.label, this.searchName, options)
           b()
           return options
         })
       }
+      console.log('get remote', this.label, this.searchName, this.remoteOptions)
       return this.remoteOptions;
     }
     return this.options;

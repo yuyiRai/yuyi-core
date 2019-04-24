@@ -10,7 +10,7 @@ export declare class AsyncLoadProperty<V = any> {
     emitter: any;
     constructor(type: any, getter: any, defaultValue?: V, timeBuffer?: number);
     getValue: (param: any) => V;
-    reset(nextDefaultValue: V, force: boolean): this;
+    reset(nextDefaultValue: V, force?: boolean): this;
     updateValue(nextValue: V): Promise<void>;
     registerGetter(getter: any): void;
     readonly valueGetter: ((param: {}) => void) & import("mobx").IAction;
@@ -18,6 +18,12 @@ export declare class AsyncLoadProperty<V = any> {
     loadingEnd(): void;
     isTypedValue(value: any): any;
 }
+declare const asyncPropertyNameKey = "__$$$AsyncPropertyName";
+declare const asyncPropertyName = "__$$$AsyncProperty";
+export declare type AsyncProperty<V> = V & {
+    [asyncPropertyNameKey]: string;
+    [asyncPropertyName]: AsyncLoadProperty<V>;
+};
 export declare type AsyncComputedConfig<V> = {
     type: any;
     defaultValue: V;
@@ -28,3 +34,10 @@ export declare type AsyncComputedConfig<V> = {
  * @return { PropertyDecorator }
  */
 export declare function asyncComputed<V = any>({ type, defaultValue, watcher, time }: AsyncComputedConfig<V>): PropertyDecorator;
+export declare class AsyncPropertyGetter {
+    name: string;
+    t: any;
+    readonly tt: any;
+    get(t: any, key: string): string;
+}
+export {};

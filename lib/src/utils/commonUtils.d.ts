@@ -23,7 +23,7 @@ declare const _default: {
     castString(value: any): string;
     argShifter(todoFunc: any, startIndex?: number): (...args: any[]) => any;
     modelValidator<T>(fieldName: any, validator: any): (model: T) => any;
-    getTestArray(length: number): any[];
+    getTestArray(length: number): number[];
     arrayMap(array: any[], iteratee: any): any[];
     arrayMap2(array: any[], iteratee: any): any[];
     arrayMap3(array: any[], iteratee: any): any[];

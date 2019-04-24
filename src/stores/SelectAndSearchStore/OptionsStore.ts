@@ -17,13 +17,13 @@ export class OptionsStore {
     this.itemConfig = itemConfig;
     if (this.itemConfig.allowInput) {
       // console.log(this);
-      this.$on('options-change', (options: Option[]) => {
-        console.log(options, this.lastOptions, this.shadowOption)
-        this.lastOptions = cloneDeep(options)
-        // if(this.itemConfig.label==='归属车辆')
-        //   debugger
-        this.setShadowOption(this.shadowOption.label, 'options-update');
-      });
+      // this.$on('options-change', (options: Option[]) => {
+      //   console.log(options, this.lastOptions, this.shadowOption)
+      //   this.lastOptions = cloneDeep(options)
+      //   // if(this.itemConfig.label==='归属车辆')
+      //   //   debugger
+      //   this.setShadowOption(this.shadowOption.label, 'options-update');
+      // });
       // reaction(() => this.itemConfig.options, options => {
       //   // console.log(options, this.shadowOption.value)
       //   // if(this.itemConfig.label==='归属车辆')
@@ -90,7 +90,7 @@ export class OptionsStore {
       }
     }
   }
-  @Utils.timebuffer(10) @action.bound updateShadowOption(value: any, label: any = undefined) {
+  @action.bound updateShadowOption(value: any, label: any = undefined) {
     if (Utils.isString(this.shadowOption.errorMsg)) {
       this.shadowOption.errorMsg = null;
     }

@@ -11,7 +11,7 @@ export declare const CustomUtils: {
     downloadFile(fileId: string, fileName: string): void;
     likeArray(arr: any[], array: any[]): boolean;
     getDtoOrFormValue(key: string, formOrDto: any): any;
-    jsGetAge(strBirthday: string): any;
+    jsGetAge(strBirthday: string): number;
     connectTo(target: any, source: any, ...keyNames: any[]): boolean;
     getListDifferent(listA: any[], listB: any[], deep?: boolean): {
         push: any[];

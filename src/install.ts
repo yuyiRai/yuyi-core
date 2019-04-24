@@ -1,6 +1,6 @@
 import * as components from './components'
 import Utils from './utils'
-import { Message } from 'element-react'
+// import { Message } from 'element-react'
 import { forEach } from 'lodash'
 import { VueConstructor } from 'vue';
 // export * from './TablePage'
@@ -39,6 +39,6 @@ export default function install(Vue: VueConstructor) {
   // Vue.prototype.$confirm = MessageBox.confirm;
   // Vue.prototype.$prompt = MessageBox.prompt;
   // Vue.prototype.$notify = Notification;
-  Vue.prototype.$message = Message;
+  // Vue.prototype.$message = Message;
 
 };
