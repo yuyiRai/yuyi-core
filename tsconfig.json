@@ -9,7 +9,7 @@
     "sourceMap": true,
     "allowJs": true,
     "downlevelIteration": true,
-    "jsx": "preserve",
+    "jsx": "react",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "rootDir": "",
