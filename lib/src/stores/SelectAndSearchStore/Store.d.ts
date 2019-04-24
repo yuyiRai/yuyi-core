@@ -56,10 +56,10 @@ export declare class SelectAndSearchStore {
         label: string;
         value: string;
     };
-    onChange(value: string | string[]): any;
+    onChange(value: string | string[], source?: 'options patch' | 'options delete' | 'options' | 'blur' | 'select'): any;
     patchSelectedOption(pushOptionsList: Option[]): void;
-    readonly selectedLables: any;
-    readonly selectedLablesStr: any;
+    readonly selectedLables: any[];
+    readonly selectedLablesStr: string;
     readonly selectedLablesConfig: {
         label: any;
         remove: () => void;

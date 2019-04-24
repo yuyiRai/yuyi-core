@@ -1,7 +1,7 @@
 import { observable, computed, action, runInAction } from 'mobx';
 import { EventStoreInject } from '../../utils/EventStore';
 import { ItemConfig } from '../ItemConfig';
-import { autobind } from 'core-decorators';
+import { autobind, } from 'core-decorators';
 import { OptionsStore } from './OptionsStore';
 import Utils, { Option } from '../../utils';
 
@@ -157,8 +157,8 @@ export class SelectAndSearchStore {
             ? Utils.zipEmptyData(_.concat(lastValue, _.map(selectedOptions, 'value')), true)
             : _.get(selectedOptions, '[0].value')
           console.log('搜索完毕', label, selectedOptions, selectValue, this.value)
-          if (!Utils.likeArray(selectValue, this.value))
-            this.onChange(selectValue)
+          if (!Utils.likeArray(selectValue, Utils.castArray(this.value)))
+            this.onChange(selectValue, 'options patch')
           // this.itemConfig.label=="手术名称" && console.log('搜索完毕', label, keyWordArr, itemConfig, nextOptions, this.selectedOptions, this.itemConfig.loading)
         }
       }
@@ -167,18 +167,18 @@ export class SelectAndSearchStore {
 
   @action.bound onChangeWithLabel(label: string) {
     const value = this.optionsStore.labelToValue(label);
-    console.log('onBlur', label, value, this.value)
+    // console.log('onBlur', label, value, this.value)
     // if(Utils.isEqual(value, this.value)) {
     //   return
     // }
-    return this.onChange(value)
+    return this.onChange(value, 'blur')
   }
 
   defaultCreater(value: string) {
     return ({ label: value, value })
   }
   
-  @action.bound onChange(value: string | string[]) {
+  @action.bound onChange(value: string | string[], source?: 'options patch' | 'options delete' | 'options' | 'blur' | 'select') {
     if (!Utils.isEqual(value, this.value)) {
       const { options, label, nameCode, allowCreate } = this.itemConfig;
       // 原始选项中是否选中
@@ -189,7 +189,7 @@ export class SelectAndSearchStore {
       const isSelected = selectedObj.length > 0
       const isAllowCreateOption = allowCreate && !isSelected && Utils.isNotEmptyValue(value) && this.optionsStore.isValidShadowOption
 
-      console.log('onChange', label, value, this.value, 'allow-create:',isAllowCreateOption)
+      console.log(`onChange by ${source} label: "${label}" value: "${value}" last-value: "${this.value}" allow-create:${isAllowCreateOption}`)
       if (isAllowCreateOption) {
         const additionOption = Utils.isFunctionFilter(allowCreate, this.defaultCreater)(value)
         if (Utils.getOptionsByValue(options, additionOption.value || additionOption).length == 0) {
@@ -228,13 +228,12 @@ export class SelectAndSearchStore {
     return this.selectedLables.join(',')
   }
   @computed get selectedLablesConfig() {
-    console.log(this.selectedLables)
     return _.map(this.selectedLables, (label) => {
       return {
         label,
         remove: () => {
           console.log('close', this.value, this.labelsToValues(label))
-          this.onChange(_.pullAll([...Utils.castArray(this.value)], this.labelsToValues(label)))
+          this.onChange(_.pullAll([...Utils.castArray(this.value)], this.labelsToValues(label)), 'options delete')
         }
       }
     })

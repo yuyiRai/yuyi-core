@@ -15,7 +15,11 @@ export declare type RuleConfigGetter<T = any> = (...args: any[]) => RuleConfig<T
 export declare type RuleConfigMap<T = any> = {
     [k: string]: RuleConfig<T> | RuleConfigList<T> | RuleConfigGetter<T>;
 };
-export declare class ItemConfig {
+export interface IItemConfig {
+    multiple?: boolean;
+    [key: string]: any;
+}
+export declare class ItemConfig implements IItemConfig {
     [key: string]: any;
     destorySet: Set<IReactionDisposer | Lambda>;
     i: IKeyValueMap;
@@ -66,6 +70,7 @@ export declare class ItemConfig {
     readonly loading: any;
     setLoading(v: boolean): void;
     readonly allowCreate: boolean | ((data: any, form?: any) => Option);
+    readonly allowInput: boolean;
     /**
      * @type { Array } 配置项Array
      */
@@ -90,7 +95,7 @@ export declare class ItemConfig {
     }) => any;
     getRuleList(i: IKeyValueMap<any>, componentProps: IKeyValueMap<any>): RuleConfigList | undefined;
     optionsMatcher(r: any, values: any, callback: any): Promise<any>;
-    getOptionsSafe(): any[] | Promise<any[]>;
+    getOptionsSafe(): Promise<Option[]>;
     readonly defaultRule: RuleConfigMap<any> & {
         dateToDate30: {
             validator: (rule: any, value: any, callback: any) => any;

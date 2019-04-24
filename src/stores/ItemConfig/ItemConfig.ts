@@ -22,8 +22,13 @@ export type RuleConfigList<T = any> = Array<RuleConfig<T>>
 export type RuleConfigGetter<T = any> = (...args: any[]) => RuleConfig<T> | RuleConfigList<T>
 export type RuleConfigMap<T = any> = { [k: string]: RuleConfig<T> | RuleConfigList<T> | RuleConfigGetter<T> }
 
+export interface IItemConfig {
+  multiple?: boolean;
+  [key: string]: any;
+}
+
 @EventStoreInject(['options-change'])
-export class ItemConfig {
+export class ItemConfig implements IItemConfig {
   [key: string]: any;
   destorySet: Set<IReactionDisposer | Lambda> = new Set<IReactionDisposer | Lambda>()
   @observable.ref i: IKeyValueMap = {};
@@ -70,8 +75,13 @@ export class ItemConfig {
       this.observe(i, (e: any) => {
         this.$version++
         // console.log(e)
-        if (e.name === '$$core_options') {
-          this.label ==='诊断名称' && console.log(`${e.name}: ${e.oldValue} => ${e.newValue}`, { config: i, event: e })
+        const { oldValue, newValue, name } = e;
+        if (name === '$$core_options' && !Utils.isEqual(oldValue, newValue)) {
+          this.label ==='诊断名称' && console.log(
+            `${name}: options[${(oldValue||[]).length}] => options[${(newValue||[]).length}]`, { config: i, event: e })
+          if(newValue) {
+            this.optionsInited = Utils.isNotEmptyArray(newValue)
+          }
           this.$emit('options-change', e.newValue)
         }
         // console.log(`${e.name}: ${e.oldValue} => ${e.newValue}`, {config: i, event: e})
@@ -282,17 +292,14 @@ export class ItemConfig {
             throw e;
           }
           // console.log('resList', keyWordArr, this.i.label, resList)
-          this.optionsInited = Utils.isNotEmptyArray(nextOptions)
         }
       } else {
         nextOptions = await remoteMethod(toString(keyWord))
         // console.log(this.i.label, 'start search', keyWord, nextOptions)
-        this.optionsInited = Utils.isNotEmptyArray(nextOptions)
         // console.log('resList', keyWord, this.i.label, r)
       }
       this.setLoading(false)
     }
-    this.optionsInited = true
     return nextOptions;
   }
   // searchMethods = (key) => {
@@ -352,6 +359,9 @@ export class ItemConfig {
   @computed get allowCreate(): boolean | ((data: any, form?: any) => Option) {
     return this.getComputedValue('allowCreate') || false
   }
+  @computed get allowInput(): boolean {
+    return this.getComputedValue('allowInput') || (this.type=='search' && !this.multiple)
+  }
   /**
    * @type { Array } 配置项Array
    */
@@ -361,12 +371,12 @@ export class ItemConfig {
     return Utils.isArrayFilter(this.$version, this.i.options, this.getComputedValue('options')) || []
   }
   @action.bound setOptions(v: any) {
-    if (!Utils.likeArray(this.i.options, v)) {
-      this.label === '归属车辆' && console.log('设置Option', this.i.label, v)
+    if (!Utils.likeArray(this.options, v)) {
+      this.label === '诊断名称' && console.log('设置Option', this.i.label, this.options, v)
       this.i.options = v
       this.updateVersion()
       // console.log('setOptions', v)
-      this.$emit('options-change', this.i.options)
+      this.$emit('options-change', v)
     }
   }
   @action updateVersion() {
@@ -512,10 +522,9 @@ export class ItemConfig {
     return Utils.isNotEmptyArrayFilter(iRules, undefined)
   }
 
-  @Utils.timebuffer(0)
   @autobind async optionsMatcher(r: any, values: any, callback: any) {
     if (!this.allowCreate) {
-      const options = await this.getOptionsSafe()
+      const options = await Reflect.apply(this.getOptionsSafe, this, [])
       for (const value of Utils.isStringFilter(values, '').split(',')) {
         if (Utils.isNotEmptyValue(value) && (Utils.isArrayFilter(Utils.getOptionsByValue(options, value)) || []).length === 0) {
           console.error(this.label, '选择项匹配失败，请重新选择！', options, this.form, values, this)
@@ -527,17 +536,17 @@ export class ItemConfig {
     return callback()
   }
 
-  @autobind getOptionsSafe() {
+  @autobind async getOptionsSafe(): Promise<Option[]> {
     if (this.type === 'search' && (this.options.length === 0 || !this.optionsInited)) {
-      return this.remoteOptions || new Promise(r => {
+      if (!Utils.isArrayFilter(this.remoteOptions)) {
         console.log('safe start', this.label, this.remoteOptions, this.options)
         const b = reaction(() => this.remoteOptions, options => {
-          r(options)
           console.log('safe end', this.label, options)
-          // this.setOptions(options)
           b()
+          return options
         })
-      });
+      }
+      return this.remoteOptions;
     }
     return this.options;
   }

@@ -1,7 +1,17 @@
 /* eslint-disable */
-import { assign, concat, differenceWith, filter, isArray, isEqual, join, keys, reduce, values } from 'lodash';
+import { assign, concat, differenceWith, find, filter, isArray, isEqual, join, keys, reduce, values } from 'lodash';
 import Utils from './';
 import CommonDto from "./CommonDto";
+import { IKeyValueMap } from 'mobx';
+
+export function zipEmptyData<T = any>(object: (T | undefined | null)[], isRemoveRepeat?: boolean): T[];
+export function zipEmptyData<T = any>(object: IKeyValueMap<T | undefined | null>, isRemoveRepeat?: boolean): IKeyValueMap<T>;
+export function zipEmptyData<T = any>(object: IKeyValueMap<T | undefined | null> | (T | undefined | null)[], isRemoveRepeat = true): IKeyValueMap<T> | T[] {
+  return isArray(object)
+    ? Utils.pipe(filter(object, v => Utils.isNotEmptyValue(v)), (list: any[]) => Utils.jsxIf(isRemoveRepeat, Array.from(new Set(list)), list))
+    : reduce<any, any>(filter(keys(object), (k) => Utils.isNotEmptyValue(object[k])), (o, key) => assign(o, { [key]: object[key] }), {});
+}
+
 export const CustomUtils = {
   uuid() {
     const s: any[] = [];
@@ -20,11 +30,7 @@ export const CustomUtils = {
   pipe(data: any, ...funcArr: any[]) {
     return reduce(funcArr, (value, func) => (Utils.isFunctionFilter(func) || Utils.stubFunction)(value), data);
   },
-  zipEmptyData(object: any, isRemoveRepeat = true) {
-    return isArray(object)
-      ? Utils.pipe(filter(object, v => Utils.isNotEmptyValue(v)), (list: any[]) => Utils.jsxIf(isRemoveRepeat, Array.from(new Set(list)), list))
-      : reduce<any, any>(filter(keys(object), (k) => Utils.isNotEmptyValue(object[k])), (o, key) => assign(o, { [key]: object[key] }), {});
-  },
+  zipEmptyData,
   zipEmptyDataNative(object: any) {
     return isArray(object)
       ? object.filter(v => Utils.isNotEmptyValue(v))
@@ -42,15 +48,15 @@ export const CustomUtils = {
     a.remove();
   },
   // 判断两个数组是否无序相等
-  likeArray(arr: any, array: any) {
+  likeArray(arr: any[], array: any[]) {
     // if the other array is a falsy value, return
     if (!Utils.isArray(array) || !Utils.isArray(arr))
       return false;
     // compare lengths - can save a lot of time 
     if (arr.length != array.length)
       return false;
-    for (var v of arr) {
-      if (!array.includes(v)) {
+    for (const v of arr) {
+      if (Utils.isNil(find(array, (item: any) => Utils.isEqual(item, v)))) {
         return false;
       }
     }

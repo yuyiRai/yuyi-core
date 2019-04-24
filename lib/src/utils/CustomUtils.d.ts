@@ -1,12 +1,15 @@
 import CommonDto from "./CommonDto";
+import { IKeyValueMap } from 'mobx';
+export declare function zipEmptyData<T = any>(object: (T | undefined | null)[], isRemoveRepeat?: boolean): T[];
+export declare function zipEmptyData<T = any>(object: IKeyValueMap<T | undefined | null>, isRemoveRepeat?: boolean): IKeyValueMap<T>;
 export declare const CustomUtils: {
     uuid(): string;
     createObjectKey(obj: any): string;
     pipe(data: any, ...funcArr: any[]): any;
-    zipEmptyData(object: any, isRemoveRepeat?: boolean): any;
+    zipEmptyData: typeof zipEmptyData;
     zipEmptyDataNative(object: any): {};
     downloadFile(fileId: string, fileName: string): void;
-    likeArray(arr: any, array: any): boolean;
+    likeArray(arr: any[], array: any[]): boolean;
     getDtoOrFormValue(key: string, formOrDto: any): any;
     jsGetAge(strBirthday: string): number;
     connectTo(target: any, source: any, ...keyNames: any[]): boolean;
