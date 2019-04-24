@@ -1,17 +1,16 @@
 import Notification, { ArgsProps, IconType, NotificationPlacement } from 'antd/lib/notification';
 import 'antd/lib/notification/style/css';
-import './style/index.css'
+// import './style/index.css'
 import { assign, concat, reduce } from 'lodash';
 import React from 'react';
+import ReactDom from 'react-dom';
 import Utils from "..";
-import { createGlobalStyle } from 'styled-components'
-createGlobalStyle`
-  .ant-notification.ant-notification-bottomLeft {
-    z-index: 2048;
-  }
-  .ant-notification.ant-notification-topLeft {
-    z-index: 2048;
-  }
+import styled from 'styled-components'
+import { autobind } from 'core-decorators';
+
+export const YuyiContainer = styled.div`
+  position: fixed;
+  z-index: 2048;
 `
 
 export interface INotificationStoreConfigBase {
@@ -36,12 +35,11 @@ export interface INotificationStoreConfigGroup<T = any> extends INotificationSto
   msg: T[];
 }
 
-export const Container = () => {
 
-}
+const div = document.createElement('div')
+
 export function $notify<V = any>(config: INotificationStoreConfig<V>, instance: any, time: number = 100): Promise<NotificationStore> {
   return Utils.simpleTimeBufferInput(instance, config, function (configList: INotificationStoreConfig<V>[]): NotificationStore {
-
     const { msg, ...config }: INotificationStoreConfigGroup = reduce<any, any>(
       configList,
       ({ msg, ...other }, { msg: iMsg, ...iOther }) => {
@@ -56,47 +54,60 @@ export function $notify<V = any>(config: INotificationStoreConfig<V>, instance: 
     const message = reduce(
       Array.from(new Set(msg)),
       (c, domGetter, index, list) =>
-        [...c, c.length > 0 && <br key={index + list.length + 1} />, Utils.isFunction(domGetter) ? domGetter(index, list) : domGetter],
+      concat(c, [c.length > 0 && <br key={index + list.length + 1} />, Utils.isFunction(domGetter) ? domGetter(index, list) : domGetter]),
       []
     );
-
-    Notification.config({
-      getContainer() {
-        const div = document.createElement('div')
-        div.style.zIndex = '2048'
-        div.setAttribute('id', 'yuyi-container')
-        document.body.append(div)
-        console.log('getContainer', div)
-        return div;
-      }
-    })
+    
+  
     const instance = new NotificationStore({
       key: Utils.uuid(),
       ...config,
       ...(config.title ? { message: config.title, description: <span>{message}</span> } : { message: <span>{message}</span> })
     });
-    console.error(message, instance);
+    // console.error(message, instance);
     return instance;
   }, time || 100);
 }
 
 
 export class NotificationStore {
+  static container: HTMLDivElement;
   key: string;
-  // static container: HTMLDivElement
+  static inited: boolean = false;
   constructor(props: ArgsProps) {
     this.key = props.key;
-    Notification.open(props);
-    // if(!NotificationStore.container){
-    // }
-    // setTimeout(() => {
-    //   (document.querySelector('.ant-notification.ant-notification-bottomLeft') as any).style.zIndex = 2048
-    // }, 10);
+    this.prepare()
+    this.open(props);
   }
-  close() {
+
+  open = Notification.open;
+
+  @autobind close() {
     Notification.close(this.key);
   }
-  destroy() {
+
+  @autobind destroy() {
     Notification.destroy()
+  }
+
+  @autobind prepare() {
+    document.body.append(div)
+    if(!NotificationStore.inited)
+      ReactDom.render(<YuyiContainer ref={NotificationStore.init}></YuyiContainer>, div)
+  }
+
+  static init(container: HTMLDivElement) {
+    if(container) {
+      NotificationStore.container = container;
+      Notification.config({
+        getContainer() {
+          // div.style.zIndex = '2048'
+          // div.style.position = 'fixed'
+          // div.setAttribute('id', 'yuyi-container')
+          return NotificationStore.container;
+        }
+      })
+      NotificationStore.inited = true
+    }
   }
 }

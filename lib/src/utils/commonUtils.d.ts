@@ -1,6 +1,7 @@
 import { values } from 'lodash';
 import { EventEmitter } from './EventEmitter';
 import { HttpBox } from './HttpBox';
+import { IKeyValueMap } from 'mobx';
 declare global {
     interface Object {
         values: typeof values;
@@ -36,7 +37,7 @@ declare const _default: {
     validateModelField(model: any, fieldName: any, validator: any): any;
     castArray(value: any, allowEmpty?: boolean): any[];
     castObjectArray(objOrArr: any[], allowEmpty?: boolean): any[];
-    createGroupWith(list: any[], keyOrWith: any): {};
+    createGroupWith<T = any>(list: T[], keyOrWith: string | ((item: T) => string)): IKeyValueMap<T[]>;
     getEventEmitter(): EventEmitter<{}>;
     waitingPromise(time: number, emitValue: any, isError?: boolean): Promise<{}>;
     /**
@@ -75,5 +76,6 @@ declare const _default: {
         <T extends object>(collection: T, iteratee?: import("lodash").ObjectIterator<T, any>): T;
     };
     concat: <T>(array: import("lodash").Many<T>, ...values: import("lodash").Many<T>[]) => T[];
+    escapeRegExp: (string?: string) => string;
 };
 export default _default;

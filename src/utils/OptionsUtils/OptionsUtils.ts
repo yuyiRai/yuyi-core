@@ -250,7 +250,7 @@ export function getCodeListByKey(codeType: Option[] | OptionSearcher, optionFact
       if (isOnlySearch && !Utils.isNotEmptyString(keyWord)) {
         return codeType
       }
-      return castArray(getOptionsByKey(codeType, new RegExp(keyWord)))
+      return castArray(getOptionsByKey(codeType, new RegExp(Utils.escapeRegExp(keyWord))))
     }
   } else if (isFunction(codeType)) {
     return async function (keyWord: string, isOnlySearch?: boolean): Promise<Option[]> {

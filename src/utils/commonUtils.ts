@@ -1,11 +1,12 @@
 /* eslint-disable */
 import { castArray, cloneDeep, forEach, isEqual, isFunction, 
-  isRegExp, concat, isString, keys, last, property, reduce, 
+  isRegExp, concat, isString, keys, last, property, reduce, escapeRegExp,
   stubArray, takeRight, toArray, toString, values } from 'lodash';
 import { EventEmitter } from './EventEmitter';
 import { HttpBox } from './HttpBox';
 import Utils from '.';
 import { typeFilterUtils } from './TypeLib';
+import { IKeyValueMap } from 'mobx';
 
 // const _ = {
 //   filter,map,forEach
@@ -277,7 +278,7 @@ export default {
         : Utils.isNotEmptyObject(objOrArr) && [objOrArr],
     ) || []
   },
-  createGroupWith(list: any[], keyOrWith: any) {
+  createGroupWith<T = any>(list: T[], keyOrWith: string | ((item: T) => string)): IKeyValueMap<T[]>  {
     return reduce(Utils.isArrayFilter(list, []), function (map, item) {
       const mapKey = isString(keyOrWith) ? item[keyOrWith] : (isFunction(keyOrWith) ? keyOrWith(item) : "default")
       map[mapKey] = typeFilterUtils.isArrayFilter(map[mapKey], [])
@@ -325,5 +326,6 @@ export default {
   isEqual,
   reduce,
   forEach,
-  concat
+  concat,
+  escapeRegExp
 }

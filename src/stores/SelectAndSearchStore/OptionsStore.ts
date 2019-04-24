@@ -64,7 +64,7 @@ export class OptionsStore {
   }
 
   @autobind labelToValue(label: any) {
-    return Utils.isStringFilter(Utils.labelToValue(this.displayOptions, new RegExp(`^(\\\[(.*)\\\]|)${label}(\\\[(.*)\\\]|)$`)), label);
+    return Utils.isStringFilter(Utils.labelToValue(this.displayOptions, new RegExp(`^(\\\[(.*)\\\]|)${Utils.escapeRegExp(label)}(\\\[(.*)\\\]|)$`)), label);
   }
 
   @autobind async shadowUpdateDispatcher(label: any, value: any, source: any) {

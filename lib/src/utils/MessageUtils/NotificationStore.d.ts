@@ -1,7 +1,7 @@
 import { ArgsProps, IconType, NotificationPlacement } from 'antd/lib/notification';
 import 'antd/lib/notification/style/css';
-import './style/index.css';
 import React from 'react';
+export declare const YuyiContainer: import("styled-components").StyledComponent<"div", any, {}, never>;
 export interface INotificationStoreConfigBase {
     title?: React.ReactNode;
     message?: React.ReactNode;
@@ -23,11 +23,15 @@ export interface INotificationStoreConfig<T = any> extends INotificationStoreCon
 export interface INotificationStoreConfigGroup<T = any> extends INotificationStoreConfigBase {
     msg: T[];
 }
-export declare const Container: () => void;
 export declare function $notify<V = any>(config: INotificationStoreConfig<V>, instance: any, time?: number): Promise<NotificationStore>;
 export declare class NotificationStore {
+    static container: HTMLDivElement;
     key: string;
+    static inited: boolean;
     constructor(props: ArgsProps);
+    open: (args: ArgsProps) => void;
     close(): void;
     destroy(): void;
+    prepare(): void;
+    static init(container: HTMLDivElement): void;
 }

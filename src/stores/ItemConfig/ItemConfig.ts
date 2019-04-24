@@ -367,12 +367,12 @@ export class ItemConfig implements IItemConfig {
    */
   @computed get options(): Option[] {
     // trace()
-    this.label === '归属车辆' && console.log('伤者类型 get options', Utils.isArrayFilter(this.$version, this.getComputedValue('options'), []))
+    // this.label === '归属车辆' && console.log('伤者类型 get options', Utils.isArrayFilter(this.$version, this.getComputedValue('options'), []))
     return Utils.isArrayFilter(this.$version, this.i.options, this.getComputedValue('options')) || []
   }
   @action.bound setOptions(v: any) {
     if (!Utils.likeArray(this.options, v)) {
-      this.label === '诊断名称' && console.log('设置Option', this.i.label, this.options, v)
+      // this.label === '诊断名称' && console.log('设置Option', this.i.label, this.options, v)
       this.i.options = v
       this.updateVersion()
       // console.log('setOptions', v)
