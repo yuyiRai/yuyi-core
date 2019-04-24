@@ -1,6 +1,6 @@
 {
   "name": "yuyi-core",
-  "version": "0.6.11",
+  "version": "0.6.12",
   "description": "yuyi",
   "main": "lib/src/index.js",
   "scripts": {
