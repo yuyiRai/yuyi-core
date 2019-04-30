@@ -103,5 +103,5 @@ export declare class ItemConfig implements IItemConfig {
             trigger: string;
         }[];
     };
-    static getDefaultRules(itemConfig: ItemConfig): RuleConfigMap;
+    static getDefaultRules(itemConfig: ItemConfig, configStore: any): RuleConfigMap;
 }
