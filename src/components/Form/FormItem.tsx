@@ -51,7 +51,7 @@ export class FormItemStore {
     this.setAntdForm(storeForm.antdForm)
     
     this.ruleWatcher = reaction(() => this.itemConfig.rule, (rule) => {
-      console.log('ruleWatcher', rule)
+      // console.log('ruleWatcher', rule)
       this.itemConfig.updateVersion()
       storeForm.updateError(code)
       const value = Utils.cloneDeep(this.itemConfig.currentValue)
@@ -146,7 +146,7 @@ export class FormItemStore {
 }
 
 @inject((stores: { storeForm: FormStore }, props: IFormItemProps, context) => {
-  // console.log('fromitem get store', stores, props, context)
+  console.log('fromitem get store', stores, props, context)
   const { storeForm } = stores;
   const store = storeForm.registerItemStore(props.code) 
   store.itemConfig.setForm(storeForm.formSource)

@@ -2,7 +2,9 @@ import * as React from 'react'
 import { IFormItemConfig } from './Interface';
 import { IKeyValueMap } from 'mobx';
 import { FormStore } from './FormStore';
-import { observer, inject, Provider } from 'mobx-react';
+import { observer, inject } from 'mobx-react';
+
+export const NativeStore = React.createContext({storeForm: null});
 
 import LocaleProvider from 'antd/lib/locale-provider';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
@@ -35,7 +37,9 @@ export class CommonForm extends React.Component<ICommonFormProps, ICommonFormSta
     }
   }
   @Utils.observable state: ICommonFormState
-
+  static defaultProps = {
+    model: {}
+  }
   static getDerivedStateFromProps(nextProps: ICommonFormProps, prevState: ICommonFormState) {
     const { formStore: last } = prevState
     if (nextProps.formStore) {
@@ -46,16 +50,18 @@ export class CommonForm extends React.Component<ICommonFormProps, ICommonFormSta
       FormStore.disposedForm(prevState.formStore.formSource)
       prevState.formStore.formItemMap.delete(prevState.formStore.formSource)
     }
-    const formStore = FormStore.registerForm(nextProps.model, prevState.formStore.instance, prevState.formStore)
-    if (nextProps.config) {
-      formStore.setConfig(nextProps.config)
-    }
-    if (Utils.isFunction(nextProps.storeRef)) {
-      nextProps.storeRef(formStore)
-    }
-    // console.log('formStore diff', formStore, prevState.formStore, formStore !== prevState.formStore)
-    if (formStore !== prevState.formStore) {
-      return { ...prevState, formStore }
+    if (!Utils.isNil(nextProps.model)){
+      const formStore = FormStore.registerForm(nextProps.model, prevState.formStore.instance, prevState.formStore)
+      if (nextProps.config) {
+        formStore.setConfig(nextProps.config)
+      }
+      if (Utils.isFunction(nextProps.storeRef)) {
+        nextProps.storeRef(formStore)
+      }
+      // console.log('formStore diff', nextProps.storeRef, formStore, prevState.formStore, formStore !== prevState.formStore)
+      if (formStore !== prevState.formStore) {
+        return { ...prevState, formStore }
+      }
     }
     return prevState
   }
@@ -65,10 +71,12 @@ export class CommonForm extends React.Component<ICommonFormProps, ICommonFormSta
     const { children, config } = this.props
     return (
       <LocaleProvider locale={zh_CN}>
-        <Provider storeForm={this.state.formStore} ><>
-          {Utils.isArray(config) && <FormGroup config={config} ></FormGroup>}
-          {children}
-        </></Provider>
+        <NativeStore.Provider value={{storeForm: this.state.formStore}} >
+          <>
+            {Utils.isArray(config) && <FormGroup config={config} ></FormGroup>}
+            {children}
+          </>
+        </NativeStore.Provider>
       </LocaleProvider>
     );
   }

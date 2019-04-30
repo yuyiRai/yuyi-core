@@ -1,13 +1,15 @@
 import { GetFieldDecoratorOptions, WrappedFormUtils } from 'antd/lib/form/Form';
 import Row from 'antd/lib/row';
 import 'antd/lib/row/style/css';
-import { inject, observer, Provider } from 'mobx-react';
+import { observer, Provider } from 'mobx-react';
 import * as React from 'react';
 import styled from 'styled-components';
 import FormItem from './FormItem';
 import { FormStore } from './FormStore';
 import { IFormItemConfig } from './Interface';
 import { form } from './util';
+import { NativeStore } from './CommonForm';
+import { Observer } from 'mobx-react-lite';
 // import { Utils } from '../../build';
 
 export interface IFormProps {
@@ -23,8 +25,8 @@ export interface IFormState {
 const formItemLayout = { labelCol: { span: 5 }, wrapperCol: { span: 18, offset: 1 } }
 
 
-declare const config: IFormItemConfig
-declare const i: number
+// declare const config: IFormItemConfig
+// declare const i: number
 @observer
 export default class Form extends React.Component<IFormProps, any> {
   state: any = {
@@ -34,28 +36,31 @@ export default class Form extends React.Component<IFormProps, any> {
   }
   static getDerivedStateFromProps(nextProps: IFormProps, prevState: any) {
     const { form, storeForm } = nextProps
-    if (storeForm !== prevState.lastConfig) {
-      console.log(Utils)
-      console.log(storeForm.configList, prevState.lastConfig, storeForm.configList===prevState.lastConfig)
-      prevState.itemChildren = (
-        <For index='i' each="config" of={storeForm.configList}>
-          <FormItem {...formItemLayout} key={i} code={config.code}></FormItem>
-        </For>
-        // storeForm.configList.map(config => {
-        //   return <FormItem {...formItemLayout} key={config.code} code={config.code}></FormItem>
-        // })
-      )
-      // prevState.a = (
-      //   <For each="config" of={storeForm.configList} index="i">
-      //     <FormItem {...formItemLayout} key={config.code} code={config.code}></FormItem>
-      //   </For>
-      // )
-      prevState.form = form
-      prevState.lastConfig = storeForm
-      storeForm.setAntdForm(form)
+    if (storeForm instanceof FormStore) {
+      storeForm.setConfig(nextProps.config)
+      if (storeForm !== prevState.lastConfig) {
+        console.log(Utils)
+        console.log(storeForm.configList, prevState.lastConfig, storeForm.configList === prevState.lastConfig)
+        prevState.itemChildren = (
+          // <For index='i' each="config" of={storeForm.configList}>
+          //   <FormItem {...formItemLayout} key={i} code={config.code}></FormItem>
+          // </For>
+          storeForm.configList.map(config => {
+            return <FormItem {...formItemLayout} key={config.code} code={config.code}></FormItem>
+          })
+        )
+        // prevState.a = (
+        //   <For each="config" of={storeForm.configList} index="i">
+        //     <FormItem {...formItemLayout} key={config.code} code={config.code}></FormItem>
+        //   </For>
+        // )
+        prevState.form = form
+        prevState.lastConfig = storeForm
+        storeForm.setAntdForm(form)
+      }
+      storeForm.receiveAntdForm(form)
+      console.log('getDerivedStateFromProps', nextProps)
     }
-    storeForm.receiveAntdForm(form)
-    console.log('getDerivedStateFromProps')
     return prevState
   }
   // @Utils.computed get itemChildren(){
@@ -67,13 +72,13 @@ export default class Form extends React.Component<IFormProps, any> {
   public render() {
     const { form } = this.state
     const { children, className } = this.props
-    console.log(form, children)
+    // console.log(form, children)
     return (
-      <Provider antdForm={form}>
+      <Provider antdForm={form} storeForm={this.props.storeForm}>
         <>
-          <If condition={true}>
-              good taste in music
-          </If>
+          {/* <If condition={true}>
+            good taste in music
+          </If> */}
           <Row className={className}>
             {this.state.itemChildren}
           </Row>
@@ -107,15 +112,18 @@ export const StyledForm = styled(Form)`
 `
 export const InjectedForm = form(StyledForm as any) as any
 
-export const FormGroup: React.FunctionComponent<IFormProps> = inject(
-  (stores, nextProps: IFormProps, context) => {
-    console.log('fromgroup get store', stores, nextProps, context)
-    const store = stores['storeForm'];
-    if (store) {
-      store.setConfig(nextProps.config)
-    }
-    return { 'storeForm': stores['storeForm'] }
-  }
-)(observer((props: IFormProps) => {
-  return <InjectedForm {...props} />
-}))
+export const FormGroup: React.FunctionComponent<IFormProps> = (props: IFormProps) => {
+
+  return (
+    <NativeStore.Consumer>{
+      (value: any) => {
+        console.log('fromgroup get store', props, value)
+        return (
+          <Observer render={() => (
+            value.storeForm && <InjectedForm {...props} storeForm={value.storeForm} />
+          )}></Observer>
+        )
+      }
+    }</NativeStore.Consumer>
+  )
+}

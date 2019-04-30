@@ -162,7 +162,7 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
   @observable.ref reactionAntdFormEmitter = new EventEmitter<WrappedFormUtils>()
   @action.bound reactionAntdForm(callback: (antdForm: WrappedFormUtils) => void) {
     const sub = this.reactionAntdFormEmitter.subscribe((antdForm) => {
-      console.log('reactionAntdForm', sub)
+      // console.log('reactionAntdForm', sub)
       callback(antdForm)
       sub.unsubscribe()
     })

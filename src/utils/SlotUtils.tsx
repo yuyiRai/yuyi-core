@@ -32,18 +32,40 @@ const getReactElementFromVNode = (nodeFactory: IKeyValueMap<VNode[] | Function>)
     });
   }, {});
 };
-
+export const VueProvider = {
+  template: `
+    <span>
+      <slot></slot>
+    </span>
+  `,
+  name: 'VueProvider',
+  props: ['value', 'name'],
+  inject: {
+    a: {
+      default: 1
+    }
+  },
+  provide() {
+    console.log('VueProvider', this.name, this, this.value)
+    return {
+      a: {
+        provide: 123
+      }
+    }
+  }
+}
 export const react2Vue = (Target: IReactComponent<any>) => {
   return {
     functional: true,
     render(h: any, vueProps: any) {
-      const { ['default']: children, ...slots } = vueProps.slots();
+      console.log(Target.name, 'react2Vue', vueProps, this)
+      const { ['default']: children,...slots } = vueProps.slots();
       const { scopedSlots, props, attrs, ref } = vueProps.data;
       // console.log(Target.displayName || Target.name, vueProps, children, slots, scopedSlots)
       return h(ReactWrapper, {
         ref,
         props: {
-          component: Target,
+          component: Target
         },
         attrs: {
           ...props,
@@ -52,7 +74,7 @@ export const react2Vue = (Target: IReactComponent<any>) => {
           $commonSlots: () => slots
         },
         on: {
-          'click': console.log
+          'onClick': console.log
         }
       } as any, children);
     }
@@ -73,7 +95,7 @@ export function slotInjectContainer<T extends IReactComponent<any>>(target: T) {
     };
     return <Provider {...injectProps}><Target {...other} /></Provider>;
   } as T;
-  Object.defineProperty(injected, 'name', { value: Target.name, writable: false, configurable: false, enumerable: false });
+  Object.defineProperty(injected, 'name', { value: target.name, writable: false, configurable: false, enumerable: false });
   injected.displayName = Target.displayName;
   return injected;
 }
@@ -89,7 +111,7 @@ export function useSlots(target: any, propertyName: string) {
       if (!this.props) {
         return value;
       }
-      // console.error('get slot', propertyName, this)
+      console.error('get slot', propertyName, this)
       const { slots, scopedSlots } = this.props;
       return slots[slotName] || scopedSlots[slotName] || value || (() => <span>slots-{slotName}</span>);
     }

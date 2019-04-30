@@ -11,6 +11,21 @@ export declare const SlotUtils: () => {
     slotInjectContainer: typeof slotInjectContainer;
     useSlots: typeof useSlots;
 };
+export declare const VueProvider: {
+    template: string;
+    name: string;
+    props: string[];
+    inject: {
+        a: {
+            default: number;
+        };
+    };
+    provide(): {
+        a: {
+            provide: number;
+        };
+    };
+};
 export declare const react2Vue: (Target: IReactComponent<any>) => {
     functional: boolean;
     render(h: any, vueProps: any): any;
