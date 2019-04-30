@@ -2,7 +2,7 @@
   "name": "yuyi-core",
   "version": "0.8.4",
   "description": "yuyi",
-  "main": "lib/src/index.js",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yuyiRai/yuyi-core.git"
