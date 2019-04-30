@@ -7,6 +7,7 @@ import { typeFilterUtils, typeUtils } from "./TypeLib";
 import * as ParseUtils from "./ParseUtils";
 import * as MessageUtils from './MessageUtils'
 import * as MobxUtils from './MobxUtils'
+import * as SlotUtils from './SlotUtils'
 
 export type IUtils = typeof CustomUtils 
 & typeof OptionsUtils 
@@ -16,6 +17,7 @@ export type IUtils = typeof CustomUtils
 & typeof typeFilterUtils
 & typeof MessageUtils
 & typeof MobxUtils
+& typeof SlotUtils
 
 export const Utils: IUtils = {
   ...CommonUtils,
@@ -26,6 +28,7 @@ export const Utils: IUtils = {
   ...CustomUtils,
   ...ParseUtils,
   ...MessageUtils,
-  ...MobxUtils
+  ...MobxUtils,
+  ...SlotUtils
 };
 

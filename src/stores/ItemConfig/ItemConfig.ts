@@ -88,12 +88,12 @@ export class ItemConfig implements IItemConfig {
     // this.observe(this.form, console.log)
     this.reaction(() => this.i, (i: any) => {
       // console.log('register', i)
-      this.reaction(() => this.rule, (value) => {
-        console.log('rule', value)
-      })
-      this.reaction(() => this.currentValue, (value) => {
-        console.log('currentValue', value)
-      })
+      // this.reaction(() => this.rule, (value) => {
+      //   console.log('rule', value)
+      // })
+      // this.reaction(() => this.currentValue, (value) => {
+      //   console.log('currentValue', value)
+      // })
       for (const name of ['loading', 'options', 'rule']) {
         registerKey(i, name)
       }
@@ -241,7 +241,7 @@ export class ItemConfig implements IItemConfig {
     }
   }
 
-  @computed get remoteOptions(): Promise<any[]> | any[] {
+  get remoteOptions(): Promise<any[]> | any[] {
     return this.remoteMethod ? this.remoteSearchBySearchName(this.searchName) : this.options
   }
 
@@ -255,7 +255,7 @@ export class ItemConfig implements IItemConfig {
     const { remoteMethod, multiple } = this;
     let nextOptions: Option[] = []
     if (Utils.isFunction(remoteMethod)) {
-      this.setLoading(true)
+      // runInAction(() => this.setLoading(true)) 
       if (multiple) {
         const keyWordArr: string[] = Utils.zipEmptyData(Utils.castArray(keyWord));
         if (keyWordArr.length > 0) {
@@ -277,7 +277,7 @@ export class ItemConfig implements IItemConfig {
         // console.log(this.i.label, 'start search', keyWord, nextOptions)
         // console.log('resList', keyWord, this.i.label, r)
       }
-      this.setLoading(false)
+      // runInAction(() => this.setLoading(false)) 
     }
     return nextOptions;
   }
@@ -518,21 +518,21 @@ export class ItemConfig implements IItemConfig {
   @autobind async getOptionsSafe(): Promise<Option[]> {
     if (this.type === 'search' && (this.options.length === 0 || !this.optionsInited)) {
       if (!Utils.isArrayFilter(this.remoteOptions)) {
-        console.log('safe start', this.label, this.searchName, this.remoteOptions, this.options)
+        // console.log('safe start', this.label, this.searchName, this.remoteOptions, this.options)
         const options = await this.remoteOptions
-        console.log('safe end', this.label, this.searchName, options)
+        // console.log('safe end', this.label, this.searchName, options)
         return options
       }
-      console.log('get remote', this.label, this.searchName, this.remoteOptions)
+      // console.log('get remote', this.label, this.searchName, this.remoteOptions)
       return this.remoteOptions;
     }
     return this.options;
   }
 
   @computed get defaultRule() {
-    return Object.assign(ItemConfig.getDefaultRules(this), getDefaultRules(this))
+    return Object.assign(ItemConfig.getDefaultRules(this, this.componentProps), getDefaultRules(this))
   }
-  static getDefaultRules(itemConfig: ItemConfig): RuleConfigMap {
+  static getDefaultRules(itemConfig: ItemConfig, configStore: any): RuleConfigMap {
     return {
       phone: {
         validator: (rule: any, value: any, callback: any) => {
@@ -578,29 +578,29 @@ export class ItemConfig implements IItemConfig {
         tirgger: 'change',
         message: `${config.label}必须大于0！`
       }],
-      // licanseNo: (form: { licenseType: any; }, config: any) => [{
-      //   validator: (rule: any, value: string, callback: { (): void; (): void; (arg0: Error): void; (): void; }) => {
-      //     // console.log('licenseNo', value)
-      //     if (Utils.isNotEmptyString(value)) {
-      //       if (trim(value) === '*' || value.indexOf('新车') > -1 || (itemConfig.code !== 'licanseNo' && value === '车外')) {
-      //         return callback()
-      //       } else {
-      //         const selected: Option = Utils.getOptionsByValue(configStore.licenseTypeList, form.licenseType)
-      //         // console.log(form.licenseType, selected)
-      //         const res = (selected && !/警|军队|其它/ig.test(selected.label as string))
-      //           ? /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领]{1}[A-Z]{1}[A-Z0-9警]{5,6}$/
-      //           : /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9警]{5,6}$/;
-      //         if (res.test(value)) {
-      //           return callback()
-      //         } else
-      //           return callback(new Error());
-      //       }
-      //     }
-      //     return callback()
-      //   },
-      //   trigger: 'blur',
-      //   message: '请录入正确的车牌号！'
-      // }],
+      licanseNo: (form: { licenseType: any; }, config: any) => [{
+        validator: (rule: any, value: string, callback: { (): void; (): void; (arg0: Error): void; (): void; }) => {
+          // console.log('licenseNo', value)
+          if (Utils.isNotEmptyString(value)) {
+            if (trim(value) === '*' || value.indexOf('新车') > -1 || (itemConfig.code !== 'licanseNo' && value === '车外')) {
+              return callback()
+            } else {
+              const selected: Option = Utils.getOptionsByValue(get(configStore, '$store.state.taskDispatcher.licenseTypeList'), form.licenseType)
+              // console.log(form.licenseType, selected)
+              const res = (selected && !/警|军队|其它/ig.test(selected.label as string))
+                ? /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领]{1}[A-Z]{1}[A-Z0-9警]{5,6}$/
+                : /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9警]{5,6}$/;
+              if (res.test(value)) {
+                return callback()
+              } else
+                return callback(new Error());
+            }
+          }
+          return callback()
+        },
+        trigger: 'blur',
+        message: '请录入正确的车牌号！'
+      }],
       idCard: [{
         pattern: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
         trigger: 'blur',

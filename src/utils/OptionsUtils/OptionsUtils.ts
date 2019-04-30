@@ -244,6 +244,7 @@ export function getCodeListByKey(codeType: OptionSearcher, optionFactory?: Array
  * @param valueKey 
  */
 export function getCodeListByKey(codeType: Option[] | OptionSearcher, optionFactory?: ArrayIterator<IKeyValueMap, Option>): RemoteSearcher {
+  debugger
   const { isArrayFilter } = typeFilterUtils
   if (isArray(codeType)) {
     return async function (keyWord: string, isOnlySearch?: boolean): Promise<Option[]> {

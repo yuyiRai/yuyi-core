@@ -95,8 +95,8 @@ export class OptionsStore {
     if (Utils.isString(this.shadowOption.errorMsg)) {
       this.shadowOption.errorMsg = null;
     }
-    if (this.itemConfig.label === '交强险承保单位')
-      debugger;
+    // if (this.itemConfig.label === '交强险承保单位')
+    //   debugger;
     if (value === this.value && this.shadowOption.value != this.value) {
       // console.log(this.selectedLablesStr)
       this.shadowOption.label = label || this.selectedLablesStr;
