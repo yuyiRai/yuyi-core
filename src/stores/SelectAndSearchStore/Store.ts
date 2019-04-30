@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { observable, computed, action, runInAction } from 'mobx';
 import { EventStoreInject } from '../../utils/EventStore';
 import { ItemConfig } from '../ItemConfig';

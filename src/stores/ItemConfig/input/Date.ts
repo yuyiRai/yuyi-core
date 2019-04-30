@@ -3,7 +3,8 @@ import { ItemConfig } from '../ItemConfig';
 import Utils from '../../../utils';
 
 export const checkDateToDate = (date: any, itemConfig: ItemConfig) => ((rule: any, value: any, callback: any) => {
-  const [start, end] = map(itemConfig.code.split('|'), code => itemConfig.form[code])
+  console.log('testt, check', value, itemConfig)
+  const [start, end] = Utils.isArrayFilter(value, map(itemConfig.code.split('|'), code => itemConfig.form[code]))
   if (!Utils.isNil(start) && !Utils.isNil(end) && itemConfig.type === 'dateToDate') {
     console.log('testt, check', [start, end], itemConfig)
     // console.log(start,end,value)
@@ -12,9 +13,9 @@ export const checkDateToDate = (date: any, itemConfig: ItemConfig) => ((rule: an
       const startTime = new Date(start).getTime()
       if ((endTime - startTime) > 30 * 1000 * 60 * 60 * 24) {
         console.error(`${itemConfig.label}时长超出${date}天`)
-        throw callback(new Error(`${itemConfig.label}时长超出${date}天！`));
+        return callback(new Error(`${itemConfig.label}时长超出${date}天！`));
       } else if(endTime < startTime){
-        throw callback(new Error(`${itemConfig.label}截止时间不能早于起始时间！`));
+        return callback(new Error(`${itemConfig.label}截止时间不能早于起始时间！`));
       }
     }
   }
@@ -33,11 +34,11 @@ export const getDefaultRules = function(itemConfig: ItemConfig) {
   return {
     dateToDate30: [{
       validator: checkDateToDate(30, itemConfig),
-      trigger: ['change', 'blur'],
+      trigger: ['onChange'],
     }],
     futureDate: [{
       validator: checkFutureDate(itemConfig),
-      trigger: 'blur'
+      trigger: 'onChange'
     }]
   }
 }

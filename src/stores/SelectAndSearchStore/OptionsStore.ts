@@ -1,3 +1,4 @@
+/* eslint-disable */
 import { observable, computed, action, runInAction } from 'mobx';
 import { EventStoreInject } from '../../utils/EventStore';
 import { ItemConfig } from '../ItemConfig';
@@ -162,22 +163,42 @@ export class OptionsStore {
   }
   @autobind toConvertedOption(item: Option, index: number): Option {
     if (!this.__optionMap.get(item)) {
-      if (!Utils.isNumber(this.__keyMap[item.__key])) {
-        this.__keyMap[item.__key] = 0;
+      // if (!Utils.isNumber(this.__keyMap[item.__key])) {
+      //   this.__keyMap[item.__key] = 0;
+      // }
+      // this.__keyMap[item.__key]++;
+      // this.__optionMap.set(item, {
+      //   ...item,
+      //   key: `${item.__key}.${this.__keyMap[item.__key]}`,
+      //   label: Utils.isStringFilter(item.label, item.value, (Utils.isObject(item) ? index : item) + ''),
+      //   value: Utils.isStringFilter(item.value, (Utils.isObject(item) ? index : item) + '')
+      // });
+      if (Utils.isNil(this.__keyMap[item.__key])) {
+        this.__keyMap[item.__key] = true;
+        const option = {
+          ...item,
+          key: `${item.__key}.${this.__keyMap[item.__key]}`,
+          label: Utils.isStringFilter(item.label, item.value, (Utils.isObject(item) ? index : item) + ''),
+          value: Utils.isStringFilter(item.value, (Utils.isObject(item) ? index : item) + '')
+        }
+        this.__optionMap.set(item, option);
+        return option
+      } else {
+        return null
       }
-      this.__keyMap[item.__key]++;
-      this.__optionMap.set(item, {
-        ...item,
-        key: `${item.__key}.${this.__keyMap[item.__key]}`,
-        label: Utils.isStringFilter(item.label, item.value, (Utils.isObject(item) ? index : item) + ''),
-        value: Utils.isStringFilter(item.value, (Utils.isObject(item) ? index : item) + '')
-      });
     }
     return this.__optionMap.get(item);
   }
   @computed get convertedOption(): Option[] {
+    this.__keyMap = {}
     // console.time(`2displayOptionsNative${this.itemConfig.label}`)
-    const result = Utils.arrayMapDive(this.__optionArr, this.toConvertedOption);
+    const result = []
+    Utils.forEach(this.__optionArr, (o, index) => {
+      const option = this.toConvertedOption(o, index);
+      if(option){
+        result.push(option)
+      }
+    })
     // console.timeEnd(`2displayOptionsNative${this.itemConfig.label}`)
     // console.time(`displayOptionsNative${this.itemConfig.label}`)
     // const result = [], array = this.__optionArr

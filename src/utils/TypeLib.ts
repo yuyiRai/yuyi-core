@@ -119,6 +119,7 @@ export function todoFilter(handler: (v: any) => boolean): FilterFunction {
 
 export interface ITypeFilterUtils {
   isNumberFilter: FilterFunction<number>;
+  isBooleanFilter: FilterFunction<boolean>;
   isStringFilter: FilterFunction<string>;
   isNotEmptyStringFilter: FilterFunction<string>;
   isArrayFilter: FilterArrayFunction; 

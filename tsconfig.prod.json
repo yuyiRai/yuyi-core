@@ -1,6 +1,7 @@
 {
   "extends": "./tsconfig.dev.json",
   "compilerOptions": {
-    "outDir": "lib",
+    "outDir": "../MedicalShare/Foreground/MedicalShareMP/node_modules/yuyi-core/lib",
+    "declarationDir": "../MedicalShare/Foreground/MedicalShareMP/node_modules/yuyi-core/types",
   }
 }

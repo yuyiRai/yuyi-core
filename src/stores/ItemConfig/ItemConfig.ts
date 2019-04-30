@@ -1,13 +1,19 @@
 /* eslint-disable */
 import { autobind } from 'core-decorators';
-import { difference, isNil, forEach, map, set, trim, isRegExp, keys, isError, toString } from 'lodash';
-import { action, computed, extendObservable, isComputedProp, observable, observe, reaction, IKeyValueMap, IReactionDisposer, IReactionOptions, IReactionPublic, IObservableValue, IComputedValue, IValueDidChange, Lambda } from 'mobx';
+import { difference, isNil, forEach, map, get, set, trim, isRegExp, keys, isError, toString } from 'lodash';
+import { toJS, action, computed, extendObservable, 
+  isComputedProp, observable, observe, reaction, 
+  IKeyValueMap, IReactionDisposer, IReactionOptions, 
+  IReactionPublic, IObservableValue, IComputedValue, IValueDidChange, Lambda } from 'mobx';
 import { EventStoreInject } from '../../utils/EventStore';
-import { asyncComputed } from '../../utils/AsyncProperty';
+// import { asyncComputed } from '../../utils/AsyncProperty';
 import { Utils } from '../../utils/Utils';
 import { DisplayConfig } from './ItemDisplayConfig';
 import { getDefaultRules } from './input/Date';
 import { Option } from '../../utils';
+import { FormStore, registerKey } from '../../components/Form/FormStore';
+import { expr } from 'mobx-utils'
+import { EventEmitter } from '../../utils/EventEmitter';
 
 export type ValidatorCallback = (error?: string | Error) => void
 export type RuleConfig<T = any> = {
@@ -26,6 +32,9 @@ export interface IItemConfig {
   multiple?: boolean;
   [key: string]: any;
 }
+export interface IPropertyChangeEvent<T = any> extends IValueDidChange<T> {
+  name: string;
+}
 
 @EventStoreInject(['options-change'])
 export class ItemConfig implements IItemConfig {
@@ -40,12 +49,15 @@ export class ItemConfig implements IItemConfig {
   // @computed get form() {
   //   return this.formStore ? this.formStore.form : {}
   // }
-  @observable.ref form: IKeyValueMap;
+  @observable form: IKeyValueMap = {};
+  @computed get formStore(){
+    return FormStore.registerForm(this.form, this.componentProps)
+  }
   @observable.ref componentProps: IKeyValueMap = {}
   @observable.shallow initConfig = observable.map({})
   @observable $version = 0
   // @observable loading = false;
-  @observable displayConfig = new DisplayConfig()
+  @observable private displayConfig = new DisplayConfig()
   @computed get displayProps() {
     return this.displayConfig.init(this, this.componentProps)
   }
@@ -57,9 +69,12 @@ export class ItemConfig implements IItemConfig {
     return difference(
       this.iKeys,
       keys(this),
-      ['refConfig', 'code', 'label', 'required', 'hidden', 'rule', 'remoteMethod', 'loading', 'options', 'isViewOnly']
+      ['refConfig', 'code', 'rule', 'remoteMethod', 'loading', 'options', 'isViewOnly']
     )
   }
+
+  onPropertyChange = new EventEmitter<IPropertyChangeEvent>()
+
   constructor(initModel: any, form: any = {}, componentProps: any = {}) {
     // this.reaction(()=>this.remoteOptions, options=>{
     //   console.log('remoteOptions change', this.i.label, options, this)
@@ -67,31 +82,41 @@ export class ItemConfig implements IItemConfig {
     // this.reaction(() => this.loading, options=>{
     //   console.log('loading change', this.i.label, options)
     // })
+    // this.reaction(() => this., (hidden: any) => {
+    //     console.log(hidden)
+    // })
+    // this.observe(this.form, console.log)
     this.reaction(() => this.i, (i: any) => {
       // console.log('register', i)
-      for (const name of ['loading', 'options']) {
-        this.registerKey(i, name)
+      this.reaction(() => this.rule, (value) => {
+        console.log('rule', value)
+      })
+      this.reaction(() => this.currentValue, (value) => {
+        console.log('currentValue', value)
+      })
+      for (const name of ['loading', 'options', 'rule']) {
+        registerKey(i, name)
       }
-      this.observe(i, (e: any) => {
-        this.$version++
-        // console.log(e)
-        const { oldValue, newValue, name } = e;
-        if (name === '$$core_options' && !Utils.isEqual(oldValue, newValue)) {
-          this.label ==='诊断名称' && console.log(
-            `${name}: options[${(oldValue||[]).length}] => options[${(newValue||[]).length}]`, { config: i, event: e })
-          if(newValue) {
+      this.observe(i, (e: IPropertyChangeEvent) => {
+        this.onPropertyChange.emit(e)
+        console.log(e, this)
+        const { oldValue, newValue, name } = e
+        if (name === 'options' && !Utils.isEqual(oldValue, newValue)) {
+          this.label === '诊断名称' && console.log(
+            `${name}: options[${(oldValue || []).length}] => options[${(newValue || []).length}]`, { config: i, event: e })
+          if (newValue) {
             this.optionsInited = Utils.isNotEmptyArray(newValue)
           }
           this.$emit('options-change', e.newValue)
         }
         // console.log(`${e.name}: ${e.oldValue} => ${e.newValue}`, {config: i, event: e})
       })
+      this.registerObservables(i)
       // this.$emit('options-change', this.options)
       // this.reaction(() => i.loading, value => {
       //   // this.loading = value
       //   console.log('i loading change', this.i.label, value)
       // }, { fireImmediately: true })
-      this.registerObservables(i)
     }, { fireImmediately: true })
     if (initModel) {
       this.init(initModel, form, componentProps)
@@ -114,7 +139,7 @@ export class ItemConfig implements IItemConfig {
         const thisArg = this;
         extendObservable(this, {
           get [key]() {
-            return Utils.isNumber(thisArg.$version) && thisArg.getComputedValue(key, baseConfig)
+            return thisArg.getComputedValue(key, baseConfig)
           },
           // [keyName](value) {
           //   // console.log(key, 'set', value, baseConfig.label)
@@ -127,38 +152,7 @@ export class ItemConfig implements IItemConfig {
     }
   }
 
-  @autobind registerKey(i: any, key: string) {
-    const defaultV = i[key]
-    const coreKey = `$$core_${key}`;
-    observable.ref(i, coreKey, {
-      value: defaultV,
-      enumerable: false,
-      configurable: true
-    })
-    computed(i, key, {
-      get() {
-        return (this[coreKey])
-      },
-      set(value) {
-        this[coreKey] = value
-      }
-    })
-    // set(this.i, key, defaultV)
-    // extendObservable(, {
-    //   [key]: defaultV
-    // }, {}, { deep: false })
-  }
-
   @action.bound setForm(form: any) {
-    // if(form instanceof FormStore){
-    //   this.formStore = form
-    // } else if(form){
-    //   const getter = FormStore.registerForm(form)
-    //   if(!this.formStore || this.getter !== this.formStore)
-    //     this.formStore = getter
-    //   else 
-    //     this.formStore.setForm(form)
-    // }
     this.form = form;
   }
   optionsInited = false
@@ -183,32 +177,22 @@ export class ItemConfig implements IItemConfig {
   }
 
   @autobind getComputedValue(key: string, target: any = this.i, defaultValue?: any) {
-    const keyValue = target[key] //(action(Utils.getPropertyFieldByCreate))(this.i, [key, defaultValue])
-    // if(keyValue !== this.i[key]) {
-    //   this.updateVersion()
-    // }
-    if (!(/(^refConfig$)|^(on|get(.*?))|((.*?)Method)$|(.*?)filter(.*?)/.test(key)) && (keyValue instanceof Function)) {
-      const computedValue = keyValue(this.form || {}, this)
-      return Utils.isNil(computedValue) ? defaultValue : computedValue
+    try {
+      const keyValue = target[key] //(action(Utils.getPropertyFieldByCreate))(this.i, [key, defaultValue])
+      // if(keyValue !== this.i[key]) {
+      //   this.updateVersion()
+      // }
+      if (!(/(^refConfig$)|^(on|get(.*?))|((.*?)Method)$|(.*?)filter(.*?)/.test(key)) && (keyValue instanceof Function)) {
+        const computedValue = expr(() => keyValue(this.form || {}, this))
+        return this.$version>-1 && Utils.isNil(computedValue) ? defaultValue : computedValue
+      }
+      return keyValue
+    } catch (e) {
+      console.error(e)
+      return undefined
     }
-    return keyValue
   }
 
-  /**
-   * 是否控制必录
-   */
-  @computed.struct get required() {
-    return this.$version > -1 && this.getComputedValue('required');
-  }
-  /**
-   * 是否
-   */
-  @computed.struct get hidden() {
-    return Utils.isNumber(this.$version) && this.getComputedValue('hidden');
-  }
-  @computed.struct get label() {
-    return this.getComputedValue('label');
-  }
   @computed.struct get type() {
     return this.i.type;
   }
@@ -224,11 +208,11 @@ export class ItemConfig implements IItemConfig {
   }
   @autobind getSearchName() {
     const { nameCode } = this;
-    return !isNil(nameCode) ? (this.form || {})[nameCode] : (this.form || {})[this.code]
+    return Utils.isStringFilter(!isNil(nameCode) ? (this.form || {})[nameCode] : (this.form || {})[this.code])
   }
 
   @computed.struct get currentValue() {
-    return (this.form || {})[this.code]
+    return toJS(get(this.form || {}, this.code))
   }
 
 
@@ -257,12 +241,7 @@ export class ItemConfig implements IItemConfig {
     }
   }
 
-  @asyncComputed({
-    type: Array,
-    defaultValue: [],
-    time: 100,
-    watcher: 'searchName'
-  }) get remoteOptions(): Promise<any[]> | any[] {
+  @computed get remoteOptions(): Promise<any[]> | any[] {
     return this.remoteMethod ? this.remoteSearchBySearchName(this.searchName) : this.options
   }
 
@@ -360,7 +339,7 @@ export class ItemConfig implements IItemConfig {
     return this.getComputedValue('allowCreate') || false
   }
   @computed get allowInput(): boolean {
-    return this.getComputedValue('allowInput') || (this.type=='search' && !this.multiple)
+    return this.getComputedValue('allowInput') || (this.type == 'search' && !this.multiple)
   }
   /**
    * @type { Array } 配置项Array
@@ -368,7 +347,7 @@ export class ItemConfig implements IItemConfig {
   @computed get options(): Option[] {
     // trace()
     // this.label === '归属车辆' && console.log('伤者类型 get options', Utils.isArrayFilter(this.$version, this.getComputedValue('options'), []))
-    return Utils.isArrayFilter(this.$version, this.i.options, this.getComputedValue('options')) || []
+    return Utils.isArrayFilter(this.i.options, this.getComputedValue('options')) || []
   }
   @action.bound setOptions(v: any) {
     if (!Utils.likeArray(this.options, v)) {
@@ -385,10 +364,10 @@ export class ItemConfig implements IItemConfig {
 
   export() {
     const model = {}
-    for (const key in this.i) {
-      model[key] = this.getComputedValue(key)
+    for (const key of this.iKeys) {
+      model[key] = this[key]
     }
-    return model;
+    return toJS(model);
   }
 
   /**
@@ -455,7 +434,7 @@ export class ItemConfig implements IItemConfig {
   @autobind getRuleList(i: IKeyValueMap<any>, componentProps: IKeyValueMap<any>): RuleConfigList | undefined {
     const iRules = []
     // if (this.required) {
-    if (Utils.isNumber(this.$version) && this.requiredRule) {
+    if (this.requiredRule) {
       iRules.push(this.requiredRule)
     }
     let ruleGetter = Utils.isFunction(i.rule) ? i.rule(this.form, this) : i.rule;
@@ -509,7 +488,7 @@ export class ItemConfig implements IItemConfig {
     //       })
     //     }
     // })
-    if (this.i.type=='select' || this.i.type==='search') {
+    if (this.i.type == 'select' || this.i.type === 'search') {
       iRules.push({
         validator: this.optionsMatcher,
         trigger: 'change',
@@ -540,11 +519,9 @@ export class ItemConfig implements IItemConfig {
     if (this.type === 'search' && (this.options.length === 0 || !this.optionsInited)) {
       if (!Utils.isArrayFilter(this.remoteOptions)) {
         console.log('safe start', this.label, this.searchName, this.remoteOptions, this.options)
-        const b = reaction(() => this.remoteOptions, options => {
-          console.log('safe end', this.label, this.searchName, options)
-          b()
-          return options
-        })
+        const options = await this.remoteOptions
+        console.log('safe end', this.label, this.searchName, options)
+        return options
       }
       console.log('get remote', this.label, this.searchName, this.remoteOptions)
       return this.remoteOptions;
@@ -553,9 +530,9 @@ export class ItemConfig implements IItemConfig {
   }
 
   @computed get defaultRule() {
-    return this.$version > -1 && Object.assign(ItemConfig.getDefaultRules(this, this.componentProps.$store.state.taskDispatcher), getDefaultRules(this))
+    return Object.assign(ItemConfig.getDefaultRules(this), getDefaultRules(this))
   }
-  static getDefaultRules(itemConfig: ItemConfig, configStore: any): RuleConfigMap {
+  static getDefaultRules(itemConfig: ItemConfig): RuleConfigMap {
     return {
       phone: {
         validator: (rule: any, value: any, callback: any) => {
@@ -601,29 +578,29 @@ export class ItemConfig implements IItemConfig {
         tirgger: 'change',
         message: `${config.label}必须大于0！`
       }],
-      licanseNo: (form: { licenseType: any; }, config: any) => [{
-        validator: (rule: any, value: string, callback: { (): void; (): void; (arg0: Error): void; (): void; }) => {
-          // console.log('licenseNo', value)
-          if (Utils.isNotEmptyString(value)) {
-            if (trim(value) === '*' || value.indexOf('新车') > -1 || (itemConfig.code !== 'licanseNo' && value === '车外')) {
-              return callback()
-            } else {
-              const selected: Option = Utils.getOptionsByValue(configStore.licenseTypeList, form.licenseType)
-              // console.log(form.licenseType, selected)
-              const res = (selected && !/警|军队|其它/ig.test(selected.label as string))
-                ? /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领]{1}[A-Z]{1}[A-Z0-9警]{5,6}$/
-                : /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9警]{5,6}$/;
-              if (res.test(value)) {
-                return callback()
-              } else
-                return callback(new Error());
-            }
-          }
-          return callback()
-        },
-        trigger: 'blur',
-        message: '请录入正确的车牌号！'
-      }],
+      // licanseNo: (form: { licenseType: any; }, config: any) => [{
+      //   validator: (rule: any, value: string, callback: { (): void; (): void; (arg0: Error): void; (): void; }) => {
+      //     // console.log('licenseNo', value)
+      //     if (Utils.isNotEmptyString(value)) {
+      //       if (trim(value) === '*' || value.indexOf('新车') > -1 || (itemConfig.code !== 'licanseNo' && value === '车外')) {
+      //         return callback()
+      //       } else {
+      //         const selected: Option = Utils.getOptionsByValue(configStore.licenseTypeList, form.licenseType)
+      //         // console.log(form.licenseType, selected)
+      //         const res = (selected && !/警|军队|其它/ig.test(selected.label as string))
+      //           ? /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领]{1}[A-Z]{1}[A-Z0-9警]{5,6}$/
+      //           : /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9警]{5,6}$/;
+      //         if (res.test(value)) {
+      //           return callback()
+      //         } else
+      //           return callback(new Error());
+      //       }
+      //     }
+      //     return callback()
+      //   },
+      //   trigger: 'blur',
+      //   message: '请录入正确的车牌号！'
+      // }],
       idCard: [{
         pattern: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
         trigger: 'blur',

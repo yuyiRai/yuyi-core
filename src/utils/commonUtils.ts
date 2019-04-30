@@ -323,7 +323,13 @@ export default {
   last,
   cloneDeep,
   toArray,
-  isEqual,
+  isEqual<A = any, B = any>(valueA: A, valueB: B, noStrict: boolean = false): boolean {
+    const ia = Utils.isNotEmptyValueFilter
+    if (noStrict) {
+      return ia(valueA) === ia(valueB) || isEqual(ia(valueA), ia(valueB))
+    }
+    return isEqual(valueA, valueB)
+  },
   reduce,
   forEach,
   concat,

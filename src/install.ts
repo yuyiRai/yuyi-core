@@ -25,7 +25,7 @@ export default function install(Vue: VueConstructor) {
    * @param { boolean | object } paramSource true为历史记录后退，false为不确认后退，对象为详细配置
    */
   Vue.prototype.$goBack = function(paramSource: boolean | object = true) {
-    let { confirm, useBack = false, ...params} = Utils.isObjectFilter(paramSource, { confirm: paramSource })
+    let { confirm, useBack = false, ...params} = Utils.isObjectFilter(paramSource) || { confirm: paramSource }
     if(confirm === false) {
       return this.$utils.pathReturn(this, params, false, useBack)
     }

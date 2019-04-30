@@ -1,18 +1,23 @@
 import '.'
-
+import { IUtils, Utils as GlobalUtils } from '../utils/Utils'
+window.Utils = GlobalUtils
 interface IPrototype extends Object {
-    [key: string]: any;
+  [key: string]: any;
 }
 interface IClassConstructor extends Function {
-    [key: string]: any;
+  [key: string]: any;
 }
 declare global {
-    export namespace Type {
-        type Function = (...args: any[]) => void | any;
-        type Prototype = IPrototype;
-        type ClassConstructor = IClassConstructor;
-    }
-    export interface Array<T> {
-      includes(type: any): boolean;
-    }
+  var Utils: IUtils;
+  export class Type {
+    Function: (...args: any[]) => void | any;
+    Prototype: IPrototype;
+    ClassConstructor: IClassConstructor;
+  }
+  export interface Array<T> {
+    includes(type: any): boolean;
+  }
+  export interface Window {
+    Utils: IUtils
+  }
 }

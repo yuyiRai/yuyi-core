@@ -1,7 +1,7 @@
+/* eslint-disable */
 import Utils from '.'
 import { autobind } from 'core-decorators';
 import { IKeyValueMap } from 'mobx';
-
 export type Service = (...params: any[]) => Promise<any>
 export class HttpBox {
   _map = {}
