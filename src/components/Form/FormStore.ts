@@ -243,9 +243,9 @@ export function registerKey(target: any, key: string, deep: boolean = false) {
 
   const keyDeep = key.split('.');
   // const coreKey = `$$core_${keyDeep[0]}`;
-  const defaultV = get(target, keyDeep[0], target)
+  const defaultV = get(target, keyDeep[0], null)
   const d = (deep?observable:observable.ref)
-  debugger
+  // debugger
   d(target, keyDeep[0], { value: defaultV, enumerable: false, configurable: true })
   // computed.struct(target, keyDeep[0], {
   //   get() { return get(this, coreKey) },
