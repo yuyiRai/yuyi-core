@@ -101,7 +101,7 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
         if (data.validating !== true) {
           // console.log('hasError', data.validating, data.errors, isNotEmptyArray(data.errors))
           const isValidResult = data.validating === false
-          registerKey(this.formSource, pathStr)
+          this.registerKey(this.formSource, pathStr)
           if (Utils.isFunction(callback)) {
             Object.assign(result, callback(pathStr, data, isValidResult))
           } else {
@@ -208,7 +208,7 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
     console.log('setForm', form)
     mapToDiff(this.formMap, form)
     for (const config of this.configList) {
-      registerKey(form, config.code, true)
+      this.registerKey(form, config.code)
     }
     this.formSource = form;
     this.formSourceTrack.push(Utils.cloneDeep(form));
@@ -221,7 +221,12 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
   @action.bound replaceForm(formMap: ObservableMap<string, any>) {
     this.formMap = formMap;
   }
-
+  @action.bound registerKey(target: any, key: string, deep: boolean = false)  {
+    debugger
+    console.log('registerKey', key)
+    registerKey(target, key, deep)
+    return 
+  }
 }
 
 export function mapToDiff(map: ObservableMap<any>, form: any) {
@@ -245,7 +250,6 @@ export function registerKey(target: any, key: string, deep: boolean = false) {
   // const coreKey = `$$core_${keyDeep[0]}`;
   const defaultV = get(target, keyDeep[0], null)
   const d = (deep?observable:observable.ref)
-  // debugger
   d(target, keyDeep[0], { value: defaultV, enumerable: false, configurable: true })
   // computed.struct(target, keyDeep[0], {
   //   get() { return get(this, coreKey) },
