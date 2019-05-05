@@ -1,4 +1,4 @@
-import { ObservableMap, IObservableArray, IKeyValueMap, IMapDidChange } from 'mobx';
+import { ObservableMap, IObservableArray, IKeyValueMap, IMapDidChange, Lambda } from 'mobx';
 import { IFormItemConfig } from './Interface/FormItem';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { ItemConfig } from '../../stores';
@@ -18,10 +18,12 @@ export declare class FormStore<T extends IKeyValueMap = any> extends GFormStore 
     constructor();
     formSource: T;
     formSourceTrack: T[];
+    readonly lastFormSource: T;
     formMap: ObservableMap<keyof T, any>;
     readonly form: T;
     errorTack: IMapDidChange[];
     instance: any;
+    formSourceListerner: Lambda;
     errorGroup: ObservableMap<keyof T, Error[]>;
     readonly errors: IKeyValueMap<Error[]>;
     getErrors(itemKey: keyof T): Error[];
@@ -41,13 +43,15 @@ export declare class FormStore<T extends IKeyValueMap = any> extends GFormStore 
     antdForm: WrappedFormUtils;
     antdFormMap: ObservableMap<string, WrappedFormUtils>;
     setAntdForm(antdForm: WrappedFormUtils, code?: string): void;
-    formItemStores: {};
+    formItemStores: IKeyValueMap<FormItemStore>;
     registerItemStore(code: string): FormItemStore;
     registerForm(form: any, code: string, itemConfig: ItemConfig): void;
     getConfig(code: string): IFormItemConfig;
     setForm(form: T, instance: any): void;
     setConfig(configList: IFormItemConfig[]): void;
+    private registerFormSourceListerner;
     replaceForm(formMap: ObservableMap<string, any>): void;
+    registerKey(target: any, deep?: boolean): void;
 }
 export declare function mapToDiff(map: ObservableMap<any>, form: any): ObservableMap<any, any>;
 export declare function registerKey(target: any, key: string, deep?: boolean): void;

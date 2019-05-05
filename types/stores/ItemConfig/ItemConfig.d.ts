@@ -29,11 +29,8 @@ export declare class ItemConfig implements IItemConfig {
     destorySet: Set<IReactionDisposer | Lambda>;
     i: IKeyValueMap;
     iKeys: string[];
-    /**
-     * @type { FormStore }
-     */
     form: IKeyValueMap;
-    readonly formStore: FormStore<any>;
+    formStore: FormStore;
     componentProps: IKeyValueMap;
     initConfig: import("mobx").ObservableMap<any, any>;
     $version: number;
@@ -41,6 +38,8 @@ export declare class ItemConfig implements IItemConfig {
     readonly displayProps: DisplayConfig;
     readonly isViewOnly: any;
     readonly otherKey: string[];
+    setFormStore(formStore: FormStore): void;
+    readonly formSource: any;
     onPropertyChange: EventEmitter<IPropertyChangeEvent<any>>;
     constructor(initModel: any, form?: any, componentProps?: any);
     reaction(source: (r: IReactionPublic) => {}, callback: (arg: {}, r: IReactionPublic) => void, options?: IReactionOptions): void;
