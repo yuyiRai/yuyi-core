@@ -49,7 +49,7 @@ export class ItemConfig implements IItemConfig {
   // @computed get form() {
   //   return this.formStore ? this.formStore.form : {}
   // }
-  @observable form: IKeyValueMap = {};
+  @observable.ref form: IKeyValueMap = {};
   @computed get formStore(){
     return FormStore.registerForm(this.form, this.componentProps)
   }
