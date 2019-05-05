@@ -1,7 +1,7 @@
 import { get, set, difference, keys, forEach, toArray, isNil } from 'lodash';
 import {
   action, computed, extendObservable, observable, ObservableMap,
-  IObservableArray, IKeyValueMap, observe, runInAction, IMapDidChange
+  IObservableArray, IKeyValueMap, observe, runInAction, IMapDidChange, reaction, Lambda, IObjectDidChange
 } from 'mobx';
 import { Utils, isNotEmptyArray } from '../../utils';
 import { IFormItemConfig } from './Interface/FormItem';
@@ -45,7 +45,7 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
     })
     observe(this.formMap, listener => {
       // const config = this.formItemConfigMap[listener.name]
-      // console.log('this.formMap', listener, this.formSource, this.formItemConfigMap)
+      console.log('this.formMap', listener, this.formSource, this.formItemConfigMap)
       // for (const key in this.formItemConfigMap) {
       //   const config = this.formItemConfigMap[key]
       //   console.log('update config', config, key, (listener.name))
@@ -54,19 +54,25 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
       //     // break;
       //   }
       // }
+      
     })
-    // reaction(() => this.formSource, listener => {
-    //   console.log('this.formSource', listener)
-    // })
+    reaction(() => this.formMap, () => {
+      console.log('this.formMap')
+    })
   }
   @observable formSource: T = {} as T
   @observable formSourceTrack: T[] = []
+  @computed.struct get lastFormSource(){
+    return this.formSourceTrack[this.formSourceTrack.length-1] || this.formSource
+  }
   @observable.shallow formMap: ObservableMap<keyof T, any> = observable.map({}, { deep: false });
   @computed.struct get form(): T {
     return extendObservable({}, this.formMap.toPOJO()) as T;
   }
   @observable.ref errorTack: IMapDidChange[] = []
   @observable.ref instance: any = {}
+
+  formSourceListerner: Lambda;
 
   @observable.shallow errorGroup: ObservableMap<keyof T, Error[]> = observable.map({}, { deep: false });
   @computed.struct get errors() { return this.errorGroup.toPOJO() }
@@ -87,7 +93,6 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
     return this.config.toJSON()
   }
 
-
   // @Memoize
   @action.bound patchFieldsChange(patch: T, path: string[] = [], callback?: any): IKeyValueMap<boolean> {
     const result: IKeyValueMap<boolean> = {}
@@ -101,7 +106,7 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
         if (data.validating !== true) {
           // console.log('hasError', data.validating, data.errors, isNotEmptyArray(data.errors))
           const isValidResult = data.validating === false
-          this.registerKey(this.formSource, pathStr)
+          registerKey(this.formSource, pathStr)
           if (Utils.isFunction(callback)) {
             Object.assign(result, callback(pathStr, data, isValidResult))
           } else {
@@ -112,8 +117,14 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
             const isChanged = !Utils.isEqual(this.formSource[key], data.value, true)
             if (isChanged) {
               // console.log('patchFieldsChange', key, this.formSource[key], data.value, this)
+              this.formSource[key] = data.value
               this.formMap.set(key, data.value)
-              set(this.formSource, key, data.value)
+              console.log('set', 'formMap', this.formSource, this.formItemStores)
+              // for(const key of (this.formItemStores as any)) {
+              //   console.log(key)
+              //   const a: FormItemStore = key
+              //   // a &&a.itemConfig && a.itemConfig.setForm(this.formSource)
+              // }
             }
             Object.assign(result, {[key]: isChanged}) 
           }
@@ -132,9 +143,9 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
             this.updateError(pathStr, errors)
           }
           if (obj !== preObj) {
+            set(this.formSource, key, obj)
             this.formMap.set(key, obj)
             // console.log('patchFieldsChange inner', pathStr, obj, value, this)
-            set(this.formSource, key, obj)
             return { [pathStr]: true } // 确认修改
           }
           return { [pathStr]: false } // 值不变
@@ -180,7 +191,7 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
       this.antdFormMap.set(code, antdForm)
     }
   }
-  @observable formItemStores = {}
+  @observable formItemStores: IKeyValueMap<FormItemStore> = {}
 
   @action.bound registerItemStore(code: string): FormItemStore {
     // console.log('registerForm', form)
@@ -205,26 +216,39 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
   }
 
   @action.bound setForm(form: T, instance: any) {
-    console.log('setForm', form)
+    console.log('setForm', form, this.configList.length)
     mapToDiff(this.formMap, form)
-    for (const config of this.configList) {
-      this.registerKey(form, config.code)
-    }
+    this.registerKey(form)
     this.formSource = form;
-    this.formSourceTrack.push(Utils.cloneDeep(form));
     this.instance = instance
     this.clearValidate()
+    this.registerFormSourceListerner();
   }
   @action.bound setConfig(configList: IFormItemConfig[]) {
+    console.log('setConfig', configList)
     this.config = observable.array(configList, { deep: false })
+    this.registerKey(this.formSource)
+    this.registerFormSourceListerner();
   }
+  private registerFormSourceListerner() {
+    if (this.formSourceListerner) {
+      this.formSourceListerner();
+    }
+    this.formSourceListerner = observe(this.formSource, (listener: IObjectDidChange) => {
+      // console.log('this.formSource', listener)
+      this.formSourceTrack.push(this.formSource);
+    });
+  }
+
   @action.bound replaceForm(formMap: ObservableMap<string, any>) {
     this.formMap = formMap;
   }
-  @action.bound registerKey(target: any, key: string, deep: boolean = false)  {
-    debugger
-    console.log('registerKey', key)
-    registerKey(target, key, deep)
+  @action.bound registerKey(target: any, deep: boolean = false)  {
+    // debugger
+    for (const config of this.configList) {
+      console.log('registerKey', config.code)
+      registerKey(target, config.code, deep)
+    }
     return 
   }
 }

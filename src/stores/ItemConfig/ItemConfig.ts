@@ -42,17 +42,13 @@ export class ItemConfig implements IItemConfig {
   destorySet: Set<IReactionDisposer | Lambda> = new Set<IReactionDisposer | Lambda>()
   @observable.ref i: IKeyValueMap = {};
   @observable.ref iKeys: string[] = []
-  /**
-   * @type { FormStore }
-   */
   // @observable formStore;
   // @computed get form() {
   //   return this.formStore ? this.formStore.form : {}
   // }
   @observable.ref form: IKeyValueMap = {};
-  @computed get formStore(){
-    return FormStore.registerForm(this.form, this.componentProps)
-  }
+  @observable.ref formStore: FormStore;
+
   @observable.ref componentProps: IKeyValueMap = {}
   @observable.shallow initConfig = observable.map({})
   @observable $version = 0
@@ -71,6 +67,14 @@ export class ItemConfig implements IItemConfig {
       keys(this),
       ['refConfig', 'code', 'rule', 'remoteMethod', 'loading', 'options', 'isViewOnly']
     )
+  }
+  @action.bound setFormStore(formStore: FormStore) {
+    this.formStore = formStore
+  }
+
+  @computed.struct get formSource() {
+    console.log('this.formStore', this.formStore && this.formStore.formSource);
+    return (this.formStore && this.formStore.lastFormSource) || this.form
   }
 
   onPropertyChange = new EventEmitter<IPropertyChangeEvent>()
@@ -183,7 +187,7 @@ export class ItemConfig implements IItemConfig {
       //   this.updateVersion()
       // }
       if (!(/(^refConfig$)|^(on|get(.*?))|((.*?)Method)$|(.*?)filter(.*?)/.test(key)) && (keyValue instanceof Function)) {
-        const computedValue = expr(() => keyValue(this.form || {}, this))
+        const computedValue = expr(() => keyValue(this.formSource || {}, this))
         return this.$version>-1 && Utils.isNil(computedValue) ? defaultValue : computedValue
       }
       return keyValue

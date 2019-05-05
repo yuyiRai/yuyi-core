@@ -48,6 +48,7 @@ export class FormItemStore {
   constructor(storeForm: FormStore, code: string) {
     this.storeForm = storeForm
     this.itemConfig = new ItemConfig(storeForm.getConfig(code), storeForm.formSource, this)
+    this.itemConfig.setFormStore(storeForm)
     this.setAntdForm(storeForm.antdForm)
     
     this.ruleWatcher = reaction(() => this.itemConfig.rule, (rule) => {

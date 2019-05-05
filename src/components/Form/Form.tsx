@@ -32,13 +32,16 @@ export default class Form extends React.Component<IFormProps, any> {
   state: any = {
     itemChildren: [],
     lastConfig: [],
+    lastStore: null,
     form: null
   }
   static getDerivedStateFromProps(nextProps: IFormProps, prevState: any) {
     const { form, storeForm } = nextProps
     if (storeForm instanceof FormStore) {
-      storeForm.setConfig(nextProps.config)
-      if (storeForm !== prevState.lastConfig) {
+      if (nextProps.config !== prevState.lastConfig) {
+        storeForm.setConfig(nextProps.config)
+      }
+      if (storeForm !== prevState.lastStore) {
         console.log(Utils)
         console.log(storeForm.configList, prevState.lastConfig, storeForm.configList === prevState.lastConfig)
         prevState.itemChildren = (
@@ -55,7 +58,8 @@ export default class Form extends React.Component<IFormProps, any> {
         //   </For>
         // )
         prevState.form = form
-        prevState.lastConfig = storeForm
+        prevState.lastStore = storeForm
+        prevState.lastConfig = nextProps.config
         storeForm.setAntdForm(form)
       }
       storeForm.receiveAntdForm(form)
