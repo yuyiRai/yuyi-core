@@ -208,7 +208,7 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
     console.log('setForm', form)
     mapToDiff(this.formMap, form)
     for (const config of this.configList) {
-      registerKey(form, config.code)
+      registerKey(form, config.code, true)
     }
     this.formSource = form;
     this.formSourceTrack.push(Utils.cloneDeep(form));
@@ -243,9 +243,9 @@ export function registerKey(target: any, key: string, deep: boolean = false) {
 
   const keyDeep = key.split('.');
   // const coreKey = `$$core_${keyDeep[0]}`;
-  const defaultV = get(target, keyDeep[0], null)
+  const defaultV = get(target, keyDeep[0], target)
   const d = (deep?observable:observable.ref)
-  // debugger
+  debugger
   d(target, keyDeep[0], { value: defaultV, enumerable: false, configurable: true })
   // computed.struct(target, keyDeep[0], {
   //   get() { return get(this, coreKey) },

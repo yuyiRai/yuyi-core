@@ -43,7 +43,7 @@ export const form = Form.create({
     //将表单变化的值绑定到store中
     // console.log('onFieldsChange', props, changedFields, allValues);
     const r = props.storeForm.patchFieldsChange(changedFields);
-    console.log('onFieldsChange patchFieldsChange result', r);
+    console.log('onFieldsChange patchFieldsChange result', r, changedFields);
   },
   onValuesChange(props: IFormProps & FormComponentProps<any>, values, allValues) {
     // console.log('onValuesChange', props, values, allValues);
