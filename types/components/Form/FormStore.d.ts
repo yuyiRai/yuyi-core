@@ -14,7 +14,9 @@ export declare class GFormStore {
     static disposedForm(form: any): void;
     static registerForm<T = any>(form: any, instance: T, replace?: FormStore): FormStore<any>;
 }
+export declare type onItemChangeCallback = (code: string, value: any) => void;
 export declare class FormStore<T extends IKeyValueMap = any> extends GFormStore {
+    [x: string]: any;
     constructor();
     formSource: T;
     formSourceTrack: T[];
@@ -32,6 +34,8 @@ export declare class FormStore<T extends IKeyValueMap = any> extends GFormStore 
     clearValidate(): void;
     config: IObservableArray<IFormItemConfig>;
     readonly configList: IFormItemConfig[];
+    onItemChange(callback: onItemChangeCallback): void;
+    onItemChangeEmit(code: string, value: any): void;
     patchFieldsChange(patch: T, path?: string[], callback?: any): IKeyValueMap<boolean>;
     validate(): Promise<void>;
     readonly allFormMap: WeakMap<any, FormStore<any>>;

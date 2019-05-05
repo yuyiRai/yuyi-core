@@ -73,7 +73,7 @@ export class ItemConfig implements IItemConfig {
   }
 
   @computed.struct get formSource() {
-    console.log('this.formStore', this.formStore && this.formStore.formSource);
+    // console.log('this.formStore', this.formStore && this.formStore.formSource);
     return (this.formStore && this.formStore.lastFormSource) || this.form
   }
 

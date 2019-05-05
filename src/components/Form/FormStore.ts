@@ -12,6 +12,7 @@ import reduce from 'immer';
 import { ItemConfig } from '../../stores';
 import { FormItemStore } from './FormItem';
 import { EventEmitter } from '../../utils/EventEmitter';
+import { EventStoreInject } from '../../utils/EventStore';
 
 export interface ICommonFormConfig extends IKeyValueMap {
   $formStore?: FormStore;
@@ -36,7 +37,11 @@ export class GFormStore {
   }
 }
 
+export type onItemChangeCallback = (code: string, value: any) => void
+
+@EventStoreInject(['onItemChange'])
 export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
+  [x: string]: any;
   constructor() {
     super()
     observe(this.errorGroup, (listener: IMapDidChange) => {
@@ -45,7 +50,7 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
     })
     observe(this.formMap, listener => {
       // const config = this.formItemConfigMap[listener.name]
-      console.log('this.formMap', listener, this.formSource, this.formItemConfigMap)
+      // console.log('this.formMap', listener, this.formSource, this.formItemConfigMap)
       // for (const key in this.formItemConfigMap) {
       //   const config = this.formItemConfigMap[key]
       //   console.log('update config', config, key, (listener.name))
@@ -93,6 +98,13 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
     return this.config.toJSON()
   }
 
+  @autobind onItemChange(callback: onItemChangeCallback) {
+    this.$on('onItemChange', callback, this)
+  }
+  @autobind onItemChangeEmit(code: string, value: any) {
+    this.$emit('onItemChange', code, value)
+  }
+
   // @Memoize
   @action.bound patchFieldsChange(patch: T, path: string[] = [], callback?: any): IKeyValueMap<boolean> {
     const result: IKeyValueMap<boolean> = {}
@@ -120,6 +132,7 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
               this.formSource[key] = data.value
               this.formMap.set(key, data.value)
               console.log('set', 'formMap', this.formSource, this.formItemStores)
+              this.onItemChangeEmit(key, data.value)
               // for(const key of (this.formItemStores as any)) {
               //   console.log(key)
               //   const a: FormItemStore = key
@@ -146,6 +159,7 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
             set(this.formSource, key, obj)
             this.formMap.set(key, obj)
             // console.log('patchFieldsChange inner', pathStr, obj, value, this)
+            this.onItemChangeEmit(pathStr, value)
             return { [pathStr]: true } // 确认修改
           }
           return { [pathStr]: false } // 值不变
@@ -233,6 +247,7 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
   private registerFormSourceListerner() {
     if (this.formSourceListerner) {
       this.formSourceListerner();
+      this.formSourceListerner = null
     }
     this.formSourceListerner = observe(this.formSource, (listener: IObjectDidChange) => {
       // console.log('this.formSource', listener)
@@ -244,7 +259,6 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
     this.formMap = formMap;
   }
   @action.bound registerKey(target: any, deep: boolean = false)  {
-    // debugger
     for (const config of this.configList) {
       console.log('registerKey', config.code)
       registerKey(target, config.code, deep)

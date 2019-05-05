@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { IFormItemConfig } from './Interface';
 import { IKeyValueMap } from 'mobx';
-import { FormStore } from './FormStore';
+import { FormStore, onItemChangeCallback } from './FormStore';
 export declare const NativeStore: React.Context<{
     storeForm: any;
 }>;
@@ -10,6 +10,7 @@ export interface ICommonFormProps extends IKeyValueMap {
     config?: IFormItemConfig[];
     formStore?: FormStore;
     storeRef?: (store: FormStore) => void;
+    onItemChange?: onItemChangeCallback;
 }
 export interface ICommonFormState extends IKeyValueMap {
     formStore: FormStore;

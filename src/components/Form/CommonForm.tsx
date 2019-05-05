@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { IFormItemConfig } from './Interface';
 import { IKeyValueMap } from 'mobx';
-import { FormStore } from './FormStore';
+import { FormStore, onItemChangeCallback } from './FormStore';
 import { observer, inject } from 'mobx-react';
 
 export const NativeStore = React.createContext({storeForm: null});
@@ -15,7 +15,8 @@ export interface ICommonFormProps extends IKeyValueMap {
   model: any;
   config?: IFormItemConfig[];
   formStore?: FormStore;
-  storeRef?: (store: FormStore) => void
+  storeRef?: (store: FormStore) => void;
+  onItemChange?: onItemChangeCallback;
 }
 export interface ICommonFormState extends IKeyValueMap {
   formStore: FormStore;
@@ -57,6 +58,9 @@ export class CommonForm extends React.Component<ICommonFormProps, ICommonFormSta
       }
       if (Utils.isFunction(nextProps.storeRef)) {
         nextProps.storeRef(formStore)
+      }
+      if (Utils.isFunction(nextProps.onItemChange)) {
+        formStore.onItemChange(nextProps.onItemChange)
       }
       // console.log('formStore diff', nextProps.storeRef, formStore, prevState.formStore, formStore !== prevState.formStore)
       if (formStore !== prevState.formStore) {

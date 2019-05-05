@@ -10,6 +10,7 @@ export interface IEventStore extends IEventStoreBase, EventEmitter<any> {
     isValidEventName(eventName: string): boolean;
 }
 export declare class EventStore extends EventEmitter<any> implements IEventStore {
+    private eventMap;
     eventNames: Array<string>;
     constructor(eventNames: string[]);
     /**
@@ -28,7 +29,7 @@ export declare class EventStore extends EventEmitter<any> implements IEventStore
      * @param {string} eventName 事件名
      * @param {(...args, event) => void} callback 事件名
      */
-    $on(eventName: string, callback: Function): boolean;
+    $on(eventName: string, callback: Function, instance?: any): boolean;
 }
 export interface InjectedClass extends IEventStoreBase {
     __getEventListenersHooks?: (validEventNames: string[], allowExtendKey: IKeyValueMap, force?: boolean) => any;
