@@ -1,5 +1,5 @@
 /* eslint-disable */
-import CommonUtils from './commonUtils';
+import commonUtils from './commonUtils';
 import * as OptionsUtils from './OptionsUtils';
 import CustomUtils from './CustomUtils';
 import TimeBufferUtils from './TimeBuffer';
@@ -12,15 +12,16 @@ import * as SlotUtils from './SlotUtils'
 export type IUtils = typeof CustomUtils 
 & typeof OptionsUtils 
 & typeof typeUtils 
-& typeof CommonUtils 
+& typeof commonUtils 
 & typeof TimeBufferUtils 
 & typeof typeFilterUtils
 & typeof MessageUtils
+& typeof ParseUtils
 & typeof MobxUtils
 & typeof SlotUtils
 
 export const Utils: IUtils = {
-  ...CommonUtils,
+  ...commonUtils,
   ...OptionsUtils,
   ...TimeBufferUtils,
   ...typeUtils,

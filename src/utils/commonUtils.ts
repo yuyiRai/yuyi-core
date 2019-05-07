@@ -1,7 +1,9 @@
 /* eslint-disable */
-import { castArray, cloneDeep, forEach, isEqual, isFunction, 
+import {
+  castArray, cloneDeep, forEach, isEqual, isFunction,
   isRegExp, concat, isString, keys, last, property, reduce, escapeRegExp,
-  stubArray, takeRight, toArray, toString, values } from 'lodash';
+  stubArray, takeRight, toArray, toString, values
+} from 'lodash';
 import { EventEmitter } from './EventEmitter';
 import { HttpBox } from './HttpBox';
 import Utils from '.';
@@ -25,7 +27,7 @@ if (!Object.values) {
 }
 
 export function jsxIf(bool: any, when: any, elseValue?: any) {
-  if ( ( Utils.isFunctionFilter(bool) || (()=>bool) )()) {
+  if ((Utils.isFunctionFilter(bool) || (() => bool))()) {
     return when;
   } else {
     return elseValue
@@ -35,7 +37,7 @@ export function jsxIf(bool: any, when: any, elseValue?: any) {
 export default {
   jsxIf,
   stubArray: stubArray,
-  stubFunction() {},
+  stubFunction() { },
   stubObject() {
     return {};
   },
@@ -70,8 +72,8 @@ export default {
   },
   getTestArray(length: number) {
     const arr = []
-    for(let i=length;i>0;i--){
-      arr[i-1] = i
+    for (let i = length; i > 0; i--) {
+      arr[i - 1] = i
     }
     return arr
   },
@@ -84,7 +86,7 @@ export default {
     return result;
   },
   arrayMap2(array: any[], iteratee: any) {
-    var rLength = array.length % 8,length = rLength, pLength = array.length - rLength,result = Array(array.length);
+    var rLength = array.length % 8, length = rLength, pLength = array.length - rLength, result = Array(array.length);
     while (length--) {
       result[length] = iteratee(array[length], length);
     }
@@ -102,7 +104,7 @@ export default {
     return result;
   },
   arrayMapDive(array: any[], iteratee: any) {
-    let rLength = array.length % 8, length = rLength, pLength = (array.length-rLength), result = Array(array.length);
+    let rLength = array.length % 8, length = rLength, pLength = (array.length - rLength), result = Array(array.length);
     while (length--) {
       if (array[length])
         result[length] = iteratee(array[length], length, array);
@@ -110,51 +112,51 @@ export default {
     while (pLength) {
       let wlength = 8
       const tmp = rLength + pLength;
-      while(wlength) {
+      while (wlength) {
         const index = tmp - wlength--
         if (array[index])
           result[index] = iteratee(array[index], index, array);
       }
-      pLength-=8
+      pLength -= 8
     }
     return result;
   },
   arrayMapToKeysDive(array: any[], key: any) {
-    let rLength = array.length % 8, length = rLength, pLength = (array.length-rLength), result = Array(array.length);
+    let rLength = array.length % 8, length = rLength, pLength = (array.length - rLength), result = Array(array.length);
     while (length--) {
       result[length] = Utils.isObject(array[length]) ? array[length][key] : undefined;
     }
     while (pLength) {
       let wlength = 8
       const tmp = rLength + pLength;
-      while(wlength) {
+      while (wlength) {
         const index = tmp - wlength--
         result[index] = Utils.isObject(array[index]) ? array[index][key] : undefined;
       }
-      pLength-=8
+      pLength -= 8
     }
     return result;
   },
   arrayForEachDive(array: any[], iteratee: any) {
-    let rLength = array.length % 8, length = rLength, pLength = (array.length-rLength);
+    let rLength = array.length % 8, length = rLength, pLength = (array.length - rLength);
     while (length--) {
       iteratee(array[length], length, array);
     }
     while (pLength) {
       let wlength = 8
       const tmp = rLength + pLength;
-      while(wlength) {
+      while (wlength) {
         const index = tmp - wlength--
         iteratee(array[index], index, array);
       }
-      pLength-=8
+      pLength -= 8
     }
   },
   arrayPush(array: any[], values: any[]) {
     var index = -1,
-        length = values.length,
-        offset = array.length;
-  
+      length = values.length,
+      offset = array.length;
+
     while (++index < length) {
       array[offset + index] = values[index];
     }
@@ -162,18 +164,18 @@ export default {
   },
   arrayPushDive(arrayTarget: any[], array: any[]) {
     const rLength = array.length % 8, tLength = values.length
-    let length = rLength, pLength = array.length-rLength, offset = 0
+    let length = rLength, pLength = array.length - rLength, offset = 0
     while (length--) {
-      arrayTarget[tLength+offset++] = array[rLength-length-1]
+      arrayTarget[tLength + offset++] = array[rLength - length - 1]
     }
     const maxPlangth = rLength + pLength + 8
     while (pLength) {
       const tmp = maxPlangth - pLength;
       let length = 8
-      while(length) {
-        arrayTarget[tLength+offset++] = array[tmp - length--]
+      while (length) {
+        arrayTarget[tLength + offset++] = array[tmp - length--]
       }
-      pLength-=8
+      pLength -= 8
     }
   },
   // test(length: number, pi = 8) {
@@ -247,7 +249,7 @@ export default {
     return result;
   },
   arrayFilterDive(array: any[], iteratee: any) {
-    let rLength = array.length % 8, length = rLength, pLength = (array.length-rLength), result = [];
+    let rLength = array.length % 8, length = rLength, pLength = (array.length - rLength), result = [];
     while (length--) {
       const index = rLength - length - 1
       iteratee(array[index], index, array) && result.push(array[index]);
@@ -256,11 +258,11 @@ export default {
     while (pLength) {
       let wlength = 8
       const tmp = maxPlangth - pLength
-      while(wlength) {
+      while (wlength) {
         const index = (tmp - wlength--)
         iteratee(array[index], index, array) && result.push(array[index]);
       }
-      pLength-=8
+      pLength -= 8
     }
     return result;
   },
@@ -278,7 +280,7 @@ export default {
         : Utils.isNotEmptyObject(objOrArr) && [objOrArr],
     ) || []
   },
-  createGroupWith<T = any>(list: T[], keyOrWith: string | ((item: T) => string)): IKeyValueMap<T[]>  {
+  createGroupWith<T = any>(list: T[], keyOrWith: string | ((item: T) => string)): IKeyValueMap<T[]> {
     return reduce(Utils.isArrayFilter(list, []), function (map, item) {
       const mapKey = isString(keyOrWith) ? item[keyOrWith] : (isFunction(keyOrWith) ? keyOrWith(item) : "default")
       map[mapKey] = typeFilterUtils.isArrayFilter(map[mapKey], [])
@@ -289,7 +291,7 @@ export default {
   getEventEmitter() {
     return new EventEmitter()
   },
-  waitingPromise(time: number, emitValue: any, isError = false) {
+  waitingPromise<V = any>(time: number, emitValue: any, isError = false): Promise<V> {
     return new Promise((resolve, reject) => {
       setTimeout(isError ? reject : resolve, time, emitValue);
     })
@@ -301,7 +303,7 @@ export default {
    * @param { boolean } isConfirm 是否是经过确认的离开
    */
   pathReturn(instance: any, params: any, isConfirm: any, useBack: any) {
-    if(useBack) {
+    if (useBack) {
       return instance.$router.back()
     }
     const { query = {}, path: pathSet = undefined, ...other } = Utils.isObjectFilter(params) || {}
@@ -323,6 +325,7 @@ export default {
   last,
   cloneDeep,
   toArray,
+  toString,
   isEqual<A = any, B = any>(valueA: A, valueB: B, noStrict: boolean = false): boolean {
     const ia = Utils.isNotEmptyValueFilter
     if (noStrict) {

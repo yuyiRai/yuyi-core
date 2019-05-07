@@ -7,6 +7,7 @@ import { CheckItem, SwitchItem } from './CheckItem';
 import { InputNumberItem } from './NumberInputItem';
 import { RadioItem } from './RadioItem';
 import { IReactComponent } from 'mobx-react';
+import { SearchItem } from './Search';
 export function ItemSwitchType(type?: FormItemType): React.FunctionComponent<any> {
   switch (type) {
     case 'text': return InputItem;
@@ -20,6 +21,7 @@ export function ItemSwitchType(type?: FormItemType): React.FunctionComponent<any
     case 'switch': return SwitchItem;
     case 'radio': return RadioItem;
     case 'number': return InputNumberItem;
+    case 'search': return SearchItem;
     default: return InputItem;
   }
 }

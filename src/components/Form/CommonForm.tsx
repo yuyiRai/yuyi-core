@@ -1,10 +1,10 @@
 import * as React from 'react'
-import { IFormItemConfig } from './Interface';
+import { IFormItemConstructor } from './Interface';
 import { IKeyValueMap } from 'mobx';
 import { FormStore, onItemChangeCallback } from './FormStore';
 import { observer, inject } from 'mobx-react';
 
-export const NativeStore = React.createContext({storeForm: null});
+export const NativeStore = React.createContext({formStore: null});
 
 import LocaleProvider from 'antd/lib/locale-provider';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
@@ -13,7 +13,7 @@ import { Utils } from '../../utils';
 
 export interface ICommonFormProps extends IKeyValueMap {
   model: any;
-  config?: IFormItemConfig[];
+  config?: IFormItemConstructor[];
   formStore?: FormStore;
   storeRef?: (store: FormStore) => void;
   onItemChange?: onItemChangeCallback;
@@ -25,7 +25,7 @@ export interface ICommonFormState extends IKeyValueMap {
 @inject(
   (stores, nextProps: ICommonFormProps, context) => {
     console.log('CommonForm get store', stores, nextProps, context)
-    return { 'storeForm': stores['storeForm'] }
+    return { 'formStore': stores['formStore'] }
   }
 )
 @observer
@@ -49,7 +49,7 @@ export class CommonForm extends React.Component<ICommonFormProps, ICommonFormSta
     if (last.formSource !== nextProps.model) {
       // console.log('getDerivedStateFromProps', nextProps, prevState)
       FormStore.disposedForm(prevState.formStore.formSource)
-      prevState.formStore.formItemMap.delete(prevState.formStore.formSource)
+      // prevState.formStore.formItemMap.delete(prevState.formStore.formSource)
     }
     if (!Utils.isNil(nextProps.model)){
       const formStore = FormStore.registerForm(nextProps.model, prevState.formStore.instance, prevState.formStore)
@@ -75,7 +75,7 @@ export class CommonForm extends React.Component<ICommonFormProps, ICommonFormSta
     const { children, config } = this.props
     return (
       <LocaleProvider locale={zh_CN}>
-        <NativeStore.Provider value={{storeForm: this.state.formStore}} >
+        <NativeStore.Provider value={{formStore: this.state.formStore}} >
           <>
             {Utils.isArray(config) && <FormGroup config={config} ></FormGroup>}
             {children}

@@ -1,11 +1,11 @@
 import Input, { InputProps, TextAreaProps } from 'antd/lib/input';
 import 'antd/lib/input/style/css';
-import Tooltip from 'antd/lib/tooltip';
 import React, { FocusEventHandler, ChangeEventHandler } from 'react';
 import { OFormItemCommon } from '../Interface/FormItem';
 import { commonInjectItem } from "./commonInjectItem";
 import { Utils } from '../../../utils';
 import { isFunction } from 'util';
+import { ValueHintContainer } from './OptionsUtil/ToolTipContainer';
 
 const inev = Utils.isNotEmptyValueFilter
 
@@ -73,14 +73,11 @@ export const TextAreaItem: React.FunctionComponent<ITextAreaProps> = commonInjec
 )
 
 const Text: React.FunctionComponent<IInputItemProps> = (props) => {
-  const { antdForm, storeForm, code, itemConfig, ...other } = props
+  const { antdForm, formStore, code, itemConfig, ...other } = props
   const { value, onChange, onBlur } = useShadowValue<IInputItemProps>(itemConfig.currentValue, props)
   // console.log('fieldDecoratorOption', itemConfig.label, value, other.value, other);
   return (
-    <Tooltip trigger={['focus', 'hover'] as any}
-      title={value}
-      placement="topLeft"
-    >
+    <ValueHintContainer value={value}>
       <Input allowClear
         {...other}
         onChange={onChange}
@@ -89,13 +86,13 @@ const Text: React.FunctionComponent<IInputItemProps> = (props) => {
         suffix={itemConfig.suffix}
         maxLength={itemConfig.maxLength}
       />
-    </Tooltip>
+    </ValueHintContainer>
   )
   // return <Input {...other}/>
 }
 
 const Area: React.FunctionComponent<ITextAreaProps> = (props) => {
-  const { antdForm, storeForm, code, itemConfig, ...other } = props
+  const { antdForm, formStore, code, itemConfig, ...other } = props
   const { value, onChange, onBlur } = useShadowValue<ITextAreaProps>(other.value, props)
   return (
     <Input.TextArea

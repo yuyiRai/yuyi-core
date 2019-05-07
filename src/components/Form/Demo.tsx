@@ -13,7 +13,7 @@ const voiceroid = ['1', '2', '3', '4', '5']
 const props: any = {
   model: {
     name: 'yuyi',
-    password: '123456',
+    password: '123456', voiceroid: 'a,b',
     info: {
       birthday: '1996-06-30',
       voiceroid: [...voiceroid]
@@ -21,20 +21,21 @@ const props: any = {
     // showVoiceroid: false
   },
   config: [
-    { label: '姓名', code: 'name', suffix: <Icon type='plus' />, required: form => !form.showVoiceroid, rule: 'commonCode' },
+    { label: '姓名', code: 'name', suffix: <Icon type='plus' />, required: form => form.showVoiceroid !== '1', rule: 'commonCode' },
     { label: '密码', code: 'password' },
     { label: '生日', code: 'info.birthday', value: new Date(), type: "date", rule: 'futureDate' },
     { label: '年龄', code: 'info.birthday2', type: "number" },
     {
       label: '提交时间', code: 'info.submitTime', type: "dateToDate", rule: 'dateToDate30', disabled: (form: any, itemConfig: ItemConfig) => {
         // console.log(form, itemConfig);
-        return form.showVoiceroid
+        return form.showVoiceroid !== '1'
       }
     },
-    { label: 'A', code: 'showVoiceroid', type: "checkOne", value: false },
-    { label: 'B', code: 'info.voiceroid', type: "check", options: voiceroid, hidden: form => !form.showVoiceroid },
-    { label: 'C', code: 'info.voiceroid2', type: "radio", options: voiceroid, hidden: form => !form.showVoiceroid },
-    { label: '产品介绍', code: 'info.introduce', type: "textarea", options: voiceroid, hidden: form => !form.showVoiceroid },
+    { label: 'A', code: 'showVoiceroid', type: "checkOne", value: '1' },
+    { label: 'B', code: 'voiceroid', transformer: 'group', type: "search", options: [{label: 'A', value: 'a'}, {label: 'B', value: 'b'}, {label: 'C', value: 'c'}]  },
+    { label: 'B', code: 'info.voiceroid', type: "check", options: voiceroid, hidden: form => form.showVoiceroid !== '1' },
+    { label: 'C', code: 'info.voiceroid2', type: "radio", options: voiceroid, hidden: form => form.showVoiceroid !== '1' },
+    { label: '产品介绍', code: 'info.introduce', type: "textarea", options: voiceroid, hidden: form => form.showVoiceroid !== '1' },
   ]
 }
 

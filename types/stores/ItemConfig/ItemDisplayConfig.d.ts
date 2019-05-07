@@ -1,10 +1,27 @@
 import { IKeyValueMap } from 'mobx';
-import { ItemConfig } from './ItemConfig';
+export interface IDisplayConfig {
+    code: string;
+    name?: string;
+    label?: string;
+    inline?: boolean;
+    isViewOnly?: boolean;
+    showMessage?: boolean;
+    textAlign?: 'center' | 'left' | 'right';
+    disabled?: boolean;
+    size?: boolean;
+    col?: number;
+    offset?: number;
+    offectRight?: number;
+    prefix?: any;
+    suffix?: any;
+    height?: string;
+    useLabel?: boolean;
+}
 export declare class DisplayConfig {
-    itemConfig: ItemConfig;
+    itemConfig: IDisplayConfig;
     props: IKeyValueMap;
-    init(itemConfig: ItemConfig, props: IKeyValueMap): this;
-    readonly isInlineMessage: any;
+    init(itemConfig: IDisplayConfig, props: IKeyValueMap): this;
+    readonly isInlineMessage: boolean;
     readonly isShowMessage: boolean;
     readonly textAlign: string;
     readonly isDisabled: any;

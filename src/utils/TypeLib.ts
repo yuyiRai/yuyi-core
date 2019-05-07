@@ -73,11 +73,11 @@ export const typeUtils = {
    * 判断非空字符串
    * @param {*} str
    */
-  isNotEmptyString(str: any): boolean {
+  isNotEmptyString(str: any): str is string {
     return isString(str) && str.length > 0;
   },
   isFunction,
-  isNotFunction(func: any): boolean {
+  isNotFunction(func: any) {
     return !isFunction(func);
   },
   isNil,
@@ -123,7 +123,7 @@ export interface ITypeFilterUtils {
   isStringFilter: FilterFunction<string>;
   isNotEmptyStringFilter: FilterFunction<string>;
   isArrayFilter: FilterArrayFunction; 
-  isObjectFilter: FilterFunction<{[key: string]: any}>; 
+  isObjectFilter: FilterFunction; 
   isNotEmptyArrayFilter: FilterArrayFunction;  
   isNotEmptyValueFilter: FilterFunction<boolean | string | number | any>;
   isFunctionFilter: FilterFunction<Function>

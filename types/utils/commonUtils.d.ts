@@ -39,7 +39,7 @@ declare const _default: {
     castObjectArray(objOrArr: any[], allowEmpty?: boolean): any[];
     createGroupWith<T = any>(list: T[], keyOrWith: string | ((item: T) => string)): IKeyValueMap<T[]>;
     getEventEmitter(): EventEmitter<{}>;
-    waitingPromise(time: number, emitValue: any, isError?: boolean): Promise<{}>;
+    waitingPromise<V = any>(time: number, emitValue: any, isError?: boolean): Promise<V>;
     /**
      * 组件返回
      * @param { { $router: any, $route: any } } instance
@@ -56,6 +56,7 @@ declare const _default: {
         <T>(value: T): T[keyof T][];
         (): any[];
     };
+    toString: (value: any) => string;
     isEqual<A = any, B = any>(valueA: A, valueB: B, noStrict?: boolean): boolean;
     reduce: {
         <T, TResult>(collection: T[], callback: import("lodash").MemoListIterator<T, TResult, T[]>, accumulator: TResult): TResult;

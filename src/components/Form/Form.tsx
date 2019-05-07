@@ -6,15 +6,15 @@ import * as React from 'react';
 import styled from 'styled-components';
 import FormItem from './FormItem';
 import { FormStore } from './FormStore';
-import { IFormItemConfig } from './Interface';
+import { IFormItemConstructor } from './Interface';
 import { form } from './util';
 import { NativeStore } from './CommonForm';
 import { Observer } from 'mobx-react-lite';
 // import { Utils } from '../../build';
 
 export interface IFormProps {
-  storeForm?: FormStore;
-  config: IFormItemConfig[];
+  formStore?: FormStore;
+  config: IFormItemConstructor[];
   form?: WrappedFormUtils<any>;
   [key: string]: any;
 }
@@ -36,40 +36,40 @@ export default class Form extends React.Component<IFormProps, any> {
     form: null
   }
   static getDerivedStateFromProps(nextProps: IFormProps, prevState: any) {
-    const { form, storeForm } = nextProps
-    if (storeForm instanceof FormStore) {
+    const { form, formStore } = nextProps
+    if (formStore instanceof FormStore) {
       if (nextProps.config !== prevState.lastConfig) {
-        storeForm.setConfig(nextProps.config)
+        formStore.setConfig(nextProps.config)
       }
-      if (storeForm !== prevState.lastStore) {
+      if (formStore !== prevState.lastStore) {
         console.log(Utils)
-        console.log(storeForm.configList, prevState.lastConfig, storeForm.configList === prevState.lastConfig)
+        console.log(formStore.configList, prevState.lastConfig, formStore.configList === prevState.lastConfig)
         prevState.itemChildren = (
-          // <For index='i' each="config" of={storeForm.configList}>
+          // <For index='i' each="config" of={formStore.configList}>
           //   <FormItem {...formItemLayout} key={i} code={config.code}></FormItem>
           // </For>
-          storeForm.configList.map(config => {
+          formStore.configList.map(config => {
             return <FormItem {...formItemLayout} key={config.code} code={config.code}></FormItem>
           })
         )
         // prevState.a = (
-        //   <For each="config" of={storeForm.configList} index="i">
+        //   <For each="config" of={formStore.configList} index="i">
         //     <FormItem {...formItemLayout} key={config.code} code={config.code}></FormItem>
         //   </For>
         // )
         prevState.form = form
-        prevState.lastStore = storeForm
+        prevState.lastStore = formStore
         prevState.lastConfig = nextProps.config
-        storeForm.setAntdForm(form)
+        formStore.setAntdForm(form)
       }
-      storeForm.receiveAntdForm(form)
+      formStore.receiveAntdForm(form)
       console.log('getDerivedStateFromProps', nextProps)
     }
     return prevState
   }
   // @Utils.computed get itemChildren(){
-  //   const { storeForm } = this.props
-  //   return storeForm.configList.map(config => {
+  //   const { formStore } = this.props
+  //   return formStore.configList.map(config => {
   //     return <FormItem {...formItemLayout} key={config.code} code={config.code}></FormItem>
   //   })
   // }
@@ -78,7 +78,7 @@ export default class Form extends React.Component<IFormProps, any> {
     const { children, className } = this.props
     // console.log(form, children)
     return (
-      <Provider antdForm={form} storeForm={this.props.storeForm}>
+      <Provider antdForm={form} formStore={this.props.formStore}>
         <>
           {/* <If condition={true}>
             good taste in music
@@ -124,7 +124,7 @@ export const FormGroup: React.FunctionComponent<IFormProps> = (props: IFormProps
         console.log('fromgroup get store', props, value)
         return (
           <Observer render={() => (
-            value.storeForm && <InjectedForm {...props} storeForm={value.storeForm} />
+            value.formStore && <InjectedForm {...props} formStore={value.formStore} />
           )}></Observer>
         )
       }

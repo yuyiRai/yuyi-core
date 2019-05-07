@@ -1,21 +1,23 @@
 /* eslint-disable */
 import { observable, computed, action, runInAction } from 'mobx';
-import { EventStoreInject } from '../../utils/EventStore';
-import { ItemConfig } from '../ItemConfig';
 import { autobind } from 'core-decorators';
 import Utils, { Option } from '../../utils';
-import { findIndex, cloneDeep } from 'lodash'
+import { findIndex, cloneDeep, pullAll } from 'lodash'
+import { createTransformer, ITransformer } from 'mobx-utils'
+import { IItemConfig } from '../ItemConfig/interface';
 
 
-@EventStoreInject(['change', 'change-with', 'options-change'], { itemConfig: ItemConfig })
-export class OptionsStore {
+export class OptionsStore<V = any> {
   [k: string]: any;
-  @observable
-  itemConfig: ItemConfig;
+  @observable itemConfig: IItemConfig;
   __keyMap = {};
   __optionMap = new WeakMap();
-  constructor(itemConfig: ItemConfig) {
+  @observable.ref transformer: ITransformer<OptionsStore, V[]>;
+  constructor(itemConfig: IItemConfig, transformer?: ITransformer<OptionsStore, V[]>) {
     this.itemConfig = itemConfig;
+    if (transformer) {
+      this.transformer = createTransformer(transformer)
+    }
     if (this.itemConfig.allowInput) {
       // console.log(this);
       // this.$on('options-change', (options: Option[]) => {
@@ -33,10 +35,8 @@ export class OptionsStore {
       // }, { fireImmediately: true })
     }
   }
-  @observable
-  shadowOption: any = { key: Utils.uuid(), errorMsg: null, label: '', value: '', highlight: true };
-  @computed
-  get shadowOptionMode() {
+  @observable shadowOption: Option = { key: Utils.uuid(), errorMsg: null, label: '', value: '', highlight: true };
+  @computed get shadowOptionMode() {
     return this.itemConfig.code === this.itemConfig.nameCode ? 'text' : 'code';
   }
   /**
@@ -81,8 +81,7 @@ export class OptionsStore {
       // }
       // console.error('shadowOption result', result, value)
       runInAction(() => this.updateShadowOption(value, label));
-    }
-    catch (error) {
+    } catch (error) {
       console.log('shadowOption', error)
       if (this.shadowOption.label !== value) {
         this.shadowOption.value = value;
@@ -221,7 +220,7 @@ export class OptionsStore {
       return Utils.isEqual(v, value) || (Utils.isEqual(label, value));
     });
   }
-  @computed get displayOptions() {
+  @computed get displayOptions(): Option[] {
     const { allowInput } = this.itemConfig;
     const defaultOptions = this.filterOptions;
     if (allowInput) {
@@ -238,5 +237,39 @@ export class OptionsStore {
       }
     }
     return defaultOptions;
+  }
+
+  @computed get transformOption(): V[] {
+    return this.transformer ? this.transformer(this) : []
+  }
+
+  @autobind valuesToLabels(value: any) {
+    return Utils.valuesToLabels(this.displayOptions, value)
+  }
+  @autobind labelsToValues(label: any) {
+    return Utils.labelsToValues(this.displayOptions, label)
+  }
+
+  @computed get selectedLables() {
+    const { currentComponentValue: value } = this.itemConfig
+    return Utils.zipEmptyData(Utils.isNotEmptyArrayFilter(this.valuesToLabels(value)) || [this.shadowOption.label])
+  }
+  @computed get selectedLablesStr() {
+    return this.selectedLables.join(',')
+  }
+  @computed get selectedLablesConfig() {
+    const { currentComponentValue: value } = this.itemConfig
+    return Utils.arrayMapDive(this.selectedLables, (label: string) => {
+      return {
+        label,
+        remove: () => {
+          return pullAll([...Utils.castArray(value)], this.labelsToValues(label))
+        }
+      }
+    })
+  }
+  @computed get hasSelectedTag(){
+    console.log('selectedLablesConfig', this.selectedLablesConfig)
+    return this.selectedLablesConfig.length > 0
   }
 }

@@ -1,3 +1,7 @@
+import { isDate } from "lodash";
+import moment from "moment";
+import { typeUtils } from "./TypeLib";
+
 /**
 * Created by jiachenpan on 16/11/18.
 */
@@ -7,7 +11,7 @@ export function parseTime(time: any, cFormat?: string) {
    return null
  }
  const format = cFormat || '{y}-{m}-{d} {h}:{i}:{s}'
- let date
+ let date: any
  if (typeof time === 'object') {
    date = time
  } else {
@@ -32,4 +36,19 @@ export function parseTime(time: any, cFormat?: string) {
    return value || 0
  })
  return time_str
+}
+
+
+export const dateFormatStr = 'YYYY-MM-DD'
+export const dateTimeFormatStr = 'YYYY-MM-DD HH:mm:ss'
+export function toDateString(value: any, formatter: string = dateTimeFormatStr): Date | string {
+  if (isDate(value)) {
+    return moment(value).format(formatter)
+  } else if (typeUtils.isNotEmptyString(value)) {
+    const date = moment(value)
+    if (date.isValid()) {
+      return date.format(formatter)
+    }
+  }
+  return moment().format(formatter)
 }

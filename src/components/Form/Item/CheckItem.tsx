@@ -17,12 +17,12 @@ export const CheckItem: React.FunctionComponent<IAppProps> = commonInjectItem(
   props => <Check {...props} />
 )
 
-const Check: React.FunctionComponent<IAppProps> = ({ antdForm, storeForm, code, itemConfig, onChange, ...other }) => {
+const Check: React.FunctionComponent<IAppProps> = ({ antdForm, formStore, code, itemConfig, onChange, ...other }) => {
   const store = useOptionsStore(itemConfig)
   // console.log(other, optionStore, optionStore.displayOptions)
   return (
     <Observer>{() =>
-      <Checkbox.Group {...other} style={{ width: '100%' }} onChange={onChange} options={store.displayOptions}>
+      <Checkbox.Group {...other} style={{ width: '100%' }} onChange={onChange} options={store.displayOptions as any}>
         <Row>
           <Col span={8}><Checkbox value="A">A</Checkbox></Col>
           <Col span={8}><Checkbox value="B">B</Checkbox></Col>
@@ -52,7 +52,7 @@ interface SwitchProps extends ElementReactLibs.ComponentProps<{}> {
 export interface ISwitchItemProps extends SwitchProps, OFormItemCommon {
 
 }
-const OSwitch = ({ antdForm, storeForm, code, itemConfig, ...other }: ISwitchItemProps) => {
+const OSwitch = ({ antdForm, formStore, code, itemConfig, ...other }: ISwitchItemProps) => {
   console.log(other)
   return <Switch {...other} />
 }

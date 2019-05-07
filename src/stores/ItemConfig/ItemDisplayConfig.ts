@@ -1,13 +1,29 @@
 /* eslint-disable */
 import { observable, computed, action, IKeyValueMap } from 'mobx';
-import { ItemConfig } from './ItemConfig';
 import Utils from '../../utils';
-
+export interface IDisplayConfig {
+  code: string;
+  name?: string;
+  label?: string;
+  inline?: boolean;
+  isViewOnly?: boolean;
+  showMessage?: boolean;
+  textAlign?: 'center' | 'left' | 'right';
+  disabled?: boolean;
+  size?: boolean;
+  col?: number;
+  offset?: number;
+  offectRight?: number;
+  prefix?: any;
+  suffix?: any;
+  height?: string;
+  useLabel?: boolean;
+}
 export class DisplayConfig {
-  @observable itemConfig: ItemConfig
+  @observable itemConfig: IDisplayConfig
   @observable.ref props: IKeyValueMap
   
-  @action init(itemConfig: ItemConfig, props: IKeyValueMap){
+  @action init(itemConfig: IDisplayConfig, props: IKeyValueMap){
     this.itemConfig = itemConfig;
     this.props = props;
     return this;

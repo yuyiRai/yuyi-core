@@ -33,7 +33,7 @@ export interface IInputNumberProps extends InputNumberProps, OFormItemCommon {
 
 const defaultPrecision = 0
 
-const App: React.FunctionComponent<IInputNumberProps> = ({ antdForm, storeForm, code, itemConfig, className, ...other }) => {
+const App: React.FunctionComponent<IInputNumberProps> = ({ antdForm, formStore, code, itemConfig, className, ...other }) => {
   const { suffix } = itemConfig;
   return (
     <span>

@@ -7,7 +7,7 @@ interface IAutoCompleteItemProps extends AutoCompleteProps, OFormItemCommon{
 }
 
 const AutoCompleteItem: React.FunctionComponent<IAutoCompleteItemProps> = (props) => {
-  const { antdForm, storeForm, code, itemConfig, ...other } = props
+  const { antdForm, formStore, code, itemConfig, ...other } = props
   return <AutoComplete {...other}/>;
 };
 

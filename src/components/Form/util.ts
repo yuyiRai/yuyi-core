@@ -1,7 +1,6 @@
 import Form, { FormComponentProps } from 'antd/lib/form'
 import { } from 'antd/lib/form/interface'
 import { IFormProps } from './Form';
-import { IFormItemConfig } from './Interface';
 import { IKeyValueMap, } from 'mobx';
 import { get, set } from 'lodash';
 import Utils from '../../utils';
@@ -10,15 +9,17 @@ import { WrappedFormUtils } from 'antd/lib/form/Form';
 
 export function filterToValue(v: any, defaultValue?: any) {
   const v2 = Utils.isNotEmptyValueFilter(Utils.isArray(v) ? Utils.zipEmptyData(v) : v, defaultValue)
-  return v2 === undefined ? null : v2
+  return v2 === null ? undefined : v2
 }
 
-export const objToForm = (model: IKeyValueMap, configList: IFormItemConfig[], store: FormStore, form: WrappedFormUtils) => {
+export const objToForm = (model: IKeyValueMap, store: FormStore, form: WrappedFormUtils) => {
   let target = {}
   const r = {}
-  for (const config of configList) {
+  // console.log('formValueTransform', store.formValueTransform)
+  for (const config of store.configList) {
     const v = get(model, config.code)
-    const value = filterToValue(v, config.value)
+    const value = store.getF2VValue(config.code, filterToValue(v, config.value))
+    // console.log('formValueTransform', value, v)
     set(target, config.code, Form.createFormField({ value }))
     // console.log('initvalue', config.code, v, value);
     if (!Utils.isEqual(v, value, true)) {
@@ -42,7 +43,7 @@ export const form = Form.create({
   onFieldsChange(props: IFormProps & FormComponentProps<any>, changedFields: any, allValues) {
     //将表单变化的值绑定到store中
     // console.log('onFieldsChange', props, changedFields, allValues);
-    const r = props.storeForm.patchFieldsChange(changedFields);
+    const r = props.formStore.patchFieldsChange(changedFields);
     console.log('onFieldsChange patchFieldsChange result', r, changedFields);
   },
   onValuesChange(props: IFormProps & FormComponentProps<any>, values, allValues) {
@@ -50,6 +51,6 @@ export const form = Form.create({
   },
   mapPropsToFields(props: IFormProps & FormComponentProps<any>) {
     //将store中的值绑定到视图中
-    return objToForm(props.storeForm.formSource, props.config, props.storeForm, props.form)
+    return objToForm(props.formStore.formSource, props.formStore, props.form)
   },
 })

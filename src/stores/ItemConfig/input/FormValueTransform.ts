@@ -1,19 +1,25 @@
 /* eslint-disable */
 import { parseTime } from '../../../utils/ParseUtils'
-import Utils from '../../../utils';
+import moment from 'moment'
+import Utils, { observable, computed } from '../../../utils';
+import { FormItemType } from '../interface';
 
-export type FilterType = 'group' | 'check' | 'checkOne' | 'dateTime' | 'dateToDate'
-export class CommonValueFilter {
-  type: FilterType;
+export type FilterType = 'group' | FormItemType
+export interface IFormValueTransform {
+  F2V: (value: any) => any;
+  V2F: (value: any) => any;
+}
+export class FormValueTransform implements IFormValueTransform {
+  @observable private type: FilterType;
   constructor(type: FilterType) {
     this.type = type
   }
-  get filter() {
+  @computed get F2V() {
     switch (this.type) {
       case 'group':
-        return this.groupFilter
+        return this.groupF2V
       case 'check':
-        return this.groupFilter
+        return this.groupF2V
       case 'checkOne':
         return (v: any) => v === '1';
       case 'dateTime': 
@@ -24,14 +30,14 @@ export class CommonValueFilter {
       case 'dateToDate':
         return (v: any) => Utils.isArrayFilter(v, []).filter((i) => Utils.isNotEmptyValue(i))
     }
-    return this.normalFilter
+    return this.normalF2V
   }
-  get filterToValue() {
+  @computed get V2F() {
     switch (this.type) {
       case 'group':
-        return this.groupFilterToValue
+        return this.groupV2F
       case 'check':
-        return this.groupFilterToValue
+        return this.groupV2F
       case 'checkOne':
         return (v: any) => {
           return v===true ? '1' : '0'
@@ -39,7 +45,7 @@ export class CommonValueFilter {
       case 'dateTime': 
         return (v: any) => Utils.isDate(v) ? v : 
                 (Utils.isNotEmptyString(v) 
-                  ? (v.length<11?(v+" 00:00:00"):v) 
+                  ? moment(v).format('YYYY-MM-DD HH:mm:ss')
                   : undefined)
       case 'dateToDate':
         return (v: any) => {
@@ -50,21 +56,22 @@ export class CommonValueFilter {
           return [s,e]
         }
     }
-    return this.normalFilter
+    return this.normalF2V
   }
 
-  normalFilter(value: any) {
-    return Utils.isNotEmptyValueFilter(value, null)
+  private normalF2V(value: any) {
+    return Utils.isNotEmptyValueFilter(value)
   }
-  groupFilter(string: any) {
-    return Utils.isNotEmptyString(string) ? string.split(',').filter((i: string)=>Utils.isNotEmptyString(i)) : [] 
+  private groupF2V(string: any) {
+    // debugger
+    return Utils.isNotEmptyString(string) ? Utils.zipEmptyData(string.split(',')) : [] 
   }
-  groupFilterToValue(array: any) {
-    return Utils.isArrayFilter(array, []).filter(i=>Utils.isNotEmptyString(i)).join(',')
+  private groupV2F(array: any) {
+    return Utils.toString(Utils.zipEmptyData(Utils.isArrayFilter(array, [])))
   }
-  
+
 }
 
-export default function getFilter(type: FilterType) {
-  return new CommonValueFilter(type);
+export default function getTransform(type: FilterType | string): IFormValueTransform {
+  return new FormValueTransform(type as FilterType);
 }

@@ -79,8 +79,8 @@ export declare function labelToValue(optionList: Option[], label: SearchKey<stri
  * @param value
  */
 export declare function valueToLabel(optionList: Option[], value: SearchKey<string>): string | undefined;
-export declare function valuesToLabels(options: Option[], value: SearchKey<string>): string;
-export declare function valuesToLabels(options: Option[], value: SearchKey<string>, joinKey: string): string[];
+export declare function valuesToLabels(options: Option[], value: SearchKey<string>): string[];
+export declare function valuesToLabels(options: Option[], value: SearchKey<string>, joinKey: string): string;
 export declare function labelsToValues(options: Option[], label: SearchKey<string>): string[];
 export declare function labelsToValues(options: Option[], label: SearchKey<string>, joinKey: string): string;
 export declare function getCodeListByKey(codeType: Option[]): RemoteSearcher;

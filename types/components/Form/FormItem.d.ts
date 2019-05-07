@@ -1,4 +1,4 @@
-import { WrappedFormUtils } from 'antd/lib/form/Form';
+import { WrappedFormUtils, GetFieldDecoratorOptions } from 'antd/lib/form/Form';
 import { FormItemProps } from 'antd/lib/form/FormItem';
 import 'antd/lib/form/style/css';
 import * as React from 'react';
@@ -18,31 +18,17 @@ export declare class FormItemStore {
     ruleWatcher: IReactionDisposer;
     validateReset: IReactionDisposer;
     itemConfig: ItemConfig;
-    storeForm: FormStore;
+    formStore: FormStore;
     readonly antdForm: WrappedFormUtils;
     setAntdForm(antdForm: WrappedFormUtils): void;
-    constructor(storeForm: FormStore, code: string);
+    constructor(formStore: FormStore, code: string);
     readonly code: string;
     init(): void;
     dispose(): void;
     readonly fieldDecorator: (node: React.ReactNode) => React.ReactNode;
     getFieldDecorator: (store: FormItemStore) => (node: React.ReactNode) => React.ReactNode;
-    readonly decoratorOptions: {
-        validateTrigger: string[];
-        rules: import("../../stores").RuleConfig<any>[];
-        initialValue: any;
-        getValueProps(): {
-            value: any;
-        };
-    };
-    getFieldDecoratorOptions: import("mobx-utils").ITransformer<ItemConfig, {
-        validateTrigger: string[];
-        rules: import("../../stores").RuleConfig<any>[];
-        initialValue: any;
-        getValueProps(): {
-            value: any;
-        };
-    }>;
+    readonly decoratorOptions: GetFieldDecoratorOptions;
+    getFieldDecoratorOptions: import("mobx-utils").ITransformer<ItemConfig, GetFieldDecoratorOptions>;
     readonly Component: JSX.Element;
     readonly renderer: (children: JSX.Element) => JSX.Element;
 }
@@ -58,7 +44,7 @@ export declare class FormItemContainer extends React.Component<any, IFormItemSta
         display: string;
     }>;
     propsTransform: import("mobx-utils").ITransformer<ItemConfig, {
-        type: any;
+        type: import("./Interface/FormItem").FormItemType;
         displayProps: {
             colSpan: number;
             useColumn: any;
@@ -72,7 +58,7 @@ export declare class FormItemContainer extends React.Component<any, IFormItemSta
         display: string;
     };
     readonly containerProps: {
-        type: any;
+        type: import("./Interface/FormItem").FormItemType;
         displayProps: {
             colSpan: number;
             useColumn: any;

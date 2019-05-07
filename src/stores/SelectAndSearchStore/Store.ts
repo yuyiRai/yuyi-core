@@ -1,7 +1,8 @@
 /* eslint-disable */
 import { observable, computed, action, runInAction } from 'mobx';
 import { EventStoreInject } from '../../utils/EventStore';
-import { ItemConfig } from '../ItemConfig';
+import { ItemConfigBase } from '../ItemConfig/ItemConfigBase';
+import { ItemConfig } from '../ItemConfig/ItemConfig';
 import { autobind, } from 'core-decorators';
 import { OptionsStore } from './OptionsStore';
 import Utils, { Option } from '../../utils';
@@ -11,7 +12,7 @@ const _ = {
   last, toString, pullAllBy, pullAll, some, map, filter, concat, get
 }
 
-@EventStoreInject(['change', 'change-with', 'options-change'], { itemConfig: ItemConfig })
+@EventStoreInject(['change', 'change-with', 'options-change'], { itemConfig: ItemConfigBase })
 export class SelectAndSearchStore {
   [k: string]: any;
   @observable type = 'select';

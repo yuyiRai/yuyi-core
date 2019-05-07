@@ -1,7 +1,7 @@
 import { ObservableMap, IObservableArray, IKeyValueMap, IMapDidChange, Lambda } from 'mobx';
-import { IFormItemConfig } from './Interface/FormItem';
+import { IFormItemConstructor } from './Interface/FormItem';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
-import { ItemConfig } from '../../stores';
+import { ItemConfig, IFormValueTransform } from '../../stores';
 import { FormItemStore } from './FormItem';
 import { EventEmitter } from '../../utils/EventEmitter';
 export interface ICommonFormConfig extends IKeyValueMap {
@@ -32,15 +32,17 @@ export declare class FormStore<T extends IKeyValueMap = any> extends GFormStore 
     hasErrors(itemKey: keyof T): boolean;
     updateError(itemKey: keyof T, errors?: Array<Error>): void;
     clearValidate(): void;
-    config: IObservableArray<IFormItemConfig>;
-    readonly configList: IFormItemConfig[];
+    config: IObservableArray<IFormItemConstructor>;
+    readonly configList: IFormItemConstructor[];
     onItemChange(callback: onItemChangeCallback): void;
     onItemChangeEmit(code: string, value: any): void;
     patchFieldsChange(patch: T, path?: string[], callback?: any): IKeyValueMap<boolean>;
+    readonly formValueTransform: Map<string, IFormValueTransform>;
+    getV2FValue(key: string, value: any): any;
+    getF2VValue(key: string, value: any): any;
+    setFormValue(value: any, key: string, innerPath?: string): boolean;
     validate(): Promise<void>;
     readonly allFormMap: WeakMap<any, FormStore<any>>;
-    formItemMap: ObservableMap<any, ICommonFormConfig>;
-    readonly formItemConfigMap: ICommonFormConfig;
     reactionAntdFormEmitter: EventEmitter<WrappedFormUtils<any>>;
     reactionAntdForm(callback: (antdForm: WrappedFormUtils) => void): void;
     receiveAntdForm(antdForm: WrappedFormUtils): void;
@@ -49,10 +51,9 @@ export declare class FormStore<T extends IKeyValueMap = any> extends GFormStore 
     setAntdForm(antdForm: WrappedFormUtils, code?: string): void;
     formItemStores: IKeyValueMap<FormItemStore>;
     registerItemStore(code: string): FormItemStore;
-    registerForm(form: any, code: string, itemConfig: ItemConfig): void;
-    getConfig(code: string): IFormItemConfig;
+    getConfig(code: string): IFormItemConstructor;
     setForm(form: T, instance: any): void;
-    setConfig(configList: IFormItemConfig[]): void;
+    setConfig(configList: IFormItemConstructor[]): void;
     private registerFormSourceListerner;
     replaceForm(formMap: ObservableMap<string, any>): void;
     registerKey(target: any, deep?: boolean): void;

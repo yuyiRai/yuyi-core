@@ -19,9 +19,9 @@ const { RangePicker } = DatePicker
 
 
 export const DatePickerItem: React.FunctionComponent<IDatePickerProps> = inject(
-  'storeForm', 'antdForm', 'itemConfig'
+  'formStore', 'antdForm', 'itemConfig'
 )(observer(
-  ({antdForm, storeForm, code, itemConfig, ...other}) => {
+  ({antdForm, formStore, code, itemConfig, ...other}) => {
     // console.log(other)
     return <VueWrapper component={ElDatePickerItem} {...other} itemConfig={itemConfig.export()}></VueWrapper>
     // return <DatePicker {...other}/>
@@ -32,9 +32,9 @@ export type IDatePickerProps = OFormItemCommon & DatePickerProps
 
 
 export const DateRangePickerItem: React.FunctionComponent<IDateRangePickerProps> = inject(
-  'storeForm', 'antdForm', 'itemConfig'
+  'formStore', 'antdForm', 'itemConfig'
 )(observer(
-  ({antdForm, storeForm, code, itemConfig, ...other}: IDateRangePickerProps) => {
+  ({antdForm, formStore, code, itemConfig, ...other}: IDateRangePickerProps) => {
     // console.log(other, itemConfig)
     return <VueWrapper component={ElDatePickerItem}  {...other} itemConfig={itemConfig.export()}></VueWrapper>
     // return <RangePicker showTime format="YYYY-MM-DD HH:mm:ss" locale={zh_CN} {...other} defaultPickerValue={itemConfig.defaultValue} ranges={defaultDateRangeList}/>

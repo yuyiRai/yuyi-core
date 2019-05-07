@@ -4,15 +4,16 @@ import {
   IObservableArray, IKeyValueMap, observe, runInAction, IMapDidChange, reaction, Lambda, IObjectDidChange
 } from 'mobx';
 import { Utils, isNotEmptyArray } from '../../utils';
-import { IFormItemConfig } from './Interface/FormItem';
+import { IFormItemConstructor } from './Interface/FormItem';
 import { Memoize } from 'lodash-decorators'
 import { autobind } from 'core-decorators';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 import reduce from 'immer';
-import { ItemConfig } from '../../stores';
+import { ItemConfig, IFormValueTransform } from '../../stores';
 import { FormItemStore } from './FormItem';
 import { EventEmitter } from '../../utils/EventEmitter';
 import { EventStoreInject } from '../../utils/EventStore';
+import getTransform from '../../stores/ItemConfig/input/FormValueTransform';
 
 export interface ICommonFormConfig extends IKeyValueMap {
   $formStore?: FormStore;
@@ -93,7 +94,7 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
     this.errorGroup.clear()
   }
 
-  @observable.shallow config: IObservableArray<IFormItemConfig> = observable.array([]);
+  @observable.shallow config: IObservableArray<IFormItemConstructor> = observable.array([]);
   @computed get configList() {
     return this.config.toJSON()
   }
@@ -115,59 +116,80 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
       if (data.name === pathStr) {
         // this.formMap.set(pathStr, data.value)
         // this.formSource[key] = data.value
+        // validating 为ture表示正在校验，为false表示结束校验，空则代表不影响值变更
         if (data.validating !== true) {
-          // console.log('hasError', data.validating, data.errors, isNotEmptyArray(data.errors))
-          const isValidResult = data.validating === false
+          console.log('hasError', data.name, data, isNotEmptyArray(data.errors))
+          if (data.validating === false) {
+            // this.errorGroup.set(key, isNotEmptyArray(data.errors) ? data.errors : null)
+            this.updateError(data.name, data.errors)
+          }
           registerKey(this.formSource, pathStr)
           if (Utils.isFunction(callback)) {
-            Object.assign(result, callback(pathStr, data, isValidResult))
+            Object.assign(result, callback(pathStr, data.value))
           } else {
-            if (isValidResult) {
-              // this.errorGroup.set(key, isNotEmptyArray(data.errors) ? data.errors : null)
-              this.updateError(key, data.errors)
-            }
-            const isChanged = !Utils.isEqual(this.formSource[key], data.value, true)
-            if (isChanged) {
-              // console.log('patchFieldsChange', key, this.formSource[key], data.value, this)
-              this.formSource[key] = data.value
-              this.formMap.set(key, data.value)
-              console.log('set', 'formMap', this.formSource, this.formItemStores)
-              this.onItemChangeEmit(key, data.value)
-              // for(const key of (this.formItemStores as any)) {
-              //   console.log(key)
-              //   const a: FormItemStore = key
-              //   // a &&a.itemConfig && a.itemConfig.setForm(this.formSource)
-              // }
-            }
+            const isChanged = this.setFormValue(data.value, key)
             Object.assign(result, {[key]: isChanged}) 
           }
         }
       } else {
-        const next = this.patchFieldsChange(data, nextpath, callback || ((pathStr: string, { value, errors }: any, isValidResult?: boolean): IKeyValueMap<boolean> => {
-          const preObj = this.formMap.get(key) || {}
+        const next = this.patchFieldsChange(data, nextpath, callback || ((pathStr: string, value: any): IKeyValueMap<boolean> => {
           const innerPath = pathStr.replace(key + '.', '')
-          const obj = reduce(preObj, (i: any) => {
-            if (!Utils.isEqual(get(i, innerPath), value, true)) {
-              set(i, innerPath, value)
-            }
-          })
-          if (isValidResult) {
-            // this.errorGroup.set(pathStr, isNotEmptyArray(errors) ? errors : null)
-            this.updateError(pathStr, errors)
-          }
-          if (obj !== preObj) {
-            set(this.formSource, key, obj)
-            this.formMap.set(key, obj)
-            // console.log('patchFieldsChange inner', pathStr, obj, value, this)
-            this.onItemChangeEmit(pathStr, value)
-            return { [pathStr]: true } // 确认修改
-          }
-          return { [pathStr]: false } // 值不变
+          const isChanged = this.setFormValue(value, key, innerPath)
+          return { [pathStr]: isChanged } // 值不变
         }))
         Object.assign(result, next)
       }
     }
     return result
+  }
+
+  @computed get formValueTransform() {
+    return Utils.reduce(this.config, (nextMap, i) => {
+      const key = i.code
+      const store = this.formItemStores[key]
+      return nextMap.set(key, (store && store.itemConfig.formValueTransform) || getTransform(i.type))
+    }, new Map<string, IFormValueTransform>())
+  }
+  @autobind getV2FValue(key: string, value: any) {
+    const transforms = this.formValueTransform.get(key)
+    if(transforms) {
+      return transforms.V2F(value)
+    }
+    return value
+  }
+  @autobind getF2VValue(key: string, value: any) {
+    const transforms = this.formValueTransform.get(key)
+    if(transforms) {
+      return transforms.F2V(value)
+    }
+    return value
+  }
+  @action.bound setFormValue(value: any, key: string, innerPath?: string): boolean {
+    let isChanged: boolean;
+    let nextValue: any;
+    let pathStr = key;
+    if(Utils.isNotEmptyString(innerPath)) {
+      pathStr += '.' + innerPath
+      const preObj = this.formMap.get(key) || {}
+      const obj = reduce(preObj, (i: any) => {
+        if (!Utils.isEqual(get(i, innerPath), value, true)) {
+          const toValue = this.getV2FValue(pathStr, value)
+          set(i, innerPath, toValue)
+        }
+      })
+      nextValue = obj;
+      isChanged = obj !== preObj
+    } else {
+      nextValue = this.getV2FValue(key, value);
+      isChanged = !Utils.isEqual(this.formSource[key], value, true)
+    }
+    if (isChanged) {
+      this.formSource[key] = nextValue
+      this.formMap.set(key, nextValue)
+      this.onItemChangeEmit(pathStr, nextValue)
+      console.log('set', 'formMap', value, nextValue, this.formSource, this.formItemStores)
+    }
+    return isChanged
   }
 
   @autobind async validate() {
@@ -179,10 +201,10 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
     return FormStore.formMap
   }
 
-  @observable formItemMap: ObservableMap<any, ICommonFormConfig> = observable.map({})
-  @computed.struct get formItemConfigMap() {
-    return this.formItemMap.get(this.formSource) || {}
-  }
+  // @observable formItemMap: ObservableMap<any, ICommonFormConfig> = observable.map({})
+  // @computed.struct get formItemConfigMap() {
+  //   return this.formItemMap.get(this.formSource) || {}
+  // }
 
   @observable.ref reactionAntdFormEmitter = new EventEmitter<WrappedFormUtils>()
   @action.bound reactionAntdForm(callback: (antdForm: WrappedFormUtils) => void) {
@@ -210,19 +232,19 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
   @action.bound registerItemStore(code: string): FormItemStore {
     // console.log('registerForm', form)
     this.formItemStores[code] = this.formItemStores[code] || new FormItemStore(this, code)
-    this.registerForm(this.formSource, code, this.formItemStores[code].itemConfig)
+    // this.registerForm(this.formSource, code, this.formItemStores[code].itemConfig)
     return this.formItemStores[code]
   }
 
-  @action.bound registerForm(form: any, code: string, itemConfig: ItemConfig) {
-    // console.log('registerForm', form)
-    const keyMap: ICommonFormConfig = this.formItemMap.get(form) || {}
-    if(keyMap[code] !== itemConfig){
-      keyMap.$formStore = this
-      keyMap[code] = itemConfig
-      this.formItemMap.set(form, keyMap)
-    }
-  }
+  // @action.bound registerForm(form: any, code: string, itemConfig: ItemConfig) {
+  //   // console.log('registerForm', form)
+  //   const keyMap: ICommonFormConfig = this.formItemMap.get(form) || {}
+  //   if(keyMap[code] !== itemConfig){
+  //     keyMap.$formStore = this
+  //     keyMap[code] = itemConfig
+  //     this.formItemMap.set(form, keyMap)
+  //   }
+  // }
 
   @Memoize
   @autobind getConfig(code: string) {
@@ -238,7 +260,7 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
     this.clearValidate()
     this.registerFormSourceListerner();
   }
-  @action.bound setConfig(configList: IFormItemConfig[]) {
+  @action.bound setConfig(configList: IFormItemConstructor[]) {
     console.log('setConfig', configList)
     this.config = observable.array(configList, { deep: false })
     this.registerKey(this.formSource)
@@ -260,7 +282,7 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
   }
   @action.bound registerKey(target: any, deep: boolean = false)  {
     for (const config of this.configList) {
-      console.log('registerKey', config.code)
+      // console.log('registerKey', config.code)
       registerKey(target, config.code, deep)
     }
     return 

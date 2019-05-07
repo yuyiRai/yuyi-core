@@ -5,11 +5,11 @@ export function commonInjectItem<T extends IReactComponent>(target: T): T & (T e
 export function commonInjectItem<T extends IReactComponent>(Target: T | string, ...append: string[]) {
   if (isString(Target)) {
     return function (InjectTarget: T) {
-      return inject('storeForm', 'antdForm', 'itemConfig', Target, ...append)(observer(InjectTarget));
+      return inject('formStore', 'antdForm', 'itemConfig', Target, ...append)(observer(InjectTarget));
     };
   }
-  return inject('storeForm', 'antdForm', 'itemConfig')(observer(Target));
+  return inject('formStore', 'antdForm', 'itemConfig')(observer(Target));
 }
 // export const commonInjectItem = () => function <T extends IReactComponent>(target: T) {
-//   return inject('storeForm', 'antdForm')(observer(target));
+//   return inject('formStore', 'antdForm')(observer(target));
 // };

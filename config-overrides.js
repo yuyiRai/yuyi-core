@@ -1,5 +1,6 @@
 const { override, overrideDevServer, removeModuleScopePlugin, watchAll, fixBabelImports, addBundleVisualizer, addBabelPlugins, disableEsLint } = require('customize-cra');
 const statements = require('tsx-control-statements').default;
+const _ = require('lodash').default;
 const UglifyJSPlugin= require('uglifyjs-webpack-plugin')
 const DynamicCdnWebpackPlugin = require('dynamic-cdn-webpack-plugin');
 
@@ -71,20 +72,29 @@ module.exports = {
     //   camel2DashComponentName: false
     // }),
     fixBabelImports("rxjs/operator", {
-      "transform": "rxjs/operator/${member}",
-      "preventFullImport": true,
-      "camelCase": true,
-      "skipDefaultConversion": true
+      libraryDirectory: '../_esm5/internal/operators',
+      libraryName: 'rxjs/operators',
+      camel2DashComponentName: false,
+      transformToDefaultImport: false
     }),
+    // fixBabelImports("rxjs/observable", {
+    //   libraryDirectory: '_esm5/internal/observable',
+    //   libraryName: 'rxjs',
+    //   camel2DashComponentName: false,
+    //   transformToDefaultImport: false,
+    // }),
     fixBabelImports("element-react", {
       libraryName: "element-react",
       libraryDirectory: 'dist/npm/es6/src',
       styleLibraryName: "element-theme-default"
     }),
-    fixBabelImports("element-ui", {
-      libraryName: "element-ui",
-      styleLibraryName: "theme-chalk"
-    }),
+    // fixBabelImports("element-ui", {
+    //   libraryName: 'element-ui',
+    //   libraryDirectory: 'lib',
+    //   camel2DashComponentName: true,
+    //   style: (path) =>`element-ui/lib/theme-chalk/${
+    //         _.kebabCase(basename(path, '.js'))}.css`,
+    // }),
     fixBabelImports('antd', {
       libraryName: 'antd',
       libraryDirectory: 'lib',

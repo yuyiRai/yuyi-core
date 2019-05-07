@@ -12,7 +12,7 @@ import { useOptionsStoreProps } from './OptionsUtil';
 interface IAppProps extends OFormItemCommon, RadioGroupProps {
 }
 
-const App: React.FunctionComponent<IAppProps> = ({ antdForm, storeForm, code, itemConfig, ...other }) => {
+const App: React.FunctionComponent<IAppProps> = ({ antdForm, formStore, code, itemConfig, ...other }) => {
   const RadioGroup = useOptionsStoreProps(itemConfig, Radio.Group)
   return (
     <RadioGroup {...other} ></RadioGroup>

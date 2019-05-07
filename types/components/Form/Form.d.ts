@@ -2,10 +2,10 @@ import { GetFieldDecoratorOptions, WrappedFormUtils } from 'antd/lib/form/Form';
 import 'antd/lib/row/style/css';
 import * as React from 'react';
 import { FormStore } from './FormStore';
-import { IFormItemConfig } from './Interface';
+import { IFormItemConstructor } from './Interface';
 export interface IFormProps {
-    storeForm?: FormStore;
-    config: IFormItemConfig[];
+    formStore?: FormStore;
+    config: IFormItemConstructor[];
     form?: WrappedFormUtils<any>;
     [key: string]: any;
 }

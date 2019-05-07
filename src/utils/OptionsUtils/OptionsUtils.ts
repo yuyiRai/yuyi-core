@@ -197,8 +197,8 @@ export function valueToLabel(optionList: Option[], value: SearchKey<string>): st
 }
 
 
-export function valuesToLabels(options: Option[], value: SearchKey<string>): string;
-export function valuesToLabels(options: Option[], value: SearchKey<string>, joinKey: string): string[];
+export function valuesToLabels(options: Option[], value: SearchKey<string>): string[];
+export function valuesToLabels(options: Option[], value: SearchKey<string>, joinKey: string): string;
 /**
  * 批量转换value到label
  * @param options 

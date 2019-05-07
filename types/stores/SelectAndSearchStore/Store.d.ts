@@ -1,4 +1,4 @@
-import { ItemConfig } from '../ItemConfig';
+import { ItemConfig } from '../ItemConfig/ItemConfig';
 import { OptionsStore } from './OptionsStore';
 import { Option } from '../../utils';
 export declare class SelectAndSearchStore {
@@ -19,7 +19,7 @@ export declare class SelectAndSearchStore {
      */
     selectedOptions: Option[];
     value: string | string[];
-    readonly shadowOption: any;
+    readonly shadowOption: Option;
     setShadowOption(label: any, source: any): void;
     setShadowOptionByValue(value: any, source: any): void;
     readonly displayOptions: Option[];
@@ -92,5 +92,5 @@ export declare class SelectAndSearchStore {
         suffix: string;
     };
     labelsToValues(label: any): string[];
-    valuesToLabels(value: any, joinKey?: string): string[];
+    valuesToLabels(value: any, joinKey?: string): string;
 }

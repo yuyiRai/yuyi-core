@@ -1,5 +1,5 @@
 import { Col } from 'antd';
-import { WrappedFormUtils } from 'antd/lib/form/Form';
+import { WrappedFormUtils, GetFieldDecoratorOptions } from 'antd/lib/form/Form';
 import AntFormItem, { FormItemProps } from 'antd/lib/form/FormItem';
 import 'antd/lib/form/style/css';
 import { inject, observer, Provider } from 'mobx-react';
@@ -35,26 +35,26 @@ export class FormItemStore {
   ruleWatcher: IReactionDisposer;
   validateReset: IReactionDisposer;
   @observable itemConfig: ItemConfig;
-  @observable.ref storeForm: FormStore;
+  @observable.ref formStore: FormStore;
 
   @computed.struct get antdForm(): WrappedFormUtils {
-    return this.storeForm.antdFormMap.get(this.code)
+    return this.formStore.antdFormMap.get(this.code)
   }
 
   @action.bound setAntdForm(antdForm: WrappedFormUtils){
-    this.storeForm.setAntdForm(antdForm, this.code)
+    this.formStore.setAntdForm(antdForm, this.code)
   }
 
-  constructor(storeForm: FormStore, code: string) {
-    this.storeForm = storeForm
-    this.itemConfig = new ItemConfig(storeForm.getConfig(code), storeForm.formSource, this)
-    this.itemConfig.setFormStore(storeForm)
-    this.setAntdForm(storeForm.antdForm)
+  constructor(formStore: FormStore, code: string) {
+    this.formStore = formStore
+    this.itemConfig = new ItemConfig(formStore.getConfig(code), formStore.formSource, this)
+    this.itemConfig.setFormStore(formStore)
+    this.setAntdForm(formStore.antdForm)
     
     this.ruleWatcher = reaction(() => this.itemConfig.rule, (rule) => {
       // console.log('ruleWatcher', rule)
       this.itemConfig.updateVersion()
-      storeForm.updateError(code)
+      formStore.updateError(code)
       const value = Utils.cloneDeep(this.itemConfig.currentValue)
       // this.antdForm.resetFields([this.code])
       if(this.antdForm.getFieldError(this.code)){
@@ -68,13 +68,13 @@ export class FormItemStore {
   }
 
   @action.bound init() {
-    const { storeForm, code } = this;
+    const { formStore, code } = this;
     // reaction(() => this.fieldDecorator, () => {
     //   console.log('fieldDecorator change', code)
     // })
     this.validateReset = autorun(() => {
-      if (!storeForm.hasErrors(code) || !this.itemConfig.rule) {
-        storeForm.reactionAntdForm(antdForm => {
+      if (!formStore.hasErrors(code) || !this.itemConfig.rule) {
+        formStore.reactionAntdForm(antdForm => {
           // console.log('updateVersion', code, this.antdForm.getFieldError(code))
           this.itemConfig.updateVersion()
           this.setAntdForm(antdForm)
@@ -96,10 +96,10 @@ export class FormItemStore {
   }
   
   getFieldDecorator = (store: FormItemStore) => {
-    const { code, antdForm, storeForm } = store;
+    const { code, antdForm, formStore } = store;
     const { itemConfig } = store;
     const { value } = itemConfig
-    const hasError = storeForm.hasErrors(itemConfig.code)
+    const hasError = formStore.hasErrors(itemConfig.code)
     console.log('get fieldDecorator', value, hasError)
     // const { itemConfig } = this.state;
     // const { value } = itemConfig
@@ -108,13 +108,13 @@ export class FormItemStore {
   @computed get decoratorOptions(){
     return this.getFieldDecoratorOptions(this.itemConfig)
   }
-  getFieldDecoratorOptions = createTransformer((itemConfig: ItemConfig) => {
+  getFieldDecoratorOptions = createTransformer<ItemConfig, GetFieldDecoratorOptions>((itemConfig: ItemConfig) => {
     // console.log('update fieldDecorator options', itemConfig.rule)
     return {
       validateTrigger: ['onChange', 'onBlur'],
-      rules: itemConfig.rule, initialValue: itemConfig.value, getValueProps() {
-        // console.log('value filter', itemConfig, props);
-        return { value: Utils.isNotEmptyValueFilter(itemConfig.currentValue, itemConfig.value) || null }
+      rules: itemConfig.rule, initialValue: itemConfig.value, getValueProps(value: any) {
+        // console.log('value filter', itemConfig.code, value, itemConfig);
+        return { value: Utils.isNotEmptyValueFilter(itemConfig.currentComponentValue, itemConfig.currentValue, value) }
       }
     }
   }, { debugNameGenerator: () => 'getFieldDecoratorOptions' })
@@ -146,11 +146,11 @@ export class FormItemStore {
   }
 }
 
-@inject((stores: { storeForm: FormStore }, props: IFormItemProps, context) => {
+@inject((stores: { formStore: FormStore }, props: IFormItemProps, context) => {
   console.log('fromitem get store', stores, props, context)
-  const { storeForm } = stores;
-  const store = storeForm.registerItemStore(props.code) 
-  store.itemConfig.setForm(storeForm.formSource)
+  const { formStore } = stores;
+  const store = formStore.registerItemStore(props.code) 
+  store.itemConfig.setForm(formStore.formSource)
   return { store }
 })
 @observer
