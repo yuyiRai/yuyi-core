@@ -1,10 +1,10 @@
-import { get, set, difference, keys, forEach, toArray, isNil } from 'lodash';
+import { get, set, difference, keys, forEach, toArray, isNil, values } from 'lodash';
 import {
   action, computed, extendObservable, observable, ObservableMap,
   IObservableArray, IKeyValueMap, observe, runInAction, IMapDidChange, reaction, Lambda, IObjectDidChange
 } from 'mobx';
 import { Utils, isNotEmptyArray } from '../../utils';
-import { IFormItemConstructor } from './Interface/FormItem';
+import { IFormItemConstructor, CommonStore } from './Interface/FormItem';
 import { Memoize } from 'lodash-decorators'
 import { autobind } from 'core-decorators';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
@@ -21,7 +21,7 @@ export interface ICommonFormConfig extends IKeyValueMap {
 }
 export type keys = keyof ICommonFormConfig;
 
-export class GFormStore {
+export class GFormStore extends CommonStore {
   static formMap: WeakMap<any, FormStore> = new WeakMap<any, FormStore>();
   static disposedForm(form: any) {
     this.formMap.delete(form)
@@ -94,9 +94,22 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
     this.errorGroup.clear()
   }
 
-  @observable.shallow config: IObservableArray<IFormItemConstructor> = observable.array([]);
-  @computed get configList() {
+  @observable.shallow private config: IObservableArray<IFormItemConstructor> = observable.array([]);
+  @computed public get configList() {
     return this.config.toJSON()
+  }
+  @computed public get itemCodeList() {
+    return this.config.map(i => i.code)
+  }
+  @computed public get itemCodeNameMap(): IKeyValueMap<string> {
+    return this.config.reduce((obj, config) => {
+      return config.nameCode ? Object.assign(obj, {
+        [config.code]: config.nameCode
+      }) : obj
+    }, {})
+  }
+  @computed public get itemCodeNameList() {
+    return values(this.itemCodeNameMap)
   }
 
   @autobind onItemChange(callback: onItemChangeCallback) {
@@ -181,19 +194,35 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
       isChanged = obj !== preObj
     } else {
       nextValue = this.getV2FValue(key, value);
-      isChanged = !Utils.isEqual(this.formSource[key], value, true)
+      isChanged = !Utils.isEqual(this.formSource[key], nextValue, true)
     }
     if (isChanged) {
       this.formSource[key] = nextValue
       this.formMap.set(key, nextValue)
       this.onItemChangeEmit(pathStr, nextValue)
-      console.log('set', 'formMap', value, nextValue, this.formSource, this.formItemStores)
+      console.log('set', 'formMap', pathStr, value, nextValue, this.formSource, this.formItemStores)
+      this.setFormValueWithName(pathStr)
     }
     return isChanged
   }
+  public searchNameWatcher: any = {}
+  @action.bound setFormValueWithName(code: string) {
+    const nameCode = this.itemCodeNameMap[code]
+    const { itemConfig: { optionsStore }} = this.formItemStores[code]
+    if(Utils.isNotEmptyString(nameCode) && nameCode !== code) {
+      // this.reaction(() => optionsStore.selectedLablesStr, searchName => {
+      //   console.log('get nameCode',  'formMap', optionsStore, optionsStore.selectedLables)
+      //   set(this.formSource, nameCode, optionsStore.selectedLablesStr)
+      // }, { fireImmediately: true })
+      // this.searchNameWatcher[nameCode] = true
+      
+      console.log('get nameCode',  'formMap', optionsStore, optionsStore.selectedLables)
+      set(this.formSource, nameCode, optionsStore.selectedLablesStr)
+    }
+  }
 
   @autobind async validate() {
-    const r = await this.antdForm && this.antdForm.validateFields(this.configList.map(i => i.code), { force: true })
+    const r = await this.antdForm && this.antdForm.validateFields(this.itemCodeList, { force: true })
     console.log(r);
   }
 
@@ -281,9 +310,13 @@ export class FormStore<T extends IKeyValueMap = any> extends GFormStore {
     this.formMap = formMap;
   }
   @action.bound registerKey(target: any, deep: boolean = false)  {
-    for (const config of this.configList) {
-      // console.log('registerKey', config.code)
-      registerKey(target, config.code, deep)
+    for (const code of this.itemCodeList) {
+      console.log('registerKey', code)
+      registerKey(target, code, deep)
+    }
+    for (const code of this.itemCodeNameList) {
+      console.log('registerKey', code)
+      registerKey(target, code, deep)
     }
     return 
   }

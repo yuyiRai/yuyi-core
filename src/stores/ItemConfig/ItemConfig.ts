@@ -2,13 +2,13 @@
 import { action, computed, IKeyValueMap, IValueDidChange, observable, toJS, IValueWillChange } from 'mobx';
 import { FormStore } from '../../components/Form/FormStore';
 import { EventStoreInject } from '../../utils/EventStore';
-import { IItemConfig } from './interface/ItemConfig';
+import { IItemConfig, BaseItemConfigTransformer } from './interface/ItemConfig';
 import { ItemConfigBase } from './ItemConfigBase';
 import { SearchStore } from './SearchStore';
-import { ITransformer } from 'mobx-utils';
+import { ITransformer, createTransformer } from 'mobx-utils';
 import { get } from 'lodash';
 import { OptionsStore } from '../SelectAndSearchStore';
-import getTransform, { IFormValueTransform } from './input/FormValueTransform';
+import getTransform, { IFormValueTransform, FilterType } from './input/FormValueTransform';
 
 export interface IPropertyChangeEvent<T = any> extends IValueDidChange<T> {
   name: string;
@@ -16,6 +16,29 @@ export interface IPropertyChangeEvent<T = any> extends IValueDidChange<T> {
 
 @EventStoreInject(['options-change'])
 export class ItemConfig extends ItemConfigBase implements IItemConfig {
+  @observable private static commonTransformerConfig: BaseItemConfigTransformer<FilterType>;
+  @action.bound public static setCommonTransformerPipe(func: BaseItemConfigTransformer<FilterType>) {
+    this.commonTransformerConfig = func;
+  }
+  @computed public static get commonTransformer(): BaseItemConfigTransformer<FilterType> {
+    return createTransformer<IItemConfig, FilterType>(
+      this.commonTransformerConfig || function ({ type, multiple }: IItemConfig) {
+        if (['select', 'search'].includes(type) && multiple) {
+          return 'group'
+        }
+        return ({
+          'check': 'group',
+          'checkOne': {
+            F2V: (v: any) => v === '1',
+            V2F: (v: any) => {
+              return v===true ? '1' : '0'
+            }
+          }
+        })[type];
+      }
+    )
+  }
+
   [key: string]: any;
   @observable.ref form: IKeyValueMap = {};
 
@@ -27,15 +50,18 @@ export class ItemConfig extends ItemConfigBase implements IItemConfig {
   @action.bound setSearchStore(searchStore: SearchStore) {
     this.searchStore = searchStore
   }
-  @action.bound useSearchStore(config: IItemConfig = this) {
-    const store = new SearchStore(config)
+  @action.bound useSearchStore<T>(transformer?: ITransformer<OptionsStore, T[]>, config: ItemConfig = this) {
+    const store = this.searchStore || new SearchStore(config)
     this.setSearchStore(store)
+    this.useOptionsStore(transformer, config)
     return store;
   }
 
   @computed get formValueTransform(): IFormValueTransform {
-    const { transformer, type } = this.i
-    return Utils.isObjectFilter(transformer, getTransform(Utils.isNotEmptyStringFilter(transformer, type)))
+    return getTransform(this.transformer)
+  }
+  @computed get transformer() {
+    return this.i.transformer || ItemConfig.commonTransformer(this)
   }
   @computed get form2Value() {
     const { filter } = this.i
@@ -52,7 +78,7 @@ export class ItemConfig extends ItemConfigBase implements IItemConfig {
   
   @observable optionsStore: OptionsStore;
   @action.bound useOptionsStore<T>(transformer?: ITransformer<OptionsStore, T[]>, config: IItemConfig = this) {
-    const store = new OptionsStore(config, transformer)
+    const store = this.optionsStore || new OptionsStore(config, transformer)
     this.optionsStore = store
     return store;
   }
@@ -82,10 +108,11 @@ export class ItemConfig extends ItemConfigBase implements IItemConfig {
   }
 
   export() {
-    const model = {}
+    const model:any = {}
     for (const key of this.iKeys) {
       model[key] = this[key]
     }
+    model.__isExportObject = true
     return toJS(model);
   }
 

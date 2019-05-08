@@ -153,12 +153,14 @@ export default {
     }
   },
   arrayPush(array: any[], values: any[]) {
-    var index = -1,
-      length = values.length,
+    const values2 = values
+    let index = 0,
+      length = values2.length,
       offset = array.length;
 
-    while (++index < length) {
-      array[offset + index] = values[index];
+    while (index < length) {
+      debugger
+      array[offset + index] = values2[index++];
     }
     return array;
   },

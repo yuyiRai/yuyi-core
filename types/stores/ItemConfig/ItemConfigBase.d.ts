@@ -33,7 +33,7 @@ export declare class ItemConfigBase extends CommonStore implements IItemConfig {
     readonly searchName: string;
     getSearchName(): string;
     readonly currentValue: any;
-    readonly remoteMethod: (keyWord: string, form?: any) => Promise<any>;
+    readonly remoteMethod: (keyWord: string, form?: any) => any;
     readonly remoteOptions: Promise<any[]> | any[];
     remoteSearchBySearchName(keyWordStr: string): Promise<Option[]>;
     remoteSearch(keyWord: string[]): Promise<Option[]>;
@@ -48,6 +48,7 @@ export declare class ItemConfigBase extends CommonStore implements IItemConfig {
      * @type { Array } 配置项Array
      */
     readonly options: Option[];
+    getOptions(): Option[];
     setOptions(v: any): void;
     updateVersion(): void;
     export(): {};

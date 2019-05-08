@@ -40,7 +40,7 @@ export class ItemConfigBase extends CommonStore implements IItemConfig {
     return difference(
       this.iKeys,
       keys(this),
-      ['refConfig', 'code', 'rule', 'remoteMethod', 'loading', 'options', 'isViewOnly']
+      ['refConfig', 'code', 'rule', 'remoteMethod', 'loading', 'options', 'isViewOnly', 'transformer']
     )
   }
 
@@ -58,6 +58,9 @@ export class ItemConfigBase extends CommonStore implements IItemConfig {
     //     console.log(hidden)
     // })
     // this.observe(this.form, console.log)
+    // this.reaction(() => this.i.options, options => {
+    //   // console.log(Utils.isArrayFilter(options, this.getComputedValue('options')) || [])
+    // })
     this.reaction(() => this.i, (i: any) => {
       // console.log('register', i)
       // this.reaction(() => this.rule, (value) => {
@@ -74,8 +77,8 @@ export class ItemConfigBase extends CommonStore implements IItemConfig {
         console.log(e, this)
         const { oldValue, newValue, name } = e
         if (name === 'options' && !Utils.isEqual(oldValue, newValue)) {
-          this.label === '诊断名称' && console.log(
-            `${name}: options[${(oldValue || []).length}] => options[${(newValue || []).length}]`, { config: i, event: e })
+          this.label === '查勘地点' && console.log(
+            `${name}: options[${(oldValue || []).length}] => options[${(newValue || []).length}]`, { config: i, event: e }, this.options)
           if (newValue) {
             this.optionsInited = Utils.isNotEmptyArray(newValue)
           }
@@ -307,7 +310,10 @@ export class ItemConfigBase extends CommonStore implements IItemConfig {
    * @type { Array } 配置项Array
    */
   @computed get options(): Option[] {
-    // trace()
+    return this.$version>-1 && this.getOptions()
+  }
+  @autobind getOptions(): Option[] {
+    // console.log('options resolve', this.i, this)
     // this.label === '归属车辆' && console.log('伤者类型 get options', Utils.isArrayFilter(this.$version, this.getComputedValue('options'), []))
     return Utils.isArrayFilter(this.i.options, this.getComputedValue('options')) || []
   }

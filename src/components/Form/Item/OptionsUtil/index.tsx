@@ -10,9 +10,14 @@ export function useOptionsStore(itemConfig: ItemConfig, transformer?: ITransform
   return useAsObservableSource(itemConfig.useOptionsStore(transformer));
 }
 
-export function useSearchStore(itemConfig: ItemConfig) {
+export function useSearchStore(itemConfig: ItemConfig, transformer?: ITransformer<OptionsStore, JSX.Element[]>) {
   // reaction(()=>itemConfig.options, console.log)
-  return useAsObservableSource(itemConfig.useSearchStore());
+  return useAsObservableSource(itemConfig.useSearchStore(transformer));
+}
+
+export function useItemConfig(itemConfig: ItemConfig) {
+  // reaction(()=>itemConfig.options, console.log)
+  return useAsObservableSource(itemConfig);
 }
 
 export function useOptionsStoreProps<P = any>(itemConfig: ItemConfig, Component: IReactComponent<P>): IReactComponent<P> {

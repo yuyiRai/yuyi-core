@@ -19,7 +19,7 @@ export const objToForm = (model: IKeyValueMap, store: FormStore, form: WrappedFo
   for (const config of store.configList) {
     const v = get(model, config.code)
     const value = store.getF2VValue(config.code, filterToValue(v, config.value))
-    // console.log('formValueTransform', value, v)
+    // console.log('formValueTransform', config.code, value, v, store)
     set(target, config.code, Form.createFormField({ value }))
     // console.log('initvalue', config.code, v, value);
     if (!Utils.isEqual(v, value, true)) {

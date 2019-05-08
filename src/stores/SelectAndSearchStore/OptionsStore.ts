@@ -246,6 +246,7 @@ export class OptionsStore<V = any> {
   @autobind valuesToLabels(value: any) {
     return Utils.valuesToLabels(this.displayOptions, value)
   }
+  
   @autobind labelsToValues(label: any) {
     return Utils.labelsToValues(this.displayOptions, label)
   }
@@ -254,22 +255,35 @@ export class OptionsStore<V = any> {
     const { currentComponentValue: value } = this.itemConfig
     return Utils.zipEmptyData(Utils.isNotEmptyArrayFilter(this.valuesToLabels(value)) || [this.shadowOption.label])
   }
+  @computed get selectedOptions() {
+    const { currentComponentValue: value } = this.itemConfig
+    
+    return Utils.zipEmptyData(Utils.isNotEmptyArrayFilter(this.valuesToLabels(value)) || [this.shadowOption.label])
+  }
   @computed get selectedLablesStr() {
     return this.selectedLables.join(',')
   }
-  @computed get selectedLablesConfig() {
+  @computed get selectedLablesConfig(): LabelsConfigList {
     const { currentComponentValue: value } = this.itemConfig
-    return Utils.arrayMapDive(this.selectedLables, (label: string) => {
+    return Utils.arrayMapDive(this.selectedLables, (label: string, index: number) => {
       return {
         label,
-        remove: () => {
-          return pullAll([...Utils.castArray(value)], this.labelsToValues(label))
+        value: Utils.labelToValue(this.displayOptions, label),
+        remove: (onChange: onChangeHandler) => {
+          onChange(pullAll([...Utils.castArray(value)], this.labelsToValues(label)))
         }
       }
     })
   }
   @computed get hasSelectedTag(){
-    console.log('selectedLablesConfig', this.selectedLablesConfig)
-    return this.selectedLablesConfig.length > 0
+    // console.log('selectedLablesConfig', this.selectedLablesConfig)
+    return this.selectedLables.length > 0
   }
 }
+
+export type onChangeHandler = (value: any) => void
+export interface ILabelsConfig {
+  label: string;
+  remove(onChange: onChangeHandler): void;
+}
+export type LabelsConfigList = Array<ILabelsConfig>

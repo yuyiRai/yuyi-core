@@ -1,10 +1,9 @@
 /* eslint-disable */
-import { parseTime } from '../../../utils/ParseUtils'
-import moment from 'moment'
+import { parseTime, DateFormatter, EDateFormatter } from '../../../utils/ParseUtils'
 import Utils, { observable, computed } from '../../../utils';
-import { FormItemType } from '../interface';
 
-export type FilterType = 'group' | FormItemType
+export type FilterTypeKey = 'group' | 'dateTime' | 'date' | 'dateToDate'
+export type FilterType = FilterTypeKey | IFormValueTransform
 export interface IFormValueTransform {
   F2V: (value: any) => any;
   V2F: (value: any) => any;
@@ -15,38 +14,34 @@ export class FormValueTransform implements IFormValueTransform {
     this.type = type
   }
   @computed get F2V() {
+    const { type } = this;
+    if (Utils.isObject(type) && type.F2V) {
+      return type.F2V
+    }
     switch (this.type) {
       case 'group':
         return this.groupF2V
-      case 'check':
-        return this.groupF2V
-      case 'checkOne':
-        return (v: any) => v === '1';
       case 'dateTime': 
-        return (v: any) => Utils.isDate(v) ? v : 
-                (Utils.isNotEmptyString(v) 
-                  ? (v.length<11?(v+" 00:00:00"):v) 
-                  : undefined);
+        return this.dateFormatter(EDateFormatter.dateTime);
+      case 'date': 
+        return this.dateFormatter(EDateFormatter.date);
       case 'dateToDate':
         return (v: any) => Utils.isArrayFilter(v, []).filter((i) => Utils.isNotEmptyValue(i))
     }
-    return this.normalF2V
+    return this.normalCommon
   }
   @computed get V2F() {
+    const { type } = this;
+    if (Utils.isObject(type) && type.V2F) {
+      return type.V2F
+    }
     switch (this.type) {
       case 'group':
         return this.groupV2F
-      case 'check':
-        return this.groupV2F
-      case 'checkOne':
-        return (v: any) => {
-          return v===true ? '1' : '0'
-        }
       case 'dateTime': 
-        return (v: any) => Utils.isDate(v) ? v : 
-                (Utils.isNotEmptyString(v) 
-                  ? moment(v).format('YYYY-MM-DD HH:mm:ss')
-                  : undefined)
+        return this.dateFormatter(EDateFormatter.dateTime)
+      case 'date': 
+        return this.dateFormatter(EDateFormatter.date);
       case 'dateToDate':
         return (v: any) => {
           const [s,e] = Utils.isArrayFilter(v, []).filter((i) => Utils.isNotEmptyValue(i))
@@ -56,20 +51,29 @@ export class FormValueTransform implements IFormValueTransform {
           return [s,e]
         }
     }
-    return this.normalF2V
+    return this.normalCommon
   }
 
-  private normalF2V(value: any) {
+  private normalCommon(value: any) {
     return Utils.isNotEmptyValueFilter(value)
   }
-  private groupF2V(string: any) {
-    // debugger
-    return Utils.isNotEmptyString(string) ? Utils.zipEmptyData(string.split(',')) : [] 
-  }
-  private groupV2F(array: any) {
-    return Utils.toString(Utils.zipEmptyData(Utils.isArrayFilter(array, [])))
+
+  private dateFormatter(formatter?: DateFormatter) {
+    return (value: any) => Utils.toDateString(value, formatter)
   }
 
+  private groupF2V(value: any) {
+    let next: string[];
+    if (Utils.isNotEmptyString(value)) {
+      next = value.split(',')
+    } else {
+      next = Utils.castArray(value)
+    }
+    return Utils.zipEmptyData(next)
+  }
+  private groupV2F(array: any[]) {
+    return Utils.toString(Utils.zipEmptyData(Utils.isArrayFilter(array, [])))
+  }
 }
 
 export default function getTransform(type: FilterType | string): IFormValueTransform {

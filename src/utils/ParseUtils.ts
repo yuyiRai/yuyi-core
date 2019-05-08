@@ -38,10 +38,12 @@ export function parseTime(time: any, cFormat?: string) {
  return time_str
 }
 
-
-export const dateFormatStr = 'YYYY-MM-DD'
-export const dateTimeFormatStr = 'YYYY-MM-DD HH:mm:ss'
-export function toDateString(value: any, formatter: string = dateTimeFormatStr): Date | string {
+export enum EDateFormatter {
+  date = 'YYYY-MM-DD',
+  dateTime = 'YYYY-MM-DD HH:mm:ss'
+}
+export type DateFormatter = EDateFormatter | string
+export function toDateString(value: any, formatter: DateFormatter = EDateFormatter.dateTime): Date | string {
   if (isDate(value)) {
     return moment(value).format(formatter)
   } else if (typeUtils.isNotEmptyString(value)) {

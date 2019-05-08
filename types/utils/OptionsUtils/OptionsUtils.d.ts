@@ -7,6 +7,7 @@ export declare type Option = {
     label?: string;
     [key: string]: any;
 };
+export declare type OptionBase = Option | string;
 /**
  * 提供匹配方法/正则/匹配项数组/其它，返回通用匹配方法
  * @param searchKey

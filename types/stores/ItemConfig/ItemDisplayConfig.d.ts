@@ -1,8 +1,21 @@
 import { IKeyValueMap } from 'mobx';
+import { IItemConfig, ComputedProperty } from './interface';
+export interface IDisplayConfigConstructor {
+    inline?: ComputedProperty<boolean>;
+    isViewOnly?: ComputedProperty<boolean>;
+    showMessage?: ComputedProperty<boolean>;
+    textAlign?: ComputedProperty<'center' | 'left' | 'right'>;
+    disabled?: ComputedProperty<boolean>;
+    size?: ComputedProperty<boolean>;
+    col?: ComputedProperty<number>;
+    offset?: ComputedProperty<number>;
+    offectRight?: ComputedProperty<number>;
+    prefix?: ComputedProperty<any>;
+    suffix?: ComputedProperty<any>;
+    height?: ComputedProperty<string>;
+    useLabel?: ComputedProperty<boolean>;
+}
 export interface IDisplayConfig {
-    code: string;
-    name?: string;
-    label?: string;
     inline?: boolean;
     isViewOnly?: boolean;
     showMessage?: boolean;
@@ -18,9 +31,9 @@ export interface IDisplayConfig {
     useLabel?: boolean;
 }
 export declare class DisplayConfig {
-    itemConfig: IDisplayConfig;
+    itemConfig: IItemConfig;
     props: IKeyValueMap;
-    init(itemConfig: IDisplayConfig, props: IKeyValueMap): this;
+    init(itemConfig: IItemConfig, props: IKeyValueMap): this;
     readonly isInlineMessage: boolean;
     readonly isShowMessage: boolean;
     readonly textAlign: string;

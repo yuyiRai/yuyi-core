@@ -1,9 +1,10 @@
-import { ISearchConfig } from "../SearchStore";
-import { IDisplayConfig } from "../ItemDisplayConfig";
-import { Option } from "../../../utils";
+import { ISearchConfig, ISearchConfigConstructor } from "../SearchStore";
+import { IDisplayConfig, IDisplayConfigConstructor } from "../ItemDisplayConfig";
+import { OptionBase } from "../../../utils";
 import { IEventStoreBase } from "../../../utils/EventStore";
 import { IReactionPublic, IReactionOptions, intercept, IObservableValue, IComputedValue, IValueDidChange, IReactionDisposer, Lambda, reaction, observe, IInterceptor, IValueWillChange } from "mobx";
 import { FilterType, IFormValueTransform } from "../input";
+import { ITransformer } from "mobx-utils";
 
 export type FormItemType = "" | "text" | "textArea" | "textarea"
   | 'number'
@@ -12,25 +13,33 @@ export type FormItemType = "" | "text" | "textArea" | "textarea"
   | 'check' | 'radio'
   | 'checkOne' | 'switch' | 'address' | undefined | null | never
 
-export type ComputedProperty<T> = T & ComputedPropertyConstructor<T>
-export type ComputedPropertyConstructor<T> = (form: any, itemConfig: IItemConfig) => T
+export type ComputedProperty<T, M = any> = T | ComputedPropertyConstructor<T, M>
+export type ComputedPropertyConstructor<T, M = any> = (form: M, itemConfig?: IItemConfig) => T
 
-export interface IFormItemConstructorBase {
+export type ItemConfigEventHandler<T, R = void> = (e: T, formSource?: any, config?: IFormItemConfig) => R;
+export type ValueAny = any;
+
+export interface IFormItemBase {
   type?: FormItemType;
   code: string | '_';
   nameCode?: string;
   label?: string;
+  onChange?: ItemConfigEventHandler<ValueAny>;
 }
 
-export interface IFormItemConstructor extends IFormItemConstructorBase {
-  disabled?: ComputedProperty<boolean>
-  hidden?: ComputedProperty<boolean>
-  value?: ComputedProperty<any>;
-  defaultValue?: ComputedProperty<any>;
-  [key: string]: ComputedProperty<any>
+/**
+ * typeof i
+ */
+export interface IFormItemConstructor<M = any> extends IFormItemBase, ISearchConfigConstructor, IDisplayConfigConstructor {
+  disabled?: ComputedProperty<boolean, M>
+  hidden?: ComputedProperty<boolean, M>
+  value?: ComputedProperty<any, M>;
+  defaultValue?: ComputedProperty<any, M>;
+  required?: ComputedProperty<boolean, M> 
+  [key: string]: ComputedProperty<any, M>
 }
 
-export interface IBaseConfig extends IFormItemConstructorBase {
+export interface IBaseConfig extends IFormItemBase {
   value?: any;
   defaultValue?: any;
   disabled?: boolean;
@@ -44,7 +53,7 @@ export interface IBaseConfig extends IFormItemConstructorBase {
 export interface IFormItemConfig extends IBaseConfig, IDisplayConfig, ISearchConfig {
   rule?: any[] | string;
   requiredMessage?: string;
-  options?: Option[];
+  options?: OptionBase[];
   loading?: boolean;
 }
 
@@ -53,6 +62,12 @@ export abstract class CommonStore {
   reaction(source: (r: IReactionPublic) => {}, callback: (arg: {}, r: IReactionPublic) => void, options?: IReactionOptions): void {
     this.destorySet.add(reaction(source, callback, options))
   };
+  onceReaction(source: (r: IReactionPublic) => {}, callback: (arg: {}, r: IReactionPublic) => void, options?: IReactionOptions): void {
+    const a = reaction(source, (arg: {}, r: IReactionPublic) => {
+      callback(arg, r)
+      a()
+    }, options)
+  }
   observe<T = any>(value: IObservableValue<T> | IComputedValue<T>, listener: (change: IValueDidChange<T>) => void, fireImmediately?: boolean): void {
     this.destorySet.add(observe(value, listener, fireImmediately))
   }
@@ -78,3 +93,5 @@ export interface IItemConfig extends IFormItemConfig, IEventStoreBase, CommonSto
   setLoading(loading: boolean): void;
   [key: string]: any;
 }
+
+export type BaseItemConfigTransformer<T = any> = ITransformer<IItemConfig, T>

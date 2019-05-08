@@ -1,10 +1,23 @@
 /* eslint-disable */
 import { observable, computed, action, IKeyValueMap } from 'mobx';
 import Utils from '../../utils';
+import { IItemConfig, ComputedProperty } from './interface';
+export interface IDisplayConfigConstructor {
+  inline?: ComputedProperty<boolean>;
+  isViewOnly?: ComputedProperty<boolean>;
+  showMessage?: ComputedProperty<boolean>;
+  textAlign?: ComputedProperty<'center' | 'left' | 'right'>;
+  disabled?: ComputedProperty<boolean>;
+  size?: ComputedProperty<boolean>;
+  col?: ComputedProperty<number>;
+  offset?: ComputedProperty<number>;
+  offectRight?: ComputedProperty<number>;
+  prefix?: ComputedProperty<any>;
+  suffix?: ComputedProperty<any>;
+  height?: ComputedProperty<string>;
+  useLabel?: ComputedProperty<boolean>;
+}
 export interface IDisplayConfig {
-  code: string;
-  name?: string;
-  label?: string;
   inline?: boolean;
   isViewOnly?: boolean;
   showMessage?: boolean;
@@ -20,10 +33,10 @@ export interface IDisplayConfig {
   useLabel?: boolean;
 }
 export class DisplayConfig {
-  @observable itemConfig: IDisplayConfig
+  @observable itemConfig: IItemConfig
   @observable.ref props: IKeyValueMap
   
-  @action init(itemConfig: IDisplayConfig, props: IKeyValueMap){
+  @action init(itemConfig: IItemConfig, props: IKeyValueMap){
     this.itemConfig = itemConfig;
     this.props = props;
     return this;

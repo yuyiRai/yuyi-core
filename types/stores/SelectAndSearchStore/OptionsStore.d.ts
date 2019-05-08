@@ -41,7 +41,14 @@ export declare class OptionsStore<V = any> {
     valuesToLabels(value: any): string[];
     labelsToValues(label: any): string[];
     readonly selectedLables: any[];
+    readonly selectedOptions: any[];
     readonly selectedLablesStr: string;
-    readonly selectedLablesConfig: any[];
+    readonly selectedLablesConfig: LabelsConfigList;
     readonly hasSelectedTag: boolean;
 }
+export declare type onChangeHandler = (value: any) => void;
+export interface ILabelsConfig {
+    label: string;
+    remove(onChange: onChangeHandler): void;
+}
+export declare type LabelsConfigList = Array<ILabelsConfig>;

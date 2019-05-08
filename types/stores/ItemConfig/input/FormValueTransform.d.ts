@@ -1,5 +1,5 @@
-import { FormItemType } from '../interface';
-export declare type FilterType = 'group' | FormItemType;
+export declare type FilterTypeKey = 'group' | 'dateTime' | 'date' | 'dateToDate';
+export declare type FilterType = FilterTypeKey | IFormValueTransform;
 export interface IFormValueTransform {
     F2V: (value: any) => any;
     V2F: (value: any) => any;
@@ -9,7 +9,8 @@ export declare class FormValueTransform implements IFormValueTransform {
     constructor(type: FilterType);
     readonly F2V: (value: any) => any;
     readonly V2F: (value: any) => any;
-    private normalF2V;
+    private normalCommon;
+    private dateFormatter;
     private groupF2V;
     private groupV2F;
 }

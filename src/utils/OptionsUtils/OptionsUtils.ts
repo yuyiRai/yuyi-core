@@ -7,6 +7,7 @@ import { IKeyValueMap } from 'mobx';
 export type SearchKey<T = any> = keyMatcher | RegExp | T[] | T
 export type keyMatcher = (key?: string, arg1?: any, arg2?: any) => boolean;
 export type Option = { value?: string, label?: string, [key: string]: any }
+export type OptionBase = Option | string
 
 /**
  * 提供匹配方法/正则/匹配项数组/其它，返回通用匹配方法
