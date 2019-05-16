@@ -3,7 +3,7 @@ import { EventEmitter } from '@/utils/EventEmitter';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { IKeyValueMap, Lambda, ObservableMap } from 'mobx';
 import { FormModel, IFormItemConstructor } from '../Interface/FormItem';
-import { IFormItemStore } from "./FormItemStoreBase";
+import { IFormItemStoreConstructor } from "./FormItemStoreBase";
 import { FormStoreCore } from './FormStoreCore';
 import { ConfigInit } from './ItemConfigGroupStore';
 import { PatchDataTree } from './PatchData';
@@ -12,7 +12,7 @@ export interface ICommonFormConfig extends IKeyValueMap {
     [k: string]: WrappedFormUtils | FormStore | ItemConfig;
 }
 export declare type onItemChangeCallback = (code: string, value: any) => void;
-export declare class FormStore<FM extends FormModel = any, VM extends IFormItemStore<FM, any> = IFormItemStore<FM, any>> extends FormStoreCore<FM, VM> {
+export declare class FormStore<FM extends FormModel = any, VM extends IFormItemStoreConstructor<FM, any> = IFormItemStoreConstructor<FM, any>> extends FormStoreCore<FM, VM> {
     constructor(configList?: IFormItemConstructor<any, FM>[]);
     instance: any;
     formSourceListerner: Lambda;
@@ -51,14 +51,14 @@ export declare class FormStore<FM extends FormModel = any, VM extends IFormItemS
     searchNameWatcher: any;
     getValueWithName(code: string, nameCode: string): string;
     validate(codeList?: string[]): Promise<void>;
-    readonly allFormMap: WeakMap<any, FormStore<any, IFormItemStore<any, any>>>;
+    readonly allFormMap: WeakMap<any, FormStore<any, IFormItemStoreConstructor<any, any>>>;
     reactionAntdFormEmitter: EventEmitter<WrappedFormUtils<any>>;
     reactionAntdForm(callback: (antdForm: WrappedFormUtils) => void): void;
     receiveAntdForm(antdForm: WrappedFormUtils): void;
     antdForm: WrappedFormUtils;
     antdFormMap: ObservableMap<string, WrappedFormUtils>;
     setAntdForm(antdForm: WrappedFormUtils, code?: string): void;
-    setConfig<V>(config: ConfigInit<V, FM>): void;
+    setConfig<V>(config: ConfigInit<FM, V>): void;
     setForm(form: FM, instance: any): void;
     private registerFormSourceListerner;
     replaceForm(formMap: ObservableMap<string, any>): void;

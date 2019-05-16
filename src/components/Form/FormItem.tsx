@@ -11,10 +11,10 @@ import { inject, observer, Provider } from 'mobx-react';
 import { createTransformer, expr } from 'mobx-utils';
 import * as React from 'react';
 import { FormStore } from './FormStore';
+import { FormItemStoreCore, IFormItemStoreCore } from './FormStore/FormItemStoreBase';
 import { OFormItemCommon } from './Interface/FormItem';
 import { ItemSwitchType } from './Item';
 import { FormItemLoading } from './Item/common/Loading';
-import { FormItemStoreCore, IFormItemStoreCore } from './FormStore/FormItemStoreBase';
 
 export const ChildrenContext = React.createContext({
   children: null
@@ -38,16 +38,9 @@ export class FormItemStore<FM = any, V = any> extends FormItemStoreCore<FM, V> i
   public formStore: FormStore<FM, typeof FormItemStore>;
   ruleWatcher: IReactionDisposer;
   validateReset: IReactionDisposer;
-
-  @computed.struct get antdForm(): WrappedFormUtils {
-    return this.formStore.antdFormMap.get(this.code)
-  }
-  @action.bound setAntdForm(antdForm: WrappedFormUtils) {
-    this.formStore.setAntdForm(antdForm, this.code)
-  }
-
   constructor(formStore: FormStore<FM, any>, code: string) {
     super(formStore, code)
+    this.setFormStore(formStore)
     this.setAntdForm(formStore.antdForm)
 
     this.ruleWatcher = reaction(() => this.itemConfig.rule, (rule) => {
@@ -61,6 +54,13 @@ export class FormItemStore<FM = any, V = any> extends FormItemStoreCore<FM, V> i
         // this.antdForm.validateFields([this.code])
       }
     })
+  }
+
+  @computed.struct get antdForm(): WrappedFormUtils {
+    return this.formStore.antdFormMap.get(this.code)
+  }
+  @action.bound setAntdForm(antdForm: WrappedFormUtils) {
+    this.formStore.setAntdForm(antdForm, this.code)
   }
 
   @action.bound init() {
@@ -198,9 +198,9 @@ export class FormItemContainer extends React.Component<{
   })
   @computed get style() {
     const { itemConfig } = this.props;
-    return { 
-      display: expr(() => itemConfig.hidden ? 'none' : undefined), 
-      maxHeight: itemConfig.type !== 'textarea' && itemConfig.displayProps.colSpan > 1 && '54px' 
+    return {
+      display: expr(() => itemConfig.hidden ? 'none' : undefined),
+      maxHeight: itemConfig.type !== 'textarea' && itemConfig.displayProps.colSpan > 1 && '54px'
     }
   }
   @computed get containerProps() {

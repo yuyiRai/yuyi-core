@@ -8,7 +8,7 @@ import produce from 'immer';
 import { get, set } from 'lodash';
 import { action, computed, IKeyValueMap, IMapDidChange, IObjectDidChange, Lambda, observable, ObservableMap, observe } from 'mobx';
 import { FormModel, IFormItemConstructor, IItemConfig } from '../Interface/FormItem';
-import { IFormItemStore } from "./FormItemStoreBase";
+import { IFormItemStoreConstructor } from "./FormItemStoreBase";
 import { FormStoreCore } from './FormStoreCore';
 import { ConfigInit } from './ItemConfigGroupStore';
 import { PatchDataTree } from './PatchData';
@@ -23,9 +23,9 @@ export type onItemChangeCallback = (code: string, value: any) => void
 
 export class FormStore<
   FM extends FormModel = any, 
-  VM extends IFormItemStore<FM, any> = IFormItemStore<FM, any>
+  VM extends IFormItemStoreConstructor<FM, any> = IFormItemStoreConstructor<FM, any>
 > extends FormStoreCore<FM, VM> {
-  
+
   constructor(configList?: IFormItemConstructor<any, FM>[]) {
     super(configList)
     this.observe(this.errorGroup, (listener: IMapDidChange) => {
@@ -263,7 +263,7 @@ export class FormStore<
   //   }
   // }
 
-  @action.bound setConfig<V>(config: ConfigInit<V, FM>) {
+  @action.bound setConfig<V>(config: ConfigInit<FM, V>) {
     this.configStore.setConfigSource(config)
     this.registerFormKey(this.formSource)
     this.registerFormSourceListerner();

@@ -6,7 +6,7 @@ import { Utils } from '../../utils/Utils';
 import { getDefaultRules } from './input/Date';
 import { IItemConfig, IItemConfigBase } from "./interface";
 import { CommonStore } from "./interface/CommonStore";
-import { RuleConfigList, RuleConfigMap } from './interface/RuleConfig';
+import { IValidator, RuleConfigList, RuleConfigMap, ValidatorCallback } from './interface/RuleConfig';
 
 export class RuleStore<V, FM> extends CommonStore {
   @observable itemConfig: IItemConfigBase<V, FM>;
@@ -15,7 +15,7 @@ export class RuleStore<V, FM> extends CommonStore {
     this.itemConfig = itemConfig
   }
 
-  @computed 
+  @computed
   public get requiredRule() {
     const { itemConfig } = this
     const { required } = itemConfig
@@ -24,30 +24,33 @@ export class RuleStore<V, FM> extends CommonStore {
         const { validator } = itemConfig.required as any
         return Object.assign({}, itemConfig.required, { validator: this.shadowRuleRegister(validator) })
       }
+      const validator: IValidator<string | number> = Utils.isFunctionFilter(
+        itemConfig.required,
+        function (_: any, value: string | number, callback: ValidatorCallback) {
+          // value = Utils.isNotEmptyValueFilter(value, this.form[this.code])
+          if (Utils.isEmptyData(trim(value + '')) || (itemConfig.type === 'number' && value == 0)) {
+            callback(new Error(itemConfig.requiredMessage || `[${itemConfig.label}]不能为${itemConfig.type === 'number' ? '0' : '空'}！`))
+            return
+          }
+          callback();
+        }
+      )
       return {
         required: true,
-        validator: this.shadowRuleRegister(
-          Utils.isFunctionFilter(itemConfig.required,
-            (rule: any, value: any, callback: any) => {
-              // value = Utils.isNotEmptyValueFilter(value, this.form[this.code])
-              if (Utils.isEmptyData(trim(value)) || (itemConfig.type === 'number' && value == 0)) {
-                return callback(new Error(itemConfig.requiredMessage || `[${itemConfig.label}]不能为${itemConfig.type === 'number' ? '0' : '空'}！`))
-              }
-              return callback();
-            })),
+        validator: this.shadowRuleRegister(validator),
         trigger: itemConfig.type === 'check' ? 'none' : (itemConfig.type == 'select' ? 'change' : 'blur') //i.type == 'select' ? 'blur' : 'change'
       }
     }
   }
 
-  @autobind 
-  public shadowRuleRegister(validator: any) {
+  @autobind
+  public shadowRuleRegister(validator: IValidator<string | number>) {
     // const { componentProps } = this.itemConfig
     return (rule: any, value: any, callback: { (arg0: any): void; (): void; }) => {
-      return validator(rule, value, (error: { message: any; }) => {
+      return validator(rule, value, (error) => {
         if (isError(error) || Utils.isNotEmptyString(error)) {
           // if (!componentProps.$store || !componentProps.$store.state.taskDispatcher.shadowRequired) {
-            return callback(error)
+          return callback(error)
           // } else {
           //   // console.log('will catch shadowform error')
           //   componentProps.$store.dispatch('catchShadowFormError', Utils.isStringFilter(this.itemConfig.requiredMessage, error.message, error)).then(() => {
@@ -60,7 +63,7 @@ export class RuleStore<V, FM> extends CommonStore {
     }
   }
 
-  @autobind 
+  @autobind
   public getRuleList(i: IKeyValueMap<any>): RuleConfigList | undefined {
     const iRules = []
     // if (this.required) {
@@ -129,7 +132,7 @@ export class RuleStore<V, FM> extends CommonStore {
   }
 
 
-  @autobind 
+  @autobind
   public async optionsMatcher(r: any, values: any, callback: any) {
     if (!this.itemConfig.allowCreate) {
       const options = this.itemConfig.options || []
@@ -144,17 +147,17 @@ export class RuleStore<V, FM> extends CommonStore {
     return callback()
   }
 
-  @computed 
+  @computed
   public get defaultRule() {
     return Object.assign(
-      RuleStore.getDefaultRules(this.itemConfig), 
+      RuleStore.getDefaultRules(this.itemConfig),
       getDefaultRules(this.itemConfig)
     )
   }
-  public static getDefaultRules<FM>(itemConfig: IItemConfig<FM>): RuleConfigMap {
+  public static getDefaultRules<FM, V = any>(itemConfig: IItemConfig<V, FM>): RuleConfigMap<V, FM> {
     return {
       phone: {
-        validator: (rule: any, value: any, callback: any) => {
+        validator: (rule: any, value: V, callback: any) => {
           // value = Utils.isNotEmptyValueFilter(value, this.form[this.code])
           // console.log('check', value)
           // console.log(rule, value, l,a, this.itemPipe.itemConfig.rule)
@@ -173,7 +176,7 @@ export class RuleStore<V, FM> extends CommonStore {
         message: '请录入正确的手机号！'
       },
       'chejiahao': [{
-        validator: (rule: any, value: any, callback: any) => {
+        validator: (rule: any, value: V, callback: ValidatorCallback) => {
           if (Utils.isEmptyValue(value)) {
             return callback();
           }
@@ -186,10 +189,10 @@ export class RuleStore<V, FM> extends CommonStore {
         trigger: 'blur',
         message: '车架号只允许17位'
       }],
-      plusOnly: (form: any, config: { label?: any; }) => [{
-        validator($: any, value: string, callback: { (arg0: Error): void; (): void; }) {
+      plusOnly: (form, config) => [{
+        validator(rule, value, callback: { (arg0: Error): void; (): void; }) {
           // console.log(v,b)
-          if (Utils.isNotEmptyValue(value) && (Utils.isNumberFilter(parseFloat(value)) || 0) <= 0) {
+          if (Utils.isNotEmptyValue(value) && (Utils.isNumberFilter(parseFloat(value+'')) || 0) <= 0) {
             return callback(new Error())
           }
           return callback();

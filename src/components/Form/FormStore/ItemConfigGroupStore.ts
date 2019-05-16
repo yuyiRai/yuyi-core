@@ -5,7 +5,7 @@ import { ItemConfig } from 'src/stores';
 import { CommonStore, IFormItemConstructor, FormModel } from '../Interface/FormItem';
 import { FormStoreCore } from './FormStoreCore';
 
-export type ConfigInit<V, FM = FormModel> = IFormItemConstructor<V, FM>[] | IKeyValueMap<IFormItemConstructor<V, FM>>
+export type ConfigInit<FM = FormModel, VKeys = any> = IFormItemConstructor<VKeys, FM>[] | IKeyValueMap<IFormItemConstructor<VKeys, FM>>
 
 export class ItemConfigGroupStore<FM = FormModel, VKeys = any> extends CommonStore {
   @observable
@@ -63,7 +63,7 @@ export class ItemConfigGroupStore<FM = FormModel, VKeys = any> extends CommonSto
   }
 
   @action.bound
-  public setConfigSource<V>(configSource: ConfigInit<V, FM>) {
+  public setConfigSource<V>(configSource: ConfigInit<FM, V>) {
     console.log('setConfig', configSource, this, this.store)
     this.mapToDiff(this.configSource, reduce(configSource, (object, config: IFormItemConstructor<V, FM>, key: string | number) => {
       return (Utils.isNumber(key) || Utils.isEqual(key, config.code)) ? Object.assign(object, { [config.code]: config }) : object
@@ -74,9 +74,9 @@ export class ItemConfigGroupStore<FM = FormModel, VKeys = any> extends CommonSto
     super()
     this.store = formStore
     this.observe(this.configSource, listener => {
-      console.log('on-base-config-change', listener, this)
+      // console.log('on-base-config-change', listener, this)
       if (listener.type === 'add') {
-        this.itemConfigMap.set(listener.name, new ItemConfig<VKeys, FM>(listener.newValue, this.store.formSource, this, this.store as any).log('on-base-config-change'))
+        this.itemConfigMap.set(listener.name, new ItemConfig<VKeys, FM>(listener.newValue, this.store.formSource, this, this.store as any))//.log('on-base-config-change'))
       } else if (listener.type === 'delete') {
         this.getItemConfig(listener.name).destory()
         this.itemConfigMap.delete(listener.name)

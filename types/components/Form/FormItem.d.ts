@@ -5,8 +5,8 @@ import 'antd/lib/form/style/css';
 import { IReactionDisposer } from 'mobx';
 import * as React from 'react';
 import { FormStore } from './FormStore';
-import { OFormItemCommon } from './Interface/FormItem';
 import { FormItemStoreCore, IFormItemStoreCore } from './FormStore/FormItemStoreBase';
+import { OFormItemCommon } from './Interface/FormItem';
 export declare const ChildrenContext: React.Context<{
     children: any;
 }>;
@@ -22,9 +22,9 @@ export declare class FormItemStore<FM = any, V = any> extends FormItemStoreCore<
     formStore: FormStore<FM, typeof FormItemStore>;
     ruleWatcher: IReactionDisposer;
     validateReset: IReactionDisposer;
+    constructor(formStore: FormStore<FM, any>, code: string);
     readonly antdForm: WrappedFormUtils;
     setAntdForm(antdForm: WrappedFormUtils): void;
-    constructor(formStore: FormStore<FM, any>, code: string);
     init(): void;
     dispose(): void;
     readonly fieldDecorator: (node: React.ReactNode) => React.ReactNode;
@@ -53,7 +53,7 @@ export declare class FormItemContainer extends React.Component<{
     propsTransform: import("mobx-utils").ITransformer<ItemConfig<any, import("mobx").IKeyValueMap<any>>, {
         type: import("./Interface/FormItem").FormItemType;
         displayProps: {
-            colSpan: number;
+            colSpan: any;
             useColumn: any;
         };
         lg: any;
@@ -68,7 +68,7 @@ export declare class FormItemContainer extends React.Component<{
     readonly containerProps: {
         type: import("./Interface/FormItem").FormItemType;
         displayProps: {
-            colSpan: number;
+            colSpan: any;
             useColumn: any;
         };
         lg: any;

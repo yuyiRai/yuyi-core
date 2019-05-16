@@ -3,22 +3,22 @@ import { action, computed, extendObservable, IKeyValueMap, IMapDidChange, observ
 import { EventStoreInject } from 'src/stores/EventStore';
 import { isNotEmptyArray } from 'src/utils';
 import { FormModel } from '../Interface/FormItem';
-import { IFormItemStore, IFormItemStoreCore, VMFormStore } from "./FormItemStoreBase";
+import { IFormItemStoreConstructor, IFormItemStoreCore } from "./FormItemStoreBase";
 import { GFormStore } from './GFormStore';
 import { ConfigInit, ItemConfigGroupStore } from './ItemConfigGroupStore';
 
 export type onItemChangeCallback = (code: string, value: any) => void
 
 @EventStoreInject(['onItemChange'])
-export class FormStoreCore<FM extends FormModel, VM extends IFormItemStore<FM> = any> extends GFormStore {
+export class FormStoreCore<FM extends FormModel, VM extends IFormItemStoreConstructor<FM> = any> extends GFormStore {
   @observable
   configStore: ItemConfigGroupStore<FM> = new ItemConfigGroupStore<FM>(this);
-  constructor(config?: ConfigInit<any, FM>) {
+  constructor(config?: ConfigInit<FM>) {
     super();
     this.configStore.setConfigSource(config || []);
   }
   
-  @observable.shallow formMap: ObservableMap<string, any> = observable.map({}, { deep: false });
+  @observable.shallow formMap: ObservableMap<keyof FM, any> = observable.map({}, { deep: false });
   @observable formSource: FM = {} as FM
   @observable formSourceTrack: FM[] = []
   @computed.struct get lastFormSource() {
@@ -33,8 +33,7 @@ export class FormStoreCore<FM extends FormModel, VM extends IFormItemStore<FM> =
   @action.bound registerItemStore<V>(code: string, Constructor: VM): IFormItemStoreCore<FM, V> {
     // console.log('registerForm', form)
     // debugger
-    const This: VMFormStore<FM, V> = this
-    this.formItemStores[code] = this.formItemStores[code] || new Constructor(This, code)
+    this.formItemStores[code] = this.formItemStores[code] || new Constructor(this, code)
     // this.registerForm(this.formSource, code, this.formItemStores[code].itemConfig)
     return this.formItemStores[code]
   }

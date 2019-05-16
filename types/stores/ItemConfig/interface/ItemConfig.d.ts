@@ -45,7 +45,7 @@ export interface IBaseConfig<V, FM> extends IFormItemBase<V, FM> {
     defaultValue?: V;
     disabled?: boolean;
     hidden?: boolean;
-    required?: boolean;
+    required?: boolean | RuleConfig<V>;
     refConfig?: (store: FormStore) => void;
 }
 export interface IFormItemConfig<V, FM> extends IBaseConfig<V, FM>, ISearchConfig<V, FM>, IDisplayConfig {

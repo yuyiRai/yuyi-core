@@ -1,7 +1,10 @@
 import { IItemConfig, FormModel } from "./ItemConfig";
 import { FormStore } from "src/components";
+export interface IValidator<V> {
+    (rules: any, value: V, callback: ValidatorCallback): void | any;
+}
 export declare type RuleConfig<V = any> = {
-    validator?(rules: any, value: V, callback: ValidatorCallback): void;
+    validator?: IValidator<V>;
     strict?: boolean | undefined;
     trigger?: 'change' | 'blur' | Array<'change' | 'blur'>;
     message?: string;

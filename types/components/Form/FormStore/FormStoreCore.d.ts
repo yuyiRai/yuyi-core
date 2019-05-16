@@ -1,13 +1,13 @@
 import { IKeyValueMap, IMapDidChange, ObservableMap } from 'mobx';
 import { FormModel } from '../Interface/FormItem';
-import { IFormItemStore, IFormItemStoreCore } from "./FormItemStoreBase";
+import { IFormItemStoreConstructor, IFormItemStoreCore } from "./FormItemStoreBase";
 import { GFormStore } from './GFormStore';
 import { ConfigInit, ItemConfigGroupStore } from './ItemConfigGroupStore';
 export declare type onItemChangeCallback = (code: string, value: any) => void;
-export declare class FormStoreCore<FM extends FormModel, VM extends IFormItemStore<FM> = any> extends GFormStore {
+export declare class FormStoreCore<FM extends FormModel, VM extends IFormItemStoreConstructor<FM> = any> extends GFormStore {
     configStore: ItemConfigGroupStore<FM>;
-    constructor(config?: ConfigInit<any, FM>);
-    formMap: ObservableMap<string, any>;
+    constructor(config?: ConfigInit<FM>);
+    formMap: ObservableMap<keyof FM, any>;
     formSource: FM;
     formSourceTrack: FM[];
     readonly lastFormSource: FM;
