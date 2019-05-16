@@ -1,7 +1,7 @@
-import { IItemConfig } from '../interface/ItemConfig';
-export declare const checkDateToDate: (date: any, itemConfig: IItemConfig) => (rule: any, value: any, callback: any) => any;
-export declare const checkFutureDate: (itemConfig: IItemConfig) => (rule: any, value: any, callback: any) => any;
-export declare const getDefaultRules: (itemConfig: IItemConfig) => {
+import { IItemConfig } from '../interface';
+export declare const checkDateToDate: <FM>(date: any, itemConfig: IItemConfig<FM, import("mobx").IKeyValueMap<any>>) => (rule: any, value: any, callback: any) => any;
+export declare const checkFutureDate: <FM>(itemConfig: IItemConfig<FM, import("mobx").IKeyValueMap<any>>) => (rule: any, value: any, callback: any) => any;
+export declare const getDefaultRules: <FM>(itemConfig: IItemConfig<FM, import("mobx").IKeyValueMap<any>>) => {
     dateToDate30: {
         validator: (rule: any, value: any, callback: any) => any;
         trigger: string[];

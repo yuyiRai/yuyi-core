@@ -1,5 +1,5 @@
 import './interface';
-
+import './utils';
 declare global {
   export namespace JSX {
     type TChildren =
@@ -23,4 +23,4 @@ declare global {
   export function For<T>(props: { children?: TChildren | TChildren[]; each: string; of: Iterable<T>; index?: string; }): any;
   export function With(props: { children?: TChildren | TChildren[];[id: string]: any; }): any;
 }
-export * from './interface'
+export * from '.'

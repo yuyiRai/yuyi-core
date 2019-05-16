@@ -1,18 +1,16 @@
-import * as React from 'react'
-import { Select, Spin } from 'antd';
-import { SelectProps, OptGroupProps, SelectValue } from 'antd/lib/select/index';
+import { AutoComplete, Select, Spin } from 'antd';
+import { OptGroupProps, SelectProps } from 'antd/lib/select/index';
 import 'antd/lib/select/style/css';
 import { Observer } from 'mobx-react-lite';
-import { useSearchStore } from '../OptionsUtil';
-import { OptionsStore } from '../../../../stores';
-import { OFormItemCommon, IItemConfig } from '../../Interface';
-import { commonInjectItem } from '../commonInjectItem';
+import { createTransformer } from 'mobx-utils';
+import * as React from 'react';
 import styled from 'styled-components';
+import { OptionsStore } from '../../../../stores/ItemConfig/OptionsStore';
+import { IItemConfig, OFormItemCommon } from '../../Interface';
+import { commonInjectItem } from '../commonInjectItem';
+import { useSearchStore } from '../OptionsUtil';
 import { ValueHintContainer } from '../OptionsUtil/ToolTipContainer';
 import { TagGroup } from './TagGroup';
-import { createTransformer } from 'mobx-utils';
-import { IReactComponent } from 'mobx-react';
-
 export interface ISelectItemProps extends OFormItemCommon, SelectProps {
   center?: boolean;
 }
@@ -22,104 +20,88 @@ export const SearchItem: React.FunctionComponent<ISelectItemProps> = commonInjec
 export interface ISearchResultGroupProps extends OptGroupProps {
   disabled?: boolean;
 }
-export const OSearchResultGroup: React.FunctionComponent<ISearchResultGroupProps> = ({disabled, ...props}) => {
-  if (disabled) {
-    return <>{props.children}</>
-  }
-  return (
-    <Select.OptGroup {...props}>
-      {props.children}
-    </Select.OptGroup>
-  )
-}
 
-export function preSwitchContainer<P>(Container: IReactComponent<P>) {
-  return (props: P & {key?: any}, children: JSX.Element | JSX.Element[], switchValue: boolean) => switchContainer(Container, props, children, switchValue)
+export function preSwitchContainer(container: JSX.Element) {
+  return (children: JSX.Element | JSX.Element[], switchValue: boolean) => switchContainer(container, children, switchValue)
 }
-export function switchContainer<P>(Container: IReactComponent<P>, props: P & {key?: any}, children: JSX.Element | JSX.Element[], switchValue: boolean) {
+export function switchContainer(container: JSX.Element, children: JSX.Element | JSX.Element[], switchValue: boolean) {
   if (switchValue) {
-    return <Container {...props}>{children}</Container>
+    return React.cloneElement(container, container.props, children)
   }
   return children
 }
 
 export const getSelectModel = createTransformer((itemConfig: IItemConfig) => {
-  if(itemConfig.multiple) {
-    if(itemConfig.allowCreate) {
+  if (itemConfig.multiple) {
+    if (itemConfig.allowCreate) {
       return 'tags'
     }
     return 'multiple'
   }
   return undefined;
 })
+
 export const getNotFoundContent = createTransformer((itemConfig: IItemConfig) => {
-  return itemConfig.loading ? <div style={{textAlign: 'center'}}><Spin size="small" /></div> : undefined
+  return itemConfig.loading ? <div style={{ textAlign: 'center' }}><Spin size="small" /></div> : undefined
 })
 
-export const OSearchItem: React.FunctionComponent<ISelectItemProps> = styled((props: ISelectItemProps) => {
+export const OSearchItem: React.FunctionComponent<any> = styled((props: any) => {
   const { antdForm, formStore, code, itemConfig, ...other } = props
+  const isAutoComplete = (itemConfig.allowInput === true && itemConfig.type === 'search' && !itemConfig.multiple)
+  const OptionItem = isAutoComplete ? AutoComplete.Option : Select.Option
+  const OptGroupItem = isAutoComplete ? AutoComplete.OptGroup : Select.OptGroup
   const searchStore = useSearchStore(itemConfig, (store: OptionsStore<JSX.Element>) => {
-    return store.displayOptions.map(d => <Select.Option title={d.label} key={d.key} value={d.value}>{d.label}</Select.Option>);
+    return store.displayOptions.map(d => 
+      <OptionItem title={d.label} key={d.key} value={d.value}>{store.getOptionsLabel(d)}</OptionItem>
+    );
   })
   const { optionsStore } = itemConfig
-  const { transformOption } = optionsStore;
-  console.log(props, optionsStore.displayOptions, transformOption)
   const mode = getSelectModel(itemConfig)
   return (
     <Observer>{() => {
-      const [ isVisible, changeVisible ] = React.useState(undefined)
-      const optionsList = switchContainer(Select.OptGroup, { key: searchStore.searchHintText }, transformOption, Utils.isNotEmptyString(searchStore.searchHintText))
-  
+      const { transformOption } = optionsStore;
+      // console.log(isAutoComplete, props, optionsStore.displayOptions, transformOption, itemConfig.options)
+      const [isVisible, changeVisible] = React.useState(undefined)
+      const optionsList = switchContainer(
+        <OptGroupItem key={searchStore.searchHintText} label={searchStore.searchHintText} />,
+        transformOption,
+        itemConfig.type === 'search' && Utils.isNotEmptyString(searchStore.searchHintText)
+      )
       const hint = (
         <TagGroup labelsConfig={optionsStore.selectedLablesConfig} onClose={v => {
           other.onChange(v, transformOption)
         }} />
       )
+      if (isAutoComplete) {
+        return <AutoComplete {...other} onSearch={searchStore.onSearch} dataSource={transformOption} />
+      }
       const selectElement = (
         <Select mode={mode}
-            showSearch
-            defaultActiveFirstOption={false}
-            showArrow={true}
-            optionFilterProp="title"
-            // filterOption={false}
-            dropdownRender={mode!=='tags' ? (menu?: JSX.Element, props?: SelectProps<SelectValue>): JSX.Element => {
-              // console.log('dropdownRender', menu.props.menuItems)
-              // const { menuItems, ...other } = menu.props
-              // if (searchStore.searchHintText) {
-              //   menu = React.cloneElement(menu, {
-              //     ...other,
-              //     menuItems: [menuItems[menuItems.length-1]]
-              //   })
-              // }
-              return (
-                <div>
-                  { false && getNotFoundContent(itemConfig) }
-                  { menu }
-                </div>
-              )
-            } : undefined }
-            onSearch={searchStore.onSearch}
-            notFoundContent={getNotFoundContent(itemConfig) || 'Not Found'}
-            loading={itemConfig.loading}
-            {...other}
-            onDropdownVisibleChange={open => {
-              changeVisible(open ? open : undefined);
-              !open && searchStore.resetKeyword()
-            }}
-          >{ optionsList }</Select>
+          allowClear
+          autoClearSearchValue={false}
+          showSearch={itemConfig.type === 'search'}
+          defaultActiveFirstOption={false}
+          showArrow={true}
+          optionFilterProp="title"
+          onSearch={itemConfig.type === 'search' ? searchStore.onSearch : undefined}
+          notFoundContent={getNotFoundContent(itemConfig)}
+          loading={itemConfig.loading}
+          {...other}
+          onDropdownVisibleChange={open => {
+            changeVisible(open ? open : undefined);
+            !open && searchStore.resetKeyword()
+          }}
+        >{optionsList}</Select>
       )
-      return (
-        <>{
-        <span>{searchStore.keyWord}</span>}{
-          switchContainer(ValueHintContainer, {
-            value: hint,
-            visible: optionsStore.hasSelectedTag ? isVisible : false
-          }, selectElement, itemConfig.multiple)
-        }</>
-      )
+      return <>{
+        switchContainer(
+          <ValueHintContainer value={hint} visible={optionsStore.hasSelectedTag ? isVisible : false} />,
+          selectElement,
+          itemConfig.multiple
+        )
+      }</>
     }}</Observer>
   );
 })`
-  display: block !important;
   text-align: ${props => props.center ? 'center' : undefined};
 `

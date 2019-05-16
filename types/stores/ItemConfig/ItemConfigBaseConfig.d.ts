@@ -1,0 +1,33 @@
+import { IKeyValueMap } from 'mobx';
+import { OptionBase } from '../../utils';
+import { FormItemType, IItemConfigBase, RuleConfigList } from './interface';
+import { ItemConfigBaseConfigModel } from './ItemConfigBaseConfigModel';
+import { RuleStore } from './RuleConfigStore';
+export declare class ItemConfigBaseConfig<V, FM> extends ItemConfigBaseConfigModel<V, FM> implements IItemConfigBase<V, FM> {
+    componentProps: IKeyValueMap;
+    ruleConfig: RuleStore<V, FM>;
+    readonly code: string;
+    readonly label: string;
+    readonly type: FormItemType;
+    readonly placeholder: string;
+    readonly nameCode: string;
+    readonly viewOnly: boolean;
+    readonly required: boolean;
+    readonly hidden: boolean;
+    readonly disabled: boolean;
+    readonly isViewOnly: boolean;
+    readonly rules: RuleConfigList;
+    setRules(v: RuleConfigList): void;
+    readonly options: OptionBase[];
+    getOptions(): OptionBase[];
+    setOptions(v: any): void;
+    childrenConfig: IKeyValueMap<ItemConfigBaseConfig<V, FM>>;
+    readonly allConfig: IKeyValueMap<ItemConfigBaseConfig<V, FM>>;
+    parentConfig: ItemConfigBaseConfig<V, FM>;
+    setParentConfig(parentConfig: ItemConfigBaseConfig<V, FM>): void;
+    readonly _loading: boolean;
+    readonly loading: boolean;
+    setLoading(v: boolean, source?: string): void;
+    readonly loadData: (key: import("../../utils").Option, keyList: import("../../utils").Option[], form?: FM, itemConfig?: import("./interface").IItemConfig<V, FM>) => import("../../utils").Option[] | Promise<import("../../utils").Option[]>;
+    readonly loadDataDeep: number;
+}

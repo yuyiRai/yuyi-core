@@ -15,8 +15,9 @@ export function filterToValue(v: any, defaultValue?: any) {
 export const objToForm = (model: IKeyValueMap, store: FormStore, form: WrappedFormUtils) => {
   let target = {}
   const r = {}
+  console.log('objToForm', model)
   // console.log('formValueTransform', store.formValueTransform)
-  for (const config of store.configList) {
+  for (const config of store.configStore.configList) {
     const v = get(model, config.code)
     const value = store.getF2VValue(config.code, filterToValue(v, config.value))
     // console.log('formValueTransform', config.code, value, v, store)
@@ -47,7 +48,7 @@ export const form = Form.create({
     console.log('onFieldsChange patchFieldsChange result', r, changedFields);
   },
   onValuesChange(props: IFormProps & FormComponentProps<any>, values, allValues) {
-    // console.log('onValuesChange', props, values, allValues);
+    console.log('onValuesChange', props, values, allValues);
   },
   mapPropsToFields(props: IFormProps & FormComponentProps<any>) {
     //将store中的值绑定到视图中

@@ -1,10 +1,10 @@
 /* eslint-disable */
 import { observable, computed, action, runInAction } from 'mobx';
-import { EventStoreInject } from '../../utils/EventStore';
+import { EventStoreInject } from '@/stores/EventStore';
 import { ItemConfigBase } from '../ItemConfig/ItemConfigBase';
 import { ItemConfig } from '../ItemConfig/ItemConfig';
 import { autobind, } from 'core-decorators';
-import { OptionsStore } from './OptionsStore';
+import { OptionsStore2 } from './OptionsStore';
 import Utils, { Option } from '../../utils';
 
 import { last, toString, pullAllBy, some, pullAll, map, filter, concat, get } from 'lodash'
@@ -21,9 +21,9 @@ export class SelectAndSearchStore {
    */
   @observable itemConfig: ItemConfig;
   /**
-   * @type { OptionsStore }
+   * @type { OptionsStore2 }
    */
-  @observable optionsStore: OptionsStore;
+  @observable OptionsStore2: OptionsStore2;
   @observable.ref searchEventEmitter: (...params: any[]) => Promise<any>;
   /**
    * 至今为止选择过的optionList
@@ -35,19 +35,19 @@ export class SelectAndSearchStore {
   // shadowOptionObserve = observe(this.shadowOption, 'value', next => console.log('shadowOption', next))
 
   @computed get shadowOption() {
-    return this.optionsStore.shadowOption || {}
+    return this.OptionsStore2.shadowOption || {}
   }
 
   @action.bound setShadowOption(label: any, source: any) {
-    this.optionsStore.setShadowOption(label, source)
+    this.OptionsStore2.setShadowOption(label, source)
   }
 
   @action.bound setShadowOptionByValue(value: any, source: any) {
-    this.optionsStore.setShadowOptionByValue(value, source)
+    this.OptionsStore2.setShadowOptionByValue(value, source)
   }
 
   @computed get displayOptions(): Option[] {
-    return this.optionsStore.displayOptions || []
+    return this.OptionsStore2.displayOptions || []
   }
 
   /**
@@ -67,7 +67,7 @@ export class SelectAndSearchStore {
       if (value !== this.value) {
         this.value = value
         if (this.itemConfig.allowInput && value !== this.shadowOption.value) {
-          this.optionsStore.setShadowOptionByValue(value, 'valueUpdate')
+          this.OptionsStore2.setShadowOptionByValue(value, 'valueUpdate')
         }
       }
     }
@@ -81,7 +81,7 @@ export class SelectAndSearchStore {
   @action.bound setConfig(type: 'select' | 'search', itemConfig: ItemConfig) {
     this.type = ['select', 'search'].includes(type) ? type : 'select'
     this.itemConfig = (itemConfig instanceof ItemConfig) ? itemConfig : (Utils.isObject(itemConfig) ? new ItemConfig(itemConfig) : this.itemConfig)
-    this.optionsStore = new OptionsStore(this.itemConfig)
+    this.OptionsStore2 = new OptionsStore2(this.itemConfig)
     this.searchEventEmitter = Utils.createSimpleTimeBufferInput((keywordList: any[]) => {
       this.remoteMethod(_.last(keywordList))
     }, this, 300)
@@ -96,7 +96,7 @@ export class SelectAndSearchStore {
     if (Utils.isNotEmptyArray(keyArr) && (keyArr!== this.selectedLables) && !Utils.likeArray(keyArr, this.selectedLables)) {
       if (this.itemConfig.allowInput) {
         // debugger
-        this.optionsStore.setShadowOption(Utils.castString(key), 'search')
+        this.OptionsStore2.setShadowOption(Utils.castString(key), 'search')
       }
       this.searchEventEmitter(keyArr)
     }
@@ -168,7 +168,7 @@ export class SelectAndSearchStore {
   }
 
   @action.bound onChangeWithLabel(label: string) {
-    const value = this.optionsStore.labelToValue(label);
+    const value = this.OptionsStore2.labelToValue(label);
     // console.log('onBlur', label, value, this.value)
     // if(Utils.isEqual(value, this.value)) {
     //   return
@@ -189,7 +189,7 @@ export class SelectAndSearchStore {
       // this.patchSelectedOption(pushList)
       // this.value = value
       const isSelected = selectedObj.length > 0
-      const isAllowCreateOption = allowCreate && !isSelected && Utils.isNotEmptyValue(value) && this.optionsStore.isValidShadowOption
+      const isAllowCreateOption = allowCreate && !isSelected && Utils.isNotEmptyValue(value) && this.OptionsStore2.isValidShadowOption
 
       console.log(`onChange by ${source} label: "${label}" value: "${value}" last-value: "${this.value}" allow-create:${isAllowCreateOption}`)
       if (isAllowCreateOption) {
@@ -266,10 +266,10 @@ export class SelectAndSearchStore {
   }
 
   @autobind labelsToValues(label: any) {
-    return Utils.labelsToValues(this.isSearch ? this.selectedOptions : this.itemConfig.options, label)
+    return Utils.labelsToValues(this.isSearch ? this.selectedOptions : this.itemConfig.options as any, label)
   }
 
   @autobind valuesToLabels(value: any, joinKey?: string) {
-    return Utils.valuesToLabels(this.isSearch ? this.selectedOptions : this.itemConfig.options, value, joinKey)
+    return Utils.valuesToLabels(this.isSearch ? this.selectedOptions : this.itemConfig.options as any, value, joinKey)
   }
 }

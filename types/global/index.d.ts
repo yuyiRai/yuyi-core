@@ -1,5 +1,6 @@
 /// <reference types="react" />
 import './interface';
+import './utils';
 declare global {
     namespace JSX {
         type TChildren = Element | string | number | boolean | null | typeof undefined;
@@ -34,4 +35,4 @@ declare global {
         [id: string]: any;
     }): any;
 }
-export * from './interface';
+export * from '.';

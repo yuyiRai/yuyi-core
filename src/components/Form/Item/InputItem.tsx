@@ -6,12 +6,13 @@ import { commonInjectItem } from "./commonInjectItem";
 import { Utils } from '../../../utils';
 import { isFunction } from 'util';
 import { ValueHintContainer } from './OptionsUtil/ToolTipContainer';
+// import { SlotContext } from '../../../utils/SlotUtils';
 
 const inev = Utils.isNotEmptyValueFilter
 
 export interface IHasShadowValueProps<V = any> extends OFormItemCommon {
-  onChange?: ChangeEventHandler<V>; 
-  onBlur?: FocusEventHandler<V>; 
+  onChange?: ChangeEventHandler<V>;
+  onBlur?: FocusEventHandler<V>;
   value?: V;
 }
 
@@ -24,7 +25,7 @@ export function useShadowValue<P = any>(initValue: any, props: IHasShadowValuePr
 
   React.useEffect(() => {
     if (inev(lastV) !== inev(currentValue)) {
-      console.log('input: change props value', inev(lastV), inev(currentValue))
+      // console.log('input: change props value', inev(lastV), inev(currentValue))
       setShadowValue(currentValue)
       setLastV(currentValue)
     }
@@ -67,8 +68,8 @@ export type IInputItemProps = InputProps & OFormItemCommon
 export const InputItem: React.FunctionComponent<IInputItemProps> = commonInjectItem(
   props => <Text {...props} />
 )
-export type ITextAreaProps = TextAreaProps & OFormItemCommon
-export const TextAreaItem: React.FunctionComponent<ITextAreaProps> = commonInjectItem(
+export type ITextAreaItemProps = TextAreaProps & OFormItemCommon
+export const TextAreaItem: React.FunctionComponent<ITextAreaItemProps> = commonInjectItem(
   props => <Area {...props} />
 )
 
@@ -76,9 +77,12 @@ const Text: React.FunctionComponent<IInputItemProps> = (props) => {
   const { antdForm, formStore, code, itemConfig, ...other } = props
   const { value, onChange, onBlur } = useShadowValue<IInputItemProps>(itemConfig.currentValue, props)
   // console.log('fieldDecoratorOption', itemConfig.label, value, other.value, other);
-  return (
+  // const { slots } = React.useContext(SlotContext)
+  // const Inter = slots.inter
+  // console.log(slots)
+  return <>{(
     <ValueHintContainer value={value}>
-      <Input allowClear
+      <Input allowClear={false}
         {...other}
         onChange={onChange}
         value={value}
@@ -87,13 +91,14 @@ const Text: React.FunctionComponent<IInputItemProps> = (props) => {
         maxLength={itemConfig.maxLength}
       />
     </ValueHintContainer>
-  )
+    )}
+  </>
   // return <Input {...other}/>
 }
 
-const Area: React.FunctionComponent<ITextAreaProps> = (props) => {
+const Area: React.FunctionComponent<ITextAreaItemProps> = (props) => {
   const { antdForm, formStore, code, itemConfig, ...other } = props
-  const { value, onChange, onBlur } = useShadowValue<ITextAreaProps>(other.value, props)
+  const { value, onChange, onBlur } = useShadowValue<ITextAreaItemProps>(other.value, props)
   return (
     <Input.TextArea
       {...other} rows={!itemConfig.autoSize && 4}

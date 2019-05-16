@@ -5,6 +5,9 @@ export declare type keyMatcher = (key?: string, arg1?: any, arg2?: any) => boole
 export declare type Option = {
     value?: string;
     label?: string;
+    children?: Option[];
+    disabled?: boolean;
+    isLeaf?: boolean;
     [key: string]: any;
 };
 export declare type OptionBase = Option | string;
@@ -86,6 +89,7 @@ export declare function labelsToValues(options: Option[], label: SearchKey<strin
 export declare function labelsToValues(options: Option[], label: SearchKey<string>, joinKey: string): string;
 export declare function getCodeListByKey(codeType: Option[]): RemoteSearcher;
 export declare function getCodeListByKey(codeType: OptionSearcher, optionFactory?: ArrayIterator<IKeyValueMap, Option>): RemoteSearcher;
+export declare function convertValueOption(valueList: string[], isFull?: boolean): Option[];
 declare const _default: {
     getCodeListByKey: typeof getCodeListByKey;
     getOptionsByLabel: typeof getOptionsByLabel;
@@ -101,5 +105,6 @@ declare const _default: {
     isLabelMatchedItemByMatcher: typeof isLabelMatchedItemByMatcher;
     isValueMatchedItemByMatcher: typeof isValueMatchedItemByMatcher;
     optionsSelectedMatch: typeof optionsSelectedMatch;
+    convertValueOption: typeof convertValueOption;
 };
 export default _default;

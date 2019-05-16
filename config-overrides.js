@@ -1,14 +1,9 @@
-const { override, overrideDevServer, removeModuleScopePlugin, watchAll, fixBabelImports, addBundleVisualizer, addBabelPlugins, disableEsLint } = require('customize-cra');
-const statements = require('tsx-control-statements').default;
+const { override, overrideDevServer, addWebpackResolve, watchAll, fixBabelImports, addBundleVisualizer, addBabelPlugins, disableEsLint } = require('customize-cra');
+
 const _ = require('lodash').default;
 const UglifyJSPlugin= require('uglifyjs-webpack-plugin')
 const DynamicCdnWebpackPlugin = require('dynamic-cdn-webpack-plugin');
 
-// 1. import default from the plugin module
-const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
-// 2. create a transformer;
-// the factory additionally accepts an options object which described below
-const styledComponentsTransformer = createStyledComponentsTransformer();
 
 const path = require('path');
 const fs = require('fs');
@@ -44,14 +39,24 @@ const outputChange = config => {
   }
   return config
 };
-// 3. add getCustomTransformer method to the loader config
 
+const getResolveConfig = () => {
+  // import path resolve see https://github.com/dividab/tsconfig-paths-webpack-plugin
+  const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+  return addWebpackResolve({
+    plugins: [new TsconfigPathsPlugin({ configFile: resolveApp('tsconfig.dev.json') })]
+  })
+}
+
+
+// 3. add getCustomTransformer method to the loader config
 module.exports = {
   webpack: override(
     outputChange,
     disableEsLint(),
     useTsLoader(),
     useCDNAuto(),
+    getResolveConfig(),
     // fixBabelImports("rxjs", {
     //   libraryDirectory: "",
     //   camel2DashComponentName: false
@@ -59,7 +64,8 @@ module.exports = {
     // addBabelPlugin(new UglifyJsPlugin()),
     ...addBabelPlugins(
       "jsx-control-statements",
-      "styled-components"
+      "styled-components",
+      "babel-plugin-ts-nameof"
     ),
     fixBabelImports("lodash", {
       libraryName: "lodash",
@@ -128,14 +134,61 @@ function useCDNAuto() {
   };
 }
 
+const statements = require('tsx-control-statements').default;
+const keysTransformer = require('ts-transformer-keys/transformer').default;
+// 1. import default from the plugin module
+const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
+// 2. create a transformer;
+// the factory additionally accepts an options object which described below
+
+const ts = require("typescript");
 function useTsLoader() {
-  return config => {
+  return (config, evn) => {
     config.module.rules.unshift({
-      test: /\.tsx?$/,
+      test: /\.(ts|tsx)$/,
       loader: 'awesome-typescript-loader',
       options: {
+        compiler: 'ttypescript',
+        configFileName: resolveApp('tsconfig.dev.json'),
         transpileOnly: true,
-        getCustomTransformers: () => ({ before: [statements(), styledComponentsTransformer] })
+        getCustomTransformers: (program) => ({ before: [
+          (program) => {
+            program.getCompilerOptions = new Proxy(program.getCompilerOptions, {
+              apply(target, thisArg, args) {
+                const options = Reflect.apply(target, thisArg, args)
+                Object.assign(options, {
+                  "paths": {
+                    "src/*": ["./src/*"],
+                    "@/*": ["./src/*"],
+                    "src": ["src"],
+                    "@": ["src"]
+                  },
+                  "outDir": "./lib",
+                  "declarationDir": "./types",
+                  "allowJs": false,
+                  "declaration": true,
+                  "module": "esnext",
+                  "target": "es5",
+                  "sourceMap": true,
+                  "noEmit": false,
+                  "jsx": "react",
+                  "skipLibCheck": true,
+                  "isolatedModules": false
+                })
+                return options;
+              }
+            })
+            return (node) => {
+              const visitor = (node) => ts.visitEachChild(node, visitor, program);
+              return ts.visitNode(node, visitor)
+            }
+          },
+          statements(),
+          createStyledComponentsTransformer()
+        ] }),
+        useCache: true,
+        errorsAsWarnings: true,
+        forceIsolatedModules: true,
       }
     });
     return config;

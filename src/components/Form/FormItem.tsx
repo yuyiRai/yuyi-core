@@ -1,20 +1,22 @@
+import { ItemConfig } from '@/stores';
+import Utils from '@/utils';
 import { Col } from 'antd';
-import { WrappedFormUtils, GetFieldDecoratorOptions } from 'antd/lib/form/Form';
+import { GetFieldDecoratorOptions, WrappedFormUtils } from 'antd/lib/form/Form';
 import AntFormItem, { FormItemProps } from 'antd/lib/form/FormItem';
 import 'antd/lib/form/style/css';
+import { autobind } from 'core-decorators';
+import { set } from 'lodash';
+import { action, autorun, computed, IReactionDisposer, reaction, runInAction } from 'mobx';
 import { inject, observer, Provider } from 'mobx-react';
+import { createTransformer, expr } from 'mobx-utils';
 import * as React from 'react';
-import { ItemConfig } from '../../stores';
-import Utils, { } from '../../utils';
+import { FormStore } from './FormStore';
 import { OFormItemCommon } from './Interface/FormItem';
 import { ItemSwitchType } from './Item';
-import { computed, autorun, IReactionDisposer, runInAction, reaction, observable, action,  } from 'mobx';
-import { set } from 'lodash'
-import { createTransformer, expr } from 'mobx-utils';
-import { FormStore } from './FormStore';
-import { autobind } from 'core-decorators';
+import { FormItemLoading } from './Item/common/Loading';
+import { FormItemStoreCore, IFormItemStoreCore } from './FormStore/FormItemStoreBase';
 
-const ChildrenContext = React.createContext({
+export const ChildrenContext = React.createContext({
   children: null
 })
 
@@ -31,40 +33,34 @@ export const OAntFormItem = observer((props: any) => {
   return <AntFormItem colon={itemConfig.isViewOnly} label={itemConfig.label} {...other}>{children}</AntFormItem>
 })
 
-export class FormItemStore {
+export class FormItemStore<FM = any, V = any> extends FormItemStoreCore<FM, V> implements IFormItemStoreCore<FM, V> {
+
+  public formStore: FormStore<FM, typeof FormItemStore>;
   ruleWatcher: IReactionDisposer;
   validateReset: IReactionDisposer;
-  @observable itemConfig: ItemConfig;
-  @observable.ref formStore: FormStore;
 
   @computed.struct get antdForm(): WrappedFormUtils {
     return this.formStore.antdFormMap.get(this.code)
   }
-
-  @action.bound setAntdForm(antdForm: WrappedFormUtils){
+  @action.bound setAntdForm(antdForm: WrappedFormUtils) {
     this.formStore.setAntdForm(antdForm, this.code)
   }
 
-  constructor(formStore: FormStore, code: string) {
-    this.formStore = formStore
-    this.itemConfig = new ItemConfig(formStore.getConfig(code), formStore.formSource, this)
-    this.itemConfig.setFormStore(formStore)
+  constructor(formStore: FormStore<FM, any>, code: string) {
+    super(formStore, code)
     this.setAntdForm(formStore.antdForm)
-    
+
     this.ruleWatcher = reaction(() => this.itemConfig.rule, (rule) => {
       // console.log('ruleWatcher', rule)
       this.itemConfig.updateVersion()
       formStore.updateError(code)
       const value = Utils.cloneDeep(this.itemConfig.currentValue)
       // this.antdForm.resetFields([this.code])
-      if(this.antdForm.getFieldError(this.code)){
-        this.antdForm.setFields(set({}, this.code, {value}))
+      if (this.antdForm.getFieldError(this.code)) {
+        this.antdForm.setFields(set({}, this.code, { value }))
         // this.antdForm.validateFields([this.code])
       }
     })
-  }
-  @computed get code(): string {
-    return this.itemConfig.code;
   }
 
   @action.bound init() {
@@ -80,7 +76,7 @@ export class FormItemStore {
           this.setAntdForm(antdForm)
         })
       }
-        // this.antdForm.validateFields([code])
+      // this.antdForm.validateFields([code])
     })
   }
 
@@ -92,40 +88,44 @@ export class FormItemStore {
   @computed get fieldDecorator() {
     // console.log('get fieldDecorator')
     // trace()
-    return this.itemConfig.$version >-1 && this.getFieldDecorator(this)
+    return this.itemConfig.$version > -1 && this.getFieldDecorator(this)
   }
-  
-  getFieldDecorator = (store: FormItemStore) => {
-    const { code, antdForm, formStore } = store;
-    const { itemConfig } = store;
-    const { value } = itemConfig
-    const hasError = formStore.hasErrors(itemConfig.code)
-    console.log('get fieldDecorator', value, hasError)
+
+  getFieldDecorator = (store: FormItemStore<FM, V>) => {
+    const { code, antdForm } = store;
     // const { itemConfig } = this.state;
     // const { value } = itemConfig
     return antdForm.getFieldDecorator(code, this.decoratorOptions);
   }
-  @computed get decoratorOptions(){
+  @computed get decoratorOptions() {
     return this.getFieldDecoratorOptions(this.itemConfig)
   }
-  getFieldDecoratorOptions = createTransformer<ItemConfig, GetFieldDecoratorOptions>((itemConfig: ItemConfig) => {
+  getFieldDecoratorOptions = createTransformer<ItemConfig<V, FM>, GetFieldDecoratorOptions>((itemConfig: ItemConfig<V, FM>) => {
     // console.log('update fieldDecorator options', itemConfig.rule)
+    console.log('get fieldDecorator', this.hasError)
     return {
-      validateTrigger: ['onChange', 'onBlur'],
-      rules: itemConfig.rule, initialValue: itemConfig.value, getValueProps(value: any) {
+      validateTrigger: ['onBlur', 'onChange'].concat(this.hasError ? ['onInput'] : []),
+      rules: itemConfig.rules, initialValue: itemConfig.value, getValueProps(value: any) {
         // console.log('value filter', itemConfig.code, value, itemConfig);
-        return { value: Utils.isNotEmptyValueFilter(itemConfig.currentComponentValue, itemConfig.currentValue, value) }
+        return {
+          value: Utils.isNotEmptyValueFilter(
+            itemConfig.computed !== false ? itemConfig.computed : undefined,
+            itemConfig.currentComponentValue,
+            itemConfig.currentValue,
+            value
+          )
+        }
       }
     }
   }, { debugNameGenerator: () => 'getFieldDecoratorOptions' })
 
-  
+
   @computed get Component() {
     const { code, antdForm, itemConfig } = this
     const { type, displayProps } = itemConfig
     const Component = ItemSwitchType(type)
     // console.log('getComponent');
-    return <Component code={code} antdForm={antdForm} disabled={displayProps.isDisabled} placeholder={itemConfig.placeholder || `请输入${itemConfig.label}`} />;
+    return <Component code={code} antdForm={antdForm} disabled={displayProps.isDisabled} placeholder={itemConfig.placeholder} />;
   }
 
   @computed get renderer() {
@@ -135,11 +135,7 @@ export class FormItemStore {
     return (children: JSX.Element) => {
       return (
         <Provider itemConfig={itemConfig}>
-          <ChildrenContext.Provider value={{ children }}>
-            <FormItemContainer>
-              {children}
-            </FormItemContainer>
-          </ChildrenContext.Provider>
+          <FormItemContainer itemConfig={itemConfig} >{children}</FormItemContainer>
         </Provider>
       );
     }
@@ -147,10 +143,11 @@ export class FormItemStore {
 }
 
 @inject((stores: { formStore: FormStore }, props: IFormItemProps, context) => {
-  console.log('fromitem get store', stores, props, context)
+  // console.log('fromitem get store', stores, props, context)
   const { formStore } = stores;
-  const store = formStore.registerItemStore(props.code) 
+  const store = formStore.registerItemStore(props.code, FormItemStore)
   store.itemConfig.setForm(formStore.formSource)
+  store.itemConfig.setConfig(formStore.configStore.getConfig(props.code))
   return { store }
 })
 @observer
@@ -169,23 +166,27 @@ export default class FormItem extends React.Component<IFormItemProps, IFormItemS
   componentWillUnmount() {
     runInAction(() => this.props.store.dispose())
   }
-
   public render() {
     const { code, store, ...other } = this.props;
+    const { itemConfig, hasError } = store;
     // console.log('remder', store.itemConfig.code, store.itemConfig.rule);
     // console.log(this.store.itemConfig.label)
     return store.renderer(
-      <OAntFormItem itemConfig={store.itemConfig} {...other}>{
-        store.fieldDecorator(React.cloneElement(store.Component))
-      }</OAntFormItem>
+      <OAntFormItem itemConfig={itemConfig} {...other} validateStatus={hasError ? 'error' : 'success'} hasFeedback={false}>
+        <FormItemLoading code={code}>{
+          store.fieldDecorator(React.cloneElement(store.Component))
+        }</FormItemLoading>
+      </OAntFormItem>
     )
   }
 }
 
-@inject('itemConfig')
 @observer
-export class FormItemContainer extends React.Component<any, IFormItemState> {
+export class FormItemContainer extends React.Component<{
+  itemConfig: ItemConfig
+}, IFormItemState> {
   lastContainerProps = {}
+  static contextType = ChildrenContext;
   styleTransform = createTransformer((itemConfig: ItemConfig) => {
     // console.log('FormItemContainer style change')
     return { display: itemConfig.hidden ? 'none' : undefined }
@@ -196,36 +197,32 @@ export class FormItemContainer extends React.Component<any, IFormItemState> {
     return { type, displayProps: { colSpan, useColumn }, lg, sm, xs, offset }
   })
   @computed get style() {
-    return { display: expr(() => this.props.itemConfig.hidden ? 'none' : undefined) }
+    const { itemConfig } = this.props;
+    return { 
+      display: expr(() => itemConfig.hidden ? 'none' : undefined), 
+      maxHeight: itemConfig.type !== 'textarea' && itemConfig.displayProps.colSpan > 1 && '54px' 
+    }
   }
   @computed get containerProps() {
     const { itemConfig } = this.props;
     return this.propsTransform(itemConfig)
   }
-  @computed get children() {
-    // console.log('FormItemContainer children change')
-    return (
-      <ChildrenContext.Consumer>{
-        ({ children }) => children
-      }</ChildrenContext.Consumer>
-    )
-  }
   @computed get renderer() {
     // console.log('FormItemContainer container change')
     const { type, displayProps: { colSpan, useColumn }, lg, sm, xs, offset } = this.containerProps
     if (useColumn === false) {
-      return this.children;
+      return this.props.children;
     }
     if (type === 'address') {
       return (
         <Col className='use-item-col' lg={lg || 16} sm={24} offset={offset} style={this.style}>
-          {this.children}
+          {this.props.children}
         </Col>
       )
     }
     return (
       <Col className='use-item-col' lg={colSpan} sm={sm || 12} xs={xs || 24} offset={offset} style={this.style}>
-        {this.children}
+        {this.props.children}
       </Col>
     )
   }

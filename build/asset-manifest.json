@@ -1,0 +1,15 @@
+{
+  "files": {
+    "index.css": "/yuyiRai/yuyi-core/static/css/index.e78c5b8b.css",
+    "index.js": "/yuyiRai/yuyi-core/index.js",
+    "index.css.map": "/yuyiRai/yuyi-core/static/css/index.e78c5b8b.css.map",
+    "index.js.map": "/yuyiRai/yuyi-core/index.js.map",
+    "index.min.css": "/yuyiRai/yuyi-core/static/css/index.min.e78c5b8b.css",
+    "index.min.js": "/yuyiRai/yuyi-core/index.min.js",
+    "index.min.css.map": "/yuyiRai/yuyi-core/static/css/index.min.e78c5b8b.css.map",
+    "index.html": "/yuyiRai/yuyi-core/index.html",
+    "precache-manifest.56ecd56435b1b74b9aaafa7dddaa14fa.js": "/yuyiRai/yuyi-core/precache-manifest.56ecd56435b1b74b9aaafa7dddaa14fa.js",
+    "service-worker.js": "/yuyiRai/yuyi-core/service-worker.js",
+    "static/media/icon.css": "/yuyiRai/yuyi-core/static/media/element-icons.732389de.ttf"
+  }
+}

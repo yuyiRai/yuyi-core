@@ -1,104 +1,67 @@
 /* eslint-disable */
 import { autobind } from 'core-decorators';
-import { difference, forEach, get, isError, isNil, isRegExp, keys, map, set, toString, trim } from 'lodash';
-import { action, computed, extendObservable, IKeyValueMap, isComputedProp, IValueDidChange, observable, toJS } from 'mobx';
-import { expr } from 'mobx-utils';
-import { registerKey } from '../../components/Form/FormStore';
-import { Option } from '../../utils';
+import { difference, forEach, get, isError, isRegExp, map, set, toString, trim } from 'lodash';
+import { action, computed, extendObservable, IKeyValueMap, isComputedProp, IValueDidChange, observable, ObservableMap, toJS } from 'mobx';
+import { Option, OptionBase } from '../../utils';
 import { EventEmitter } from '../../utils/EventEmitter';
-import { EventStoreInject } from '../../utils/EventStore';
 // import { asyncComputed } from '../../utils/AsyncProperty';
 import { Utils } from '../../utils/Utils';
-import { getDefaultRules } from './input/Date';
-import { CommonStore, IFormItemConstructor, IItemConfig } from './interface/ItemConfig';
-import { RuleConfigList, RuleConfigMap } from './interface/RuleConfig';
-import { DisplayConfig } from './ItemDisplayConfig';
+import { getDefaultRules } from './input';
+import { RuleConfigList, RuleConfigMap } from './interface';
+import { IFormItemConstructor, IItemConfig } from './interface/ItemConfig';
+import { ItemConfigBaseConfig } from './ItemConfigBaseConfig';
 
 export interface IPropertyChangeEvent<T = any> extends IValueDidChange<T> {
   name: string;
 }
-
-@EventStoreInject(['options-change'])
-export class ItemConfigBase extends CommonStore implements IItemConfig {
+export class ItemConfigBase<V, FM = any> extends ItemConfigBaseConfig<V, FM> implements IItemConfig<V, FM> {
   [key: string]: any;
-  @observable.ref i: IFormItemConstructor = { code: '_' };
-  @observable.ref iKeys: string[] = []
-  @observable.ref form: IKeyValueMap = {};
-  @observable.ref componentProps: IKeyValueMap = {}
-  @observable.shallow initConfig = observable.map({})
+
+  @observable initConfig: ObservableMap<string, any> = observable.map({})
+
   @observable $version = 0
   // @observable loading = false;
-  @observable private displayConfig = new DisplayConfig()
-  @computed get displayProps() {
-    return this.displayConfig.init(this, this.componentProps)
-  }
-  @computed get isViewOnly() {
-    // console.log(this.props)
-    return this.viewOnly! || (this.componentProps && (this.componentProps.viewOnly || this.componentProps.formStatus === 'view'))
-  }
   @computed private get otherKey() {
     return difference(
-      this.iKeys,
-      keys(this),
-      ['refConfig', 'code', 'rule', 'remoteMethod', 'loading', 'options', 'isViewOnly', 'transformer']
+      this.baseConfigKeys,
+      this.propertyNameList,
+      ['refConfig', 'code', 'rule', 'remoteMethod', 'loading', 'children', 'options', 'viewOnly', 'isViewOnly', 'transformer', 'computed']
     )
   }
 
   onPropertyChange = new EventEmitter<IPropertyChangeEvent>()
 
-  constructor(initModel: IFormItemConstructor, form: any = {}, componentProps: any = {}) {
+  constructor(initModel: IFormItemConstructor<V, FM>, form: FM = {} as FM, componentProps: any = {}) {
     super()
-    // this.reaction(()=>this.remoteOptions, options=>{
-    //   console.log('remoteOptions change', this.i.label, options, this)
-    // })
-    // this.reaction(() => this.loading, options=>{
-    //   console.log('loading change', this.i.label, options)
-    // })
-    // this.reaction(() => this., (hidden: any) => {
-    //     console.log(hidden)
-    // })
-    // this.observe(this.form, console.log)
     // this.reaction(() => this.i.options, options => {
-    //   // console.log(Utils.isArrayFilter(options, this.getComputedValue('options')) || [])
+    //   console.log('initConfig change', Utils.isArrayFilter(options, this.getComputedValue('options')) || [])
     // })
-    this.reaction(() => this.i, (i: any) => {
-      // console.log('register', i)
-      // this.reaction(() => this.rule, (value) => {
-      //   console.log('rule', value)
-      // })
-      // this.reaction(() => this.currentValue, (value) => {
-      //   console.log('currentValue', value)
-      // })
-      for (const name of ['loading', 'options', 'rule']) {
-        registerKey(i, name)
-      }
-      this.observe(i, (e: IPropertyChangeEvent) => {
-        this.onPropertyChange.emit(e)
-        console.log(e, this)
-        const { oldValue, newValue, name } = e
-        if (name === 'options' && !Utils.isEqual(oldValue, newValue)) {
-          this.label === '查勘地点' && console.log(
-            `${name}: options[${(oldValue || []).length}] => options[${(newValue || []).length}]`, { config: i, event: e }, this.options)
-          if (newValue) {
-            this.optionsInited = Utils.isNotEmptyArray(newValue)
-          }
-          this.$emit('options-change', e.newValue)
-        }
-        // console.log(`${e.name}: ${e.oldValue} => ${e.newValue}`, {config: i, event: e})
-      })
-      this.registerObservables(i)
-      // this.$emit('options-change', this.options)
-      // this.reaction(() => i.loading, value => {
-      //   // this.loading = value
-      //   console.log('i loading change', this.i.label, value)
-      // }, { fireImmediately: true })
-    }, { fireImmediately: true })
+    // this.observe(this.initConfig, (e: IMapDidChange) => {
+    //   console.log('initConfig change', e, this);
+    // })
 
     if (initModel) {
       this.init(initModel, form, componentProps)
     }
+    // this.observe(this.formSource, (e: IPropertyChangeEvent) => {
+    //   console.log('initConfig change2', this[e.name], this.baseConfig[e.name], e, this)
+    // }
+    this.observe(this.baseConfigModel.model, (e: IPropertyChangeEvent) => {
+      this.onPropertyChange.emit(e)
+      // console.log('initConfig change2', this[e.name], this.baseConfig[e.name], e, this)
+        const { oldValue, newValue, name } = e
+        if (name === 'options' && !Utils.isEqual(oldValue, newValue)) {
+    //       this.label === '查勘地点' && console.log(
+    //         `${name}: options[${(oldValue || []).length}] => options[${(newValue || []).length}]`, { config: i, event: e }, this.options)
+    //       if (newValue) {
+    //         this.optionsInited = Utils.isNotEmptyArray(newValue)
+    //       }
+          this.$emit('options-change', e.newValue)
+        }
+        // console.log(`${e.name}: ${e.oldValue} => ${e.newValue}`, {config: i, event: e})
+    })
+    this.onPropertyChange.subscribe()
   }
-
 
   @action.bound registerObservables(baseConfig: any) {
     for (const key of this.otherKey) {
@@ -120,64 +83,30 @@ export class ItemConfigBase extends CommonStore implements IItemConfig {
     }
   }
 
-  @action.bound setForm(form: any) {
-    this.form = form;
-  }
   optionsInited = false
-  @action.bound setConfig(next: IFormItemConstructor) {
-    if (Utils.isEqual(this.i, next))
-      this.registerObservables(this.i)
-    else {
-      this.iKeys = Object.keys(next)
-      this.registerObservables({ ...next })
-      this.i = next;
-      this.optionsInited = false
-      if (Utils.isFunction(next.refConfig)) {
-        Reflect.apply(next.refConfig, this, [this])
-      }
-    }
+  @action.bound setConfig(baseConfig: IFormItemConstructor<V, FM>, strict?: boolean) {
+    const isChange = this.setBaseConfig(baseConfig, strict)
+    isChange && this.registerObservables(baseConfig)
   }
 
-  @action.bound init(initModel: IFormItemConstructor, form: IKeyValueMap, componentProps = {}) {
+  @action.bound init(initModel: IFormItemConstructor<V, FM>, form: IKeyValueMap, componentProps = {}) {
     this.setConfig(initModel)
     this.setForm(form)
     this.componentProps = componentProps
   }
 
-  @autobind getComputedValue(key: string, target: any = this.i, defaultValue?: any) {
-    try {
-      const keyValue = target[key]
-      if (!(/(^refConfig$)|^(on|get(.*?))|((.*?)Method)$|(.*?)filter(.*?)/.test(key)) && (keyValue instanceof Function)) {
-        const computedValue = expr(() => keyValue(this.formSource || {}, this))
-        return this.$version>-1 && Utils.isNil(computedValue) ? defaultValue : computedValue
-      }
-      return keyValue
-    } catch (e) {
-      console.error(e)
-      return undefined
-    }
-  }
-
-  @computed.struct get type() {
-    return this.i.type;
-  }
-  @computed.struct get code() {
-    return this.i.code;
-  }
-  @computed.struct get nameCode() {
-    return this.i.nameCode;
-  }
 
   @computed.struct get searchName() {
     return this.getSearchName()
   }
   @autobind getSearchName() {
-    const { nameCode } = this;
-    return Utils.isStringFilter(!isNil(nameCode) ? (this.form || {})[nameCode] : (this.form || {})[this.code])
+    const v = get(Utils.cloneDeep(this.formSource), this.nameCode)
+    return Utils.isStringFilter(v) || this.currentValue
   }
 
   @computed.struct get currentValue() {
-    return toJS(get(this.form || {}, this.code))
+    const v = this.parentConfig ? get((this.parentConfig as any).currentComponentValue, this.keyInnerCode) : get(this.formSource || {}, this.code)
+    return toJS(v)
   }
 
 
@@ -229,7 +158,7 @@ export class ItemConfigBase extends CommonStore implements IItemConfig {
               // console.log('keyWord', keyWord)
               // console.log('remoteSearch start', keyWord)
               const data = await remoteMethod(keyWord, this.form);
-              Utils.arrayPush(nextOptions, data)
+              nextOptions.push(...data)
               return data
             })) //.concat([Utils.waitingPromise(100, true)]))
           } catch (e) {
@@ -256,10 +185,9 @@ export class ItemConfigBase extends CommonStore implements IItemConfig {
   //   }
   // }
 
-
   @computed.struct get rule(): RuleConfigList {
     const { i, componentProps: componentProps } = this
-    return this.isViewOnly ? [] : this.getRuleList(i, componentProps)
+    return this.isViewOnly ? [] : (this.getRuleList(i, componentProps) || [])
   }
   @action.bound setRule(v: RuleConfigList) {
     if (this.i.rule !== v)
@@ -292,51 +220,17 @@ export class ItemConfigBase extends CommonStore implements IItemConfig {
     })
   }
 
-  @computed get loading() {
-    return this.i.loading
-  }
-  @action.bound setLoading(v: boolean) {
-    // console.error('setLoading', v)
-    this.i.loading = v
-    // this.updateVersion()
-  }
   @computed get allowCreate(): boolean | ((data: any, form?: any) => Option) {
     return this.getComputedValue('allowCreate') || false
   }
   @computed get allowInput(): boolean {
-    return this.getComputedValue('allowInput') || (this.type == 'search' && !this.multiple)
+    return this.getComputedValue('allowInput') || (this.type == 'search' && !this.multiple && this.allowCreate)
   }
-  /**
-   * @type { Array } 配置项Array
-   */
-  @computed get options(): Option[] {
-    return this.$version>-1 && this.getOptions()
-  }
-  @autobind getOptions(): Option[] {
-    // console.log('options resolve', this.i, this)
-    // this.label === '归属车辆' && console.log('伤者类型 get options', Utils.isArrayFilter(this.$version, this.getComputedValue('options'), []))
-    return Utils.isArrayFilter(this.i.options, this.getComputedValue('options')) || []
-  }
-  @action.bound setOptions(v: any) {
-    if (!Utils.likeArray(this.options, v)) {
-      // this.label === '诊断名称' && console.log('设置Option', this.i.label, this.options, v)
-      this.i.options = v
-      this.updateVersion()
-      // console.log('setOptions', v)
-      this.$emit('options-change', v)
-    }
-  }
+
   @action updateVersion() {
     this.$version = this.$version + 1
   }
 
-  export() {
-    const model = {}
-    for (const key of this.iKeys) {
-      model[key] = this[key]
-    }
-    return toJS(model);
-  }
 
   /**
    * @type {function}
@@ -449,7 +343,7 @@ export class ItemConfigBase extends CommonStore implements IItemConfig {
     //       })
     //     }
     // })
-    if (this.i.type == 'select' || this.i.type === 'search') {
+    if (this.i.type == 'select' || (this.i.type === 'search' && this.strictSearch)) {
       iRules.push({
         validator: this.optionsMatcher,
         trigger: 'change',
@@ -476,7 +370,7 @@ export class ItemConfigBase extends CommonStore implements IItemConfig {
     return callback()
   }
 
-  @autobind async getOptionsSafe(): Promise<Option[]> {
+  @autobind async getOptionsSafe(): Promise<OptionBase[]> {
     if (this.type === 'search' && (this.options.length === 0 || !this.optionsInited)) {
       if (!Utils.isArrayFilter(this.remoteOptions)) {
         // console.log('safe start', this.label, this.searchName, this.remoteOptions, this.options)
@@ -493,7 +387,7 @@ export class ItemConfigBase extends CommonStore implements IItemConfig {
   @computed get defaultRule() {
     return Object.assign(ItemConfigBase.getDefaultRules(this, this.componentProps), getDefaultRules(this))
   }
-  static getDefaultRules(itemConfig: IItemConfig, configStore: any): RuleConfigMap {
+  static getDefaultRules<V, FM>(itemConfig: IItemConfig<V, FM>, configStore: any): RuleConfigMap {
     return {
       phone: {
         validator: (rule: any, value: any, callback: any) => {
@@ -528,7 +422,7 @@ export class ItemConfigBase extends CommonStore implements IItemConfig {
         trigger: 'blur',
         message: '车架号只允许17位'
       }],
-      plusOnly: (form: any, config: { label: any; }) => [{
+      plusOnly: (form: any, config: { label?: any; }) => [{
         validator($: any, value: string, callback: { (arg0: Error): void; (): void; }) {
           // console.log(v,b)
           if (Utils.isNotEmptyValue(value) && (Utils.isNumberFilter(parseFloat(value)) || 0) <= 0) {

@@ -2,20 +2,20 @@
 import { observable, computed, action, IKeyValueMap } from 'mobx';
 import Utils from '../../utils';
 import { IItemConfig, ComputedProperty } from './interface';
-export interface IDisplayConfigConstructor {
-  inline?: ComputedProperty<boolean>;
-  isViewOnly?: ComputedProperty<boolean>;
-  showMessage?: ComputedProperty<boolean>;
-  textAlign?: ComputedProperty<'center' | 'left' | 'right'>;
-  disabled?: ComputedProperty<boolean>;
-  size?: ComputedProperty<boolean>;
-  col?: ComputedProperty<number>;
-  offset?: ComputedProperty<number>;
-  offectRight?: ComputedProperty<number>;
-  prefix?: ComputedProperty<any>;
-  suffix?: ComputedProperty<any>;
-  height?: ComputedProperty<string>;
-  useLabel?: ComputedProperty<boolean>;
+export interface IDisplayConfigConstructor<FM> {
+  inline?: ComputedProperty<boolean, FM>;
+  isViewOnly?: ComputedProperty<boolean, FM>;
+  showMessage?: ComputedProperty<boolean, FM>;
+  textAlign?: ComputedProperty<'center' | 'left' | 'right', FM>;
+  disabled?: ComputedProperty<boolean, FM>;
+  size?: ComputedProperty<boolean, FM>;
+  col?: ComputedProperty<number, FM>;
+  offset?: ComputedProperty<number, FM>;
+  offectRight?: ComputedProperty<number, FM>;
+  prefix?: ComputedProperty<any, FM>;
+  suffix?: ComputedProperty<any, FM>;
+  height?: ComputedProperty<string, FM>;
+  useLabel?: ComputedProperty<boolean, FM>;
 }
 export interface IDisplayConfig {
   inline?: boolean;

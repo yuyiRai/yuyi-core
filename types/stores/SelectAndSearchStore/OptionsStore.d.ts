@@ -1,13 +1,13 @@
 import { Option } from '../../utils';
 import { ITransformer } from 'mobx-utils';
 import { IItemConfig } from '../ItemConfig/interface';
-export declare class OptionsStore<V = any> {
+export declare class OptionsStore2<V = any> {
     [k: string]: any;
-    itemConfig: IItemConfig;
+    itemConfig: IItemConfig<V, any>;
     __keyMap: {};
     __optionMap: WeakMap<object, any>;
-    transformer: ITransformer<OptionsStore, V[]>;
-    constructor(itemConfig: IItemConfig, transformer?: ITransformer<OptionsStore, V[]>);
+    transformer: ITransformer<OptionsStore2, V[]>;
+    constructor(itemConfig: IItemConfig<V, any>, transformer?: ITransformer<OptionsStore2, V[]>);
     shadowOption: Option;
     readonly shadowOptionMode: "text" | "code";
     /**
@@ -22,15 +22,18 @@ export declare class OptionsStore<V = any> {
      * @param { string } label
      */
     setShadowOption(label: string, source: any): Promise<void>;
-    labelToValue(label: any): string;
+    labelToValue(label: any): any;
     shadowUpdateDispatcher(label: any, value: any, source: any): Promise<void>;
     updateShadowOption(value: any, label?: any): {
         [x: string]: any;
         value?: string;
         label?: string;
+        children?: Option[];
+        disabled?: boolean;
+        isLeaf?: boolean;
     };
     readonly isValidShadowOption: boolean;
-    static getOptionsKey(item: any, index: any): string;
+    static getOptionsKey(item: any, index: any): any;
     readonly __optionArr: Option[];
     toConvertedOption(item: Option, index: number): Option;
     readonly convertedOption: Option[];

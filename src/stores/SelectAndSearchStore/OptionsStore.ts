@@ -7,13 +7,13 @@ import { createTransformer, ITransformer } from 'mobx-utils'
 import { IItemConfig } from '../ItemConfig/interface';
 
 
-export class OptionsStore<V = any> {
+export class OptionsStore2<V = any> {
   [k: string]: any;
-  @observable itemConfig: IItemConfig;
+  @observable itemConfig: IItemConfig<V, any>;
   __keyMap = {};
   __optionMap = new WeakMap();
-  @observable.ref transformer: ITransformer<OptionsStore, V[]>;
-  constructor(itemConfig: IItemConfig, transformer?: ITransformer<OptionsStore, V[]>) {
+  @observable.ref transformer: ITransformer<OptionsStore2, V[]>;
+  constructor(itemConfig: IItemConfig<V, any>, transformer?: ITransformer<OptionsStore2, V[]>) {
     this.itemConfig = itemConfig;
     if (transformer) {
       this.transformer = createTransformer(transformer)
@@ -107,7 +107,7 @@ export class OptionsStore<V = any> {
         this.shadowOption.label = shadowOptionSafe.label;
       }
       else {
-        const { allowCreate } = this.itemConfig;
+        const { allowCreate } = this.itemConfig as any ;
         if (Utils.isFunction(allowCreate)) {
           const { label } = allowCreate(value);
           this.shadowOption.label = Utils.isStringFilter(label, value, '');
@@ -152,8 +152,8 @@ export class OptionsStore<V = any> {
     while(++index < length) {
       const item = options[index]
       if (!Utils.isNil(item)) {
-        next[index] = (Utils.isObject(item) ? ((item as any).__key == null ? { ...item, __key: OptionsStore.getOptionsKey(item, index) } : item) : {
-          __key: OptionsStore.getOptionsKey(item, index),
+        next[index] = (Utils.isObject(item) ? ((item as any).__key == null ? { ...item, __key: OptionsStore2.getOptionsKey(item, index) } : item) : {
+          __key: OptionsStore2.getOptionsKey(item, index),
           value: item
         });
       }

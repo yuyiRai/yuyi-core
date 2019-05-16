@@ -6,5 +6,6 @@ export interface OFormItemCommon {
     formStore?: FormStore;
     antdForm?: WrappedFormUtils;
     itemConfig?: ItemConfig;
+    [key: string]: any;
 }
 export * from '../../../stores/ItemConfig/interface';

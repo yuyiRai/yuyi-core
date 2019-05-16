@@ -1,12 +1,8 @@
 {
+  "extends": "./tsconfig.base.json",
   "compileOnSave": true,
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "es6"
-    ],
     "allowJs": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -24,24 +20,7 @@
     "allowUnreachableCode": false,
     "jsx": "preserve",
     "downlevelIteration": true,
-    "typeRoots": [
-      "node_modules/@types",
-      "./src/global"
-    ],
     "isolatedModules": true,
     "pretty": true
-  },
-  "exclude": [
-    "node_modules",
-    "devlib",
-    "build",
-    "dist",
-    "scripts",
-    "acceptance-tests",
-    "webpack",
-    "jest"
-  ],
-  "include": [
-    "src"
-  ]
+  }
 }

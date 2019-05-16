@@ -1,57 +1,36 @@
-import { IKeyValueMap, IValueDidChange } from 'mobx';
-import { Option } from '../../utils';
+import { IKeyValueMap, IValueDidChange, ObservableMap } from 'mobx';
+import { Option, OptionBase } from '../../utils';
 import { EventEmitter } from '../../utils/EventEmitter';
-import { CommonStore, IFormItemConstructor, IItemConfig } from './interface/ItemConfig';
-import { RuleConfigList, RuleConfigMap } from './interface/RuleConfig';
-import { DisplayConfig } from './ItemDisplayConfig';
+import { RuleConfigList, RuleConfigMap } from './interface';
+import { IFormItemConstructor, IItemConfig } from './interface/ItemConfig';
+import { ItemConfigBaseConfig } from './ItemConfigBaseConfig';
 export interface IPropertyChangeEvent<T = any> extends IValueDidChange<T> {
     name: string;
 }
-export declare class ItemConfigBase extends CommonStore implements IItemConfig {
+export declare class ItemConfigBase<V, FM = any> extends ItemConfigBaseConfig<V, FM> implements IItemConfig<V, FM> {
     [key: string]: any;
-    i: IFormItemConstructor;
-    iKeys: string[];
-    form: IKeyValueMap;
-    componentProps: IKeyValueMap;
-    initConfig: import("mobx").ObservableMap<any, any>;
+    initConfig: ObservableMap<string, any>;
     $version: number;
-    private displayConfig;
-    readonly displayProps: DisplayConfig;
-    readonly isViewOnly: any;
     private readonly otherKey;
     onPropertyChange: EventEmitter<IPropertyChangeEvent<any>>;
-    constructor(initModel: IFormItemConstructor, form?: any, componentProps?: any);
+    constructor(initModel: IFormItemConstructor<V, FM>, form?: FM, componentProps?: any);
     registerObservables(baseConfig: any): void;
-    setForm(form: any): void;
     optionsInited: boolean;
-    setConfig(next: IFormItemConstructor): void;
-    init(initModel: IFormItemConstructor, form: IKeyValueMap, componentProps?: {}): void;
-    getComputedValue(key: string, target?: any, defaultValue?: any): any;
-    readonly type: import("./interface/ItemConfig").FormItemType;
-    readonly code: string;
-    readonly nameCode: string;
-    readonly searchName: string;
-    getSearchName(): string;
+    setConfig(baseConfig: IFormItemConstructor<V, FM>, strict?: boolean): void;
+    init(initModel: IFormItemConstructor<V, FM>, form: IKeyValueMap, componentProps?: {}): void;
+    readonly searchName: any;
+    getSearchName(): any;
     readonly currentValue: any;
-    readonly remoteMethod: (keyWord: string, form?: any) => any;
+    readonly remoteMethod: (keyWord: string, form?: any) => Promise<any>;
     readonly remoteOptions: Promise<any[]> | any[];
     remoteSearchBySearchName(keyWordStr: string): Promise<Option[]>;
     remoteSearch(keyWord: string[]): Promise<Option[]>;
     readonly rule: RuleConfigList;
     setRule(v: RuleConfigList): void;
     validateHandler: (value: any, strict?: boolean) => Promise<{}>;
-    readonly loading: any;
-    setLoading(v: boolean): void;
     readonly allowCreate: boolean | ((data: any, form?: any) => Option);
     readonly allowInput: boolean;
-    /**
-     * @type { Array } 配置项Array
-     */
-    readonly options: Option[];
-    getOptions(): Option[];
-    setOptions(v: any): void;
     updateVersion(): void;
-    export(): {};
     /**
      * @type {function}
      */
@@ -61,15 +40,32 @@ export declare class ItemConfigBase extends CommonStore implements IItemConfig {
      * @param { (code: string, isValid: boolean, errorMsg: string, config: this) => void} callback
      */
     onValidate(callback: () => void): void;
-    readonly requiredRule: any;
+    readonly requiredRule: (false & {
+        validator: (rule: any, value: any, callback: {
+            (arg0: any): void;
+            (): void;
+        }) => any;
+    }) | (true & {
+        validator: (rule: any, value: any, callback: {
+            (arg0: any): void;
+            (): void;
+        }) => any;
+    }) | {
+        required: boolean;
+        validator: (rule: any, value: any, callback: {
+            (arg0: any): void;
+            (): void;
+        }) => any;
+        trigger: string;
+    };
     shadowRuleRegister(validator: any): (rule: any, value: any, callback: {
         (arg0: any): void;
         (): void;
     }) => any;
     getRuleList(i: IKeyValueMap<any>, componentProps: IKeyValueMap<any>): RuleConfigList | undefined;
     optionsMatcher(r: any, values: any, callback: any): Promise<any>;
-    getOptionsSafe(): Promise<Option[]>;
-    readonly defaultRule: RuleConfigMap<any> & {
+    getOptionsSafe(): Promise<OptionBase[]>;
+    readonly defaultRule: RuleConfigMap<any, IKeyValueMap<any>> & {
         dateToDate30: {
             validator: (rule: any, value: any, callback: any) => any;
             trigger: string[];
@@ -79,5 +75,5 @@ export declare class ItemConfigBase extends CommonStore implements IItemConfig {
             trigger: string;
         }[];
     };
-    static getDefaultRules(itemConfig: IItemConfig, configStore: any): RuleConfigMap;
+    static getDefaultRules<V, FM>(itemConfig: IItemConfig<V, FM>, configStore: any): RuleConfigMap;
 }

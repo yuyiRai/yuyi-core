@@ -6,7 +6,14 @@ import { IKeyValueMap } from 'mobx';
 
 export type SearchKey<T = any> = keyMatcher | RegExp | T[] | T
 export type keyMatcher = (key?: string, arg1?: any, arg2?: any) => boolean;
-export type Option = { value?: string, label?: string, [key: string]: any }
+export type Option = { 
+  value?: string, 
+  label?: string, 
+  children?: Option[],
+  disabled?: boolean,
+  isLeaf?: boolean,
+  [key: string]: any 
+}
 export type OptionBase = Option | string
 
 /**
@@ -263,6 +270,10 @@ export function getCodeListByKey(codeType: Option[] | OptionSearcher, optionFact
   return async function () { return [] }
 }
 
+export function convertValueOption(valueList: string[], isFull: boolean = false): Option[] {
+  return map(valueList, value => Object.assign({value}, isFull?{label: value}: {}))
+}
+
 export default {
   getCodeListByKey,
   getOptionsByLabel,
@@ -277,5 +288,6 @@ export default {
   isValueMatchedItem,
   isLabelMatchedItemByMatcher,
   isValueMatchedItemByMatcher,
-  optionsSelectedMatch
+  optionsSelectedMatch,
+  convertValueOption
 }

@@ -21,6 +21,14 @@ const App: React.FunctionComponent<IAppProps> = ({ antdForm, formStore, code, it
 const StyledItem = styled(App)`
 
 `
+
+
 export const RadioItem = commonInjectItem(StyledItem) as any;
+export const RadioOneItem: React.FunctionComponent<IAppProps> = commonInjectItem(({ antdForm, formStore, code, itemConfig, ...other }) => {
+  return ( <Radio.Group {...other} options={[
+    { label: itemConfig.YLabel || '是', value: '1'},
+    { label: itemConfig.NLabel || '否', value: '0'},
+  ]}/> );
+}) as any;
 
 export default App;

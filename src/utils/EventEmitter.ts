@@ -1,11 +1,13 @@
-import { Observable, Observer, Subscription } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
+import { Observer } from 'rxjs/internal/types';
+import { Subscription } from 'rxjs/internal/Subscription';
 import { share } from 'rxjs/operators';
 
 export type NextEvent<T> = (value: T) => void;
 export type ErrorEvent<T> = (error: any) => void;
 export type CompletedEvent<T> = () => void;
 
-export class EventEmitter<T> extends Observable<T> {
+export class EventEmitter<T = any> extends Observable<T> {
   private observer: Observer<T> | null | undefined;
   private sub: Subscription | null;
   private lastValue: T | null;

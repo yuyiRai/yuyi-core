@@ -1,11 +1,15 @@
-import { WrappedFormUtils, GetFieldDecoratorOptions } from 'antd/lib/form/Form';
+import { ItemConfig } from '@/stores';
+import { GetFieldDecoratorOptions, WrappedFormUtils } from 'antd/lib/form/Form';
 import { FormItemProps } from 'antd/lib/form/FormItem';
 import 'antd/lib/form/style/css';
-import * as React from 'react';
-import { ItemConfig } from '../../stores';
-import { OFormItemCommon } from './Interface/FormItem';
 import { IReactionDisposer } from 'mobx';
+import * as React from 'react';
 import { FormStore } from './FormStore';
+import { OFormItemCommon } from './Interface/FormItem';
+import { FormItemStoreCore, IFormItemStoreCore } from './FormStore/FormItemStoreBase';
+export declare const ChildrenContext: React.Context<{
+    children: any;
+}>;
 export interface IFormItemProps extends FormItemProps, OFormItemCommon {
     store?: FormItemStore;
 }
@@ -14,21 +18,19 @@ export interface IFormItemState {
     init: boolean;
 }
 export declare const OAntFormItem: (props: any) => JSX.Element;
-export declare class FormItemStore {
+export declare class FormItemStore<FM = any, V = any> extends FormItemStoreCore<FM, V> implements IFormItemStoreCore<FM, V> {
+    formStore: FormStore<FM, typeof FormItemStore>;
     ruleWatcher: IReactionDisposer;
     validateReset: IReactionDisposer;
-    itemConfig: ItemConfig;
-    formStore: FormStore;
     readonly antdForm: WrappedFormUtils;
     setAntdForm(antdForm: WrappedFormUtils): void;
-    constructor(formStore: FormStore, code: string);
-    readonly code: string;
+    constructor(formStore: FormStore<FM, any>, code: string);
     init(): void;
     dispose(): void;
     readonly fieldDecorator: (node: React.ReactNode) => React.ReactNode;
-    getFieldDecorator: (store: FormItemStore) => (node: React.ReactNode) => React.ReactNode;
+    getFieldDecorator: (store: FormItemStore<FM, V>) => (node: React.ReactNode) => React.ReactNode;
     readonly decoratorOptions: GetFieldDecoratorOptions;
-    getFieldDecoratorOptions: import("mobx-utils").ITransformer<ItemConfig, GetFieldDecoratorOptions>;
+    getFieldDecoratorOptions: import("mobx-utils").ITransformer<ItemConfig<V, FM>, GetFieldDecoratorOptions>;
     readonly Component: JSX.Element;
     readonly renderer: (children: JSX.Element) => JSX.Element;
 }
@@ -38,12 +40,17 @@ export default class FormItem extends React.Component<IFormItemProps, IFormItemS
     componentWillUnmount(): void;
     render(): JSX.Element;
 }
-export declare class FormItemContainer extends React.Component<any, IFormItemState> {
+export declare class FormItemContainer extends React.Component<{
+    itemConfig: ItemConfig;
+}, IFormItemState> {
     lastContainerProps: {};
-    styleTransform: import("mobx-utils").ITransformer<ItemConfig, {
+    static contextType: React.Context<{
+        children: any;
+    }>;
+    styleTransform: import("mobx-utils").ITransformer<ItemConfig<any, import("mobx").IKeyValueMap<any>>, {
         display: string;
     }>;
-    propsTransform: import("mobx-utils").ITransformer<ItemConfig, {
+    propsTransform: import("mobx-utils").ITransformer<ItemConfig<any, import("mobx").IKeyValueMap<any>>, {
         type: import("./Interface/FormItem").FormItemType;
         displayProps: {
             colSpan: number;
@@ -56,6 +63,7 @@ export declare class FormItemContainer extends React.Component<any, IFormItemSta
     }>;
     readonly style: {
         display: string;
+        maxHeight: string;
     };
     readonly containerProps: {
         type: import("./Interface/FormItem").FormItemType;
@@ -68,7 +76,6 @@ export declare class FormItemContainer extends React.Component<any, IFormItemSta
         xs: any;
         offset: any;
     };
-    readonly children: JSX.Element;
-    readonly renderer: JSX.Element;
-    render(): JSX.Element;
+    readonly renderer: {};
+    render(): {};
 }

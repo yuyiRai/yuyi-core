@@ -159,7 +159,7 @@ export default {
       offset = array.length;
 
     while (index < length) {
-      debugger
+      // debugger
       array[offset + index] = values2[index++];
     }
     return array;
@@ -328,10 +328,12 @@ export default {
   cloneDeep,
   toArray,
   toString,
-  isEqual<A = any, B = any>(valueA: A, valueB: B, noStrict: boolean = false): boolean {
+  isEqual<A = any, B = any>(valueA: A | any, valueB: B | any, noStrict: boolean = false): boolean {
     const ia = Utils.isNotEmptyValueFilter
     if (noStrict) {
       return ia(valueA) === ia(valueB) || isEqual(ia(valueA), ia(valueB))
+    } else if(valueA === valueB) {
+      return true
     }
     return isEqual(valueA, valueB)
   },

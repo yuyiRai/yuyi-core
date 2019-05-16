@@ -1,19 +1,15 @@
-import * as React from 'react'
-import { IFormItemConstructor } from './Interface';
-import { IKeyValueMap } from 'mobx';
-import { FormStore, onItemChangeCallback } from './FormStore';
-import { observer, inject } from 'mobx-react';
-
-export const NativeStore = React.createContext({formStore: null});
-
+import { Utils } from '@/utils';
 import LocaleProvider from 'antd/lib/locale-provider';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
-import { FormGroup } from './Form';
-import { Utils } from '../../utils';
+import { IKeyValueMap } from 'mobx';
+import * as React from 'react';
+import { FormStore, onItemChangeCallback } from './FormStore';
+
+export const NativeStore = React.createContext({formStore: FormStore.prototype});
+
 
 export interface ICommonFormProps extends IKeyValueMap {
   model: any;
-  config?: IFormItemConstructor[];
   formStore?: FormStore;
   storeRef?: (store: FormStore) => void;
   onItemChange?: onItemChangeCallback;
@@ -22,30 +18,20 @@ export interface ICommonFormState extends IKeyValueMap {
   formStore: FormStore;
 }
 
-@inject(
-  (stores, nextProps: ICommonFormProps, context) => {
-    console.log('CommonForm get store', stores, nextProps, context)
-    return { 'formStore': stores['formStore'] }
-  }
-)
-@observer
+export const CommonFormContext = React.createContext<{
+  formProps: ICommonFormProps;
+  formInstance: CommonForm;
+}>({ formProps: null, formInstance: null  })
+
 export class CommonForm extends React.Component<ICommonFormProps, ICommonFormState> {
   constructor(props: ICommonFormProps) {
     super(props)
-    console.log('init parsent formStore', props.formStore)
     this.state = {
       formStore: FormStore.registerForm(props.model, this)
     }
   }
-  @Utils.observable state: ICommonFormState
-  static defaultProps = {
-    model: {}
-  }
   static getDerivedStateFromProps(nextProps: ICommonFormProps, prevState: ICommonFormState) {
     const { formStore: last } = prevState
-    if (nextProps.formStore) {
-      // console.log('getter parsent formStore', nextProps.formStore)
-    }
     if (last.formSource !== nextProps.model) {
       // console.log('getDerivedStateFromProps', nextProps, prevState)
       FormStore.disposedForm(prevState.formStore.formSource)
@@ -53,9 +39,6 @@ export class CommonForm extends React.Component<ICommonFormProps, ICommonFormSta
     }
     if (!Utils.isNil(nextProps.model)){
       const formStore = FormStore.registerForm(nextProps.model, prevState.formStore.instance, prevState.formStore)
-      if (nextProps.config) {
-        formStore.setConfig(nextProps.config)
-      }
       if (Utils.isFunction(nextProps.storeRef)) {
         nextProps.storeRef(formStore)
       }
@@ -70,17 +53,19 @@ export class CommonForm extends React.Component<ICommonFormProps, ICommonFormSta
     return prevState
   }
 
-
   public render() {
-    const { children, config } = this.props
+    const { children } = this.props
+    // const { Inter } = this
     return (
       <LocaleProvider locale={zh_CN}>
-        <NativeStore.Provider value={{formStore: this.state.formStore}} >
-          <>
-            {Utils.isArray(config) && <FormGroup config={config} ></FormGroup>}
-            {children}
-          </>
-        </NativeStore.Provider>
+        <CommonFormContext.Provider value={{formProps: this.props, formInstance: this}}>
+          <NativeStore.Provider value={{formStore: this.state.formStore}} >
+            <> 
+              {/* <Inter /> */}
+              {children}
+            </>
+          </NativeStore.Provider>
+        </CommonFormContext.Provider>
       </LocaleProvider>
     );
   }

@@ -6,4 +6,5 @@ interface IAppProps extends OFormItemCommon, RadioGroupProps {
 }
 declare const App: React.FunctionComponent<IAppProps>;
 export declare const RadioItem: any;
+export declare const RadioOneItem: React.FunctionComponent<IAppProps>;
 export default App;

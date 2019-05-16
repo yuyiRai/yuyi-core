@@ -38,7 +38,7 @@ declare const _default: {
     castArray(value: any, allowEmpty?: boolean): any[];
     castObjectArray(objOrArr: any[], allowEmpty?: boolean): any[];
     createGroupWith<T = any>(list: T[], keyOrWith: string | ((item: T) => string)): IKeyValueMap<T[]>;
-    getEventEmitter(): EventEmitter<{}>;
+    getEventEmitter(): EventEmitter<any>;
     waitingPromise<V = any>(time: number, emitValue: any, isError?: boolean): Promise<V>;
     /**
      * 组件返回
@@ -48,7 +48,7 @@ declare const _default: {
      */
     pathReturn(instance: any, params: any, isConfirm: any, useBack: any): any;
     HttpBox: typeof HttpBox;
-    testEmitter: EventEmitter<{}>;
+    testEmitter: EventEmitter<any>;
     last: <T>(array: ArrayLike<T>) => T;
     cloneDeep: <T>(value: T) => T;
     toArray: {
@@ -57,7 +57,7 @@ declare const _default: {
         (): any[];
     };
     toString: (value: any) => string;
-    isEqual<A = any, B = any>(valueA: A, valueB: B, noStrict?: boolean): boolean;
+    isEqual<A = any, B = any>(valueA: any, valueB: any, noStrict?: boolean): boolean;
     reduce: {
         <T, TResult>(collection: T[], callback: import("lodash").MemoListIterator<T, TResult, T[]>, accumulator: TResult): TResult;
         <T, TResult>(collection: ArrayLike<T>, callback: import("lodash").MemoListIterator<T, TResult, ArrayLike<T>>, accumulator: TResult): TResult;

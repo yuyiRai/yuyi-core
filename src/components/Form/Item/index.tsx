@@ -1,14 +1,24 @@
-import { FormItemType } from '../Interface/FormItem';
-import React from 'react'
-
-import { DatePickerItem, DateRangePickerItem } from './DateItem';
-import { InputItem, TextAreaItem } from './InputItem';
-import { CheckItem, SwitchItem } from './CheckItem';
-import { InputNumberItem } from './NumberInputItem';
-import { RadioItem } from './RadioItem';
 import { IReactComponent } from 'mobx-react';
+import React from 'react';
+import { FormItemType, OFormItemCommon } from '../Interface/FormItem';
+import { CascaderItem } from './Cascader';
+// import { IInputItemProps, ITextAreaItemProps } from './InputItem';
+import { CheckItem, SwitchItem } from './CheckItem';
+import { DatePickerItem, DateRangePickerItem } from './DateItem';
+import GroupItem from './GroupItem';
+import { InputItem, TextAreaItem } from './InputItem';
+import { InputNumberItem } from './NumberInputItem';
+import { RadioItem, RadioOneItem } from './RadioItem';
 import { SearchItem } from './Search';
-export function ItemSwitchType(type?: FormItemType): React.FunctionComponent<any> {
+import { SelectTreeItem } from './SelectTreeItem';
+
+
+// export function ItemSwitchType(type?: 'text' | string): React.FunctionComponent<IInputItemProps>;
+// export function ItemSwitchType(type: 'textArea' | 'textarea'): React.FunctionComponent<ITextAreaItemProps>;
+// export function ItemSwitchType(type: 'date' | 'dateTime'): React.FunctionComponent<IDatePickerItemProps>;
+// export function ItemSwitchType(type: 'dateToDate'): React.FunctionComponent<IDateRangePickerItemmProps>;
+
+export function ItemSwitchType(type?: FormItemType): React.FunctionComponent<OFormItemCommon> {
   switch (type) {
     case 'text': return InputItem;
     case 'textArea': return TextAreaItem;
@@ -20,8 +30,13 @@ export function ItemSwitchType(type?: FormItemType): React.FunctionComponent<any
     case 'checkOne': return SwitchItem;
     case 'switch': return SwitchItem;
     case 'radio': return RadioItem;
+    case 'radioOne': return RadioOneItem;
     case 'number': return InputNumberItem;
     case 'search': return SearchItem;
+    case 'select': return SearchItem;
+    case 'cascader': return CascaderItem;
+    case 'selectTree': return SelectTreeItem;
+    case 'group': return GroupItem;
     default: return InputItem;
   }
 }
@@ -40,5 +55,5 @@ export function getItemSwitch(type: FormItemType, props: any) {
   return <ItemSwitch Component={Component} {...props}/>
 }
 
-export * from './InputItem'
-export * from './DateItem'
+export * from './DateItem';
+export * from './InputItem';

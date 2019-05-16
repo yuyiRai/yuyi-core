@@ -18,16 +18,16 @@ export declare const ElCommonForm: {
     render(h: any, vueProps: any): any;
 };
 export declare class RCommonForm2 extends React.PureComponent<any, any> {
-    App: IReactComponent<any>;
     state: {
         model: {};
         lastModel: {};
         lastConfig: {};
-        config: any[];
+        config: any;
     };
     static getDerivedStateFromProps(nextProps: any, prevState: any): any;
     onChange(code: string, value: any): void;
     getStoreRef(store: FormStore): void;
+    Inter: IReactComponent<any>;
     render(): JSX.Element;
 }
 export declare const ElCommonForm2: {

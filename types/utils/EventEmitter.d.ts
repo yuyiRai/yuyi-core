@@ -1,8 +1,8 @@
-import { Observable } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
 export declare type NextEvent<T> = (value: T) => void;
 export declare type ErrorEvent<T> = (error: any) => void;
 export declare type CompletedEvent<T> = () => void;
-export declare class EventEmitter<T> extends Observable<T> {
+export declare class EventEmitter<T = any> extends Observable<T> {
     private observer;
     private sub;
     private lastValue;

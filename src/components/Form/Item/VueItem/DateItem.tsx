@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import { DatePicker } from 'element-ui'
-import { DateUtils } from '../../../../stores';
-import Utils from '../../../../utils';
+import { DateUtils } from '@/stores';
+import Utils from '@/utils';
 import { VueInReact } from 'vuera'
 import 'element-ui/lib/theme-chalk/input.css';
 import 'element-ui/lib/theme-chalk/input-number.css';

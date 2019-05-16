@@ -1,5 +1,5 @@
 import { ItemConfig } from '../ItemConfig/ItemConfig';
-import { OptionsStore } from './OptionsStore';
+import { OptionsStore2 } from './OptionsStore';
 import { Option } from '../../utils';
 export declare class SelectAndSearchStore {
     [k: string]: any;
@@ -9,9 +9,9 @@ export declare class SelectAndSearchStore {
      */
     itemConfig: ItemConfig;
     /**
-     * @type { OptionsStore }
+     * @type { OptionsStore2 }
      */
-    optionsStore: OptionsStore;
+    OptionsStore2: OptionsStore2;
     searchEventEmitter: (...params: any[]) => Promise<any>;
     /**
      * 至今为止选择过的optionList
@@ -40,12 +40,12 @@ export declare class SelectAndSearchStore {
      * @param { string | string[] } key
      */
     searchMethods(key: string | string[]): void;
-    readonly placeholder: string;
+    readonly placeholder: any;
     readonly isSearch: boolean;
     readonly hasNameCode: boolean;
     readonly useEmpty: (options: Option[]) => boolean;
     readonly isCenter: boolean;
-    readonly popperClass: "" | "center";
+    readonly popperClass: "center" | "";
     /**
      * 远程搜索方法
      * @param {string | Array<string>} keyWord 搜索关键字，可以是数组

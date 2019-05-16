@@ -14,7 +14,7 @@ export declare function useShadowValue<P = any>(initValue: any, props: IHasShado
 };
 export declare type IInputItemProps = InputProps & OFormItemCommon;
 export declare const InputItem: React.FunctionComponent<IInputItemProps>;
-export declare type ITextAreaProps = TextAreaProps & OFormItemCommon;
-export declare const TextAreaItem: React.FunctionComponent<ITextAreaProps>;
+export declare type ITextAreaItemProps = TextAreaProps & OFormItemCommon;
+export declare const TextAreaItem: React.FunctionComponent<ITextAreaItemProps>;
 declare const Text: React.FunctionComponent<IInputItemProps>;
 export default Text;

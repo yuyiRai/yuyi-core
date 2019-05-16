@@ -67,7 +67,7 @@ export declare const typeUtils: {
     isNotEmptyObject: typeof isNotEmptyObject;
     toJS: typeof toJS;
 };
-export declare type FilterFunction<T = any> = (...key: (any | T)[]) => T | undefined;
+export declare type FilterFunction<T = any> = <ST = any>(...key: (any | ST | T)[]) => ST | T | undefined;
 export declare type FilterArrayFunction = <T = any>(...key: any[]) => Array<T> | undefined;
 export declare type FilterFunctionGroup = IKeyValueMap<FilterFunction>;
 export declare function todoFilter(handler: (v: any) => boolean): FilterFunction;
@@ -80,7 +80,7 @@ export interface ITypeFilterUtils {
     isObjectFilter: FilterFunction;
     isNotEmptyArrayFilter: FilterArrayFunction;
     isNotEmptyValueFilter: FilterFunction<boolean | string | number | any>;
-    isFunctionFilter: FilterFunction<Function>;
+    isFunctionFilter: FilterFunction<(...arg: any[]) => any>;
 }
 /**
  *
