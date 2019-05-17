@@ -14,7 +14,7 @@ import { ItemConfigBaseConfig } from './ItemConfigBaseConfig';
 export interface IPropertyChangeEvent<T = any> extends IValueDidChange<T> {
   name: string;
 }
-export class ItemConfigBase<V, FM = any> extends ItemConfigBaseConfig<V, FM> implements IItemConfig<V, FM> {
+export class ItemConfigBase<V, FM = any> extends ItemConfigBaseConfig<V, FM> implements IItemConfig<FM, V> {
   [key: string]: any;
 
   @observable initConfig: ObservableMap<string, any> = observable.map({})
@@ -31,7 +31,7 @@ export class ItemConfigBase<V, FM = any> extends ItemConfigBaseConfig<V, FM> imp
 
   onPropertyChange = new EventEmitter<IPropertyChangeEvent>()
 
-  constructor(initModel: IFormItemConstructor<V, FM>, form: FM = {} as FM, componentProps: any = {}) {
+  constructor(initModel: IFormItemConstructor<FM, V>, form: FM = {} as FM, componentProps: any = {}) {
     super()
     // this.reaction(() => this.i.options, options => {
     //   console.log('initConfig change', Utils.isArrayFilter(options, this.getComputedValue('options')) || [])
@@ -84,12 +84,12 @@ export class ItemConfigBase<V, FM = any> extends ItemConfigBaseConfig<V, FM> imp
   }
 
   optionsInited = false
-  @action.bound setConfig(baseConfig: IFormItemConstructor<V, FM>, strict?: boolean) {
+  @action.bound setConfig(baseConfig: IFormItemConstructor<FM, V>, strict?: boolean) {
     const isChange = this.setBaseConfig(baseConfig, strict)
     isChange && this.registerObservables(baseConfig)
   }
 
-  @action.bound init(initModel: IFormItemConstructor<V, FM>, form: IKeyValueMap, componentProps = {}) {
+  @action.bound init(initModel: IFormItemConstructor<FM, V>, form: IKeyValueMap, componentProps = {}) {
     this.setConfig(initModel)
     this.setForm(form)
     this.componentProps = componentProps
@@ -197,7 +197,7 @@ export class ItemConfigBase<V, FM = any> extends ItemConfigBaseConfig<V, FM> imp
   validateHandler = (value: any, strict: boolean = false) => {
     return new Promise((resolve, reject) => {
       const resultList = []
-      const ruleList = this.rule.filter((rule) => (rule.strict && strict) || (!rule.strict && !strict))
+      const ruleList = this.rules.filter((rule) => (rule.strict && strict) || (!rule.strict && !strict))
       // console.log('validateHandler start', ruleList)
       if ((Utils.isArrayFilter(ruleList) || []).length === 0) {
         return resolve(true)
@@ -387,7 +387,7 @@ export class ItemConfigBase<V, FM = any> extends ItemConfigBaseConfig<V, FM> imp
   @computed get defaultRule() {
     return Object.assign(ItemConfigBase.getDefaultRules(this, this.componentProps), getDefaultRules(this))
   }
-  static getDefaultRules<V, FM>(itemConfig: IItemConfig<V, FM>, configStore: any): RuleConfigMap {
+  static getDefaultRules<V, FM>(itemConfig: IItemConfig<FM, V>, configStore: any): RuleConfigMap {
     return {
       phone: {
         validator: (rule: any, value: any, callback: any) => {

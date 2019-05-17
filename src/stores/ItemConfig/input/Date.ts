@@ -1,8 +1,8 @@
 import { map } from 'lodash';
 import Utils from '../../../utils';
-import { IItemConfig } from '../interface';
+import { IItemConfig, RuleConfigMap } from '../interface';
 
-export const checkDateToDate = <FM>(date: any, itemConfig: IItemConfig<FM>) => ((rule: any, value: any, callback: any) => {
+export const checkDateToDate = <V, FM>(date: any, itemConfig: IItemConfig<FM, V>) => ((rule: any, value: any, callback: any) => {
   console.log('testt, check', value, itemConfig)
   const [start, end] = Utils.isArrayFilter(value, map(itemConfig.code.split('|'), code => itemConfig.formSource[code]))
   if (!Utils.isNil(start) && !Utils.isNil(end) && itemConfig.type === 'dateToDate') {
@@ -23,22 +23,22 @@ export const checkDateToDate = <FM>(date: any, itemConfig: IItemConfig<FM>) => (
   return callback();
 })
 
-export const checkFutureDate = <FM>(itemConfig: IItemConfig<FM>) => ((rule: any, value: any, callback: any) => {
+export const checkFutureDate = <V, FM>(itemConfig: IItemConfig<FM, V>) => ((rule: any, value: any, callback: any) => {
   if (Utils.isNotEmptyValue(value) && new Date().getTime() > new Date(value).getTime()) {
     return callback(new Error(`${itemConfig.label}不能早于当前时间`));
   }
   return callback();
 })
 
-export const getDefaultRules = function<FM>(itemConfig: IItemConfig<FM>) {
+export const getDefaultRules = function<V, FM>(itemConfig: IItemConfig<FM, V>): RuleConfigMap<V, FM> {
   return {
     dateToDate30: [{
       validator: checkDateToDate(30, itemConfig),
-      trigger: ['onChange'],
+      trigger: ['change'],
     }],
     futureDate: [{
       validator: checkFutureDate(itemConfig),
-      trigger: 'onChange'
+      trigger: 'change'
     }]
   }
 }

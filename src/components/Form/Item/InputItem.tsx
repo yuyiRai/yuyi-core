@@ -62,6 +62,13 @@ export function useShadowValue<P = any>(initValue: any, props: IHasShadowValuePr
   }
 }
 
+declare global {
+  export interface IFormItemComponentType {
+    'text': IInputItemProps;
+    'textArea': ITextAreaItemProps;
+    'textarea': ITextAreaItemProps;
+  }
+}
 
 export type IInputItemProps = InputProps & OFormItemCommon
 

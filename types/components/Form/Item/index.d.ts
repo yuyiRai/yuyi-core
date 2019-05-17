@@ -1,7 +1,8 @@
+/// <reference types="react" />
 import { IReactComponent } from 'mobx-react';
-import React from 'react';
-import { FormItemType, OFormItemCommon } from '../Interface/FormItem';
-export declare function ItemSwitchType(type?: FormItemType): React.FunctionComponent<OFormItemCommon>;
+import { FormItemType, IItemTypeComponent } from '../Interface/FormItem';
+export declare const itemType: IItemTypeComponent;
+export declare function ItemSwitchType<T extends FormItemType>(type?: T): IItemTypeComponent[T | 'text'];
 export interface IItemSwitchProps {
     type?: FormItemType;
     Component: IReactComponent;

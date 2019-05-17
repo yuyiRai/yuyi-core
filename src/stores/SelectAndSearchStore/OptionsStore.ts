@@ -9,11 +9,11 @@ import { IItemConfig } from '../ItemConfig/interface';
 
 export class OptionsStore2<V = any> {
   [k: string]: any;
-  @observable itemConfig: IItemConfig<V, any>;
+  @observable itemConfig: IItemConfig<any, V>;
   __keyMap = {};
   __optionMap = new WeakMap();
   @observable.ref transformer: ITransformer<OptionsStore2, V[]>;
-  constructor(itemConfig: IItemConfig<V, any>, transformer?: ITransformer<OptionsStore2, V[]>) {
+  constructor(itemConfig: IItemConfig<any, V>, transformer?: ITransformer<OptionsStore2, V[]>) {
     this.itemConfig = itemConfig;
     if (transformer) {
       this.transformer = createTransformer(transformer)

@@ -1,34 +1,20 @@
 import { IKeyValueMap } from 'mobx';
-import { IItemConfig, ComputedProperty } from './interface';
-export interface IDisplayConfigConstructor<FM> {
-    inline?: ComputedProperty<boolean, FM>;
-    isViewOnly?: ComputedProperty<boolean, FM>;
-    showMessage?: ComputedProperty<boolean, FM>;
-    textAlign?: ComputedProperty<'center' | 'left' | 'right', FM>;
-    disabled?: ComputedProperty<boolean, FM>;
-    size?: ComputedProperty<boolean, FM>;
-    col?: ComputedProperty<number, FM>;
-    offset?: ComputedProperty<number, FM>;
-    offectRight?: ComputedProperty<number, FM>;
-    prefix?: ComputedProperty<any, FM>;
-    suffix?: ComputedProperty<any, FM>;
-    height?: ComputedProperty<string, FM>;
-    useLabel?: ComputedProperty<boolean, FM>;
+import { IItemConfig, ComputedPropertyCreater, ComputedPick } from './interface';
+export interface IDisplayConfigCreater<FM> {
+    inline?: ComputedPropertyCreater<boolean, FM>;
+    isViewOnly?: ComputedPropertyCreater<boolean, FM>;
+    showMessage?: ComputedPropertyCreater<boolean, FM>;
+    textAlign?: ComputedPropertyCreater<'center' | 'left' | 'right', FM>;
+    size?: ComputedPropertyCreater<boolean, FM>;
+    col?: ComputedPropertyCreater<number, FM>;
+    offset?: ComputedPropertyCreater<number, FM>;
+    offectRight?: ComputedPropertyCreater<number, FM>;
+    prefix?: ComputedPropertyCreater<any, FM>;
+    suffix?: ComputedPropertyCreater<any, FM>;
+    height?: ComputedPropertyCreater<string, FM>;
+    useLabel?: ComputedPropertyCreater<boolean, FM>;
 }
-export interface IDisplayConfig {
-    inline?: boolean;
-    isViewOnly?: boolean;
-    showMessage?: boolean;
-    textAlign?: 'center' | 'left' | 'right';
-    disabled?: boolean;
-    size?: boolean;
-    col?: number;
-    offset?: number;
-    offectRight?: number;
-    prefix?: any;
-    suffix?: any;
-    height?: string;
-    useLabel?: boolean;
+export interface IDisplayConfig<FM> extends ComputedPick<IDisplayConfigCreater<FM>, FM> {
 }
 export declare class DisplayConfig {
     itemConfig: IItemConfig;

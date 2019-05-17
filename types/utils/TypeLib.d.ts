@@ -23,7 +23,7 @@ export declare function isEmptyArrayStrict(value: any): value is any[];
 export declare function isEmptyData(value: any): value is any[];
 export declare function isNotEmptyData(value: any): boolean;
 export declare function isEmptyObject(value: any, checkValue?: boolean): value is {};
-export declare function isNotEmptyObject(value: any): boolean;
+export declare function isNotEmptyObject(value: any): value is object;
 export declare function isEventEmitter(emitter: any): boolean;
 export declare const typeUtils: {
     isArrayLike: {

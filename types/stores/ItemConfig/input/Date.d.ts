@@ -1,16 +1,7 @@
-import { IItemConfig } from '../interface';
-export declare const checkDateToDate: <FM>(date: any, itemConfig: IItemConfig<FM, import("mobx").IKeyValueMap<any>>) => (rule: any, value: any, callback: any) => any;
-export declare const checkFutureDate: <FM>(itemConfig: IItemConfig<FM, import("mobx").IKeyValueMap<any>>) => (rule: any, value: any, callback: any) => any;
-export declare const getDefaultRules: <FM>(itemConfig: IItemConfig<FM, import("mobx").IKeyValueMap<any>>) => {
-    dateToDate30: {
-        validator: (rule: any, value: any, callback: any) => any;
-        trigger: string[];
-    }[];
-    futureDate: {
-        validator: (rule: any, value: any, callback: any) => any;
-        trigger: string;
-    }[];
-};
+import { IItemConfig, RuleConfigMap } from '../interface';
+export declare const checkDateToDate: <V, FM>(date: any, itemConfig: IItemConfig<FM, V, V>) => (rule: any, value: any, callback: any) => any;
+export declare const checkFutureDate: <V, FM>(itemConfig: IItemConfig<FM, V, V>) => (rule: any, value: any, callback: any) => any;
+export declare const getDefaultRules: <V, FM>(itemConfig: IItemConfig<FM, V, V>) => RuleConfigMap<V, FM>;
 export declare const DateUtils: {
     getDateRange(days: number): Date[];
 };

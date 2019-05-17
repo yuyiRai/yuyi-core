@@ -62,7 +62,7 @@ const model = {
   showVoiceroid: undefined
 }
 const amap = new AMapService()
-const config: IFormItemConstructor<any, typeof model>[] = [
+const config: IFormItemConstructor<typeof model>[] = [
   { label: '姓名', code: 'name', required: form => form.showVoiceroid !== '1', rule: 'commonCode' },
   { label: '密码', code: 'password' },
   { label: '生日', code: 'info.birthday', value: new Date(), type: "date", rule: 'futureDate' },

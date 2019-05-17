@@ -28,7 +28,6 @@ export declare class FormItemStore<FM = any, V = any> extends FormItemStoreCore<
     init(): void;
     dispose(): void;
     readonly fieldDecorator: (node: React.ReactNode) => React.ReactNode;
-    getFieldDecorator: (store: FormItemStore<FM, V>) => (node: React.ReactNode) => React.ReactNode;
     readonly decoratorOptions: GetFieldDecoratorOptions;
     getFieldDecoratorOptions: import("mobx-utils").ITransformer<ItemConfig<V, FM>, GetFieldDecoratorOptions>;
     readonly Component: JSX.Element;
@@ -40,20 +39,20 @@ export default class FormItem extends React.Component<IFormItemProps, IFormItemS
     componentWillUnmount(): void;
     render(): JSX.Element;
 }
-export declare class FormItemContainer extends React.Component<{
-    itemConfig: ItemConfig;
+export declare class FormItemContainer<V, FM> extends React.Component<{
+    itemConfig: ItemConfig<V, FM>;
 }, IFormItemState> {
     lastContainerProps: {};
     static contextType: React.Context<{
         children: any;
     }>;
-    styleTransform: import("mobx-utils").ITransformer<ItemConfig<any, import("mobx").IKeyValueMap<any>>, {
+    styleTransform: import("mobx-utils").ITransformer<ItemConfig<V, FM>, {
         display: string;
     }>;
-    propsTransform: import("mobx-utils").ITransformer<ItemConfig<any, import("mobx").IKeyValueMap<any>>, {
+    propsTransform: import("mobx-utils").ITransformer<ItemConfig<V, FM>, {
         type: import("./Interface/FormItem").FormItemType;
         displayProps: {
-            colSpan: number;
+            colSpan: any;
             useColumn: any;
         };
         lg: any;
@@ -68,7 +67,7 @@ export declare class FormItemContainer extends React.Component<{
     readonly containerProps: {
         type: import("./Interface/FormItem").FormItemType;
         displayProps: {
-            colSpan: number;
+            colSpan: any;
             useColumn: any;
         };
         lg: any;

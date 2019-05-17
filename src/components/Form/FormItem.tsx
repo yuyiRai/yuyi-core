@@ -43,7 +43,7 @@ export class FormItemStore<FM = any, V = any> extends FormItemStoreCore<FM, V> i
     this.setFormStore(formStore)
     this.setAntdForm(formStore.antdForm)
 
-    this.ruleWatcher = reaction(() => this.itemConfig.rule, (rule) => {
+    this.ruleWatcher = reaction(() => this.itemConfig.rules, (rules) => {
       // console.log('ruleWatcher', rule)
       this.itemConfig.updateVersion()
       formStore.updateError(code)
@@ -69,9 +69,9 @@ export class FormItemStore<FM = any, V = any> extends FormItemStoreCore<FM, V> i
     //   console.log('fieldDecorator change', code)
     // })
     this.validateReset = autorun(() => {
-      if (!formStore.hasErrors(code) || !this.itemConfig.rule) {
+      if (!this.hasError || !this.itemConfig.rules) {
         formStore.reactionAntdForm(antdForm => {
-          // console.log('updateVersion', code, this.antdForm.getFieldError(code))
+          console.log('updateVersion', code, this.antdForm.getFieldError(code))
           this.itemConfig.updateVersion()
           this.setAntdForm(antdForm)
         })
@@ -87,16 +87,11 @@ export class FormItemStore<FM = any, V = any> extends FormItemStoreCore<FM, V> i
 
   @computed get fieldDecorator() {
     // console.log('get fieldDecorator')
+    const { code, antdForm } = this;
     // trace()
-    return this.itemConfig.$version > -1 && this.getFieldDecorator(this)
+    return this.itemConfig.$version > -1 && antdForm.getFieldDecorator(code, this.decoratorOptions);
   }
 
-  getFieldDecorator = (store: FormItemStore<FM, V>) => {
-    const { code, antdForm } = store;
-    // const { itemConfig } = this.state;
-    // const { value } = itemConfig
-    return antdForm.getFieldDecorator(code, this.decoratorOptions);
-  }
   @computed get decoratorOptions() {
     return this.getFieldDecoratorOptions(this.itemConfig)
   }
@@ -184,16 +179,16 @@ export default class FormItem extends React.Component<IFormItemProps, IFormItemS
 }
 
 @observer
-export class FormItemContainer extends React.Component<{
-  itemConfig: ItemConfig
+export class FormItemContainer<V, FM> extends React.Component<{
+  itemConfig: ItemConfig<V, FM>
 }, IFormItemState> {
   lastContainerProps = {}
   static contextType = ChildrenContext;
-  styleTransform = createTransformer((itemConfig: ItemConfig) => {
+  styleTransform = createTransformer((itemConfig: ItemConfig<V, FM>) => {
     // console.log('FormItemContainer style change')
     return { display: itemConfig.hidden ? 'none' : undefined }
   })
-  propsTransform = createTransformer((itemConfig: ItemConfig) => {
+  propsTransform = createTransformer((itemConfig: ItemConfig<V, FM>) => {
     // console.log('FormItemContainer props change')
     const { type, displayProps: { colSpan, useColumn }, lg, sm, xs, offset } = itemConfig
     return { type, displayProps: { colSpan, useColumn }, lg, sm, xs, offset }

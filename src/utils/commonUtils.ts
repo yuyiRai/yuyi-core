@@ -46,7 +46,7 @@ export default {
    * @param {*} functionOrValue 
    * @param  {...any} computedArgs 计算用参数 
    */
-  castComputed(functionOrValue: any, ...computedArgs: any[]) {
+  castComputed<T>(functionOrValue: T extends Function ? T : any, ...computedArgs: any[]) {
     return isFunction(functionOrValue) ? functionOrValue(...computedArgs) : functionOrValue
   },
   castFunction(value: any) {

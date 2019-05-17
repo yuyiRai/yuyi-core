@@ -7,19 +7,20 @@ import { Utils } from '../../utils/Utils';
 import { CommonStore } from "./interface/CommonStore";
 import { IFormItemConstructor } from './interface/ItemConfig';
 import { IPropertyChangeEvent } from './ItemConfigBase';
+
 @EventStoreInject(['options-change'])
 export class ItemConfigBaseConfigModel<V, FM> extends CommonStore {
-  [k:string]: any;
+  [k: string]: any;
   @observable.ref
   public form: FM = {} as FM;
   @observable.ref
   public baseConfigKeys: string[] = [];
   @observable.ref
-  public baseConfig: IFormItemConstructor<V, FM> = { code: '_' };
+  public baseConfig: IFormItemConstructor<FM, V> = { code: '_' };
   @observable
-  public baseConfigModel: IViewModel<IFormItemConstructor<V, FM>> = createViewModel(observable(this.baseConfig));
+  public baseConfigModel: IViewModel<IFormItemConstructor<FM, V>> = createViewModel(observable(this.baseConfig));
   @computed.struct
-  public get i(): IFormItemConstructor<V, FM> {
+  public get i(): IFormItemConstructor<FM, V> {
     return this.baseConfigModel.model;
   }
   @computed
@@ -39,7 +40,7 @@ export class ItemConfigBaseConfigModel<V, FM> extends CommonStore {
     return this.keyCode !== this.code ? this.code.replace(this.keyCode + '.', '') : undefined;
   }
 
-  @computed get children(): IKeyValueMap<IFormItemConstructor<V, FM>> | false {
+  @computed get children(): IKeyValueMap<IFormItemConstructor<FM, V>> | false {
     return this.type === 'group' && Utils.isNotEmptyObject(this.i.children) ? Utils.reduce(
       this.i.children,
       (obj, i, key) => Object.assign(
@@ -50,7 +51,7 @@ export class ItemConfigBaseConfigModel<V, FM> extends CommonStore {
           }
         }), {}) : false
   }
-  
+
   @action.bound
   setForm(form: any) {
     // console.log('setForm', form);
@@ -68,7 +69,7 @@ export class ItemConfigBaseConfigModel<V, FM> extends CommonStore {
   public formStore: FormStore;
   @action.bound
   public setFormStore(formStore: FormStore) {
-    if(formStore instanceof FormStore) {
+    if (formStore instanceof FormStore) {
       this.formStore = formStore;
       this.interceptProperty(this.formStore.formSource, this.keyCode, (event: IValueWillChange<any>) => {
         // console.log(event, event.newValue, get(event.object, this.keyInnerCode), this.keyCode, this.keyInnerCode);
@@ -83,75 +84,70 @@ export class ItemConfigBaseConfigModel<V, FM> extends CommonStore {
     return (this.formStore && this.formStore.lastFormSource) || this.form;
   }
 
-  private lastReceiveConfig: IKeyValueMap<IFormItemConstructor<V, FM>> = {}
+  private lastReceiveConfig: IKeyValueMap<IFormItemConstructor<FM, V>> = {}
   protected configInited: boolean = false
   @action.bound
-  public setBaseConfig(baseConfig: IFormItemConstructor<V, FM>, strict?: boolean) {
+  public setBaseConfig(baseConfig: IFormItemConstructor<FM, V>, strict: boolean = false): boolean {
     baseConfig = baseConfig && baseConfig.i ? baseConfig.i : baseConfig
-    if (!Utils.isEqual(this.baseConfig, baseConfig) ) {
-      if(this.configInited) {
+    if (strict || !Utils.isEqual(this.lastReceiveConfig, baseConfig)) {
+      if (this.configInited) {
         // if (this.label==='机构'){
         //   debugger
         // }
-        for(const key in baseConfig) {
-          if(!Utils.isEqual(this.lastReceiveConfig[key], baseConfig[key])) {
+        for (const key in baseConfig) {
+          if (!Utils.isEqual(this.lastReceiveConfig[key], baseConfig[key])) {
             this.baseConfig[key] = baseConfig[key]
-            this.lastReceiveConfig[key] = baseConfig[key]
           }
         }
-        // this.objectToDiff(this.baseConfig, baseConfig);
-        return true
+      } else {
+        // console.log('setBaseConfig', baseConfig, strict)
+        this.baseConfig = baseConfig
+        this.baseConfigKeys = Object.keys(baseConfig);
+        for (const name of this.baseConfigKeys.concat(['options', 'loading'])) {
+          this.registerKey(baseConfig, name);
+        }
+        this.baseConfigModel = createViewModel(baseConfig);
+        this.observe(baseConfig, (e: IPropertyChangeEvent) => { });
+        // console.log('initConfig change init', baseConfig, this);
+        // this.objectToDiff(this.baseConfigModel.model, baseConfig)
+        if (Utils.isFunction(baseConfig.refConfig)) {
+          Reflect.apply(baseConfig.refConfig, this, [this]);
+        }
+        this.configInited = true
       }
-      // console.log('setBaseConfig', baseConfig, strict)
-      this.baseConfig = baseConfig
-      this.baseConfigKeys = Object.keys(baseConfig);
-      for (const name of this.baseConfigKeys.concat(['options', 'loading'])) {
-        this.registerKey(baseConfig, name);
-      }
-      this.baseConfigModel = createViewModel(baseConfig);
-      this.observe(baseConfig, (e: IPropertyChangeEvent) => { });
-      // console.log('initConfig change init', baseConfig, this);
-      // this.objectToDiff(this.baseConfigModel.model, baseConfig)
-      if (Utils.isFunction(baseConfig.refConfig)) {
-        Reflect.apply(baseConfig.refConfig, this, [this]);
-      }
-      this.configInited = true
-      for(const key in baseConfig) {
-        this.lastReceiveConfig[key] = baseConfig[key]
-      }
-      return this.baseConfig;
+      this.lastReceiveConfig = Utils.cloneDeep(baseConfig);
+      return true;
     }
     return false;
   }
   @autobind
-  public getComputedValue(key: string, target: any = this.i, defaultValue?: any) {
+  public getComputedValue(key: string, target: IFormItemConstructor<FM, V> = this.i, defaultValue?: any) {
     try {
       const keyValue = target[key];
       if (!(/(^refConfig$)|^(on|get(.*?))|((.*?)Method)$|(.*?)filter(.*?)/.test(key)) && (keyValue instanceof Function)) {
         const computedValue = expr(() => keyValue(this.formSource || {}, this));
-        // if(this.code==="ciPolicyNo" && key==='required') {
-        //   debugger
-        // }
         return Utils.isNil(computedValue) ? defaultValue : computedValue;
       }
       return keyValue;
-    }
-    catch (e) {
-      console.error(e);
+    } catch (e) {
       return undefined;
     }
   }
-  @autobind 
-  public export() {
-    return ItemConfigBaseConfigModel.export(this)
+  @autobind
+  public export(): ExportedFormModel<IFormItemConstructor<FM>> {
+    return ItemConfigBaseConfigModel.export<FM>(this)
   }
 
-  public static export = createTransformer((config: ItemConfigBaseConfigModel<any, any>) => {
-    const model: any = {};
+  public static export = createTransformer(<FM>(config: ItemConfigBaseConfigModel<any, FM>): ExportedFormModel<IFormItemConstructor<FM>> => {
+    const model: ExportedFormModel<IFormItemConstructor<FM>> = {} as ExportedFormModel<IFormItemConstructor<FM>>;
     for (const key of config.baseConfigKeys) {
       model[key] = config[key];
     }
     model.__isExportObject = true;
     return toJS(model);
   })
+}
+
+export type ExportedFormModel<T> = Partial<T> & {
+  __isExportObject: true
 }

@@ -3,31 +3,31 @@ import { Option, OptionBase } from "../../utils";
 import { IItemConfig, ItemConfigEventHandler } from "./interface";
 import { CommonStore } from "./interface/CommonStore";
 export declare type KeyString = string;
-export interface ISearchConfigBase<V, FM> {
+export interface ISearchConfigBase<FM> {
     remoteMethod?: ItemConfigEventHandler<KeyString, Promise<OptionBase[]>>;
     allowCreate?: boolean | ItemConfigEventHandler<KeyString, FM, Option>;
     multiple?: boolean;
     loadDataDeep?: number;
 }
-export interface ISearchConfigConstructor<V, FM> {
+export interface ISearchConfigCreater<V, FM> {
     strictSearch?: boolean;
-    loadData?: undefined | ((key: Option, keyList: Option[], form?: FM, itemConfig?: IItemConfig<V, FM>) => Promise<Option[]> | Option[]);
+    loadData?: undefined | ((key: Option, keyList: Option[], form?: FM, itemConfig?: IItemConfig<FM, V>) => Promise<Option[]> | Option[]);
     getPathValueWithLeafValue?(leafValue: string): Option[] | Promise<Option[]>;
 }
-export interface ISearchConfig<V, FM> extends ISearchConfigBase<V, FM> {
+export interface ISearchConfig<V, FM> extends ISearchConfigBase<FM> {
     strictSearch?: boolean;
-    loadData?: undefined | ((key: Option, keyList: Option[], form?: FM, itemConfig?: IItemConfig<V, FM>) => Promise<Option[]> | Option[]);
+    loadData?: undefined | ((key: Option, keyList: Option[], form?: FM, itemConfig?: IItemConfig<FM, V>) => Promise<Option[]> | Option[]);
     getPathValueWithLeafValue?(leafValue: string): Option[] | Promise<Option[]>;
 }
 export declare class SearchStore<V, FM> extends CommonStore {
     [k: string]: any;
     mode: 'filter' | 'search';
-    itemConfig: IItemConfig<V, FM>;
+    itemConfig: IItemConfig<FM, V>;
     searchKeyHistory: IObservableArray<string>;
     readonly keyWord: string | undefined;
     inited: boolean;
     initedListener: IReactionDisposer;
-    constructor(itemConfig: IItemConfig<V, FM>);
+    constructor(itemConfig: IItemConfig<FM, V>);
     initAction(): IReactionDisposer;
     readonly searchName: any;
     readonly getPathValueWithLeafValue: (leafValue: string) => Option[] | Promise<Option[]>;

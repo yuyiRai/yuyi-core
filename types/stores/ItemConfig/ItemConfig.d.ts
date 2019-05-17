@@ -10,17 +10,17 @@ import { SearchStore } from './SearchStore';
 export interface IPropertyChangeEvent<T = any> extends IValueDidChange<T> {
     name: string;
 }
-export declare class ItemConfig<V = any, FM = FormModel> extends ItemConfigBase<V, FM> implements IItemConfig<V, FM> {
+export declare class ItemConfig<V = any, FM = FormModel> extends ItemConfigBase<V, FM> implements IItemConfig<FM, V> {
     private static commonTransformerConfig;
     static setCommonTransformerPipe(func: BaseItemConfigTransformer<FormModel>): void;
-    static readonly commonTransformer: BaseItemConfigTransformer<FormModel>;
+    static readonly commonTransformer: BaseItemConfigTransformer<FormModel, any>;
     [key: string]: any;
     $version: number;
     private displayConfig;
     readonly displayProps: DisplayConfig;
     searchStore: SearchStore<V, FM>;
     setSearchStore(searchStore: SearchStore<V, FM>): void;
-    useSearchStore<T>(transformer?: ITransformer<OptionsStore, T[]>, config?: ItemConfig<V, FM>): SearchStore<any, any>;
+    useSearchStore<T>(transformer?: ITransformer<OptionsStore, T[]>, config?: ItemConfig<V, FM>): any;
     readonly formValueTransform: IFormValueTransform<FM>;
     readonly transformer: FilterType<FM>;
     readonly form2Value: IFormValueTransformHandler<FM>;
@@ -29,7 +29,7 @@ export declare class ItemConfig<V = any, FM = FormModel> extends ItemConfigBase<
     readonly computed: any;
     readonly isComputedEnable: boolean;
     optionsStore: OptionsStore;
-    useOptionsStore<T>(transformer?: ITransformer<OptionsStore, T[]>, config?: IItemConfig<V, FM>): OptionsStore<any>;
+    useOptionsStore<T>(transformer?: ITransformer<OptionsStore, T[]>, config?: IItemConfig<FM, V>): OptionsStore<any>;
     childrenConfig: IKeyValueMap<ItemConfig<V, FM>>;
     log(message: string): this;
     constructor(initModel: any, form?: any, componentProps?: any, formStore?: FormStore);

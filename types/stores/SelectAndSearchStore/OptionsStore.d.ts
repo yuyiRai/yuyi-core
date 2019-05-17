@@ -3,11 +3,11 @@ import { ITransformer } from 'mobx-utils';
 import { IItemConfig } from '../ItemConfig/interface';
 export declare class OptionsStore2<V = any> {
     [k: string]: any;
-    itemConfig: IItemConfig<V, any>;
+    itemConfig: IItemConfig<any, V>;
     __keyMap: {};
     __optionMap: WeakMap<object, any>;
     transformer: ITransformer<OptionsStore2, V[]>;
-    constructor(itemConfig: IItemConfig<V, any>, transformer?: ITransformer<OptionsStore2, V[]>);
+    constructor(itemConfig: IItemConfig<any, V>, transformer?: ITransformer<OptionsStore2, V[]>);
     shadowOption: Option;
     readonly shadowOptionMode: "text" | "code";
     /**

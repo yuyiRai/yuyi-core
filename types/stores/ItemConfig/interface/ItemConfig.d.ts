@@ -4,68 +4,85 @@ import { ITransformer } from "mobx-utils";
 import { FormStore } from "../../../components/Form/FormStore";
 import { OptionBase } from "../../../utils";
 import { FilterType, IFormValueTransform } from "../input";
-import { IDisplayConfig, IDisplayConfigConstructor } from "../ItemDisplayConfig";
-import { IRuleStore, IRuleStoreConstructor } from "../RuleConfigStore";
-import { ISearchConfig, ISearchConfigConstructor } from "../SearchStore";
+import { IDisplayConfig, IDisplayConfigCreater } from "../ItemDisplayConfig";
+import { IRuleStore, IRuleStoreCreater } from "../RuleConfigStore";
+import { ISearchConfig, ISearchConfigCreater } from "../SearchStore";
 import { CommonStore } from "./CommonStore";
 import { RuleConfig } from "./RuleConfig";
+export interface INameKeyComponent<K extends FormItemType> {
+    $nameKey: K;
+}
+export declare class A implements INameKeyComponent<"text"> {
+    $nameKey: "text";
+}
 export declare type FormItemType = "" | "text" | "textArea" | "textarea" | 'number' | 'date' | 'dateTime' | 'dateToDate' | 'select' | 'search' | 'selectTree' | 'check' | 'radio' | 'radioOne' | 'checkOne' | 'switch' | 'address' | 'cascader' | undefined | null | never | 'group';
 export declare type FormModel<M extends object = IKeyValueMap> = M;
-export declare type ComputedProperty<T, FM = FormModel> = T | ComputedPropertyConstructor<T, FM>;
-export declare type ComputedPropertyConstructor<T, FM = FormModel> = (form: FM, itemConfig?: IItemConfig<FM>) => T;
-export declare type ItemConfigEventHandler<V, FM, R = void> = (e: V, formSource?: FM, config?: IFormItemConfig<V, FormModel>) => R;
+export declare type ValueType<T = object> = T;
+/**
+ * 属性
+ */
+export declare type ComputedProperty<FM = FormModel, T = any> = ComputedPropertyCreater<T, FM> | ValueType<T>;
+/**
+ * 计算属性
+ */
+export declare type ComputedPropertyCreater<T, FM = FormModel> = (form: FM, itemConfig?: IItemConfig<FM>) => T;
+export declare type ItemConfigEventHandler<VALUE, FM, R = void> = (e: VALUE, formSource?: FM, config?: IItemConfig<FM, VALUE>) => R;
 export declare type ValueAny = any;
-export interface IFormItemBase<V, FM> {
+export declare type ConstructorPick<P> = {
+    [K in keyof P]?: P[K] extends ComputedPropertyCreater<infer T, infer FM> ? (ComputedProperty<FM, T>) : P[K];
+};
+export declare type ComputedPick<P, FM> = {
+    [K in keyof P]?: P[K] extends ComputedPropertyCreater<infer T, FM> ? T : P[K];
+};
+/**
+ * 表单成员基本配置，固定类型
+ */
+export declare type IItemConfigStatic<FM, VALUE, CVALUE> = {
     type?: FormItemType;
     code: string | '_';
     nameCode?: string;
     label?: string;
-    onChange?: ItemConfigEventHandler<V, FM>;
-    autorunMethod?: (value: V, formStore?: FormStore<FM>, itemConfig?: IItemConfig<V, FM>) => void;
-    filter?: FilterType<FM, V>;
-    filterToValue?: FilterType<FM, V>;
-    transformer?: IFormValueTransform<FM, V> | FilterType<FM, V>;
+    computed?: ComputedPropertyCreater<VALUE | false, FM>;
+    onChange?: ItemConfigEventHandler<VALUE, FM>;
+    autorunMethod?: (value: VALUE, formStore?: FormStore<FM>, itemConfig?: IItemConfig<FM, VALUE, CVALUE>) => void;
+    filter?: FilterType<FM, VALUE, CVALUE>;
+    filterToValue?: FilterType<FM, VALUE, CVALUE>;
+    transformer?: IFormValueTransform<FM, VALUE, CVALUE> | FilterType<FM, VALUE, CVALUE>;
+    refConfig?: (store: FormStore) => void;
+};
+export interface IItemConfigCreater<FM = any, VALUE = any> {
+    /**
+     * a
+     */
+    disabled?: ComputedPropertyCreater<boolean, FM>;
+    hidden?: ComputedPropertyCreater<boolean, FM>;
+    value?: ComputedPropertyCreater<VALUE, FM>;
+    defaultValue?: ComputedPropertyCreater<VALUE, FM>;
+    required?: ComputedPropertyCreater<boolean | RuleConfig<VALUE>, FM>;
+    viewOnly?: ComputedPropertyCreater<boolean, FM>;
+    options?: ComputedPropertyCreater<OptionBase[], FM>;
+    loading?: ComputedPropertyCreater<boolean, FM>;
 }
 /**
  * typeof i
  */
-export interface IFormItemConstructor<V = any, FM = any> extends IFormItemBase<V, FM>, ISearchConfigConstructor<V, FM>, IDisplayConfigConstructor<FM>, IRuleStoreConstructor<V, FM> {
-    disabled?: ComputedProperty<boolean, FM>;
-    hidden?: ComputedProperty<boolean, FM>;
-    value?: ComputedProperty<V, FM>;
-    defaultValue?: ComputedProperty<V, FM>;
-    required?: ComputedProperty<boolean | RuleConfig<V>, FM>;
-    viewOnly?: ComputedProperty<boolean, FM>;
-    computed?: ComputedProperty<string | boolean, FM>;
-    children?: IKeyValueMap<IFormItemConstructor<V, FM>>;
-    [key: string]: ComputedProperty<any, FM>;
-}
-export interface IBaseConfig<V, FM> extends IFormItemBase<V, FM> {
-    formSource?: FM;
-    value?: V;
-    defaultValue?: V;
-    disabled?: boolean;
-    hidden?: boolean;
-    required?: boolean | RuleConfig<V>;
-    refConfig?: (store: FormStore) => void;
-}
-export interface IFormItemConfig<V, FM> extends IBaseConfig<V, FM>, ISearchConfig<V, FM>, IDisplayConfig, IRuleStore<V, FM> {
-    requiredMessage?: string;
-    options?: OptionBase[];
-    loading?: boolean;
-    /**
-     * 计算值
-     */
-    computed?: V | boolean;
-}
-export interface IItemConfigBase<V, FM> extends IFormItemConfig<V, FM>, IEventStoreBase, CommonStore {
-    formStore: FormStore<FM>;
-    i: IFormItemConstructor<V, FM>;
-    form: FM;
-    setOptions(options: ComputedProperty<OptionBase[], FM>): void;
-    setLoading(loading: ComputedProperty<boolean, FM>, source?: string): void;
-}
-export interface IItemConfig<V = any, FM = FormModel> extends IItemConfigBase<V, FM> {
+export interface IFormItemConstructor<FM = any, VALUE = any, CVALUE = VALUE> extends IItemConfigStatic<FM, VALUE, CVALUE>, ConstructorPick<IItemConfigCreater<FM, VALUE>>, ConstructorPick<ISearchConfigCreater<VALUE, FM>>, ConstructorPick<IDisplayConfigCreater<FM>>, ConstructorPick<IRuleStoreCreater<VALUE, FM>> {
+    children?: IKeyValueMap<IFormItemConstructor<FM, VALUE, CVALUE>> | false;
     [key: string]: any;
 }
-export declare type BaseItemConfigTransformer<V, FM = FormModel> = ITransformer<IItemConfig<V, FM>, FilterType<FM, V>>;
+export interface IItemConfig<FM = FormModel, VALUE = any, CVALUE = VALUE> extends IItemConfigStatic<FM, VALUE, CVALUE>, ComputedPick<IItemConfigCreater<FM, VALUE>, FM>, ISearchConfig<VALUE, FM>, IDisplayConfig<FM>, IRuleStore<VALUE, FM>, IEventStoreBase, CommonStore {
+    i: IFormItemConstructor<FM, VALUE>;
+    formStore: FormStore<FM>;
+    formSource: FM;
+    form: FM;
+    currentValue?: any;
+    currentComponentValue?: any;
+    setOptions(options: ComputedProperty<FM, OptionBase[]>, source?: string): void;
+    setLoading(loading: boolean, source?: string): void;
+    [key: string]: any;
+}
+export declare type Typed<T> = {
+    [K in keyof T]: T[K];
+};
+export declare type ItemConfigType = Typed<IItemConfig>;
+export declare type BaseItemConfigTransformer<FM = FormModel, VALUE = any> = ITransformer<IItemConfig<FM, VALUE>, FilterType<FM, VALUE>>;

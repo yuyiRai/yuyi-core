@@ -1,17 +1,18 @@
 import { autobind } from 'core-decorators';
 import { keys as getKeys, reduce, values } from 'lodash';
+import { Memoize } from 'lodash-decorators';
 import { action, computed, IKeyValueMap, observable, ObservableMap, toJS } from 'mobx';
 import { ItemConfig } from 'src/stores';
 import { CommonStore, IFormItemConstructor, FormModel } from '../Interface/FormItem';
 import { FormStoreCore } from './FormStoreCore';
 
-export type ConfigInit<FM = FormModel, VKeys = any> = IFormItemConstructor<VKeys, FM>[] | IKeyValueMap<IFormItemConstructor<VKeys, FM>>
+export type ConfigInit<FM = FormModel, VKeys = any> = IFormItemConstructor<FM, VKeys>[] | IKeyValueMap<IFormItemConstructor<FM, VKeys>>
 
 export class ItemConfigGroupStore<FM = FormModel, VKeys = any> extends CommonStore {
   @observable
   public store: FormStoreCore<FM>;
   @observable.shallow
-  public configSource: ObservableMap<string, IFormItemConstructor<VKeys, FM>> = observable.map({}, { deep: false })
+  public configSource: ObservableMap<string, IFormItemConstructor<FM, VKeys>> = observable.map({}, { deep: false })
   @observable
   public itemConfigMap: ObservableMap<string, ItemConfig<VKeys, FM>> = observable.map({}, { deep: false })
 
@@ -26,7 +27,7 @@ export class ItemConfigGroupStore<FM = FormModel, VKeys = any> extends CommonSto
   }
 
   @computed
-  public get itemConfigConstructorMap(): IKeyValueMap<IFormItemConstructor<VKeys, FM>> {
+  public get itemConfigConstructorMap(): IKeyValueMap<IFormItemConstructor<FM, VKeys>> {
     return this.config.reduce((obj, config) => {
       return config.code ? Object.assign(obj, {
         [config.code]: config
@@ -62,12 +63,15 @@ export class ItemConfigGroupStore<FM = FormModel, VKeys = any> extends CommonSto
     return this.itemConfigMap.get(code)
   }
 
+  @Memoize()
   @action.bound
   public setConfigSource<V>(configSource: ConfigInit<FM, V>) {
-    console.log('setConfig', configSource, this, this.store)
-    this.mapToDiff(this.configSource, reduce(configSource, (object, config: IFormItemConstructor<V, FM>, key: string | number) => {
-      return (Utils.isNumber(key) || Utils.isEqual(key, config.code)) ? Object.assign(object, { [config.code]: config }) : object
-    }, {}))
+    if(this.configSource.size === 0){
+      console.log('setConfig', configSource, this, this.store)
+      this.mapToDiff(this.configSource, reduce(configSource, (object, config: IFormItemConstructor<FM, V>, key: string | number) => {
+        return (Utils.isNumber(key) || Utils.isEqual(key, config.code)) ? Object.assign(object, { [config.code]: config }) : object
+      }, {}))
+    }
   }
 
   constructor(formStore: FormStoreCore<FM>) {

@@ -1,9 +1,9 @@
 import { IKeyValueMap } from 'mobx';
 import { OptionBase } from '../../utils';
-import { FormItemType, IItemConfigBase, RuleList } from './interface';
+import { FormItemType, IItemConfig, RuleList } from './interface';
 import { ItemConfigBaseConfigModel } from './ItemConfigBaseConfigModel';
 import { RuleStore } from './RuleConfigStore';
-export declare class ItemConfigBaseConfig<V, FM> extends ItemConfigBaseConfigModel<V, FM> implements IItemConfigBase<V, FM> {
+export declare class ItemConfigBaseConfig<V, FM> extends ItemConfigBaseConfigModel<V, FM> implements IItemConfig<FM, V> {
     componentProps: IKeyValueMap;
     ruleConfig: RuleStore<V, FM>;
     readonly code: string;
@@ -28,6 +28,6 @@ export declare class ItemConfigBaseConfig<V, FM> extends ItemConfigBaseConfigMod
     readonly _loading: boolean;
     readonly loading: boolean;
     setLoading(v: boolean, source?: string): void;
-    readonly loadData: (key: import("../../utils").Option, keyList: import("../../utils").Option[], form?: FM, itemConfig?: import("./interface").IItemConfig<V, FM>) => import("../../utils").Option[] | Promise<import("../../utils").Option[]>;
+    readonly loadData: (key: import("../../utils").Option, keyList: import("../../utils").Option[], form?: FM, itemConfig?: IItemConfig<FM, V, V>) => import("../../utils").Option[] | Promise<import("../../utils").Option[]>;
     readonly loadDataDeep: number;
 }

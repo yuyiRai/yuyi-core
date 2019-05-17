@@ -1,6 +1,8 @@
+/// <reference types="react" />
 import { FormStore } from '../FormStore';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
-import { ItemConfig } from '../../../stores';
+import { FormItemType } from '@/stores/ItemConfig/interface';
+import { ItemConfig } from '@/stores';
 export interface OFormItemCommon {
     code: string;
     formStore?: FormStore;
@@ -8,4 +10,12 @@ export interface OFormItemCommon {
     itemConfig?: ItemConfig;
     [key: string]: any;
 }
-export * from '../../../stores/ItemConfig/interface';
+declare global {
+    type FormItemTypeGroup<T = any> = Record<FormItemType, T>;
+    interface IFormItemComponentType extends Partial<FormItemTypeGroup<OFormItemCommon>> {
+    }
+}
+export declare type IItemTypeComponent = {
+    [K in FormItemType]?: React.FunctionComponent<IFormItemComponentType[K]>;
+};
+export * from '@/stores/ItemConfig/interface';

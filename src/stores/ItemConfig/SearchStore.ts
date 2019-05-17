@@ -8,27 +8,27 @@ import { IItemConfig, ItemConfigEventHandler } from "./interface";
 import { CommonStore } from "./interface/CommonStore";
 
 export type KeyString = string;
-export interface ISearchConfigBase<V, FM> {
+export interface ISearchConfigBase<FM> {
   remoteMethod?: ItemConfigEventHandler<KeyString, Promise<OptionBase[]>>;
   allowCreate?: boolean | ItemConfigEventHandler<KeyString, FM, Option>
   multiple?: boolean;
   loadDataDeep?: number;
 }
-export interface ISearchConfigConstructor<V, FM> {
+export interface ISearchConfigCreater<V, FM> {
   strictSearch?: boolean;
-  loadData?: undefined | ((key: Option, keyList: Option[], form?: FM, itemConfig?: IItemConfig<V, FM>) => Promise<Option[]> | Option[]);
+  loadData?: undefined | ((key: Option, keyList: Option[], form?: FM, itemConfig?: IItemConfig<FM, V>) => Promise<Option[]> | Option[]);
   getPathValueWithLeafValue?(leafValue: string): Option[] | Promise<Option[]>;
 }
-export interface ISearchConfig<V, FM> extends ISearchConfigBase<V, FM> {
+export interface ISearchConfig<V, FM> extends ISearchConfigBase<FM> {
   strictSearch?: boolean;
-  loadData?: undefined | ((key: Option, keyList: Option[], form?: FM, itemConfig?: IItemConfig<V, FM>) => Promise<Option[]> | Option[]);
+  loadData?: undefined | ((key: Option, keyList: Option[], form?: FM, itemConfig?: IItemConfig<FM, V>) => Promise<Option[]> | Option[]);
   getPathValueWithLeafValue?(leafValue: string): Option[] | Promise<Option[]>;
 }
 
 export class SearchStore<V, FM> extends CommonStore {
   [k: string]: any;
   @observable mode: 'filter' | 'search' = 'search'
-  @observable itemConfig: IItemConfig<V, FM>;
+  @observable itemConfig: IItemConfig<FM, V>;
   @observable searchKeyHistory: IObservableArray<string> = observable.array([])
   @computed get keyWord(): string | undefined {
     const { searchKeyHistory: history } = this
@@ -40,7 +40,7 @@ export class SearchStore<V, FM> extends CommonStore {
   @observable inited: boolean = false
   @observable initedListener: IReactionDisposer;
 
-  constructor(itemConfig: IItemConfig<V, FM>) {
+  constructor(itemConfig: IItemConfig<FM, V>) {
     super()
     this.itemConfig = itemConfig
     this.reaction(() => this.inited, isInited => {

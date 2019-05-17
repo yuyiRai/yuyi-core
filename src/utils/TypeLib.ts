@@ -50,7 +50,7 @@ export function isNotEmptyData(value: any): boolean {
 export function isEmptyObject(value: any, checkValue: boolean = false): value is {} {
   return isObject(value) && !isArray(value) && (checkValue ? filter(values(value), v => isNotEmptyData(v)).length === 0 : isEmpty(value));
 }
-export function isNotEmptyObject(value: any): boolean {
+export function isNotEmptyObject(value: any): value is object {
   return isObject(value) && !isArray(value) && !isEmpty(value);
 }
 export function isEventEmitter(emitter: any): boolean {

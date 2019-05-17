@@ -7,17 +7,17 @@ import { ItemConfigBaseConfig } from './ItemConfigBaseConfig';
 export interface IPropertyChangeEvent<T = any> extends IValueDidChange<T> {
     name: string;
 }
-export declare class ItemConfigBase<V, FM = any> extends ItemConfigBaseConfig<V, FM> implements IItemConfig<V, FM> {
+export declare class ItemConfigBase<V, FM = any> extends ItemConfigBaseConfig<V, FM> implements IItemConfig<FM, V> {
     [key: string]: any;
     initConfig: ObservableMap<string, any>;
     $version: number;
     private readonly otherKey;
     onPropertyChange: EventEmitter<IPropertyChangeEvent<any>>;
-    constructor(initModel: IFormItemConstructor<V, FM>, form?: FM, componentProps?: any);
+    constructor(initModel: IFormItemConstructor<FM, V>, form?: FM, componentProps?: any);
     registerObservables(baseConfig: any): void;
     optionsInited: boolean;
-    setConfig(baseConfig: IFormItemConstructor<V, FM>, strict?: boolean): void;
-    init(initModel: IFormItemConstructor<V, FM>, form: IKeyValueMap, componentProps?: {}): void;
+    setConfig(baseConfig: IFormItemConstructor<FM, V>, strict?: boolean): void;
+    init(initModel: IFormItemConstructor<FM, V>, form: IKeyValueMap, componentProps?: {}): void;
     readonly searchName: any;
     getSearchName(): any;
     readonly currentValue: any;
@@ -65,15 +65,6 @@ export declare class ItemConfigBase<V, FM = any> extends ItemConfigBaseConfig<V,
     getRuleList(i: IKeyValueMap<any>, componentProps: IKeyValueMap<any>): RuleList | undefined;
     optionsMatcher(r: any, values: any, callback: any): Promise<any>;
     getOptionsSafe(): Promise<OptionBase[]>;
-    readonly defaultRule: RuleConfigMap<any, IKeyValueMap<any>> & {
-        dateToDate30: {
-            validator: (rule: any, value: any, callback: any) => any;
-            trigger: string[];
-        }[];
-        futureDate: {
-            validator: (rule: any, value: any, callback: any) => any;
-            trigger: string;
-        }[];
-    };
-    static getDefaultRules<V, FM>(itemConfig: IItemConfig<V, FM>, configStore: any): RuleConfigMap;
+    readonly defaultRule: RuleConfigMap<any, IKeyValueMap<any>> & RuleConfigMap<any, any>;
+    static getDefaultRules<V, FM>(itemConfig: IItemConfig<FM, V>, configStore: any): RuleConfigMap;
 }

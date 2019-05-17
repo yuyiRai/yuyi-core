@@ -2,11 +2,11 @@ import { autobind } from 'core-decorators';
 import { action, computed, IKeyValueMap, observable } from 'mobx';
 import { OptionBase } from '../../utils';
 import { Utils } from '../../utils/Utils';
-import { FormItemType, IItemConfigBase, RuleList } from './interface';
+import { FormItemType, IItemConfig, RuleList } from './interface';
 import { ItemConfigBaseConfigModel } from './ItemConfigBaseConfigModel';
 import { RuleStore } from './RuleConfigStore';
 
-export class ItemConfigBaseConfig<V, FM> extends ItemConfigBaseConfigModel<V, FM> implements IItemConfigBase<V, FM> {
+export class ItemConfigBaseConfig<V, FM> extends ItemConfigBaseConfigModel<V, FM> implements IItemConfig<FM, V> {
   @observable.ref
   public componentProps: IKeyValueMap = {};
   @observable
@@ -28,7 +28,7 @@ export class ItemConfigBaseConfig<V, FM> extends ItemConfigBaseConfigModel<V, FM
 
   @computed.struct
   public get placeholder(): string {
-    return `请${['search', 'select', 'selectTree', 'cascader'].includes(this.type) ? '选择' : '输入'}${this.label}`
+    return `请${['search', 'select', 'selectTree', 'cascader'].includes(this.type) && !this.allowInput ? '选择' : '输入'}${this.label}`
   }
 
   @computed.struct

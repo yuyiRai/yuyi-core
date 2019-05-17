@@ -1,19 +1,22 @@
-import { IItemConfig, IItemConfigBase } from "./interface";
+import { IItemConfig } from "./interface";
 import { CommonStore } from "./interface/CommonStore";
-import { IValidator, RuleConfigConstructor, RuleConfigMap, RuleList, ValidatorCallback, RuleConfig } from './interface/RuleConfig';
+import { IValidator, RuleConfig, RuleConfigConstructor, RuleConfigMap, RuleList, ValidatorCallback } from './interface/RuleConfig';
+import { FormStoreCore } from 'src/components/Form/FormStore/FormStoreCore';
 export declare type RuleErrorIntercept = (value?: any, error?: Error, callback?: ValidatorCallback) => any;
 export interface IRuleStoreBase<V, FM> {
     rule?: RuleConfigConstructor<V, FM>;
+    requiredMessage?: string;
+    regExpMessage?: string;
 }
-export interface IRuleStoreConstructor<V, FM> extends IRuleStoreBase<V, FM> {
+export interface IRuleStoreCreater<V, FM> extends IRuleStoreBase<V, FM> {
 }
 export interface IRuleStore<V, FM> extends IRuleStoreBase<V, FM> {
     rule?: RuleConfig<V> | RuleList<V>;
     rules?: RuleConfig<V> | RuleList<V>;
 }
 export declare class RuleStore<V, FM> extends CommonStore {
-    itemConfig: IItemConfigBase<V, FM>;
-    constructor(itemConfig: IItemConfigBase<V, FM>);
+    itemConfig: IItemConfig<FM, V>;
+    constructor(itemConfig: IItemConfig<FM, V>);
     readonly requiredRule: (false & {
         validator: (...args: any[]) => any;
     }) | (true & {
@@ -28,19 +31,16 @@ export declare class RuleStore<V, FM> extends CommonStore {
     static ruleErrorIntercept: RuleErrorIntercept;
     static setRuleErrorIntercept(register: RuleErrorIntercept): void;
     useRuleErrorIntercept(validator: IValidator<V>): IValidator<V>;
-    getRuleList(i?: import("./interface").IFormItemConstructor<V, FM>): RuleList | undefined;
+    readonly ruleGetterParams: [FM, IItemConfig<FM, V>, FormStoreCore<FM>];
+    ruleConvert(rule: RuleConfigConstructor<V, FM>, i?: import("./interface").IFormItemConstructor<FM, V, V>): RuleList<V>;
+    convertRegExpToFunction(ruleGetter: RegExp): (rule: any, value: any, callback: ValidatorCallback) => void;
+    getRuleList(i?: import("./interface").IFormItemConstructor<FM, V, V>): RuleList | undefined;
     optionsMatcher(r: any, values: any, callback: any): Promise<any>;
-    readonly defaultRule: RuleConfigMap<V, FM> & {
-        dateToDate30: {
-            validator: (rule: any, value: any, callback: any) => any;
-            trigger: string[];
-        }[];
-        futureDate: {
-            validator: (rule: any, value: any, callback: any) => any;
-            trigger: string;
-        }[];
-    };
+    readonly defaultRule: RuleConfigMap<V, FM>;
     private static customRuleMap;
     static registerCustomRule<V, FM>(key: string, rule: RuleConfigConstructor<V, FM>): void;
-    static getDefaultRules<FM, V = any>(itemConfig: IItemConfig<V, FM>): RuleConfigMap<V, FM>;
+    static getDefaultRules<FM, V = any>(): RuleConfigMap<V, FM>;
 }
+export declare function initCustomRule(): void;
+declare const _default: void;
+export default _default;

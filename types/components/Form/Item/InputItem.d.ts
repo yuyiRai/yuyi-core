@@ -12,6 +12,13 @@ export declare function useShadowValue<P = any>(initValue: any, props: IHasShado
     onChange(e: any): void;
     onBlur: (event: React.FocusEvent<any>) => void;
 };
+declare global {
+    interface IFormItemComponentType {
+        'text': IInputItemProps;
+        'textArea': ITextAreaItemProps;
+        'textarea': ITextAreaItemProps;
+    }
+}
 export declare type IInputItemProps = InputProps & OFormItemCommon;
 export declare const InputItem: React.FunctionComponent<IInputItemProps>;
 export declare type ITextAreaItemProps = TextAreaProps & OFormItemCommon;

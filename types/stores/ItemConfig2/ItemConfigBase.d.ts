@@ -70,15 +70,6 @@ export declare class ItemConfigBase2 extends CommonStore2 implements IItemConfig
     getRuleList(i: IKeyValueMap<any>, componentProps: IKeyValueMap<any>): RuleList | undefined;
     optionsMatcher(r: any, values: any, callback: any): Promise<any>;
     getOptionsSafe(): Promise<Option[]>;
-    readonly defaultRule: RuleConfigMap<any, IKeyValueMap<any>> & {
-        dateToDate30: {
-            validator: (rule: any, value: any, callback: any) => any;
-            trigger: string[];
-        }[];
-        futureDate: {
-            validator: (rule: any, value: any, callback: any) => any;
-            trigger: string;
-        }[];
-    };
+    readonly defaultRule: RuleConfigMap<any, IKeyValueMap<any>> & RuleConfigMap<{}, {}>;
     static getDefaultRules(itemConfig: IItemConfig, configStore: any): RuleConfigMap;
 }

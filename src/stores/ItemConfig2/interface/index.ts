@@ -4,8 +4,8 @@ import { ITransformer } from "mobx-utils";
 import { OptionBase } from "../../../utils";
 import { IEventStoreBase } from "@/stores/EventStore";
 import { FilterType, IFormValueTransform } from "../../ItemConfig/input";
-import { IDisplayConfig, IDisplayConfigConstructor } from "../../ItemConfig/ItemDisplayConfig";
-import { ISearchConfig, ISearchConfigConstructor } from "../../ItemConfig/SearchStore";
+import { IDisplayConfig, IDisplayConfigCreater } from "../../ItemConfig/ItemDisplayConfig";
+import { ISearchConfig, ISearchConfigCreater } from "../../ItemConfig/SearchStore";
 export type FormItemType = "" | "text" | "textArea" | "textarea"
 | 'number'
 | 'date' | 'dateTime' | 'dateToDate'
@@ -30,7 +30,7 @@ export interface IFormItemBase {
 /**
  * typeof i
  */
-export interface IFormItemConstructor<M = any> extends IFormItemBase, ISearchConfigConstructor<any, any>, IDisplayConfigConstructor<M> {
+export interface IFormItemConstructor<M = any> extends IFormItemBase, ISearchConfigCreater<any, any>, IDisplayConfigCreater<M> {
   [key: string]: ComputedProperty<any, M>
 }
 
@@ -45,7 +45,7 @@ export interface IBaseConfig extends IFormItemBase {
   transformer?: IFormValueTransform<any> | FilterType<any>;
 }
 
-export interface IFormItemConfig extends IBaseConfig, IDisplayConfig, ISearchConfig<any, any> {
+export interface IFormItemConfig extends IBaseConfig, IDisplayConfig<any>, ISearchConfig<any, any> {
   rule?: any[] | string;
   requiredMessage?: string;
   options?: OptionBase[];

@@ -15,7 +15,7 @@ export interface IPropertyChangeEvent<T = any> extends IValueDidChange<T> {
 }
 
 @EventStoreInject(['options-change'])
-export class ItemConfig<V = any, FM = FormModel> extends ItemConfigBase<V, FM> implements IItemConfig<V, FM> {
+export class ItemConfig<V = any, FM = FormModel> extends ItemConfigBase<V, FM> implements IItemConfig<FM, V> {
 
   @observable 
   private static commonTransformerConfig: BaseItemConfigTransformer<FormModel>;
@@ -26,7 +26,7 @@ export class ItemConfig<V = any, FM = FormModel> extends ItemConfigBase<V, FM> i
   }
 
   @computed 
-  public static get commonTransformer(): BaseItemConfigTransformer<FormModel> {
+  public static get commonTransformer(): BaseItemConfigTransformer<FormModel, any> {
     return createTransformer<IItemConfig<FormModel>, FilterType<FormModel>>(
       this.commonTransformerConfig ||
       (function ({ type, multiple }: IItemConfig<FormModel>): FilterType<FormModel> {
@@ -116,7 +116,7 @@ export class ItemConfig<V = any, FM = FormModel> extends ItemConfigBase<V, FM> i
   @observable  
   public optionsStore: OptionsStore;
   @action.bound  
-  public useOptionsStore<T>(transformer?: ITransformer<OptionsStore, T[]>, config: IItemConfig<V, FM> = this) {
+  public useOptionsStore<T>(transformer?: ITransformer<OptionsStore, T[]>, config: IItemConfig<FM, V> = this) {
     const store = this.optionsStore || new OptionsStore(config, transformer)
     this.optionsStore = store
     return store;

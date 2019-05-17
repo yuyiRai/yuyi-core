@@ -7,7 +7,7 @@ import { CommonForm, CommonFormContext, NativeStore } from './CommonForm';
 import { FormContainer } from './FormContainer';
 import FormItem from './FormItem';
 import { FormStore } from './FormStore';
-import { IFormItemConfig, IFormItemConstructor } from './Interface';
+import { IItemConfig, IFormItemConstructor } from './Interface';
 import { form } from './util';
 // import { Utils } from '../../build';
 
@@ -26,7 +26,7 @@ export interface IFormState {
   fieldDecorator: GetFieldDecoratorOptions[]
 }
 
-declare const config: IFormItemConfig<any, any>;
+declare const config: IItemConfig<any, any>;
 declare const i: number
 @observer
 export default class Form extends React.Component<IFormProps, any> {

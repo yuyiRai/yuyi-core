@@ -18,7 +18,7 @@ declare const _default: {
      * @param {*} functionOrValue
      * @param  {...any} computedArgs 计算用参数
      */
-    castComputed(functionOrValue: any, ...computedArgs: any[]): any;
+    castComputed<T>(functionOrValue: T extends Function ? T : any, ...computedArgs: any[]): any;
     castFunction(value: any): (...args: any[]) => any;
     castString(value: any): string;
     argShifter(todoFunc: any, startIndex?: number): (...args: any[]) => any;

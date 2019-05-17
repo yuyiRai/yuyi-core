@@ -4,16 +4,19 @@ import { action, computed, observable, ObservableMap } from "mobx";
 // import { asyncComputed } from '../../utils/AsyncProperty';
 import { Utils } from '../../utils/Utils';
 import { getDefaultRules } from './input/Date';
-import { IItemConfig, IItemConfigBase } from "./interface";
+import { IItemConfig } from "./interface";
 import { CommonStore } from "./interface/CommonStore";
-import { IValidator, RuleConfigConstructor, RuleConfigMap, RuleList, ValidatorCallback, RuleConfig } from './interface/RuleConfig';
+import { IValidator, RuleConfig, RuleConfigConstructor, RuleConfigMap, RuleList, ValidatorCallback } from './interface/RuleConfig';
+import { FormStoreCore } from 'src/components/Form/FormStore/FormStoreCore';
 
 export type RuleErrorIntercept = (value?: any, error?: Error, callback?: ValidatorCallback) => any
 
 export interface IRuleStoreBase<V, FM> {
   rule?: RuleConfigConstructor<V, FM>
+  requiredMessage?: string;
+  regExpMessage?: string;
 }
-export interface IRuleStoreConstructor<V, FM> extends IRuleStoreBase<V, FM> {
+export interface IRuleStoreCreater<V, FM> extends IRuleStoreBase<V, FM> {
 }
 export interface IRuleStore<V, FM> extends IRuleStoreBase<V, FM> {
   rule?: RuleConfig<V> | RuleList<V>;
@@ -21,8 +24,8 @@ export interface IRuleStore<V, FM> extends IRuleStoreBase<V, FM> {
 }
 
 export class RuleStore<V, FM> extends CommonStore {
-  @observable itemConfig: IItemConfigBase<V, FM>;
-  constructor(itemConfig: IItemConfigBase<V, FM>) {
+  @observable itemConfig: IItemConfig<FM, V>;
+  constructor(itemConfig: IItemConfig<FM, V>) {
     super();
     this.itemConfig = itemConfig
   }
@@ -40,7 +43,7 @@ export class RuleStore<V, FM> extends CommonStore {
         itemConfig.required,
         function (_: any, value: string | number, callback: ValidatorCallback) {
           // value = Utils.isNotEmptyValueFilter(value, this.form[this.code])
-          if (Utils.isEmptyData(trim(value + '')) || (itemConfig.type === 'number' && value == 0)) {
+          if (Utils.isEmptyData(trim(Utils.isStringFilter(value))) || (itemConfig.type === 'number' && value == 0)) {
             callback(new Error(itemConfig.requiredMessage || `[${itemConfig.label}]不能为${itemConfig.type === 'number' ? '0' : '空'}！`))
             return
           }
@@ -65,7 +68,7 @@ export class RuleStore<V, FM> extends CommonStore {
 
   @autobind
   public useRuleErrorIntercept(validator: IValidator<V>) {
-    if (RuleStore.ruleErrorIntercept) {
+    if (!RuleStore.ruleErrorIntercept) {
       return validator
     }
     // const { componentProps } = this.itemConfig
@@ -79,6 +82,50 @@ export class RuleStore<V, FM> extends CommonStore {
     }
   }
 
+  @computed get ruleGetterParams(): [FM, IItemConfig<FM, V>, FormStoreCore<FM>] {
+    return [this.itemConfig.formSource, this.itemConfig, this.itemConfig.formStore]
+  }
+
+
+  @autobind ruleConvert(rule: RuleConfigConstructor<V, FM>, i = this.itemConfig.i): RuleList<V> {
+    const [a,b,c] = this.ruleGetterParams
+    let ruleGetter = Utils.isFunction(rule) ? rule(a,b,c) : rule;
+    if (Utils.isNotEmptyArray(ruleGetter)) {
+      return ruleGetter.map(r => this.ruleConvert(r)[0])
+    } else if (Utils.isNotEmptyString(ruleGetter)) {
+      // 可能是由 '规则Key|规则message构成'
+      const [ruleName, message] = ruleGetter.split('|')
+      const defaultRuleList = Utils.zipEmptyData(this.ruleConvert(this.defaultRule[ruleName]));
+      const isTrigger = ['change', 'blur', 'none'].includes(message);
+      if (Utils.isNotEmptyString(message)) {
+        forEach(defaultRuleList, i =>
+          set(i, isTrigger ? 'trigger' : 'message', message)
+        )
+      }
+      return defaultRuleList
+    } else if (isRegExp(ruleGetter)) {
+      return [{
+        validator: this.convertRegExpToFunction(ruleGetter),
+        message: i.regExpMessage || `请正确输入${i.label}！`,
+        trigger: 'blur'
+      }]
+    } else if (Utils.isNotEmptyObject(ruleGetter)) {
+      if(isRegExp(ruleGetter.pattern)) {
+        ruleGetter.validator = this.convertRegExpToFunction(ruleGetter.pattern)
+        ruleGetter.pattern = undefined
+      }
+      return [ruleGetter]
+    } 
+    return []
+  }
+
+  public convertRegExpToFunction(ruleGetter: RegExp) {
+    return (rule: any, value: any, callback: ValidatorCallback) => {
+      console.log('convertRegExpToFunction', ruleGetter, value)
+      return ruleGetter.test(value) ? callback() : callback(new Error())
+    }
+  }
+  
   @autobind
   public getRuleList(i = this.itemConfig.i): RuleList | undefined {
     const iRules = []
@@ -86,32 +133,7 @@ export class RuleStore<V, FM> extends CommonStore {
     if (this.requiredRule) {
       iRules.push(this.requiredRule)
     }
-    let ruleGetter = Utils.isFunction(i.rule) ? i.rule(this.itemConfig.formSource, this.itemConfig) : i.rule;
-    if (Utils.isNotEmptyString(ruleGetter)) {
-      const [ruleName, message] = ruleGetter.split('|')
-      // console.trace(this, this.defaultRule, ruleName, message)
-      const defaultRule = Utils.castComputed(this.defaultRule[ruleName], this.itemConfig.formSource, this);
-      const defaultRuleList = Utils.castObjectArray(defaultRule, false);
-      const isTrigger = ['change', 'blur', 'none'].includes(message);
-      if (Utils.isNotEmptyString(message)) {
-        forEach(defaultRuleList, i =>
-          set(i, isTrigger ? 'trigger' : 'message', message)
-        )
-      }
-      iRules.push(...defaultRuleList)
-    } else if (Utils.isNotEmptyArray(ruleGetter)) {
-      iRules.push(...ruleGetter)
-    } else if (isRegExp(ruleGetter)) {
-      iRules.push({
-        validator: (rule: any, value: any, callback: ValidatorCallback) => {
-          return (ruleGetter as RegExp).test(value) ? callback() : callback(new Error())
-        },
-        message: i.regExpMessage || `请正确输入${i.label}！`,
-        trigger: 'blur'
-      })
-    } else if (Utils.isNotEmptyObject(ruleGetter)) {
-      iRules.push(ruleGetter)
-    }
+    iRules.push(...this.ruleConvert(i.rule))
     forEach(iRules, config => {
       const { validator, required } = config
       if (Utils.isFunction(validator) && required)
@@ -148,15 +170,28 @@ export class RuleStore<V, FM> extends CommonStore {
   }
 
   @computed
-  public get defaultRule() {
+  public get defaultRule(): RuleConfigMap<V, FM> {
     return Object.assign(
-      RuleStore.getDefaultRules(this.itemConfig),
-      getDefaultRules(this.itemConfig)
+      RuleStore.getDefaultRules<V, FM>(),
+      getDefaultRules<V, FM>(this.itemConfig)
     )
   }
 
   @observable
-  private static customRuleMap: ObservableMap<any, RuleConfigConstructor<any, any>> = observable.map({
+  private static customRuleMap: ObservableMap<any, RuleConfigConstructor<any, any>> = observable.map({})
+
+  @action.bound 
+  public static registerCustomRule<V, FM>(key: string, rule: RuleConfigConstructor<V, FM>) {
+    this.customRuleMap.set(key, rule)
+  }
+
+  public static getDefaultRules<FM, V = any>(): RuleConfigMap<V, FM> {
+    return this.customRuleMap.toPOJO()
+  }
+}
+
+export function initCustomRule() {
+  const p: RuleConfigMap<any, any> = {
     phone: {
       validator: (rule: any, value: any, callback: any) => {
         // value = Utils.isNotEmptyValueFilter(value, this.form[this.code])
@@ -230,18 +265,13 @@ export class RuleStore<V, FM> extends CommonStore {
       message: '请录入正确的身份证号！'
     }],
     commonCode: (form, config) => [{
-      pattern: /(^([a-zA-z0-9].*)$)/,
-      trigger: 'blur',
+      pattern: /^(([a-zA-z0-9]*)|)$/,
+      trigger: 'onChange',
       message: `请录入正确的[${config.label}]！`
     }]
-  })
-
-  @action.bound 
-  public static registerCustomRule<V, FM>(key: string, rule: RuleConfigConstructor<V, FM>) {
-    this.customRuleMap.set(key, rule)
   }
-
-  public static getDefaultRules<FM, V = any>(itemConfig: IItemConfig<V, FM>): RuleConfigMap<V, FM> {
-    return this.customRuleMap.toPOJO()
+  for(const key in p) {
+    RuleStore.registerCustomRule(key, p[key])
   }
 }
+export default initCustomRule()
