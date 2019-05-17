@@ -3,7 +3,7 @@ import { Option } from '../../utils';
 import { EventEmitter } from '../../utils/EventEmitter';
 import { IFormItemConstructor, IItemConfig } from './interface';
 import { CommonStore2 } from './interface';
-import { RuleConfigList, RuleConfigMap } from '../ItemConfig/interface/RuleConfig';
+import { RuleList, RuleConfigMap } from '../ItemConfig/interface/RuleConfig';
 import { DisplayConfig } from '../ItemConfig/ItemDisplayConfig';
 export interface IPropertyChangeEvent<T = any> extends IValueDidChange<T> {
     name: string;
@@ -38,8 +38,8 @@ export declare class ItemConfigBase2 extends CommonStore2 implements IItemConfig
     readonly remoteOptions: Promise<any[]> | any[];
     remoteSearchBySearchName(keyWordStr: string): Promise<Option[]>;
     remoteSearch(keyWord: string[]): Promise<Option[]>;
-    readonly rule: RuleConfigList;
-    setRule(v: RuleConfigList): void;
+    readonly rule: RuleList;
+    setRule(v: RuleList): void;
     validateHandler: (value: any, strict?: boolean) => Promise<{}>;
     readonly loading: any;
     setLoading(v: boolean): void;
@@ -67,7 +67,7 @@ export declare class ItemConfigBase2 extends CommonStore2 implements IItemConfig
         (arg0: any): void;
         (): void;
     }) => any;
-    getRuleList(i: IKeyValueMap<any>, componentProps: IKeyValueMap<any>): RuleConfigList | undefined;
+    getRuleList(i: IKeyValueMap<any>, componentProps: IKeyValueMap<any>): RuleList | undefined;
     optionsMatcher(r: any, values: any, callback: any): Promise<any>;
     getOptionsSafe(): Promise<Option[]>;
     readonly defaultRule: RuleConfigMap<any, IKeyValueMap<any>> & {

@@ -7,7 +7,7 @@ import { EventEmitter } from '../../utils/EventEmitter';
 // import { asyncComputed } from '../../utils/AsyncProperty';
 import { Utils } from '../../utils/Utils';
 import { getDefaultRules } from './input';
-import { RuleConfigList, RuleConfigMap } from './interface';
+import { RuleList, RuleConfigMap } from './interface';
 import { IFormItemConstructor, IItemConfig } from './interface/ItemConfig';
 import { ItemConfigBaseConfig } from './ItemConfigBaseConfig';
 
@@ -185,11 +185,11 @@ export class ItemConfigBase<V, FM = any> extends ItemConfigBaseConfig<V, FM> imp
   //   }
   // }
 
-  @computed.struct get rule(): RuleConfigList {
+  @computed.struct get rule(): RuleList {
     const { i, componentProps: componentProps } = this
     return this.isViewOnly ? [] : (this.getRuleList(i, componentProps) || [])
   }
-  @action.bound setRule(v: RuleConfigList) {
+  @action.bound setRule(v: RuleList) {
     if (this.i.rule !== v)
       this.i.rule = v
   }
@@ -286,7 +286,7 @@ export class ItemConfigBase<V, FM = any> extends ItemConfigBaseConfig<V, FM> imp
     }
   }
 
-  @autobind getRuleList(i: IKeyValueMap<any>, componentProps: IKeyValueMap<any>): RuleConfigList | undefined {
+  @autobind getRuleList(i: IKeyValueMap<any>, componentProps: IKeyValueMap<any>): RuleList | undefined {
     const iRules = []
     // if (this.required) {
     if (this.requiredRule) {

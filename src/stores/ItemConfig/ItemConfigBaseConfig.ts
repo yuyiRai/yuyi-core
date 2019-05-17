@@ -2,7 +2,7 @@ import { autobind } from 'core-decorators';
 import { action, computed, IKeyValueMap, observable } from 'mobx';
 import { OptionBase } from '../../utils';
 import { Utils } from '../../utils/Utils';
-import { FormItemType, IItemConfigBase, RuleConfigList } from './interface';
+import { FormItemType, IItemConfigBase, RuleList } from './interface';
 import { ItemConfigBaseConfigModel } from './ItemConfigBaseConfigModel';
 import { RuleStore } from './RuleConfigStore';
 
@@ -61,10 +61,10 @@ export class ItemConfigBaseConfig<V, FM> extends ItemConfigBaseConfigModel<V, FM
     // console.log(this.props)
     return this.viewOnly! || (this.componentProps && (this.componentProps.viewOnly || this.componentProps.formStatus === 'view'));
   }
-  @computed.struct get rules(): RuleConfigList {
-    return this.isViewOnly ? [] : this.ruleConfig.getRuleList(this)
+  @computed.struct get rules(): RuleList {
+    return this.isViewOnly ? [] : this.ruleConfig.getRuleList(this.i)
   }
-  @action.bound setRules(v: RuleConfigList) {
+  @action.bound setRules(v: RuleList) {
     if (this.i.rule !== v)
       this.baseConfig.rule = v
   }

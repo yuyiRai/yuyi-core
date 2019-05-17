@@ -53,7 +53,7 @@ export declare class FormItemContainer extends React.Component<{
     propsTransform: import("mobx-utils").ITransformer<ItemConfig<any, import("mobx").IKeyValueMap<any>>, {
         type: import("./Interface/FormItem").FormItemType;
         displayProps: {
-            colSpan: any;
+            colSpan: number;
             useColumn: any;
         };
         lg: any;
@@ -68,7 +68,7 @@ export declare class FormItemContainer extends React.Component<{
     readonly containerProps: {
         type: import("./Interface/FormItem").FormItemType;
         displayProps: {
-            colSpan: any;
+            colSpan: number;
             useColumn: any;
         };
         lg: any;

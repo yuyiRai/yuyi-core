@@ -1,7 +1,7 @@
 import { IKeyValueMap, IValueDidChange, ObservableMap } from 'mobx';
 import { Option, OptionBase } from '../../utils';
 import { EventEmitter } from '../../utils/EventEmitter';
-import { RuleConfigList, RuleConfigMap } from './interface';
+import { RuleList, RuleConfigMap } from './interface';
 import { IFormItemConstructor, IItemConfig } from './interface/ItemConfig';
 import { ItemConfigBaseConfig } from './ItemConfigBaseConfig';
 export interface IPropertyChangeEvent<T = any> extends IValueDidChange<T> {
@@ -25,8 +25,8 @@ export declare class ItemConfigBase<V, FM = any> extends ItemConfigBaseConfig<V,
     readonly remoteOptions: Promise<any[]> | any[];
     remoteSearchBySearchName(keyWordStr: string): Promise<Option[]>;
     remoteSearch(keyWord: string[]): Promise<Option[]>;
-    readonly rule: RuleConfigList;
-    setRule(v: RuleConfigList): void;
+    readonly rule: RuleList;
+    setRule(v: RuleList): void;
     validateHandler: (value: any, strict?: boolean) => Promise<{}>;
     readonly allowCreate: boolean | ((data: any, form?: any) => Option);
     readonly allowInput: boolean;
@@ -62,7 +62,7 @@ export declare class ItemConfigBase<V, FM = any> extends ItemConfigBaseConfig<V,
         (arg0: any): void;
         (): void;
     }) => any;
-    getRuleList(i: IKeyValueMap<any>, componentProps: IKeyValueMap<any>): RuleConfigList | undefined;
+    getRuleList(i: IKeyValueMap<any>, componentProps: IKeyValueMap<any>): RuleList | undefined;
     optionsMatcher(r: any, values: any, callback: any): Promise<any>;
     getOptionsSafe(): Promise<OptionBase[]>;
     readonly defaultRule: RuleConfigMap<any, IKeyValueMap<any>> & {

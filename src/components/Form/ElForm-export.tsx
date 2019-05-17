@@ -43,12 +43,12 @@ export class RCommonForm2 extends React.PureComponent<any, any> {
   //   this.state = RCommonForm2.getDerivedStateFromProps(props, this.state)
   // }
   static getDerivedStateFromProps(nextProps: any, prevState: any) {
-    if(!Utils.isEqual(prevState.lastModel, nextProps.model)) {
+    if (!Utils.isEqual(prevState.lastModel, nextProps.model)) {
       logger.push('getDerivedStateFromProps chgange1');
       prevState.model = Utils.cloneDeep(nextProps.model)
       prevState.lastModel = nextProps.model
     }
-    if(prevState.lastConfig !== nextProps.config) {
+    if (prevState.lastConfig !== nextProps.config) {
       logger.push('getDerivedStateFromProps chgange2');
       // if(!prevState.config)
         prevState.config = Utils.cloneDeep(nextProps.config)

@@ -77,7 +77,7 @@ const config: IFormItemConstructor<any, typeof model>[] = [
     }
   },
   { label: 'A', code: 'showVoiceroid', type: "checkOne", value: '1' },
-  { label: '单选', code: 'search', type: "select", multiple: true, options, nameCode: 'searchName' },
+  { label: '单选', code: 'search', type: "search", allowInput: true, options, nameCode: 'searchName' },
   { label: '多选', code: 'search2', type: "search", nameCode: 'search2Name', multiple: true, 
     getOptionsLabel({ item }) {
       return `${item.name} ${

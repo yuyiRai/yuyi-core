@@ -1,4 +1,4 @@
-import { IItemConfig, FormModel } from "./ItemConfig";
+import { FormModel, IItemConfigBase } from "./ItemConfig";
 import { FormStore } from "src/components";
 
 export interface IValidator<V> {
@@ -13,9 +13,10 @@ export type RuleConfig<V = any> = {
   required?: boolean;
 };
 export type ValidatorCallback = (error?: string | Error) => void;
-export type RuleConfigList<V = any> = Array<RuleConfig<V>>;
+export type RuleList<V = any> = Array<RuleConfig<V>>;
 
-export type RuleConfigGetter<V = any, FM = FormModel> = (form: FM, config?: IItemConfig<FM>, formStore?: FormStore) => RuleConfig<V> | RuleConfigList<V>;
+export type RuleConfigGetter<V = any, FM = FormModel> = (form: FM, config?: IItemConfigBase<V, FM>, formStore?: FormStore) => RuleConfig<V> | RuleList<V>;
 export type RuleConfigMap<V = any, FM = FormModel> = {
-  [k: string]: RuleConfig<V> | RuleConfigList<V> | RuleConfigGetter<V, FM>;
+  [k: string]: RuleConfigConstructor<V, FM>;
 };
+export type RuleConfigConstructor<V, FM> = RegExp | string | RuleConfig<V> | RuleList<V> | RuleConfigGetter<V, FM>

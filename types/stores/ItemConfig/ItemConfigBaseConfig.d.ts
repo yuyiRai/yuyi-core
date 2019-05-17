@@ -1,6 +1,6 @@
 import { IKeyValueMap } from 'mobx';
 import { OptionBase } from '../../utils';
-import { FormItemType, IItemConfigBase, RuleConfigList } from './interface';
+import { FormItemType, IItemConfigBase, RuleList } from './interface';
 import { ItemConfigBaseConfigModel } from './ItemConfigBaseConfigModel';
 import { RuleStore } from './RuleConfigStore';
 export declare class ItemConfigBaseConfig<V, FM> extends ItemConfigBaseConfigModel<V, FM> implements IItemConfigBase<V, FM> {
@@ -16,8 +16,8 @@ export declare class ItemConfigBaseConfig<V, FM> extends ItemConfigBaseConfigMod
     readonly hidden: boolean;
     readonly disabled: boolean;
     readonly isViewOnly: boolean;
-    readonly rules: RuleConfigList;
-    setRules(v: RuleConfigList): void;
+    readonly rules: RuleList;
+    setRules(v: RuleList): void;
     readonly options: OptionBase[];
     getOptions(): OptionBase[];
     setOptions(v: any): void;

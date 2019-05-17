@@ -10,10 +10,12 @@ export interface ISearchConfigBase<V, FM> {
     loadDataDeep?: number;
 }
 export interface ISearchConfigConstructor<V, FM> {
+    strictSearch?: boolean;
     loadData?: undefined | ((key: Option, keyList: Option[], form?: FM, itemConfig?: IItemConfig<V, FM>) => Promise<Option[]> | Option[]);
     getPathValueWithLeafValue?(leafValue: string): Option[] | Promise<Option[]>;
 }
 export interface ISearchConfig<V, FM> extends ISearchConfigBase<V, FM> {
+    strictSearch?: boolean;
     loadData?: undefined | ((key: Option, keyList: Option[], form?: FM, itemConfig?: IItemConfig<V, FM>) => Promise<Option[]> | Option[]);
     getPathValueWithLeafValue?(leafValue: string): Option[] | Promise<Option[]>;
 }

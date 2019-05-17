@@ -135,7 +135,9 @@ export class FormItemStore<FM = any, V = any> extends FormItemStoreCore<FM, V> i
     return (children: JSX.Element) => {
       return (
         <Provider itemConfig={itemConfig}>
-          <FormItemContainer itemConfig={itemConfig} >{children}</FormItemContainer>
+          <FormItemContainer itemConfig={itemConfig}>{
+            children
+          }</FormItemContainer>
         </Provider>
       );
     }

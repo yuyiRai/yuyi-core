@@ -11,7 +11,7 @@ import { Utils } from '../../utils/Utils';
 import { getDefaultRules } from '../ItemConfig/input/Date';
 import { IFormItemConstructor, IItemConfig } from './interface';
 import { CommonStore2 } from './interface';
-import { RuleConfigList, RuleConfigMap } from '../ItemConfig/interface/RuleConfig';
+import { RuleList, RuleConfigMap } from '../ItemConfig/interface/RuleConfig';
 import { DisplayConfig } from '../ItemConfig/ItemDisplayConfig';
 
 export interface IPropertyChangeEvent<T = any> extends IValueDidChange<T> {
@@ -257,11 +257,11 @@ export class ItemConfigBase2 extends CommonStore2 implements IItemConfig {
   // }
 
 
-  @computed.struct get rule(): RuleConfigList {
+  @computed.struct get rule(): RuleList {
     const { i, componentProps: componentProps } = this
     return this.isViewOnly ? [] : this.getRuleList(i, componentProps)
   }
-  @action.bound setRule(v: RuleConfigList) {
+  @action.bound setRule(v: RuleList) {
     if (this.i.rule !== v)
       this.i.rule = v
   }
@@ -392,7 +392,7 @@ export class ItemConfigBase2 extends CommonStore2 implements IItemConfig {
     }
   }
 
-  @autobind getRuleList(i: IKeyValueMap<any>, componentProps: IKeyValueMap<any>): RuleConfigList | undefined {
+  @autobind getRuleList(i: IKeyValueMap<any>, componentProps: IKeyValueMap<any>): RuleList | undefined {
     const iRules = []
     // if (this.required) {
     if (this.requiredRule) {

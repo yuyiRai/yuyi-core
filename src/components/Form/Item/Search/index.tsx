@@ -11,6 +11,7 @@ import { commonInjectItem } from '../commonInjectItem';
 import { useSearchStore } from '../OptionsUtil';
 import { ValueHintContainer } from '../OptionsUtil/ToolTipContainer';
 import { TagGroup } from './TagGroup';
+import { HeadTagAutoComplete } from './HeadTagAutoComplete';
 export interface ISelectItemProps extends OFormItemCommon, SelectProps {
   center?: boolean;
 }
@@ -44,7 +45,6 @@ export const getSelectModel = createTransformer((itemConfig: IItemConfig) => {
 export const getNotFoundContent = createTransformer((itemConfig: IItemConfig) => {
   return itemConfig.loading ? <div style={{ textAlign: 'center' }}><Spin size="small" /></div> : undefined
 })
-
 export const OSearchItem: React.FunctionComponent<any> = styled((props: any) => {
   const { antdForm, formStore, code, itemConfig, ...other } = props
   const isAutoComplete = (itemConfig.allowInput === true && itemConfig.type === 'search' && !itemConfig.multiple)
@@ -73,7 +73,9 @@ export const OSearchItem: React.FunctionComponent<any> = styled((props: any) => 
         }} />
       )
       if (isAutoComplete) {
-        return <AutoComplete {...other} onSearch={searchStore.onSearch} dataSource={transformOption} />
+        return (
+          <HeadTagAutoComplete tag='123' {...other} onSearch={searchStore.onSearch} dataSource={transformOption} allowClear/>
+        )
       }
       const selectElement = (
         <Select mode={mode}

@@ -5,9 +5,10 @@ import { FormStore } from "../../../components/Form/FormStore";
 import { OptionBase } from "../../../utils";
 import { FilterType, IFormValueTransform } from "../input";
 import { IDisplayConfig, IDisplayConfigConstructor } from "../ItemDisplayConfig";
+import { IRuleStore, IRuleStoreConstructor } from "../RuleConfigStore";
 import { ISearchConfig, ISearchConfigConstructor } from "../SearchStore";
 import { CommonStore } from "./CommonStore";
-import { RuleConfig, RuleConfigList } from "./RuleConfig";
+import { RuleConfig } from "./RuleConfig";
 
 export type FormItemType = "" | "text" | "textArea" | "textarea"
   | 'number'
@@ -38,7 +39,12 @@ export interface IFormItemBase<V, FM> {
 /**
  * typeof i
  */
-export interface IFormItemConstructor<V = any, FM = any> extends IFormItemBase<V, FM>, ISearchConfigConstructor<V, FM>, IDisplayConfigConstructor<FM> {
+export interface IFormItemConstructor<V = any, FM = any> extends 
+  IFormItemBase<V, FM>, 
+  ISearchConfigConstructor<V, FM>,
+  IDisplayConfigConstructor<FM>,
+  IRuleStoreConstructor<V, FM>
+{
   disabled?: ComputedProperty<boolean, FM>
   hidden?: ComputedProperty<boolean, FM>
   value?: ComputedProperty<V, FM>;
@@ -60,9 +66,7 @@ export interface IBaseConfig<V, FM> extends IFormItemBase<V, FM> {
   refConfig?: (store: FormStore) => void
 }
 
-export interface IFormItemConfig<V, FM> extends IBaseConfig<V, FM>, ISearchConfig<V, FM>, IDisplayConfig {
-  rule?: RuleConfig<V> | RuleConfigList<V>;
-  rules?: RuleConfig<V> | RuleConfigList<V>;
+export interface IFormItemConfig<V, FM> extends IBaseConfig<V, FM>, ISearchConfig<V, FM>, IDisplayConfig, IRuleStore<V, FM> {
   requiredMessage?: string;
   options?: OptionBase[];
   loading?: boolean;
