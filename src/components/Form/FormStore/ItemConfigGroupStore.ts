@@ -68,7 +68,7 @@ export class ItemConfigGroupStore<FM = FormModel, VKeys = any> extends CommonSto
   @action.bound
   public setConfigSource<V>(configSource: ConfigInit<FM, V>) {
     // if(this.configSource.size === 0 || configSource!==this.configSource){
-      console.log('setConfig', configSource, this, this.store)
+      // console.log('setConfig', configSource, this, this.store)
       this.mapToDiff(this.configSource, reduce(configSource, (object, config: IFormItemConstructor<FM, V>, key: string | number) => {
         return (Utils.isNumber(key) || Utils.isEqual(key, config.code)) ? Object.assign(object, { [config.code]: config }) : object
       }, {}))

@@ -55,7 +55,7 @@ export const react2Vue = (Target: IReactComponent<any>) => {
       // console.log(Target.displayName || Target.name, vueProps, children, slots, scopedSlots)
       // const { inter } = getSlotFromVNode(slots)
       // debugger
-      console.log(Target.name, 'react2Vue', vueProps, this, children, slots)
+      // console.log(Target.name, 'react2Vue', vueProps, this, children, slots)
       return h(ReactWrapper, {
         ref,
         props: {

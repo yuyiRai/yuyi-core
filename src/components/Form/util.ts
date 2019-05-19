@@ -43,18 +43,19 @@ export const form = Form.create({
   onFieldsChange(props: IFormProps & FormComponentProps<any>, changedFields: any, allValues) {
     //将表单变化的值绑定到store中
     // console.log('onFieldsChange', props, changedFields, allValues);
-    const r = props.formStore.patchFieldsChange(changedFields);
-    console.log('onFieldsChange patchFieldsChange result', r, changedFields);
+    // const r = 
+    props.formStore.patchFieldsChange(changedFields);
+    // console.log('onFieldsChange patchFieldsChange result', r, changedFields);
   },
   onValuesChange(props: IFormProps & FormComponentProps<any>, values, allValues) {
-    console.log('onValuesChange', props, values, allValues);
+    // console.log('onValuesChange', props, values, allValues);
   },
   mapPropsToFields(props: IFormProps & FormComponentProps<any>) {
     //将store中的值绑定到视图中
     if(props.config) {
       props.formStore.setConfig(props.config)
     }
-    console.log('objToForm', props.config, Utils.cloneDeep(props.formStore.configStore.configList))
+    // console.log('objToForm', props.config, Utils.cloneDeep(props.formStore.configStore.configList))
     return objToForm(props.formStore.formSource, props.formStore, props.form)
   },
 })

@@ -151,7 +151,7 @@ export class RuleConfig<V, FM> extends CommonStore {
       })
     }
     // i.code === 'planDischargeDate' && console.log('get rule', this, $version, iRules)
-    return Utils.isNotEmptyArrayFilter(iRules, undefined)
+    return Utils.isNotEmptyArrayFilter(iRules) || []
   }
 
 

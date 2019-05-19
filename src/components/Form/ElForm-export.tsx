@@ -82,7 +82,7 @@ export class RCommonForm2 extends React.PureComponent<any, any> {
     const { Inter } = this
     const { model, config } = this.state
     const { children, config: a, slots, scopedSlots, ...other } = this.props
-    console.log('ElCommonForm2', this)
+    // console.log('ElCommonForm2', this)
     return (
       <span>
         <Inter />
