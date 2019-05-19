@@ -49,6 +49,12 @@
         "libraryDirectory": "lib",
         "camel2DashComponentName": true,
         "style": false
+      }, 
+      { "transform": "ts-import-plugin", "type": "config", 
+        "libraryName": "element-react",
+        "libraryDirectory": "dist/npm/es5/src",
+        "camel2DashComponentName": true,
+        "style": false
       }
     ],
     "lib": ["es6", "dom", "dom.iterable", "scripthost"],

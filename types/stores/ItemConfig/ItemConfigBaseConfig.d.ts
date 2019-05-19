@@ -2,10 +2,10 @@ import { IKeyValueMap } from 'mobx';
 import { OptionBase } from '../../utils';
 import { FormItemType, IItemConfig, RuleList } from './interface';
 import { ItemConfigBaseConfigModel } from './ItemConfigBaseConfigModel';
-import { RuleStore } from './RuleConfigStore';
+import { RuleConfig } from './RuleConfigStore';
 export declare class ItemConfigBaseConfig<V, FM> extends ItemConfigBaseConfigModel<V, FM> implements IItemConfig<FM, V> {
     componentProps: IKeyValueMap;
-    ruleConfig: RuleStore<V, FM>;
+    ruleConfig: RuleConfig<V, FM>;
     readonly code: string;
     readonly label: string;
     readonly type: FormItemType;
@@ -29,5 +29,7 @@ export declare class ItemConfigBaseConfig<V, FM> extends ItemConfigBaseConfigMod
     readonly loading: boolean;
     setLoading(v: boolean, source?: string): void;
     readonly loadData: (key: import("../../utils").Option, keyList: import("../../utils").Option[], form?: FM, itemConfig?: IItemConfig<FM, V, V>) => import("../../utils").Option[] | Promise<import("../../utils").Option[]>;
+    readonly useSlot: boolean;
+    readonly slot: string;
     readonly loadDataDeep: number;
 }

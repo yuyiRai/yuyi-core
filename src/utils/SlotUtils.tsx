@@ -3,12 +3,11 @@ import { VNode } from 'vue';
 import { IKeyValueMap } from 'mobx';
 import { reduce, lowerFirst } from 'lodash';
 import Utils from '.';
-import { IReactComponent, inject, Provider } from 'mobx-react';
+import { IReactComponent } from 'mobx-react';
 const { ReactWrapper, VueInReact } = require('vuera');
 
 export const SlotUtils = () => ({
   react2Vue,
-  slotInject,
   slotInjectContainer,
   useSlots
 });
@@ -20,7 +19,7 @@ export interface ISlotSource {
 const SlotSourceBase = {
   props: ['factoryProps', 'slotFactory'],
   render(h: any) {
-    // console.log('render source', h, this);
+    console.log('render source', h, this);
     const slot = Utils.isFunction(this.slotFactory) ? this.slotFactory(this.factoryProps) : this.slotFactory;
     // debugger
     return h('span', {}, slot)
@@ -38,7 +37,8 @@ export class SlotComponent extends React.Component<ISlotProps> {
 };
 
 const getSlotFromVNode = (nodeFactory: IKeyValueMap<VNode[] | Function>): any => {
-  return reduce<any, IKeyValueMap<React.FunctionComponent<ISlotSource>>>(nodeFactory, (map: any, target: VNode[] | Function, key: string) => {
+  return reduce<any, IKeyValueMap<React.FunctionComponent<ISlotSource>>>(nodeFactory, 
+    (map: any, target: VNode[] | Function, key: string) => {
     // debugger
     return Object.assign(map, {
       [key]: (props) => <SlotComponent slot={{slotFactory: target, factoryProps: props}} />
@@ -64,7 +64,7 @@ export const react2Vue = (Target: IReactComponent<any>) => {
         attrs: {
           ...props,
           ...attrs,
-          $scopedSlots: scopedSlots,
+          $scopedSlots: scopedSlots || attrs.scopedSlots,
           $commonSlots: () => getSlotFromVNode(slots)
         },
         on: {
@@ -75,13 +75,9 @@ export const react2Vue = (Target: IReactComponent<any>) => {
   };
 };
 
-
-export function slotInject<T extends IReactComponent<any>>(target: T) {
-  return inject('slots', 'scopedSlots')(target) as T;
-}
 export const SlotContext = React.createContext({ slots: {}, scopedSlots: {} });
 export function slotInjectContainer<T extends IReactComponent<any>>(target: T) {
-  const Target = inject('slots', 'scopedSlots')(target);
+  const Target = target;
   const injected = function (nextProps: any) {
     const { $commonSlots, $scopedSlots, children, ...other } = nextProps;
     const slots = $commonSlots();
@@ -90,7 +86,11 @@ export function slotInjectContainer<T extends IReactComponent<any>>(target: T) {
       scopedSlots: getSlotFromVNode($scopedSlots)
     };
     // debugger
-    return <Provider {...injectProps}><Target {...other}><span>{children}</span></Target></Provider>;
+    return (
+      <SlotContext.Provider value={injectProps}>
+        <Target {...other}><span>{children}</span></Target>
+      </SlotContext.Provider>
+    );
   } as T;
   Object.defineProperty(injected, 'name', { value: target.name, writable: false, configurable: false, enumerable: false });
   injected.displayName = Target.displayName;
@@ -110,7 +110,7 @@ export function useSlots(target: any, propertyName: string) {
       }
       const { slots: { ...slots }, scopedSlots: { ...scopedSlots } } = this.props;
       // console.error('get slot', propertyName, this, slots[slotName], scopedSlots[slotName])
-      return slots[slotName] || scopedSlots[slotName] || value || (() => <span>slots-{slotName}</span>);
+      return slots[slotName] || scopedSlots[slotName] || value || (() => true?null:<span>slots-{slotName}</span>);
     }
   });
   // console.log('get defined', target[propertyName], Object.getOwnPropertyDescriptor(target, propertyName))

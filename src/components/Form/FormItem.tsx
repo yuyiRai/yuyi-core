@@ -13,7 +13,7 @@ import * as React from 'react';
 import { FormStore } from './FormStore';
 import { FormItemStoreCore, IFormItemStoreCore } from './FormStore/FormItemStoreBase';
 import { OFormItemCommon } from './Interface/FormItem';
-import { ItemSwitchType } from './Item';
+import { ItemSwitch } from './Item';
 import { FormItemLoading } from './Item/common/Loading';
 
 export const ChildrenContext = React.createContext({
@@ -35,7 +35,7 @@ export const OAntFormItem = observer((props: any) => {
 
 export class FormItemStore<FM = any, V = any> extends FormItemStoreCore<FM, V> implements IFormItemStoreCore<FM, V> {
 
-  public formStore: FormStore<FM, typeof FormItemStore>;
+  public formStore: FormStore<FM>;
   ruleWatcher: IReactionDisposer;
   validateReset: IReactionDisposer;
   constructor(formStore: FormStore<FM, any>, code: string) {
@@ -64,14 +64,14 @@ export class FormItemStore<FM = any, V = any> extends FormItemStoreCore<FM, V> i
   }
 
   @action.bound init() {
-    const { formStore, code } = this;
+    const { formStore } = this;
     // reaction(() => this.fieldDecorator, () => {
     //   console.log('fieldDecorator change', code)
     // })
     this.validateReset = autorun(() => {
       if (!this.hasError || !this.itemConfig.rules) {
         formStore.reactionAntdForm(antdForm => {
-          console.log('updateVersion', code, this.antdForm.getFieldError(code))
+          // console.log('updateVersion', code, this.antdForm.getFieldError(code))
           this.itemConfig.updateVersion()
           this.setAntdForm(antdForm)
         })
@@ -118,9 +118,8 @@ export class FormItemStore<FM = any, V = any> extends FormItemStoreCore<FM, V> i
   @computed get Component() {
     const { code, antdForm, itemConfig } = this
     const { type, displayProps } = itemConfig
-    const Component = ItemSwitchType(type)
     // console.log('getComponent');
-    return <Component code={code} antdForm={antdForm} disabled={displayProps.isDisabled} placeholder={itemConfig.placeholder} />;
+    return <ItemSwitch type={type} code={code} antdForm={antdForm} disabled={displayProps.isDisabled} placeholder={itemConfig.placeholder} />;
   }
 
   @computed get renderer() {
@@ -142,7 +141,7 @@ export class FormItemStore<FM = any, V = any> extends FormItemStoreCore<FM, V> i
 @inject((stores: { formStore: FormStore }, props: IFormItemProps, context) => {
   // console.log('fromitem get store', stores, props, context)
   const { formStore } = stores;
-  const store = formStore.registerItemStore(props.code, FormItemStore)
+  const store = formStore.registerItemStore(props.code, () => new FormItemStore(formStore, props.code))
   store.itemConfig.setForm(formStore.formSource)
   store.itemConfig.setConfig(formStore.configStore.getConfig(props.code))
   return { store }
@@ -169,11 +168,18 @@ export default class FormItem extends React.Component<IFormItemProps, IFormItemS
     // console.log('remder', store.itemConfig.code, store.itemConfig.rule);
     // console.log(this.store.itemConfig.label)
     return store.renderer(
-      <OAntFormItem itemConfig={itemConfig} {...other} validateStatus={hasError ? 'error' : 'success'} hasFeedback={false}>
-        <FormItemLoading code={code}>{
+    <FormItemLoading code={code}>
+        <OAntFormItem
+          help={itemConfig.displayProps.isShowMessage?undefined:<span style={{display: 'none'}}/>}
+          itemConfig={itemConfig}
+          {...other}
+          style={itemConfig.displayProps.formItemStyle}
+          validateStatus={hasError ? 'error' : 'success'}
+          hasFeedback={!['check', 'checkOne', 'radio', 'radioOne', 'group', 'textArea', 'textarea'].includes(itemConfig.type)}
+        >{
           store.fieldDecorator(React.cloneElement(store.Component))
-        }</FormItemLoading>
-      </OAntFormItem>
+        }</OAntFormItem>
+      </FormItemLoading>
     )
   }
 }
@@ -197,7 +203,7 @@ export class FormItemContainer<V, FM> extends React.Component<{
     const { itemConfig } = this.props;
     return {
       display: expr(() => itemConfig.hidden ? 'none' : undefined),
-      maxHeight: itemConfig.type !== 'textarea' && itemConfig.displayProps.colSpan > 1 && '54px'
+      maxHeight: itemConfig.type !== 'textarea' && itemConfig.displayProps.colSpan <= 12 && '34px'
     }
   }
   @computed get containerProps() {

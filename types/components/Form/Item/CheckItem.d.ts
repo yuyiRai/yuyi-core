@@ -3,9 +3,22 @@ import 'antd/lib/checkbox/style/css';
 import 'element-theme-default/lib/switch.css';
 import * as React from 'react';
 import { OFormItemCommon } from '../Interface/FormItem';
+import { Option } from 'src/utils';
+import { ItemConfig } from 'src/stores';
 export interface IAppProps extends CheckboxGroupProps, OFormItemCommon {
 }
 export declare const CheckItem: React.FunctionComponent<IAppProps>;
+export declare type CheckScopedSlot<FM = object, VALUE = any> = (props: {
+    col: {
+        data: VALUE;
+        item: Option;
+        index: number;
+        props: FM;
+    };
+    onChange: any;
+    value: boolean;
+    config: ItemConfig;
+}) => any;
 interface SwitchProps extends ElementReactLibs.ComponentProps<{}> {
     value?: number | string | boolean;
     disabled?: boolean;

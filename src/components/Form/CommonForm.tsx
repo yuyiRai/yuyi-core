@@ -8,10 +8,13 @@ import { FormStore, onItemChangeCallback } from './FormStore';
 export const NativeStore = React.createContext({formStore: FormStore.prototype});
 
 
-export interface ICommonFormProps extends IKeyValueMap {
-  model: any;
-  formStore?: FormStore;
-  storeRef?: (store: FormStore) => void;
+export interface ICommonFormProps<FM = object> extends IKeyValueMap {
+  /**
+   * 表单2
+   */
+  model: FM;
+  formStore?: FormStore<FM>;
+  storeRef?: (store: FormStore<FM>) => void;
   onItemChange?: onItemChangeCallback;
 }
 export interface ICommonFormState extends IKeyValueMap {
@@ -32,9 +35,11 @@ export class CommonForm extends React.Component<ICommonFormProps, ICommonFormSta
   }
   static getDerivedStateFromProps(nextProps: ICommonFormProps, prevState: ICommonFormState) {
     const { formStore: last } = prevState
-    if (last.formSource !== nextProps.model) {
+    if (!Utils.isEqual(Utils.zipEmptyData(last.formSource), Utils.zipEmptyData(nextProps.model))) {
       // console.log('getDerivedStateFromProps', nextProps, prevState)
-      FormStore.disposedForm(prevState.formStore.formSource)
+      FormStore.disposedForm(last.formSource)
+      // debugger
+      FormStore.registerForm(nextProps.model, this, last)
       // prevState.formStore.formItemMap.delete(prevState.formStore.formSource)
     }
     if (!Utils.isNil(nextProps.model)){

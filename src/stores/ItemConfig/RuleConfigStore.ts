@@ -1,14 +1,15 @@
 import { autobind } from 'core-decorators';
-import { forEach, isRegExp, set, trim } from 'lodash';
+import { forEach, isRegExp, set } from 'lodash';
 import { action, computed, observable, ObservableMap } from "mobx";
+import { FormStoreCore } from 'src/components/Form/FormStore/FormStoreCore';
 // import { asyncComputed } from '../../utils/AsyncProperty';
 import { Utils } from '../../utils/Utils';
 import { getDefaultRules } from './input/Date';
 import { IItemConfig } from "./interface";
 import { CommonStore } from "./interface/CommonStore";
-import { IValidator, RuleConfig, RuleConfigConstructor, RuleConfigMap, RuleList, ValidatorCallback } from './interface/RuleConfig';
-import { FormStoreCore } from 'src/components/Form/FormStore/FormStoreCore';
+import { IRuleConfig, IValidator, RuleConfigConstructor, RuleConfigMap, RuleList, ValidatorCallback } from './interface/RuleConfig';
 
+const config = observable.map({})
 export type RuleErrorIntercept = (value?: any, error?: Error, callback?: ValidatorCallback) => any
 
 export interface IRuleStoreBase<V, FM> {
@@ -19,11 +20,11 @@ export interface IRuleStoreBase<V, FM> {
 export interface IRuleStoreCreater<V, FM> extends IRuleStoreBase<V, FM> {
 }
 export interface IRuleStore<V, FM> extends IRuleStoreBase<V, FM> {
-  rule?: RuleConfig<V> | RuleList<V>;
-  rules?: RuleConfig<V> | RuleList<V>;
+  rule?: IRuleConfig<V> | RuleList<V>;
+  rules?: IRuleConfig<V> | RuleList<V>;
 }
 
-export class RuleStore<V, FM> extends CommonStore {
+export class RuleConfig<V, FM> extends CommonStore {
   @observable itemConfig: IItemConfig<FM, V>;
   constructor(itemConfig: IItemConfig<FM, V>) {
     super();
@@ -43,7 +44,7 @@ export class RuleStore<V, FM> extends CommonStore {
         itemConfig.required,
         function (_: any, value: string | number, callback: ValidatorCallback) {
           // value = Utils.isNotEmptyValueFilter(value, this.form[this.code])
-          if (Utils.isEmptyData(trim(Utils.isStringFilter(value))) || (itemConfig.type === 'number' && value == 0)) {
+          if (Utils.isEmptyValue(value) || Utils.isEmptyData(value) || (itemConfig.type === 'number' && value == 0)) {
             callback(new Error(itemConfig.requiredMessage || `[${itemConfig.label}]不能为${itemConfig.type === 'number' ? '0' : '空'}！`))
             return
           }
@@ -68,7 +69,7 @@ export class RuleStore<V, FM> extends CommonStore {
 
   @autobind
   public useRuleErrorIntercept(validator: IValidator<V>) {
-    if (!RuleStore.ruleErrorIntercept) {
+    if (!RuleConfig.ruleErrorIntercept) {
       return validator
     }
     // const { componentProps } = this.itemConfig
@@ -77,7 +78,7 @@ export class RuleStore<V, FM> extends CommonStore {
         if (Utils.isNotEmptyString(error)) {
           error = new Error(error)
         };
-        return RuleStore.ruleErrorIntercept[0](value, error, callback)
+        return RuleConfig.ruleErrorIntercept(value, error, callback)
       })
     }
   }
@@ -172,21 +173,21 @@ export class RuleStore<V, FM> extends CommonStore {
   @computed
   public get defaultRule(): RuleConfigMap<V, FM> {
     return Object.assign(
-      RuleStore.getDefaultRules<V, FM>(),
+      RuleConfig.getDefaultRules<V, FM>(),
       getDefaultRules<V, FM>(this.itemConfig)
     )
   }
 
   @observable
-  private static customRuleMap: ObservableMap<any, RuleConfigConstructor<any, any>> = observable.map({})
+  public static customRuleMap: ObservableMap<string, RuleConfigConstructor<any, any>> = config
 
-  @action.bound 
+  @action 
   public static registerCustomRule<V, FM>(key: string, rule: RuleConfigConstructor<V, FM>) {
-    this.customRuleMap.set(key, rule)
+    config.set(key, rule)
   }
 
   public static getDefaultRules<FM, V = any>(): RuleConfigMap<V, FM> {
-    return this.customRuleMap.toPOJO()
+    return config.toPOJO()
   }
 }
 
@@ -271,7 +272,7 @@ export function initCustomRule() {
     }]
   }
   for(const key in p) {
-    RuleStore.registerCustomRule(key, p[key])
+    RuleConfig.registerCustomRule(key, p[key])
   }
 }
 export default initCustomRule()

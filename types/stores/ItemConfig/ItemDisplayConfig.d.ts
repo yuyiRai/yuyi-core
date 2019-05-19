@@ -1,5 +1,6 @@
 import { IKeyValueMap } from 'mobx';
-import { IItemConfig, ComputedPropertyCreater, ComputedPick } from './interface';
+import { ComputedPick, ComputedPropertyCreater, IItemConfig } from './interface';
+import { FormStore } from 'src/components';
 export interface IDisplayConfigCreater<FM> {
     inline?: ComputedPropertyCreater<boolean, FM>;
     isViewOnly?: ComputedPropertyCreater<boolean, FM>;
@@ -16,13 +17,15 @@ export interface IDisplayConfigCreater<FM> {
 }
 export interface IDisplayConfig<FM> extends ComputedPick<IDisplayConfigCreater<FM>, FM> {
 }
-export declare class DisplayConfig {
-    itemConfig: IItemConfig;
-    props: IKeyValueMap;
-    init(itemConfig: IItemConfig, props: IKeyValueMap): this;
+export declare class DisplayConfig<FM> {
+    itemConfig: IItemConfig<FM>;
+    staticProps: IKeyValueMap;
+    readonly props: Partial<FormStore> & IKeyValueMap;
+    constructor(itemConfig?: IItemConfig<FM>, staticProps?: IKeyValueMap);
+    init(itemConfig: IItemConfig<FM>, staticProps: IKeyValueMap): this;
     readonly isInlineMessage: boolean;
     readonly isShowMessage: boolean;
-    readonly textAlign: any;
+    readonly textAlign: string;
     readonly isDisabled: any;
     readonly showSize: any;
     readonly label: string;
@@ -32,7 +35,7 @@ export declare class DisplayConfig {
         width: string;
         height: string;
         marginBottom: number;
-        textAlign: any;
+        textAlign: string;
     };
     readonly prefix: any;
     readonly suffix: any;

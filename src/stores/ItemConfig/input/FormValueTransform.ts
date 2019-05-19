@@ -123,7 +123,7 @@ export class FormValueTransform<FM extends FormModel, FV = any, CV = any> implem
     return Utils.zipEmptyData(next, isRemoveRepeat)
   }
   private groupV2F(array: any[], isRemoveRepeat = true) {
-    return Utils.toString(Utils.zipEmptyData(Utils.isArrayFilter(array, []), isRemoveRepeat))
+    return Utils.toString(Utils.zipEmptyData(Utils.isArrayFilter(Utils.toJS(array), []), isRemoveRepeat))
   }
 }
 

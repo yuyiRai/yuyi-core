@@ -20,11 +20,18 @@ export const FormContainer = styled.form`
     border-color: #ff4d4f;
     box-shadow: 0 0 0 2px rgba(245, 34, 45, 0.2);
   }
-  .ant-form-item > .ant-col.ant-col-1.ant-form-item-label {
-    width: ${(props: IFormProps) => props.labelWidth}px;
-    float: left;
+  .use-item-col {
+    margin-bottom: 20px;
   }
-  .ant-form-item > .ant-col.ant-col-1.ant-form-item-control-wrapper {
-    width: ${(props: IFormProps) => `calc(100% - ${props.labelWidth}px);`}
+
+  .ant-form-item {
+    margin-bottom: 0 !important;
+    &  > .ant-col.ant-col-1.ant-form-item-label {
+      width: ${(props: IFormProps) => props.labelWidth}px;
+      float: left;
+    }
+    & > .ant-col.ant-col-1.ant-form-item-control-wrapper {
+      width: ${(props: IFormProps) => `calc(100% - ${props.labelWidth}px);`}
+    }
   }
 `;

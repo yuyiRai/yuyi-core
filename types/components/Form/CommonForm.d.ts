@@ -4,17 +4,20 @@ import { FormStore, onItemChangeCallback } from './FormStore';
 export declare const NativeStore: React.Context<{
     formStore: FormStore<any, any>;
 }>;
-export interface ICommonFormProps extends IKeyValueMap {
-    model: any;
-    formStore?: FormStore;
-    storeRef?: (store: FormStore) => void;
+export interface ICommonFormProps<FM = object> extends IKeyValueMap {
+    /**
+     * 表单2
+     */
+    model: FM;
+    formStore?: FormStore<FM>;
+    storeRef?: (store: FormStore<FM>) => void;
     onItemChange?: onItemChangeCallback;
 }
 export interface ICommonFormState extends IKeyValueMap {
     formStore: FormStore;
 }
 export declare const CommonFormContext: React.Context<{
-    formProps: ICommonFormProps;
+    formProps: ICommonFormProps<object>;
     formInstance: CommonForm;
 }>;
 export declare class CommonForm extends React.Component<ICommonFormProps, ICommonFormState> {

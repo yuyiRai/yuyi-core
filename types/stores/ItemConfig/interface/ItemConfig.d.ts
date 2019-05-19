@@ -3,12 +3,12 @@ import { IKeyValueMap } from "mobx";
 import { ITransformer } from "mobx-utils";
 import { FormStore } from "../../../components/Form/FormStore";
 import { OptionBase } from "../../../utils";
-import { FilterType, IFormValueTransform } from "../input";
+import { FilterType, IFormValueTransform, IFormValueTransformHandler, FilterTypeKey } from "../input";
 import { IDisplayConfig, IDisplayConfigCreater } from "../ItemDisplayConfig";
 import { IRuleStore, IRuleStoreCreater } from "../RuleConfigStore";
 import { ISearchConfig, ISearchConfigCreater } from "../SearchStore";
 import { CommonStore } from "./CommonStore";
-import { RuleConfig } from "./RuleConfig";
+import { IRuleConfig } from "./RuleConfig";
 export interface INameKeyComponent<K extends FormItemType> {
     $nameKey: K;
 }
@@ -45,10 +45,12 @@ export declare type IItemConfigStatic<FM, VALUE, CVALUE> = {
     computed?: ComputedPropertyCreater<VALUE | false, FM>;
     onChange?: ItemConfigEventHandler<VALUE, FM>;
     autorunMethod?: (value: VALUE, formStore?: FormStore<FM>, itemConfig?: IItemConfig<FM, VALUE, CVALUE>) => void;
-    filter?: FilterType<FM, VALUE, CVALUE>;
-    filterToValue?: FilterType<FM, VALUE, CVALUE>;
+    filter?: FilterTypeKey | IFormValueTransformHandler<FM, VALUE, CVALUE>;
+    filterToValue?: FilterTypeKey | IFormValueTransformHandler<FM, CVALUE, VALUE>;
     transformer?: IFormValueTransform<FM, VALUE, CVALUE> | FilterType<FM, VALUE, CVALUE>;
     refConfig?: (store: FormStore) => void;
+    slot?: string;
+    useSlot?: boolean | string;
 };
 export interface IItemConfigCreater<FM = any, VALUE = any> {
     /**
@@ -58,7 +60,7 @@ export interface IItemConfigCreater<FM = any, VALUE = any> {
     hidden?: ComputedPropertyCreater<boolean, FM>;
     value?: ComputedPropertyCreater<VALUE, FM>;
     defaultValue?: ComputedPropertyCreater<VALUE, FM>;
-    required?: ComputedPropertyCreater<boolean | RuleConfig<VALUE>, FM>;
+    required?: ComputedPropertyCreater<boolean | IRuleConfig<VALUE>, FM>;
     viewOnly?: ComputedPropertyCreater<boolean, FM>;
     options?: ComputedPropertyCreater<OptionBase[], FM>;
     loading?: ComputedPropertyCreater<boolean, FM>;
@@ -79,6 +81,8 @@ export interface IItemConfig<FM = FormModel, VALUE = any, CVALUE = VALUE> extend
     currentComponentValue?: any;
     setOptions(options: ComputedProperty<FM, OptionBase[]>, source?: string): void;
     setLoading(loading: boolean, source?: string): void;
+    useSlot: boolean;
+    slot: string;
     [key: string]: any;
 }
 export declare type Typed<T> = {

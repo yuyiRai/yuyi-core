@@ -11,7 +11,7 @@ export declare function jsxIf(bool: any, when: any, elseValue?: any): any;
 declare const _default: {
     jsxIf: typeof jsxIf;
     stubArray: () => any[];
-    stubFunction(): void;
+    stubFunction(...args: any[]): void;
     stubObject(): {};
     /**
      * cast computed

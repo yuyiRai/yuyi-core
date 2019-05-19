@@ -19,7 +19,7 @@ export interface IFormItemState {
 }
 export declare const OAntFormItem: (props: any) => JSX.Element;
 export declare class FormItemStore<FM = any, V = any> extends FormItemStoreCore<FM, V> implements IFormItemStoreCore<FM, V> {
-    formStore: FormStore<FM, typeof FormItemStore>;
+    formStore: FormStore<FM>;
     ruleWatcher: IReactionDisposer;
     validateReset: IReactionDisposer;
     constructor(formStore: FormStore<FM, any>, code: string);
@@ -52,7 +52,7 @@ export declare class FormItemContainer<V, FM> extends React.Component<{
     propsTransform: import("mobx-utils").ITransformer<ItemConfig<V, FM>, {
         type: import("./Interface/FormItem").FormItemType;
         displayProps: {
-            colSpan: any;
+            colSpan: number;
             useColumn: any;
         };
         lg: any;
@@ -67,7 +67,7 @@ export declare class FormItemContainer<V, FM> extends React.Component<{
     readonly containerProps: {
         type: import("./Interface/FormItem").FormItemType;
         displayProps: {
-            colSpan: any;
+            colSpan: number;
             useColumn: any;
         };
         lg: any;

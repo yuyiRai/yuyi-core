@@ -1,7 +1,7 @@
-import { AutoComplete, Select, Spin } from 'antd';
+import { AutoComplete, Select, Spin, Tag } from 'antd';
 import { OptGroupProps, SelectProps } from 'antd/lib/select/index';
-import 'antd/lib/select/style/css';
 import { Observer } from 'mobx-react-lite';
+import { Utils } from 'src/utils';
 import { createTransformer } from 'mobx-utils';
 import * as React from 'react';
 import styled from 'styled-components';
@@ -12,6 +12,7 @@ import { useSearchStore } from '../OptionsUtil';
 import { ValueHintContainer } from '../OptionsUtil/ToolTipContainer';
 import { TagGroup } from './TagGroup';
 import { HeadTagAutoComplete } from './HeadTagAutoComplete';
+import { ItemConfig } from 'src/stores';
 export interface ISelectItemProps extends OFormItemCommon, SelectProps {
   center?: boolean;
 }
@@ -45,21 +46,41 @@ export const getSelectModel = createTransformer((itemConfig: IItemConfig) => {
 export const getNotFoundContent = createTransformer((itemConfig: IItemConfig) => {
   return itemConfig.loading ? <div style={{ textAlign: 'center' }}><Spin size="small" /></div> : undefined
 })
-export const OSearchItem: React.FunctionComponent<any> = styled((props: any) => {
+
+export const StyledSelect = styled(Select).attrs(
+  props => ({
+    dropdownMenuStyle: { textAlign: props.style.textAlign }
+  })
+)`
+  & .ant-select-selection__rendered > * { 
+    text-align: ${props => props.style.textAlign};
+  }
+  & .ant-select-selection-selected-value {
+    width: 100%;
+  }
+  & .ant-select-selection--multiple {
+    max-height: 32px !important;
+    overflow: hidden;    
+    margin-bottom: -11px;
+  }
+`
+export const OSearchItem: React.FunctionComponent<any> = (props: any) => {
   const { antdForm, formStore, code, itemConfig, ...other } = props
-  const isAutoComplete = (itemConfig.allowInput === true && itemConfig.type === 'search' && !itemConfig.multiple)
+  const isAutoComplete = (itemConfig.allowInput === true && !itemConfig.multiple)
   const OptionItem = isAutoComplete ? AutoComplete.Option : Select.Option
   const OptGroupItem = isAutoComplete ? AutoComplete.OptGroup : Select.OptGroup
   const searchStore = useSearchStore(itemConfig, (store: OptionsStore<JSX.Element>) => {
-    return store.displayOptions.map(d => 
-      <OptionItem title={d.label} key={d.key} value={d.value}>{store.getOptionsLabel(d)}</OptionItem>
-    );
+    return store.displayOptions.map(d => {
+      const tag = store.getTagByOption(d)
+      return <OptionItem title={d.label} key={d.key} value={d.value}>{tag && <Tag>{tag}</Tag>}{store.getOptionsLabel(d)}</OptionItem>
+    });
   })
-  const { optionsStore } = itemConfig
+  const { optionsStore } = itemConfig as ItemConfig
   const mode = getSelectModel(itemConfig)
   return (
     <Observer>{() => {
       const { transformOption } = optionsStore;
+      // console.log(isAutoComplete, itemConfig)
       // console.log(isAutoComplete, props, optionsStore.displayOptions, transformOption, itemConfig.options)
       const [isVisible, changeVisible] = React.useState(undefined)
       const optionsList = switchContainer(
@@ -74,16 +95,23 @@ export const OSearchItem: React.FunctionComponent<any> = styled((props: any) => 
       )
       if (isAutoComplete) {
         return (
-          <HeadTagAutoComplete tag='123' {...other} onSearch={searchStore.onSearch} dataSource={transformOption} allowClear/>
+          <HeadTagAutoComplete 
+            optionLabelProp="title"
+            tag={optionsStore.getTagByOption()} 
+            {...other} 
+            onSearch={searchStore.onSearch} 
+            dataSource={transformOption} 
+            allowClear
+          />
         )
       }
       const selectElement = (
-        <Select mode={mode}
+        <StyledSelect mode={mode} style={{textAlign: itemConfig.center?'center':'left'}}
           allowClear
           autoClearSearchValue={false}
           showSearch={itemConfig.type === 'search'}
-          defaultActiveFirstOption={false}
           showArrow={true}
+          defaultActiveFirstOption={false}
           optionFilterProp="title"
           onSearch={itemConfig.type === 'search' ? searchStore.onSearch : undefined}
           notFoundContent={getNotFoundContent(itemConfig)}
@@ -93,7 +121,7 @@ export const OSearchItem: React.FunctionComponent<any> = styled((props: any) => 
             changeVisible(open ? open : undefined);
             !open && searchStore.resetKeyword()
           }}
-        >{optionsList}</Select>
+        >{optionsList}</StyledSelect>
       )
       return <>{
         switchContainer(
@@ -104,6 +132,4 @@ export const OSearchItem: React.FunctionComponent<any> = styled((props: any) => 
       }</>
     }}</Observer>
   );
-})`
-  text-align: ${props => props.center ? 'center' : undefined};
-`
+}

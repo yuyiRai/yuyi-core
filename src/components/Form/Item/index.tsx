@@ -1,6 +1,5 @@
-import { IReactComponent } from 'mobx-react';
 import React from 'react';
-import { FormItemType, IItemTypeComponent } from '../Interface/FormItem';
+import { FormItemType, IItemTypeComponent, OFormItemCommon } from '../Interface/FormItem';
 import { CascaderItem } from './Cascader';
 // import { IInputItemProps, ITextAreaItemProps } from './InputItem';
 import { CheckItem, SwitchItem } from './CheckItem';
@@ -39,20 +38,15 @@ export const itemType: IItemTypeComponent = {
 export function ItemSwitchType<T extends FormItemType>(type?: T): IItemTypeComponent[T | 'text'] {
   return itemType[type] || InputItem
 }
-export interface IItemSwitchProps {
-  type?: FormItemType;
-  Component: IReactComponent;
+export interface IItemSwitchProps extends OFormItemCommon {
+  type: FormItemType;
   [k: string]: any;
 }
-export function ItemSwitch({Component, ...props}: IItemSwitchProps) {
-  const [state, setstate] = React.useState(props.value)
-  console.log(props)
-  return <Component {...props} {...{state, setstate}}/>
-}
-export function getItemSwitch(type: FormItemType, props: any) {
-  const Component = ItemSwitchType(type)
-  return <ItemSwitch Component={Component} {...props}/>
-}
+export const ItemSwitch = React.forwardRef(({type, ...props}: IItemSwitchProps, ref) => {
+  const Component = ItemSwitchType(type);
+  // console.log(props)
+  return <Component ref={ref} {...props}/>
+})
 
 export * from './DateItem';
 export * from './InputItem';

@@ -1,7 +1,8 @@
 /* eslint-disable */
-import { observable, computed, action, IKeyValueMap } from 'mobx';
+import { action, computed, IKeyValueMap, observable } from 'mobx';
 import Utils from '../../utils';
-import { IItemConfig, ComputedPropertyCreater, ComputedPick } from './interface';
+import { ComputedPick, ComputedPropertyCreater, IItemConfig } from './interface';
+import { FormStore } from 'src/components';
 export interface IDisplayConfigCreater<FM> {
   inline?: ComputedPropertyCreater<boolean, FM>;
   isViewOnly?: ComputedPropertyCreater<boolean, FM>;
@@ -19,13 +20,23 @@ export interface IDisplayConfigCreater<FM> {
 export interface IDisplayConfig<FM> extends ComputedPick<IDisplayConfigCreater<FM>, FM> {
 }
 
-export class DisplayConfig {
-  @observable itemConfig: IItemConfig
-  @observable.ref props: IKeyValueMap
-  
-  @action init(itemConfig: IItemConfig, props: IKeyValueMap){
+export class DisplayConfig<FM> {
+  @observable itemConfig: IItemConfig<FM>
+  @observable.ref staticProps: IKeyValueMap
+
+  @computed.struct get props(): Partial<FormStore> & IKeyValueMap {
+    return { ...this.staticProps, ...this.itemConfig.formStore }
+  }
+
+
+  constructor(itemConfig?: IItemConfig<FM>, staticProps?: IKeyValueMap){
     this.itemConfig = itemConfig;
-    this.props = props;
+    this.staticProps = staticProps;
+  }
+  
+  @action init(itemConfig: IItemConfig<FM>, staticProps: IKeyValueMap){
+    this.itemConfig = itemConfig;
+    this.staticProps = staticProps;
     return this;
   }
   @computed get isInlineMessage() {
@@ -56,7 +67,6 @@ export class DisplayConfig {
     return Math.round(((this.itemConfig.col || 1) + (this.itemConfig.offectRight || 0) / 8) * this.coltal)
   }
   @computed.struct get formItemStyle() {
-    // trace()
     const { colSpan, itemConfig, showSize: viewSize, textAlign } = this;
     return {
       width: `${(colSpan-(itemConfig.offectRight))/colSpan*100}%`,

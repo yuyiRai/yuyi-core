@@ -15,22 +15,21 @@ export function filterToValue(v: any, defaultValue?: any) {
 export const objToForm = (model: IKeyValueMap, store: FormStore, form: WrappedFormUtils) => {
   let target = {}
   const r = {}
-  console.log('objToForm', model)
-  // console.log('formValueTransform', store.formValueTransform)
-  for (const config of store.configStore.configList) {
-    const v = get(model, config.code)
-    const value = store.getF2VValue(config.code, filterToValue(v, config.value))
-    // console.log('formValueTransform', config.code, value, v, store)
-    set(target, config.code, Form.createFormField({ value }))
-    // console.log('initvalue', config.code, v, value);
-    if (!Utils.isEqual(v, value, true)) {
-      // set(model, config.code, value)
-      Object.assign(r, store.patchFieldsChange(set({}, config.code, { value, name: config.code })))
-      // console.log('patchFieldsChange result', r, store);
+    // console.log('formValueTransform', store.formValueTransform)
+    for (const config of store.configStore.configList) {
+      const v = Utils.toJS(get(model, config.code))
+      const value = store.getF2VValue(config.code, filterToValue(v, config.value))
+      // console.log('formValueTransform', config.code, value, v, store)
+      set(target, config.code, Form.createFormField({ value }))
+      // console.log('initvalue', config.code, v, value);
+      if (!Utils.isEqual(v, value, true)) {
+        // set(model, config.code, value)
+        Object.assign(r, store.setFormValueWithComponentSource(config.code, value))
+        // console.log('patchFieldsChange result', r, store);
+      }
     }
-  }
   // setTimeout(() => {
-    
+
   //   console.log('patchFieldsChange result', store.formItemConfigMap.$antdForm.validateFields(Object.keys(r)), r, store);
   // }, 100);
   // console.log('mapPropsToFields', target)
@@ -52,6 +51,10 @@ export const form = Form.create({
   },
   mapPropsToFields(props: IFormProps & FormComponentProps<any>) {
     //将store中的值绑定到视图中
+    if(props.config) {
+      props.formStore.setConfig(props.config)
+    }
+    console.log('objToForm', props.config, Utils.cloneDeep(props.formStore.configStore.configList))
     return objToForm(props.formStore.formSource, props.formStore, props.form)
   },
 })

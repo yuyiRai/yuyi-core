@@ -26,6 +26,7 @@ export declare class RCommonForm2 extends React.PureComponent<any, any> {
     };
     static getDerivedStateFromProps(nextProps: any, prevState: any): any;
     onChange(code: string, value: any): void;
+    store: FormStore;
     getStoreRef(store: FormStore): void;
     Inter: IReactComponent<any>;
     render(): JSX.Element;

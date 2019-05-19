@@ -40,12 +40,12 @@ export declare class SelectAndSearchStore {
      * @param { string | string[] } key
      */
     searchMethods(key: string | string[]): void;
-    readonly placeholder: any;
+    readonly placeholder: string;
     readonly isSearch: boolean;
     readonly hasNameCode: boolean;
     readonly useEmpty: (options: Option[]) => boolean;
     readonly isCenter: boolean;
-    readonly popperClass: "" | "center";
+    readonly popperClass: "center" | "";
     /**
      * 远程搜索方法
      * @param {string | Array<string>} keyWord 搜索关键字，可以是数组

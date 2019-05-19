@@ -12,7 +12,7 @@ export const ElDatePickerItem = VueInReact(Vue.component('ElDatePickerItem', {
   name: 'ElDatePickerItem',
   functional: true,
   render(h, props) {
-    console.log('ElDatePickerItem', props)
+    // console.log('ElDatePickerItem', props)
     return h('span',{
           attrs: {
             class: props.props.className || undefined

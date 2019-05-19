@@ -1,7 +1,8 @@
 import { autobind } from 'core-decorators';
-import { keys as getKeys, reduce, values } from 'lodash';
+import { assign, keys as getKeys, reduce, values } from 'lodash';
 import { Memoize } from 'lodash-decorators';
 import { action, computed, IKeyValueMap, observable, ObservableMap, toJS } from 'mobx';
+import { Utils } from 'src/utils';
 import { ItemConfig } from 'src/stores';
 import { CommonStore, IFormItemConstructor, FormModel } from '../Interface/FormItem';
 import { FormStoreCore } from './FormStoreCore';
@@ -43,7 +44,7 @@ export class ItemConfigGroupStore<FM = FormModel, VKeys = any> extends CommonSto
   @computed
   public get itemCodeNameMap(): IKeyValueMap<string> {
     return this.config.reduce((obj, config) => {
-      return config.nameCode ? Object.assign(obj, {
+      return config.nameCode ? assign(obj, {
         [config.code]: config.nameCode
       }) : obj;
     }, {});
@@ -66,12 +67,12 @@ export class ItemConfigGroupStore<FM = FormModel, VKeys = any> extends CommonSto
   @Memoize()
   @action.bound
   public setConfigSource<V>(configSource: ConfigInit<FM, V>) {
-    if(this.configSource.size === 0){
+    // if(this.configSource.size === 0 || configSource!==this.configSource){
       console.log('setConfig', configSource, this, this.store)
       this.mapToDiff(this.configSource, reduce(configSource, (object, config: IFormItemConstructor<FM, V>, key: string | number) => {
         return (Utils.isNumber(key) || Utils.isEqual(key, config.code)) ? Object.assign(object, { [config.code]: config }) : object
       }, {}))
-    }
+    // }
   }
 
   constructor(formStore: FormStoreCore<FM>) {

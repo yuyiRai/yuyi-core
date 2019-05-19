@@ -5,12 +5,12 @@ export interface PathOption extends Option {
     path: string;
     parentOption?: Option;
 }
-export declare class OptionsTransformerStore<V> {
+export declare class OptionsTransformerStore<V, T> {
     [k: string]: any;
     itemConfig: IItemConfig<any, any>;
     __keyMap: {};
-    transformer: ITransformer<OptionsStore, V[]>;
-    constructor(itemConfig: IItemConfig<any, any>, transformer?: ITransformer<OptionsStore, V[]>);
+    transformer: ITransformer<OptionsStore, T[]>;
+    constructor(itemConfig: IItemConfig<any, any>, transformer?: ITransformer<OptionsStore, T[]>);
     static getOptionsKey(item: any, index: number, parentKey?: string): string;
     readonly __optionArr: Option[];
     static getOptionArr(sourceOptions: OptionBase[], parentKey?: any): Option[];
@@ -18,9 +18,10 @@ export declare class OptionsTransformerStore<V> {
     readonly convertedOption: PathOption[];
     private todoConvertOption;
     readonly filterOptions: Option[];
-    readonly getOptionsLabel: any;
+    readonly getOptionsLabel: (...arg: any[]) => any;
+    getTagByOption(option?: Option): any;
 }
-export declare class OptionsStore<V = any> extends OptionsTransformerStore<V> {
+export declare class OptionsStore<V = any, T = any> extends OptionsTransformerStore<V, T> {
     shadowOption: Option;
     readonly shadowOptionMode: "text" | "code";
     /**
@@ -31,7 +32,7 @@ export declare class OptionsStore<V = any> extends OptionsTransformerStore<V> {
      * 录入值的自动转化
      */
     setShadowOption(label: string, source: any): Promise<void>;
-    labelToValue(label: any): any;
+    labelToValue(label: any): string;
     shadowUpdateDispatcher(label: any, value: any, source: any): Promise<void>;
     updateShadowOption(value: any, label?: any): {
         [x: string]: any;

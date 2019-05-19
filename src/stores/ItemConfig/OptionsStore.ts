@@ -11,12 +11,12 @@ export interface PathOption extends Option {
   parentOption?: Option;
 }
 
-export class OptionsTransformerStore<V> {
+export class OptionsTransformerStore<V, T> {
   [k: string]: any;
   @observable itemConfig: IItemConfig<any, any>;
   __keyMap = {};
-  @observable.ref transformer: ITransformer<OptionsStore, V[]>;
-  constructor(itemConfig: IItemConfig<any, any>, transformer?: ITransformer<OptionsStore, V[]>) {
+  @observable.ref transformer: ITransformer<OptionsStore, T[]>;
+  constructor(itemConfig: IItemConfig<any, any>, transformer?: ITransformer<OptionsStore, T[]>) {
     this.itemConfig = itemConfig;
     if (transformer) {
       this.transformer = createTransformer(transformer)
@@ -41,16 +41,16 @@ export class OptionsTransformerStore<V> {
 
   static getOptionsKey(item: any, index: number, parentKey?: string) {
     return `${
-      Utils.isString(parentKey)?`${parentKey}.`:''
-    }${
+      Utils.isString(parentKey) ? `${parentKey}.` : ''
+      }${
       Utils.isStringFilter(item.id, item.key, item.value, (Utils.isObject(item) ? index : item) + '')
-    }`;
+      }`;
   }
 
   @computed get __optionArr(): Option[] {
     return OptionsStore.getOptionArr(this.itemConfig.options);
   }
-  
+
   public static getOptionArr(sourceOptions: OptionBase[], parentKey?: any): Option[] {
     const options = Utils.zipEmptyData(Utils.isArrayFilter(sourceOptions) || []);
     const length = Math.min(options.length, 100);
@@ -60,16 +60,16 @@ export class OptionsTransformerStore<V> {
       const item = options[index];
       if (!Utils.isNil(item)) {
         const option: Option = (
-          Utils.isObject(item) 
-          ? (
-            (item as any).__key == null 
-            ? { ...item, __key: OptionsStore.getOptionsKey(item, index, parentKey) } 
-            : item
-          ) 
-          : {
-            __key: OptionsStore.getOptionsKey(item, index, parentKey),
-            value: item
-          }
+          Utils.isObject(item)
+            ? (
+              (item as any).__key == null
+                ? { ...item, __key: OptionsStore.getOptionsKey(item, index, parentKey) }
+                : item
+            )
+            : {
+              __key: OptionsStore.getOptionsKey(item, index, parentKey),
+              value: item
+            }
         );
         if (option && option.children) {
           option.children = OptionsStore.getOptionArr(option.children, option.__key)
@@ -95,19 +95,19 @@ export class OptionsTransformerStore<V> {
       return null
     }
   }
-  
+
   @computed get convertedOption(): PathOption[] {
     this.__keyMap = {};
     return this.todoConvertOption(this.__optionArr);
   }
-  
+
   private todoConvertOption(option: any[], parentOption?: PathOption): PathOption[] {
     // console.time(`2displayOptionsNative${this.itemConfig.label}`)
     const result: PathOption[] = [];
     Utils.forEach(option, (o, index) => {
       const { itemConfig } = this;
       const baseOption: Option = this.toConvertedOption(o, index)
-      if(baseOption) {
+      if (baseOption) {
         const option = extendObservable({}, {
           ...baseOption,
           get disabled() {
@@ -130,16 +130,21 @@ export class OptionsTransformerStore<V> {
   @computed get filterOptions(): Option[] {
     // trace()
     const { filterOptions } = this.itemConfig;
-    return Utils.isNotEmptyArray(filterOptions) 
+    return Utils.isNotEmptyArray(filterOptions)
       ? Utils.arrayFilterDive(this.convertedOption, (item: Option) => !filterOptions.includes(item.label)) : this.convertedOption;
   }
 
   @computed get getOptionsLabel() {
     return Utils.isFunctionFilter(this.itemConfig.getOptionsLabel, (option: Option) => option.label)
   }
+  
+  @autobind getTagByOption(option?: Option) {
+    const { getTagByOption } = this.itemConfig
+    return Utils.isFunction(getTagByOption) && getTagByOption(option || this.selectedOptions[0])
+  }
 }
 
-export class OptionsStore<V = any> extends OptionsTransformerStore<V> {
+export class OptionsStore<V = any, T = any> extends OptionsTransformerStore<V, T> {
   @observable shadowOption: Option = { key: Utils.uuid(), errorMsg: null, label: '', value: '', highlight: true };
   @computed get shadowOptionMode() {
     return this.itemConfig.code === this.itemConfig.nameCode ? 'text' : 'code';
@@ -254,7 +259,7 @@ export class OptionsStore<V = any> extends OptionsTransformerStore<V> {
       // debugger
       // console.log('getShadowOption', defaultOptions, this.shadowOption)
       if (this.selectedItemIndex > -1) {
-        return Utils.arrayMapDive(defaultOptions, 
+        return Utils.arrayMapDive(defaultOptions,
           (option: Option, index: number) => this.selectedItemIndex === index ? { ...option, highlight: true } : option
         );
       }
@@ -279,7 +284,7 @@ export class OptionsStore<V = any> extends OptionsTransformerStore<V> {
   @autobind valuesToLabels(value: any) {
     return Utils.valuesToLabels(this.displayOptions, value)
   }
-  
+
   @autobind labelsToValues(label: any) {
     return Utils.labelsToValues(this.displayOptions, label)
   }
@@ -307,7 +312,7 @@ export class OptionsStore<V = any> extends OptionsTransformerStore<V> {
       }
     })
   }
-  @computed get hasSelectedTag(){
+  @computed get hasSelectedTag() {
     // console.log('selectedLablesConfig', this.selectedLablesConfig)
     return this.selectedLables.length > 0
   }

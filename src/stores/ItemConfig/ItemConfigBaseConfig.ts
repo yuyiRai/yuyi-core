@@ -4,13 +4,13 @@ import { OptionBase } from '../../utils';
 import { Utils } from '../../utils/Utils';
 import { FormItemType, IItemConfig, RuleList } from './interface';
 import { ItemConfigBaseConfigModel } from './ItemConfigBaseConfigModel';
-import { RuleStore } from './RuleConfigStore';
+import { RuleConfig } from './RuleConfigStore';
 
 export class ItemConfigBaseConfig<V, FM> extends ItemConfigBaseConfigModel<V, FM> implements IItemConfig<FM, V> {
   @observable.ref
   public componentProps: IKeyValueMap = {};
   @observable
-  public ruleConfig: RuleStore<V, FM> = new RuleStore<V, FM>(this);
+  public ruleConfig: RuleConfig<V, FM> = new RuleConfig<V, FM>(this);
 
   @computed.struct
   public get code(): string {
@@ -123,6 +123,15 @@ export class ItemConfigBaseConfig<V, FM> extends ItemConfigBaseConfigModel<V, FM
   @computed 
   public get loadData() {
     return this.i.loadData
+  }
+
+  @computed 
+  public get useSlot() {
+    return (Utils.isNotEmptyString(this.i.useSlot) || this.i.useSlot) && Utils.isNotEmptyString(this.slot)
+  }
+  @computed 
+  public get slot() {
+    return Utils.isNotEmptyStringFilter(this.i.useSlot, this.i.slot)
   }
   
   @computed

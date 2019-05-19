@@ -3,7 +3,7 @@ import { EventEmitter } from '@/utils/EventEmitter';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { IKeyValueMap, Lambda, ObservableMap } from 'mobx';
 import { FormModel, IFormItemConstructor } from '../Interface/FormItem';
-import { IFormItemStoreConstructor } from "./FormItemStoreBase";
+import { IFormItemStoreCore } from "./FormItemStoreBase";
 import { FormStoreCore } from './FormStoreCore';
 import { ConfigInit } from './ItemConfigGroupStore';
 import { PatchDataTree } from './PatchData';
@@ -12,7 +12,8 @@ export interface ICommonFormConfig extends IKeyValueMap {
     [k: string]: WrappedFormUtils | FormStore | ItemConfig;
 }
 export declare type onItemChangeCallback = (code: string, value: any) => void;
-export declare class FormStore<FM extends FormModel = any, VM extends IFormItemStoreConstructor<FM, any> = IFormItemStoreConstructor<FM, any>> extends FormStoreCore<FM, VM> {
+export declare class FormStore<FM extends FormModel = any, VM extends IFormItemStoreCore<FM, any> = IFormItemStoreCore<FM, any>> extends FormStoreCore<FM, VM> {
+    antFormInited: boolean;
     constructor(configList?: IFormItemConstructor<any, FM>[]);
     instance: any;
     formSourceListerner: Lambda;
@@ -50,8 +51,8 @@ export declare class FormStore<FM extends FormModel = any, VM extends IFormItemS
     private setFormValueBy;
     searchNameWatcher: any;
     getValueWithName(code: string, nameCode: string): string;
-    validate(codeList?: string[]): Promise<void>;
-    readonly allFormMap: WeakMap<any, FormStore<any, IFormItemStoreConstructor<any, any>>>;
+    validate(codeList?: string[]): Promise<any>;
+    readonly allFormMap: WeakMap<any, FormStore<any, IFormItemStoreCore<any, any>>>;
     reactionAntdFormEmitter: EventEmitter<WrappedFormUtils<any>>;
     reactionAntdForm(callback: (antdForm: WrappedFormUtils) => void): void;
     receiveAntdForm(antdForm: WrappedFormUtils): void;

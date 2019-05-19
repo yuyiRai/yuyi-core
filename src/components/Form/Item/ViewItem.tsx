@@ -71,15 +71,14 @@
 
 import * as React from 'react';
 import { OFormItemCommon } from '../Interface';
-import { slotInject } from '../../../utils/SlotUtils';
 
 interface IViewItemProps extends OFormItemCommon {
   value?: any;
 }
 
-const ViewItem: React.FunctionComponent<IViewItemProps> = slotInject((props: IViewItemProps) => {
+const ViewItem: React.FunctionComponent<IViewItemProps> = (props: IViewItemProps) => {
   const { value, itemConfig } = props;
-  const { useSlot, type } = itemConfig
+  const { useSlot, slot, type } = itemConfig
   if(type === 'radioOne'){
     return <span>{value?"是":"否"}</span>
   } else if(type==='date' || type==='dateTime'){
@@ -96,12 +95,12 @@ const ViewItem: React.FunctionComponent<IViewItemProps> = slotInject((props: IVi
   } else if(type==='address') {
     // console.log(itemConfig, itemConfig.label, itemConfig.form[itemConfig.code+'Name'])
     return <span><span> { Utils.zipEmptyData(Utils.isStringFilter(itemConfig.form[itemConfig.code+'Name'], '').split('|')).join('-') } </span><span>{itemConfig.suffix}</span></span>
-  } else if(useSlot !== null && Utils.isFunction(this.$scopedSlots[useSlot])) {
+  } else if(useSlot !== null && Utils.isFunction(this.$scopedSlots[slot])) {
     // console.log('view item', itemConfig, itemConfig.code,this.$scopedSlots , useSlot)
-    return this.$scopedSlots[useSlot]({data: value, props: itemConfig.form})
+    return useSlot && this.$scopedSlots[slot]({data: value, props: itemConfig.form})
   } else {
     return <span><span> { value } </span><span>{itemConfig.suffix}</span></span>
   }
-});
+};
 
 export default ViewItem;

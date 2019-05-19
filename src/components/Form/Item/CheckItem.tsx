@@ -10,19 +10,69 @@ import { OFormItemCommon } from '../Interface/FormItem';
 import { commonInjectItem } from "./commonInjectItem";
 import { useOptionsStore } from './OptionsUtil';
 import { Observer } from "mobx-react-lite";
+import { SlotContext } from 'src/utils/SlotUtils';
+import { Option } from 'src/utils';
+import { ItemConfig } from 'src/stores';
+
 export interface IAppProps extends CheckboxGroupProps, OFormItemCommon {
 
 }
 export const CheckItem: React.FunctionComponent<IAppProps> = commonInjectItem(
   props => <Check {...props} />
 )
+export type CheckScopedSlot<FM = object, VALUE = any> = (props: {
+  col: {
+    data: VALUE, 
+    item: Option, 
+    index: number, 
+    props: FM
+  }, 
+  onChange: any,
+  value: boolean,
+  config: ItemConfig
+}) => any
 
-const Check: React.FunctionComponent<IAppProps> = ({ antdForm, formStore, code, itemConfig, onChange, ...other }) => {
+declare const option: Option;
+declare const i: number;
+const Check: React.FunctionComponent<IAppProps> = ({ antdForm, formStore, code, itemConfig, onChange, onBlur, ...other }) => {
   const store = useOptionsStore(itemConfig)
-  // console.log(other, optionStore, optionStore.displayOptions)
+  const { scopedSlots } = React.useContext(SlotContext)
+  if (itemConfig.useSlot) {
+    const a: CheckScopedSlot = scopedSlots[itemConfig.slot]
+    const b = (options: Option, index: number) => a({
+      col: {
+        data: other.value,
+        item: options,
+        index,
+        props: formStore.formSource
+      },
+      value: other.value && other.value.includes(options.value),
+      onChange: (checked: boolean) => {
+        if (checked) {
+          const nextV = Utils.isArrayFilter(other.value) || []
+          nextV.push(options.value)
+          onChange(nextV)
+        } else {
+          store.selectedLablesConfig[index].remove(onChange)
+        }
+      },
+      config: itemConfig
+    })
+    console.log(b)
+    return (
+      <div className='el-checkbox-group'>
+        <For index='i' each='option' of={store.displayOptions}>
+          <span key={i}>{ b(option, i) }</span>
+        </For>
+      </div>
+    )
+  }
   return (
     <Observer>{() =>
-      <Checkbox.Group {...other} style={{ width: '100%' }} onChange={onChange} options={store.displayOptions as any}>
+      <Checkbox.Group {...other} style={{ width: '100%' }} onChange={(e) => {
+        console.log(itemConfig.slot, e)
+        onChange(e)
+      }} options={store.displayOptions as any}>
         <Row>
           <Col span={8}><Checkbox value="A">A</Checkbox></Col>
           <Col span={8}><Checkbox value="B">B</Checkbox></Col>

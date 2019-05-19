@@ -17,7 +17,7 @@ export declare class ItemConfigBase2 extends CommonStore2 implements IItemConfig
     initConfig: import("mobx").ObservableMap<any, any>;
     $version: number;
     private displayConfig;
-    readonly displayProps: DisplayConfig;
+    readonly displayProps: DisplayConfig<{}>;
     readonly isViewOnly: any;
     private readonly otherKey;
     onPropertyChange: EventEmitter<IPropertyChangeEvent<any>>;
@@ -31,8 +31,8 @@ export declare class ItemConfigBase2 extends CommonStore2 implements IItemConfig
     readonly type: import("./interface").FormItemType;
     readonly code: string;
     readonly nameCode: string;
-    readonly searchName: any;
-    getSearchName(): any;
+    readonly searchName: string;
+    getSearchName(): string;
     readonly currentValue: any;
     readonly remoteMethod: (keyWord: string, form?: any) => Promise<any>;
     readonly remoteOptions: Promise<any[]> | any[];

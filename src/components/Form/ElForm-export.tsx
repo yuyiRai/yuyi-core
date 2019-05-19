@@ -1,12 +1,18 @@
+import { react2Vue, slotInjectContainer, useSlots } from '@/utils/SlotUtils';
 import { autobind } from 'core-decorators';
 import { IReactComponent } from 'mobx-react';
 import React from 'react';
+import { createGlobalStyle } from 'styled-components';
 import Vue from 'vue';
-import { react2Vue, SlotContext, slotInjectContainer, useSlots } from '@/utils/SlotUtils';
 import { CommonForm } from './CommonForm';
 import { FormGroup } from './Form';
 import { FormStore } from './FormStore';
 
+const GlobalStyle = createGlobalStyle`
+  .ant-select-dropdown {
+    z-index: 2050 !important;
+  }
+`
 @slotInjectContainer
 export class RItemGroup extends React.Component<any, any> {
   @useSlots App: IReactComponent<any>;
@@ -43,27 +49,33 @@ export class RCommonForm2 extends React.PureComponent<any, any> {
   //   this.state = RCommonForm2.getDerivedStateFromProps(props, this.state)
   // }
   static getDerivedStateFromProps(nextProps: any, prevState: any) {
-    if (!Utils.isEqual(prevState.lastModel, nextProps.model)) {
+    let update = false
+    // debugger
+    if (prevState.lastModel !== nextProps.model) {
       logger.push('getDerivedStateFromProps chgange1');
       prevState.model = Utils.cloneDeep(nextProps.model)
       prevState.lastModel = nextProps.model
+      update = true
     }
-    if (prevState.lastConfig !== nextProps.config) {
+    if (prevState.lastConfig!==nextProps.config) {
       logger.push('getDerivedStateFromProps chgange2');
       // if(!prevState.config)
         prevState.config = Utils.cloneDeep(nextProps.config)
       prevState.lastConfig = nextProps.config
+      update = true
     }
-    return prevState
+    return update ? prevState : null
   }
   @autobind onChange(code: string, value: any) {
     Vue.prototype.$set(this.props.model, code, value)
-    console.log(code, value, this);
+    console.log('onChange', code, value, this);
   }
+  public store: FormStore;
   @autobind getStoreRef(store: FormStore) {
     if(this.props.storeRef) {
       this.props.storeRef(store)
     }
+    this.store = store
   }
   @useSlots Inter: IReactComponent<any>;
   public render() {
@@ -74,11 +86,12 @@ export class RCommonForm2 extends React.PureComponent<any, any> {
     return (
       <span>
         <Inter />
-        { Utils.isNotEmptyArray(config) && <SlotContext.Provider value={{slots, scopedSlots}}>
+        <GlobalStyle />
+        { Utils.isNotEmptyArray(config) &&
           <CommonForm {...other} model={model} onItemChange={this.onChange} storeRef={this.getStoreRef}>
             <FormGroup config={config} >{children}</FormGroup>
           </CommonForm>
-        </SlotContext.Provider>}
+        }
       </span>
     );
   }

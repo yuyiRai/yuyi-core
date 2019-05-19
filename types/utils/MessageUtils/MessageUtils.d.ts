@@ -1,3 +1,4 @@
+import 'element-ui/lib/theme-chalk/message.css';
 export interface IMessageConfig<T = any> {
     msg?: T;
     [k: string]: any;

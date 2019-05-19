@@ -13,7 +13,7 @@ export interface IFormItemStoreConstructor<FM = any, V = any> {
   new (formStore: VMFormStore<FM, V>, code: string): IFormItemStoreCore<FM, V>
 }
 
-export type VMFormStore<FM, V> = FormStoreCore<FM, IFormItemStoreConstructor<FM, V>>;
+export type VMFormStore<FM, V> = FormStoreCore<FM, IFormItemStoreCore<FM, V>>;
 
 export class FormItemStoreCore<FM, V> extends CommonStore implements IFormItemStoreCore<FM, V> {
   @observable.ref

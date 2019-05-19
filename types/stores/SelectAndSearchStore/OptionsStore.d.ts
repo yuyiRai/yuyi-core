@@ -22,7 +22,7 @@ export declare class OptionsStore2<V = any> {
      * @param { string } label
      */
     setShadowOption(label: string, source: any): Promise<void>;
-    labelToValue(label: any): any;
+    labelToValue(label: any): string;
     shadowUpdateDispatcher(label: any, value: any, source: any): Promise<void>;
     updateShadowOption(value: any, label?: any): {
         [x: string]: any;
@@ -33,7 +33,7 @@ export declare class OptionsStore2<V = any> {
         isLeaf?: boolean;
     };
     readonly isValidShadowOption: boolean;
-    static getOptionsKey(item: any, index: any): any;
+    static getOptionsKey(item: any, index: any): string;
     readonly __optionArr: Option[];
     toConvertedOption(item: Option, index: number): Option;
     readonly convertedOption: Option[];

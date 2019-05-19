@@ -14,7 +14,7 @@ declare const defaultFormItemLayout: {
         offset: number;
     };
 };
-export interface IFormProps<FM = any> {
+export interface IFormProps<FM = object> {
     model?: FM;
     formInstance?: CommonForm;
     formStore?: FormStore;
@@ -27,6 +27,7 @@ export interface IFormProps<FM = any> {
 export interface IFormState {
     fieldDecorator: GetFieldDecoratorOptions[];
 }
+export declare const FormItemGroup: (props: IFormProps<object>) => JSX.Element;
 export default class Form extends React.Component<IFormProps, any> {
     state: any;
     static getDerivedStateFromProps(nextProps: IFormProps, prevState: any): any;
@@ -35,6 +36,6 @@ export default class Form extends React.Component<IFormProps, any> {
         labelWidth: number;
     };
 }
-export declare const InjectedForm: import("antd/lib/form/interface").ConnectedComponentClass<typeof Form, Pick<IFormProps<any> & import("antd/lib/form/Form").FormComponentProps<any>, string | number>>;
+export declare const InjectedForm: import("antd/lib/form/interface").ConnectedComponentClass<typeof Form, Pick<IFormProps<object> & import("antd/lib/form/Form").FormComponentProps<any>, React.ReactText>>;
 export declare const FormGroup: React.FunctionComponent<IFormProps>;
 export {};

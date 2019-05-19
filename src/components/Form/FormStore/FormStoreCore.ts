@@ -3,14 +3,15 @@ import { action, computed, extendObservable, IKeyValueMap, IMapDidChange, observ
 import { EventStoreInject } from 'src/stores/EventStore';
 import { isNotEmptyArray } from 'src/utils';
 import { FormModel } from '../Interface/FormItem';
-import { IFormItemStoreConstructor, IFormItemStoreCore } from "./FormItemStoreBase";
+import { IFormItemStoreCore } from "./FormItemStoreBase";
 import { GFormStore } from './GFormStore';
+import { Utils } from 'src/utils';
 import { ConfigInit, ItemConfigGroupStore } from './ItemConfigGroupStore';
 
 export type onItemChangeCallback = (code: string, value: any) => void
 
 @EventStoreInject(['onItemChange'])
-export class FormStoreCore<FM extends FormModel, VM extends IFormItemStoreConstructor<FM> = any> extends GFormStore {
+export class FormStoreCore<FM extends FormModel, VM extends IFormItemStoreCore = any> extends GFormStore {
   @observable
   configStore: ItemConfigGroupStore<FM> = new ItemConfigGroupStore<FM>(this);
   constructor(config?: ConfigInit<FM>) {
@@ -30,10 +31,10 @@ export class FormStoreCore<FM extends FormModel, VM extends IFormItemStoreConstr
 
   
   @observable formItemStores: IKeyValueMap<IFormItemStoreCore<FM, any>> = {}
-  @action.bound registerItemStore<V>(code: string, Constructor: VM): IFormItemStoreCore<FM, V> {
+  @action.bound registerItemStore<V>(code: string, init: () => VM): IFormItemStoreCore<FM, V> {
     // console.log('registerForm', form)
     // debugger
-    this.formItemStores[code] = this.formItemStores[code] || new Constructor(this, code)
+    this.formItemStores[code] = this.formItemStores[code] || init()
     // this.registerForm(this.formSource, code, this.formItemStores[code].itemConfig)
     return this.formItemStores[code]
   }

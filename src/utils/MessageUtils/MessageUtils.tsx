@@ -1,4 +1,6 @@
-import { Message } from 'element-react';
+import { Message } from 'element-ui';
+import 'element-ui/lib/theme-chalk/message.css';
+// import 'element-theme-default/lib/message.css'
 import { assign, concat, join, reduce } from 'lodash';
 import Utils from "..";
 

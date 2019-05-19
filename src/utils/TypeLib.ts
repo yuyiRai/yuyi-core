@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { EventEmitter } from './EventEmitter';
 import { filter, isArray, isBoolean, isArrayLike, isEmpty, isFunction, isNaN, isNil,isDate, 
-  isNumber as isNumberLodash, isObject, isString, map, values } from 'lodash';
+  isNumber as isNumberLodash, isObject, isString, map, values, trim } from 'lodash';
 import { toJS, IKeyValueMap } from 'mobx';
 // Array.prototype.map = ()
 /**
@@ -11,7 +11,7 @@ import { toJS, IKeyValueMap } from 'mobx';
  * @param {*} value
  */
 export function isEmptyValue(value: any): value is '' | null | undefined {
-  return value === '' || isNil(value) || isNaN(value);
+  return (Utils.isString(value) && trim(value) === '') || isNil(value) || isNaN(value);
 }
 /**
  * 是否非空且非异常值，不包括0
@@ -102,7 +102,7 @@ export const typeUtils = {
 };
 
 import { assign, reduce } from 'lodash';
-export type FilterFunction<T = any> = <ST = any>(...key: (any | ST | T )[]) => ST | T | undefined
+export type FilterFunction<T = any> = <ST = T>(...key: (any | ST | T )[]) => ST | T | undefined
 export type FilterArrayFunction = <T = any>(...key: any[]) => Array<T> | undefined
 export type FilterFunctionGroup = IKeyValueMap<FilterFunction>
 export function todoFilter(handler: (v: any) => boolean): FilterFunction {

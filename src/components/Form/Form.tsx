@@ -12,7 +12,7 @@ import { form } from './util';
 // import { Utils } from '../../build';
 
 const defaultFormItemLayout = { labelCol: { span: 1, offset: 0 }, wrapperCol: { span: 1, offset: 0 } }
-export interface IFormProps<FM = any> {
+export interface IFormProps<FM = object> {
   model?: FM;
   formInstance?: CommonForm;
   formStore?: FormStore;
@@ -28,26 +28,29 @@ export interface IFormState {
 
 declare const config: IItemConfig<any, any>;
 declare const i: number
+export const FormItemGroup = observer((props: IFormProps) => {
+  const { formStore, formItemLayout = defaultFormItemLayout } = props
+  return (
+    <For index='i' each="config" of={formStore.configStore.configList}>
+      <FormItem {...formItemLayout} key={i} code={config.code}></FormItem>
+    </For>
+  )
+})
+
 @observer
 export default class Form extends React.Component<IFormProps, any> {
   state: any = {
-    itemChildren: [],
     lastConfig: [],
     lastStore: null,
     form: null
   }
   static getDerivedStateFromProps(nextProps: IFormProps, prevState: any) {
-    const { form, formStore, formItemLayout = defaultFormItemLayout } = nextProps
+    const { form, formStore } = nextProps
     if (formStore instanceof FormStore) {
       formStore.setConfig(nextProps.config)
       if (formStore !== prevState.lastStore) {
         // console.log(Utils, nameof<Form>())
         console.log(formStore.configStore.configList, prevState.lastConfig, formStore.configStore.configList === prevState.lastConfig)
-        prevState.itemChildren = (
-          <For index='i' each="config" of={formStore.configStore.configList}>
-            <FormItem {...formItemLayout} key={i} code={config.code}></FormItem>
-          </For>
-        )
         prevState.form = form
         prevState.lastStore = formStore
         prevState.lastConfig = nextProps.config
@@ -67,7 +70,7 @@ export default class Form extends React.Component<IFormProps, any> {
         <Provider antdForm={form} formStore={this.props.formStore}>
           <>
             <Row className={className}>
-              {this.state.itemChildren}
+              <FormItemGroup {...this.props}/>
             </Row>
             <div>{children}</div>
           </>

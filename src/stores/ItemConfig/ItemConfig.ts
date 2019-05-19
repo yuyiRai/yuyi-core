@@ -9,6 +9,7 @@ import { ItemConfigBase } from './ItemConfigBase';
 import { DisplayConfig } from './ItemDisplayConfig';
 import { OptionsStore } from './OptionsStore';
 import { SearchStore } from './SearchStore';
+import { Utils } from 'src/utils';
 
 export interface IPropertyChangeEvent<T = any> extends IValueDidChange<T> {
   name: string;
@@ -26,10 +27,19 @@ export class ItemConfig<V = any, FM = FormModel> extends ItemConfigBase<V, FM> i
   }
 
   @computed 
-  public static get commonTransformer(): BaseItemConfigTransformer<FormModel, any> {
-    return createTransformer<IItemConfig<FormModel>, FilterType<FormModel>>(
+  public static get commonTransformer(): BaseItemConfigTransformer<any, any> {
+    return createTransformer<IItemConfig<any>, FilterType<any>>(
       this.commonTransformerConfig ||
-      (function ({ type, multiple }: IItemConfig<FormModel>): FilterType<FormModel> {
+      (function ({ type, multiple, filter, filterToValue }: IItemConfig<any>): FilterType<any> {
+        if (filter && filterToValue) {
+          if(filter === filterToValue && !Utils.isFunction(filter)) {
+            return filter
+          }
+          return {
+            F2V: filter,
+            V2F: filterToValue
+          } as any
+        }
         if (['select', 'search'].includes(type) && multiple) {
           return 'group'
         }
@@ -58,10 +68,11 @@ export class ItemConfig<V = any, FM = FormModel> extends ItemConfigBase<V, FM> i
 
 
   @observable 
-  private displayConfig = new DisplayConfig()
-  @computed 
-  public get displayProps() {
-    return this.displayConfig.init(this, this.componentProps)
+  private displayConfig = new DisplayConfig<FM>(this, this.formStore)
+  
+  @computed
+  public get displayProps(): DisplayConfig<FM> {
+    return this.displayConfig
   }
 
   @observable 
@@ -84,8 +95,8 @@ export class ItemConfig<V = any, FM = FormModel> extends ItemConfigBase<V, FM> i
   }
 
   @computed 
-  public get transformer(): FilterType<FM> {
-    return this.i.transformer || (ItemConfig.commonTransformer(this) as FilterType<any>)
+  public get transformer(): FilterType<FM, V> {
+    return this.i.transformer || ItemConfig.commonTransformer(this)
   }
 
   @computed 
@@ -114,10 +125,10 @@ export class ItemConfig<V = any, FM = FormModel> extends ItemConfigBase<V, FM> i
   }
 
   @observable  
-  public optionsStore: OptionsStore;
+  public optionsStore: OptionsStore<V>;
   @action.bound  
-  public useOptionsStore<T>(transformer?: ITransformer<OptionsStore, T[]>, config: IItemConfig<FM, V> = this) {
-    const store = this.optionsStore || new OptionsStore(config, transformer)
+  public useOptionsStore<T>(transformer?: ITransformer<OptionsStore, T[]>, config: IItemConfig<FM, V> = this): OptionsStore<V> {
+    const store = this.optionsStore || new OptionsStore<V, T>(config, transformer)
     this.optionsStore = store
     return store;
   }

@@ -1,7 +1,8 @@
+import { ObservableMap } from "mobx";
+import { FormStoreCore } from 'src/components/Form/FormStore/FormStoreCore';
 import { IItemConfig } from "./interface";
 import { CommonStore } from "./interface/CommonStore";
-import { IValidator, RuleConfig, RuleConfigConstructor, RuleConfigMap, RuleList, ValidatorCallback } from './interface/RuleConfig';
-import { FormStoreCore } from 'src/components/Form/FormStore/FormStoreCore';
+import { IRuleConfig, IValidator, RuleConfigConstructor, RuleConfigMap, RuleList, ValidatorCallback } from './interface/RuleConfig';
 export declare type RuleErrorIntercept = (value?: any, error?: Error, callback?: ValidatorCallback) => any;
 export interface IRuleStoreBase<V, FM> {
     rule?: RuleConfigConstructor<V, FM>;
@@ -11,17 +12,17 @@ export interface IRuleStoreBase<V, FM> {
 export interface IRuleStoreCreater<V, FM> extends IRuleStoreBase<V, FM> {
 }
 export interface IRuleStore<V, FM> extends IRuleStoreBase<V, FM> {
-    rule?: RuleConfig<V> | RuleList<V>;
-    rules?: RuleConfig<V> | RuleList<V>;
+    rule?: IRuleConfig<V> | RuleList<V>;
+    rules?: IRuleConfig<V> | RuleList<V>;
 }
-export declare class RuleStore<V, FM> extends CommonStore {
+export declare class RuleConfig<V, FM> extends CommonStore {
     itemConfig: IItemConfig<FM, V>;
     constructor(itemConfig: IItemConfig<FM, V>);
     readonly requiredRule: (false & {
         validator: (...args: any[]) => any;
     }) | (true & {
         validator: (...args: any[]) => any;
-    }) | (RuleConfig<V> & {
+    }) | (IRuleConfig<V> & {
         validator: (...args: any[]) => any;
     }) | {
         required: boolean;
@@ -37,7 +38,7 @@ export declare class RuleStore<V, FM> extends CommonStore {
     getRuleList(i?: import("./interface").IFormItemConstructor<FM, V, V>): RuleList | undefined;
     optionsMatcher(r: any, values: any, callback: any): Promise<any>;
     readonly defaultRule: RuleConfigMap<V, FM>;
-    private static customRuleMap;
+    static customRuleMap: ObservableMap<string, RuleConfigConstructor<any, any>>;
     static registerCustomRule<V, FM>(key: string, rule: RuleConfigConstructor<V, FM>): void;
     static getDefaultRules<FM, V = any>(): RuleConfigMap<V, FM>;
 }

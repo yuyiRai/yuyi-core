@@ -5,7 +5,6 @@ export declare const SlotUtils: () => {
         functional: boolean;
         render(h: any, vueProps: any): any;
     };
-    slotInject: typeof slotInject;
     slotInjectContainer: typeof slotInjectContainer;
     useSlots: typeof useSlots;
 };
@@ -23,7 +22,6 @@ export declare const react2Vue: (Target: IReactComponent<any>) => {
     functional: boolean;
     render(h: any, vueProps: any): any;
 };
-export declare function slotInject<T extends IReactComponent<any>>(target: T): T;
 export declare const SlotContext: React.Context<{
     slots: {};
     scopedSlots: {};

@@ -37,7 +37,7 @@ export function jsxIf(bool: any, when: any, elseValue?: any) {
 export default {
   jsxIf,
   stubArray: stubArray,
-  stubFunction() { },
+  stubFunction(...args: any[]) { },
   stubObject() {
     return {};
   },

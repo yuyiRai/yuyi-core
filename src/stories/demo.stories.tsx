@@ -1,15 +1,17 @@
-import * as React from 'react';
-import { CommonForm } from './CommonForm';
-import { FormGroup } from './Form';
-import Button from 'antd/lib/button';
-import { FormStore } from './FormStore';
-// import { Icon } from 'antd';
-import { IFormItemConstructor } from './Interface';
-import { AMapService } from '@/stores'
+import { AMapService } from '@/stores';
+// import { action } from '@storybook/addon-actions';
+import { object, text, withKnobs } from '@storybook/addon-knobs';
+import { storiesOf } from '@storybook/react';
+import { Button } from 'antd';
+import React from 'react';
+import { Utils } from 'src/utils';
+import { CommonForm } from '../components/Form/CommonForm';
+import { FormGroup } from '../components/Form/Form';
+import { FormStore } from '../components/Form/FormStore';
+import { IFormItemConstructor } from '../components/Form/Interface';
 
 AMapService.setKey("70a802cd733e9a9a96bedd0ae23f19a2")
-interface IAppProps {
-}
+
 const voiceroid = ['1', '2', '3', '4', '5']
 // const voiceroid = ['yukari','maki','zunko','akane','aoi']
 const options = [
@@ -66,10 +68,12 @@ const config: IFormItemConstructor<typeof model>[] = [
   { label: '姓名', code: 'name', required: form => form.showVoiceroid !== '1', rule: 'commonCode' },
   { label: '密码', code: 'password' },
   { label: '生日', code: 'info.birthday', value: new Date(), type: "date", rule: 'futureDate' },
-  { label: '年龄', code: 'info.birthday2', type: "number", computed(form) { 
-    // console.log('info.birthday' , )
-    return new Date(form.info.birthday).getFullYear() + form.password
-  } },
+  {
+    label: '年龄', code: 'info.birthday2', type: "number", computed(form) {
+      // console.log('info.birthday' , )
+      return new Date(form.info.birthday).getFullYear() + form.password
+    }
+  },
   {
     label: '提交时间', code: 'info.submitTime', type: "dateToDate", rule: 'dateToDate30', disabled: (form, itemConfig) => {
       // console.log(form, itemConfig);
@@ -78,18 +82,19 @@ const config: IFormItemConstructor<typeof model>[] = [
   },
   { label: 'A', code: 'showVoiceroid', type: "checkOne", value: '1' },
   { label: '单选', code: 'search', type: "search", allowInput: true, options, nameCode: 'searchName' },
-  { label: '多选', code: 'search2', type: "search", nameCode: 'search2Name', multiple: true, 
+  {
+    label: '多选', code: 'search2', type: "search", nameCode: 'search2Name', multiple: true,
     getOptionsLabel({ item }) {
       return `${item.name} ${
         [item.address].join("/") ? `(${[item.address].join("/")})` : ""
-      }`;
+        }`;
     },
     async remoteMethod(key: string) {
       if (key) {
         console.log(key)
         try {
           const locationData = await amap.getAutoComplete({ city: '全国', search: key })
-          return locationData.filter(item=>item.location).map(locationData => {
+          return locationData.filter(item => item.location).map(locationData => {
             const { name, id, district } = locationData
             return {
               label: name,
@@ -98,22 +103,24 @@ const config: IFormItemConstructor<typeof model>[] = [
               item: locationData
             }
           })
-        } catch(e) {
+        } catch (e) {
           return []
         }
       }
       return []
-    } 
+    }
   },
   {
     label: '地址', code: 'addressGroup', type: 'group', col: 1, children: {
-      trree3: { col: 1,
+      trree3: {
+        col: 1,
         label: '产品c2', code: 'trree3', transformer: 'path', type: "cascader", loadData: (key, currentOptions) => {
           console.log('loadData', key, currentOptions)
-          return Utils.waitingPromise(1000, key ? options.map(opt=>({...opt, value: [key.value, opt.value].join('.')})):options)
+          return Utils.waitingPromise(1000, key ? options.map(opt => ({ ...opt, value: [key.value, opt.value].join('.') })) : options)
         }
       },
-      address: { col: 2,
+      address: {
+        col: 2,
         label: '地址查询', code: 'address', type: "search", nameCode: 'addressName',
         async remoteMethod(key: string) {
           if (key) {
@@ -140,53 +147,64 @@ const config: IFormItemConstructor<typeof model>[] = [
   { label: 'C', code: 'info.voiceroid2', type: "radio", options: voiceroid, hidden: form => form.showVoiceroid !== '1' },
   // { label: '产品介绍', code: 'info.introduce', type: "textarea", options: voiceroid, hidden: form => form.showVoiceroid !== '1' },
   { label: '产品c', code: 'info.trree', transformer: 'path', type: "cascader", options: treeOptions },
-  { label: '产品c2', code: 'info2.trree', type: "selectTree", loadData: (key, currentOptions) => {
-    console.log('loadData', key, options)
-    return Utils.waitingPromise(1000, key ? treeOptions.map(opt=>({...opt, value: [key.value, opt.value].join('.')})): treeOptions)
-  }}
+  {
+    label: '产品c2', code: 'info2.trree', type: "selectTree", loadData: (key, currentOptions) => {
+      console.log('loadData', key, options)
+      return Utils.waitingPromise(1000, key ? treeOptions.map(opt => ({ ...opt, value: [key.value, opt.value].join('.') })) : treeOptions)
+    }
+  }
 ]
-const props: any = {
+const props = {
   model,
   config
 }
+let store: FormStore
+const getStore = (gstore: FormStore) => {
+  store = gstore
+}
+storiesOf('DEMO', module)
+  .addDecorator(story => <div style={{padding: 30}}>{story()}</div>)
+  .addDecorator(withKnobs)
+  .add('App', () => {
+    const model = object('Model', props.model)
+    const config = object('Config', props.config)
+    return (
+      <CommonForm model={model} storeRef={getStore}>
+        <FormGroup key={0} config={config} disabled={true}>
+          <Button type="primary" icon="search">{text('Search', 'Search')}</Button>
+          <Button onClick={() => {
+            console.log(props, config)
+            // debugger
+            props.config[9].options = [...props.config[9].options, 'qqq']
+            props.config[10].options = [...props.config[10].options, 'qqq']
+            // voiceroid.push('aaa')
 
-
-export const App: React.FunctionComponent<IAppProps> = () => {
-  const [state, setstate] = React.useState(0)
-  const [store, getStore] = React.useState<FormStore>(null)
-  return (
-    <CommonForm model={props.model} storeRef={getStore}>
-      <For index='i' each="name" of={[1, 2, 3]}>
-        <span key={name}>{name}</span>
-      </For>
-      <FormGroup key={0} config={props.config} disabled={true}>
-        <Button type="primary" icon="search">Search</Button>
-        <Button onClick={() => {
-          console.log(props, config)
-          // debugger
-          props.config[9].options = [...props.config[9].options, 'qqq']
-          props.config[10].options = [...props.config[10].options, 'qqq']
-          // voiceroid.push('aaa')
-          setstate(state + 1)
-        }}>增加选项</Button>
-        <Button onClick={() => {
-          console.log(store)
-          props.config[0].rule = undefined
-          props.config[2].rule = undefined
-          // setstate(state+1)
-        }}>移除生日校验</Button>
-        <Button onClick={() => {
-          store.validate()
-          console.log(props, store.formSource)
-        }}>校验</Button>
-        <Button onClick={() => {
-          props.model = {}
-          setstate(state + 1)
-        }}>表单重载</Button>
-      </FormGroup>
-    </CommonForm>
-  );
-};
-
-
-export default App;
+          }}>增加选项</Button>
+          <Button onClick={() => {
+            console.log(store)
+            props.config[0].rule = undefined
+            props.config[2].rule = undefined
+            // setstate(state+1)
+          }}>移除生日校验</Button>
+          <Button onClick={() => {
+            store.validate()
+            console.log(props, store.formSource)
+          }}>校验</Button>
+          <Button onClick={() => {
+            props.model = {} as any
+          }}>表单重载</Button>
+        </FormGroup>
+      </CommonForm>
+    )
+  }, {
+    info: { 
+      inline: false
+    },
+    notes: 'a[[[[[[[[[',
+    knobs: {
+      timestamps: true, // Doesn't emit events while user is typing.
+      escapeHTML: true 
+      // Escapes strings to be safe for inserting as innerHTML. This option is true by default. It's safe to set it to `false` with frameworks like React which do escaping on their side.
+      // You can still set it to false, but it's strongly unrecommendend in cases when you host your storybook on some route of your main site or web app.
+    }
+  });

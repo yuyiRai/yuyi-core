@@ -21,8 +21,8 @@ export declare class ItemConfig2 extends ItemConfigBase2 implements IItemConfig 
     useSearchStore<T>(transformer?: ITransformer<OptionsStore2, T[]>, config?: ItemConfig2): SearchStore<any, any>;
     readonly formValueTransform: IFormValueTransform<any>;
     readonly transformer: any;
-    readonly form2Value: any;
-    readonly value2Form: any;
+    readonly form2Value: (...arg: any[]) => any;
+    readonly value2Form: (...arg: any[]) => any;
     readonly currentComponentValue: any;
     OptionsStore2: OptionsStore2;
     useOptionsStore<T>(transformer?: ITransformer<OptionsStore2, T[]>, config?: IItemConfig): OptionsStore2<any>;

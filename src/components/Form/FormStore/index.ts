@@ -7,8 +7,8 @@ import { autobind } from 'core-decorators';
 import produce from 'immer';
 import { get, set } from 'lodash';
 import { action, computed, IKeyValueMap, IMapDidChange, IObjectDidChange, Lambda, observable, ObservableMap, observe } from 'mobx';
-import { FormModel, IFormItemConstructor, IItemConfig } from '../Interface/FormItem';
-import { IFormItemStoreConstructor } from "./FormItemStoreBase";
+import { FormModel, IFormItemConstructor } from '../Interface/FormItem';
+import { IFormItemStoreCore } from "./FormItemStoreBase";
 import { FormStoreCore } from './FormStoreCore';
 import { ConfigInit } from './ItemConfigGroupStore';
 import { PatchDataTree } from './PatchData';
@@ -22,15 +22,15 @@ export interface ICommonFormConfig extends IKeyValueMap {
 export type onItemChangeCallback = (code: string, value: any) => void
 
 export class FormStore<
-  FM extends FormModel = any, 
-  VM extends IFormItemStoreConstructor<FM, any> = IFormItemStoreConstructor<FM, any>
-> extends FormStoreCore<FM, VM> {
-
+  FM extends FormModel = any,
+  VM extends IFormItemStoreCore<FM, any> = IFormItemStoreCore<FM, any>
+  > extends FormStoreCore<FM, VM> {
+  public antFormInited: boolean = false;
   constructor(configList?: IFormItemConstructor<any, FM>[]) {
     super(configList)
     this.observe(this.errorGroup, (listener: IMapDidChange) => {
       this.errorTack.push(listener)
-      console.log('this.errorGroup', this.errorTack)
+      // console.log('this.errorGroup', this.errorTack)
     })
     this.observe(this.formMap, listener => {
       // const config = this.formItemConfigMap[listener.name]
@@ -95,10 +95,9 @@ export class FormStore<
   }
 
   @computed get formValueTransform() {
-    return Utils.reduce(this.configStore.config, (nextMap, i) => {
+    return Utils.reduce(this.configStore.itemConfigMap.toPOJO(), (nextMap, i: ItemConfig<any, FM>) => {
       const key = i.code
-      const store = this.formItemStores[key]
-      return nextMap.set(key, (store && (store.itemConfig as IItemConfig<FM>).formValueTransform) || getTransform<FM>(key, i.type))
+      return nextMap.set(key, i.formValueTransform || getTransform<FM>(key, i.type))
     }, new Map<string, IFormValueTransform<FM>>())
   }
 
@@ -217,9 +216,13 @@ export class FormStore<
   // }
 
   @autobind async validate(codeList?: string[]) {
-    const r = await (this.antdForm && this.antdForm.validateFields(codeList || this.configStore.itemCodeList, { force: true }))
-    console.log('validate', r);
-    return r
+    try {
+      const r = await (this.antdForm && this.antdForm.validateFields(codeList || this.configStore.itemCodeList, { force: true }))
+      console.log('validate', r);
+      return r
+    } catch (error) {
+      return error
+    }
   }
 
   @computed get allFormMap() {
@@ -285,6 +288,7 @@ export class FormStore<
       this.formSourceListerner();
       this.formSourceListerner = null
     }
+    this.formSourceTrack.push(this.formSource);
     this.formSourceListerner = observe(this.formSource, (listener: IObjectDidChange) => {
       // console.log('this.formSource', listener)
       this.formSourceTrack.push(this.formSource);
