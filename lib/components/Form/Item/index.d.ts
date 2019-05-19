@@ -6,6 +6,6 @@ export interface IItemSwitchProps extends OFormItemCommon {
     type: FormItemType;
     [k: string]: any;
 }
-export declare const ItemSwitch: React.ForwardRefExoticComponent<Pick<IItemSwitchProps, React.ReactText> & React.RefAttributes<{}>>;
+export declare const ItemSwitch: React.ForwardRefExoticComponent<Pick<IItemSwitchProps, string | number> & React.RefAttributes<{}>>;
 export * from './DateItem';
 export * from './InputItem';

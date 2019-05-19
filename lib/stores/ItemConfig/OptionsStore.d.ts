@@ -1,25 +1,35 @@
-import { Option } from '../../utils';
 import { ITransformer } from 'mobx-utils';
-import { IItemConfig } from '../ItemConfig/interface';
-export declare class OptionsStore2<V = any> {
+import { Option, OptionBase } from '../../utils';
+import { IItemConfig } from './interface';
+export interface PathOption extends Option {
+    path: string;
+    parentOption?: Option;
+}
+export declare class OptionsTransformerStore<V, T> {
     [k: string]: any;
-    itemConfig: IItemConfig<any, V>;
+    itemConfig: IItemConfig<any, any>;
     __keyMap: {};
-    __optionMap: WeakMap<object, any>;
-    transformer: ITransformer<OptionsStore2, V[]>;
-    constructor(itemConfig: IItemConfig<any, V>, transformer?: ITransformer<OptionsStore2, V[]>);
+    transformer: ITransformer<OptionsStore, T[]>;
+    constructor(itemConfig: IItemConfig<any, any>, transformer?: ITransformer<OptionsStore, T[]>);
+    static getOptionsKey(item: any, index: number, parentKey?: string): string;
+    readonly __optionArr: Option[];
+    static getOptionArr(sourceOptions: OptionBase[], parentKey?: any): Option[];
+    private toConvertedOption;
+    readonly convertedOption: PathOption[];
+    private todoConvertOption;
+    readonly filterOptions: Option[];
+    readonly getOptionsLabel: (...arg: any[]) => any;
+    getTagByOption(option?: Option): any;
+}
+export declare class OptionsStore<V = any, T = any> extends OptionsTransformerStore<V, T> {
     shadowOption: Option;
-    readonly shadowOptionMode: "text" | "code";
+    readonly shadowOptionMode: "code" | "text";
     /**
      * 录入值的自动转化
-     * @param { string } value
-     * @param { string } label
      */
     setShadowOptionByValue(value: string, source: any): Promise<void>;
     /**
      * 录入值的自动转化
-     * @param { string } value
-     * @param { string } label
      */
     setShadowOption(label: string, source: any): Promise<void>;
     labelToValue(label: any): string;
@@ -33,14 +43,11 @@ export declare class OptionsStore2<V = any> {
         isLeaf?: boolean;
     };
     readonly isValidShadowOption: boolean;
-    static getOptionsKey(item: any, index: any): string;
-    readonly __optionArr: Option[];
-    toConvertedOption(item: Option, index: number): Option;
-    readonly convertedOption: Option[];
-    readonly filterOptions: Option[];
     readonly selectedItemIndex: number;
     readonly displayOptions: Option[];
-    readonly transformOption: V[];
+    readonly nativeDisplayOptionList: Option[];
+    readonly transformOption: (V | Option)[];
+    readonly nativeTransformOption: Option[];
     valuesToLabels(value: any): string[];
     labelsToValues(label: any): string[];
     readonly selectedLables: any[];
