@@ -95,7 +95,7 @@ export class FormStore<
   }
 
   @computed get formValueTransform() {
-    return Utils.reduce(this.configStore.itemConfigMap.toPOJO(), (nextMap, i: ItemConfig<any, FM>) => {
+    return Utils.reduce(Utils.zipEmptyData(this.configStore.itemConfigMap.toPOJO()), (nextMap, i: ItemConfig<any, FM>) => {
       const key = i.code
       return nextMap.set(key, i.formValueTransform || getTransform<FM>(key, i.type))
     }, new Map<string, IFormValueTransform<FM>>())

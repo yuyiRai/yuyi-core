@@ -3,7 +3,6 @@ import { IKeyValueMap } from 'mobx';
 import { IReactComponent } from 'mobx-react';
 import React from 'react';
 import ErrorBoundary from 'react-error-boundary';
-import { oc } from 'ts-optchain';
 import { VNode } from 'vue';
 import Utils from '.';
 
@@ -36,7 +35,7 @@ export interface ISlotSource {
 const SlotSourceBase = {
   props: ['factoryProps', 'slotFactory'],
   render(h: any) {
-    console.log('render source', h, this);
+    // console.log('render source', h, this);
     const slot = Utils.isFunction(this.slotFactory) ? this.slotFactory(this.factoryProps) : this.slotFactory;
     // debugger
     return h('span', {}, slot)
@@ -85,7 +84,7 @@ export const react2Vue = (Target: IReactComponent<any>) => {
         attrs: {
           ...props,
           ...attrs,
-          $scopedSlots: scopedSlots || oc(vueProps).data.attrs.scopedSlots(undefined),
+          $scopedSlots: scopedSlots || (attrs?attrs.scopedSlots:undefined),
           $commonSlots: () => getSlotFromVNode(slots)
         },
         on: {
@@ -130,14 +129,11 @@ export function useSlots(target: any, propertyName: string) {
   if (get || set) {
     console.error('is invalid property!!');
   }
-  Reflect.defineProperty(target, propertyName, {
-    value(props: any) {
-      const { slots: { ...slots }, scopedSlots: { ...scopedSlots } } = React.useContext(SlotContext)
-      const Renderer = slots[slotName] || scopedSlots[slotName] || value || (() => true ? <span></span> : <span>slots-{slotName}</span>)
-      return<Renderer {...props} />
-    },
-    writable: false
+  Reflect.set(target.constructor.prototype, propertyName, function(props: any) {
+    const { slots: { ...slots }, scopedSlots: { ...scopedSlots } } = React.useContext(SlotContext)
+    const Renderer = slots[slotName] || scopedSlots[slotName] || value || (() => true ? <span></span> : <span>slots-{slotName}</span>)
+    return <Renderer {...props} />
   })
-  console.error('renderer!', target.propertyName);
+  // console.error('renderer!', target.propertyName);
   // console.log('get defined', target[propertyName], Object.getOwnPropertyDescriptor(target, propertyName))
 }

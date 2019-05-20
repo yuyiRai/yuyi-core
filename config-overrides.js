@@ -117,6 +117,7 @@ function useTsLoader() {
                         "skipLibCheck": true,
                         "isolatedModules": false
                       })
+                      console.log(options)
                       return options;
                     }
                   })
