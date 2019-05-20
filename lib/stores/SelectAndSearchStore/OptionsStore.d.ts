@@ -9,7 +9,7 @@ export declare class OptionsStore2<V = any> {
     transformer: ITransformer<OptionsStore2, V[]>;
     constructor(itemConfig: IItemConfig<any, V>, transformer?: ITransformer<OptionsStore2, V[]>);
     shadowOption: Option;
-    readonly shadowOptionMode: "code" | "text";
+    readonly shadowOptionMode: "text" | "code";
     /**
      * 录入值的自动转化
      * @param { string } value

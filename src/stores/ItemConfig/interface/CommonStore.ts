@@ -1,16 +1,30 @@
 import { EventStoreProvider } from '@/stores/EventStore';
 import { autobind } from 'core-decorators';
 import { Utils } from 'src/utils';
-import { difference, forEach, get, isNil, keys, set } from 'lodash';
-import { action, autorun, computed, IArrayChange, IArraySplice, IArrayWillChange, IArrayWillSplice, IAutorunOptions, IComputedValue, IInterceptor, IMapDidChange, IMapWillChange, intercept, IObjectDidChange, IObjectWillChange, IObservableArray, IObservableValue, IReactionDisposer, IReactionOptions, IReactionPublic, ISetDidChange, ISetWillChange, isObservableProp, IValueDidChange, IValueWillChange, Lambda, observable, ObservableMap, ObservableSet, observe, reaction } from "mobx";
-export abstract class CommonStore extends EventStoreProvider {
+import { difference, forEach, cloneDeep, get, isNil, keys, set } from 'lodash';
+import { action, autorun, computed, IArrayChange, IArraySplice, IArrayWillChange, IArrayWillSplice, IAutorunOptions, IComputedValue, IInterceptor, IMapDidChange, IMapWillChange, intercept, IObjectDidChange, IObjectWillChange, IObservableArray, IObservableValue, IReactionDisposer, IReactionOptions, IReactionPublic, ISetDidChange, ISetWillChange, isObservableProp, IValueDidChange, IValueWillChange, Lambda, observable, ObservableMap, ObservableSet, observe, reaction, toJS } from "mobx";
+import { createTransformer } from 'mobx-utils';
+
+
+export const ExportUtils = {
+  export: createTransformer(<M extends object>(instance: M): ExportedFormModel<M> => {
+    const model: any = {}
+    for (const key in instance) {
+      model[key] = cloneDeep(toJS(instance[key]));
+    }
+    model.__isExportObject = true;
+    return model;
+  })
+}
+
+export abstract class CommonStore<M extends CommonStore = any> extends EventStoreProvider {
   @observable private destorySet: Set<IReactionDisposer | Lambda> = new Set<IReactionDisposer | Lambda>();
-  @action.bound public reaction(source: (r: IReactionPublic) => {}, callback: (arg: {}, r: IReactionPublic) => void, options?: IReactionOptions): void {
-    this.destorySet.add(reaction(source, callback, options));
+  @action.bound public reaction(source: (r: IReactionPublic) => {}, callback: (arg: {}, r: IReactionPublic) => void, options?: IReactionOptions): IReactionDisposer {
+    return this.registerDisposer(reaction(source, callback, options))
   }
 
   @action.bound public onceReaction(source: (r: IReactionPublic) => {}, callback: (arg: {}, r: IReactionPublic) => void, options?: IReactionOptions): void {
-    const a = reaction(source, (arg: {}, r: IReactionPublic) => {
+    const a = this.reaction(source, (arg: {}, r: IReactionPublic) => {
       callback(arg, r);
       a();
     }, options);
@@ -18,15 +32,23 @@ export abstract class CommonStore extends EventStoreProvider {
   @action.bound public autorun(view: (r: IReactionPublic) => any, opts?: IAutorunOptions): void {
     this.destorySet.add(autorun(view, opts));
   };
-  observe<T>(value: IObservableValue<T> | IComputedValue<T>, listener: (change: IValueDidChange<T>) => void, fireImmediately?: boolean): void;
-  observe<T>(observableArray: IObservableArray<T>, listener: (change: IArrayChange<T> | IArraySplice<T>) => void, fireImmediately?: boolean): void;
-  observe<V>(observableMap: ObservableSet<V>, listener: (change: ISetDidChange<V>) => void, fireImmediately?: boolean): void;
-  observe<K, V>(observableMap: ObservableMap<K, V>, listener: (change: IMapDidChange<K, V>) => void, fireImmediately?: boolean): void;
-  observe<K, V>(observableMap: ObservableMap<K, V>, property: K, listener: (change: IValueDidChange<V>) => void, fireImmediately?: boolean): void;
-  observe(object: Object, listener: (change: IObjectDidChange) => void, fireImmediately?: boolean): void;
-  observe<T, K extends keyof T>(object: T, property: K, listener: (change: IValueDidChange<T[K]>) => void, fireImmediately?: boolean): void;
-  @action.bound public observe(a: any, b: any, c?: any, d?: any): void {
-    this.destorySet.add(observe(a, b, c, d));
+  observe<T>(value: IObservableValue<T> | IComputedValue<T>, listener: (change: IValueDidChange<T>) => void, fireImmediately?: boolean): Lambda;
+  observe<T>(observableArray: IObservableArray<T>, listener: (change: IArrayChange<T> | IArraySplice<T>) => void, fireImmediately?: boolean): Lambda;
+  observe<V>(observableMap: ObservableSet<V>, listener: (change: ISetDidChange<V>) => void, fireImmediately?: boolean): Lambda;
+  observe<K, V>(observableMap: ObservableMap<K, V>, listener: (change: IMapDidChange<K, V>) => void, fireImmediately?: boolean): Lambda;
+  observe<K, V>(observableMap: ObservableMap<K, V>, property: K, listener: (change: IValueDidChange<V>) => void, fireImmediately?: boolean): Lambda;
+  observe(object: Object, listener: (change: IObjectDidChange) => void, fireImmediately?: boolean): Lambda;
+  observe<T, K extends keyof T>(object: T, property: K, listener: (change: IValueDidChange<T[K]>) => void, fireImmediately?: boolean): Lambda;
+  @action.bound public observe(a: any, b: any, c?: any, d?: any): Lambda {
+    return this.registerDisposer(observe(a, b, c, d))
+  }
+
+  private registerDisposer<T extends Lambda | IReactionDisposer>(r: Lambda | IReactionDisposer) {
+    this.destorySet.add(r);
+    return (() => {
+      this.destorySet.delete(r)
+      r()
+    }) as T;
   }
 
   intercept<T>(value: IObservableValue<T>, handler: IInterceptor<IValueWillChange<T>>): void;
@@ -37,7 +59,7 @@ export abstract class CommonStore extends EventStoreProvider {
   intercept(object: Object, handler: IInterceptor<IObjectWillChange>): void;
   intercept<T extends Object, K extends keyof T>(object: T, property: K, handler: IInterceptor<IValueWillChange<any>>): void;
 
-  @action.bound public intercept(a: any, b: any, c?: any,): void {
+  @action.bound public intercept(a: any, b: any, c?: any, ): void {
     this.destorySet.add(intercept(a, b, c));
   }
   @action.bound public interceptProperty(object: any, property: string, handler: IInterceptor<IValueWillChange<any>>): void {
@@ -57,9 +79,9 @@ export abstract class CommonStore extends EventStoreProvider {
   public mapToDiff(map: ObservableMap<any>, source: any, cahce?: any) {
     const push = difference(keys(source), Array.from(map.keys()));
     forEach(map.toPOJO(), (value, key) => {
-      if (isNil(source[key])){
+      if (isNil(source[key])) {
         map.delete(key);
-      }else if (!Utils.isEqual(source[key], value)) {
+      } else if (!Utils.isEqual(source[key], value)) {
         map.set(key, source[key]);
       }
     });
@@ -85,7 +107,7 @@ export abstract class CommonStore extends EventStoreProvider {
   }
 
   public registerKey(target: any, key: string, deep: boolean = false) {
-    if(!Utils.isNil(key)) {
+    if (!Utils.isNil(key)) {
       const keyDeep = key.split('.');
       // const coreKey = `$$core_${keyDeep[0]}`;
       const resolver = keyDeep[0]
@@ -104,8 +126,8 @@ export abstract class CommonStore extends EventStoreProvider {
   public registerGet(target: any, key: string, getter: any) {
     const keyDeep = key.split('.');
     const resolver = keyDeep.pop()
-    if (keyDeep.length>0) {
-      const deepResolver = keyDeep.length>0?keyDeep.join('.'):resolver;
+    if (keyDeep.length > 0) {
+      const deepResolver = keyDeep.length > 0 ? keyDeep.join('.') : resolver;
       // const coreKey = `$$core_${keyDeep[0]}`;
       const deepTarget = Utils.isObjectFilter(get(target, deepResolver)) || {};
       computed(deepTarget, resolver, { get: getter, enumerable: false, configurable: true });
@@ -128,4 +150,13 @@ export abstract class CommonStore extends EventStoreProvider {
   @computed public get propertyNameList() {
     return keys(this)
   }
+
+  
+  @autobind
+  public export(): ExportedFormModel<M> {
+    return ExportUtils.export(this) as any
+  }
+}
+export type ExportedFormModel<T> = Partial<T> & {
+  __isExportObject: true
 }

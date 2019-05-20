@@ -1,4 +1,5 @@
-import { addParameters, configure, addDecorator } from '@storybook/react';
+import { addParameters, configure as configureReact, addDecorator } from '@storybook/react';
+import { configure as configureVue } from '@storybook/vue';
 import 'storybook-addon-material-ui'
 import { withInfo } from "@storybook/addon-info";
 import { muiTheme } from 'storybook-addon-material-ui';
@@ -10,6 +11,7 @@ import { themes } from '@storybook/theming';
 // import '@storybook/addon-console';
 // automatically import all files ending in *.stories.tsx
 const req = require.context("../src", true, /.stories.tsx$/);
+const req2 = require.context("../src", true, /.vueStories.tsx$/);
 addParameters({
   backgrounds: [
     { name: 'twitter', value: '#00aced', default: true },
@@ -50,8 +52,8 @@ addDecorator(withKnobs)
 addDecorator(muiTheme())
 function loadStories() {
   req.keys().forEach(req);
-  // require('../src/stories/demo.tsx');
-  // require('../src/stories/index.js');
+  // req2.keys().forEach(req2);
 }
 
-configure(loadStories, module);
+configureReact(loadStories, module);
+// configureVue(loadStories, module);

@@ -18,7 +18,7 @@ export declare type CheckScopedSlot<FM = object, VALUE = any> = (props: {
     onChange: any;
     value: boolean;
     config: ItemConfig;
-}) => any;
+}) => React.ReactElement;
 interface SwitchProps extends ElementReactLibs.ComponentProps<{}> {
     value?: number | string | boolean;
     disabled?: boolean;

@@ -39,7 +39,7 @@ declare const _default: {
     castObjectArray(objOrArr: any[], allowEmpty?: boolean): any[];
     createGroupWith<T = any>(list: T[], keyOrWith: string | ((item: T) => string)): IKeyValueMap<T[]>;
     getEventEmitter(): EventEmitter<any>;
-    waitingPromise<V = any>(time: number, emitValue: any, isError?: boolean): Promise<V>;
+    waitingPromise<V = any>(time: number, emitValue?: any, isError?: boolean): Promise<V>;
     /**
      * 组件返回
      * @param { { $router: any, $route: any } } instance

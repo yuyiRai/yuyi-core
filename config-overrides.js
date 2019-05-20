@@ -159,7 +159,7 @@ function useTsLoader() {
     return config;
   };
 }
-
+const jest = require('./jest.config')
 module.exports = {
   globalEntry() {
     return config => config.entry.push(resolveApp('src/global/index.ts'))
@@ -169,6 +169,7 @@ module.exports = {
   useCDNAuto,
   disableEsLint,
   addBabelPlugins,
+  jest,
   webpack: override(
     outputChange,
     disableEsLint(),

@@ -30,7 +30,7 @@ export type CheckScopedSlot<FM = object, VALUE = any> = (props: {
   onChange: any,
   value: boolean,
   config: ItemConfig
-}) => any
+}) => React.ReactElement
 
 declare const option: Option;
 declare const i: number;
@@ -38,8 +38,8 @@ const Check: React.FunctionComponent<IAppProps> = ({ antdForm, formStore, code, 
   const store = useOptionsStore(itemConfig)
   const { scopedSlots } = React.useContext(SlotContext)
   if (itemConfig.useSlot) {
-    const a: CheckScopedSlot = scopedSlots[itemConfig.slot]
-    const b = (options: Option, index: number) => a({
+    const slot: CheckScopedSlot = scopedSlots[itemConfig.slot]
+    const slotFactory = (options: Option, index: number) => slot({
       col: {
         data: other.value,
         item: options,
@@ -58,11 +58,10 @@ const Check: React.FunctionComponent<IAppProps> = ({ antdForm, formStore, code, 
       },
       config: itemConfig
     })
-    console.log(b)
     return (
       <div className='el-checkbox-group'>
         <For index='i' each='option' of={store.displayOptions}>
-          <span key={i}>{ b(option, i) }</span>
+          <span key={i}>{ slotFactory(option, i) }</span>
         </For>
       </div>
     )

@@ -1,9 +1,26 @@
-import React from 'react'
-import { VNode } from 'vue';
+import { lowerFirst, reduce } from 'lodash';
 import { IKeyValueMap } from 'mobx';
-import { reduce, lowerFirst } from 'lodash';
-import Utils from '.';
 import { IReactComponent } from 'mobx-react';
+import React from 'react';
+import ErrorBoundary from 'react-error-boundary';
+import { oc } from 'ts-optchain';
+import { VNode } from 'vue';
+import Utils from '.';
+
+const myErrorHandler = (error: Error, componentStack: string) => {
+  // Do something with the error
+  // E.g. log to an error logging client here
+  // console.log(error, componentStack)
+};
+const SlotErrorInfo = ({ componentStack, error }) => (
+  <div>
+    <p><strong>Oops! An error occured!</strong></p>
+    <p>Here’s what we know…</p>
+    <p><strong>Error:</strong> {error.toString()}</p>
+    <p><strong>Stacktrace:</strong> {componentStack}</p>
+  </div>
+);
+
 const { ReactWrapper, VueInReact } = require('vuera');
 
 export const SlotUtils = () => ({
@@ -13,7 +30,7 @@ export const SlotUtils = () => ({
 });
 
 export interface ISlotSource {
-  factoryProps?: any, 
+  factoryProps?: any,
   slotFactory: any
 }
 const SlotSourceBase = {
@@ -32,18 +49,22 @@ export interface ISlotProps {
 }
 export class SlotComponent extends React.Component<ISlotProps> {
   render() {
-    return <span><SlotSource {...this.props.slot} /></span>;
+    return (
+      <ErrorBoundary onError={myErrorHandler} FallbackComponent={SlotErrorInfo}>
+        <span><SlotSource {...this.props.slot} /></span>
+      </ErrorBoundary>
+    );
   }
 };
 
 const getSlotFromVNode = (nodeFactory: IKeyValueMap<VNode[] | Function>): any => {
-  return reduce<any, IKeyValueMap<React.FunctionComponent<ISlotSource>>>(nodeFactory, 
+  return reduce<any, IKeyValueMap<React.FunctionComponent<ISlotSource>>>(nodeFactory,
     (map: any, target: VNode[] | Function, key: string) => {
-    // debugger
-    return Object.assign(map, {
-      [key]: (props) => <SlotComponent slot={{slotFactory: target, factoryProps: props}} />
-    });
-  }, {});
+      // debugger
+      return Object.assign(map, {
+        [key]: (props) => <SlotComponent slot={{ slotFactory: target, factoryProps: props }} />
+      });
+    }, {});
 }
 
 export const react2Vue = (Target: IReactComponent<any>) => {
@@ -64,7 +85,7 @@ export const react2Vue = (Target: IReactComponent<any>) => {
         attrs: {
           ...props,
           ...attrs,
-          $scopedSlots: scopedSlots || attrs.scopedSlots,
+          $scopedSlots: scopedSlots || oc(vueProps).data.attrs.scopedSlots(undefined),
           $commonSlots: () => getSlotFromVNode(slots)
         },
         on: {
@@ -85,11 +106,17 @@ export function slotInjectContainer<T extends IReactComponent<any>>(target: T) {
       slots,
       scopedSlots: getSlotFromVNode($scopedSlots)
     };
+    // console.log('injectProps', nextProps, injectProps)
+    if (true) {
+      (Target as any).contextType = SlotContext
+    }
     // debugger
     return (
-      <SlotContext.Provider value={injectProps}>
-        <Target {...other}><span>{children}</span></Target>
-      </SlotContext.Provider>
+      <ErrorBoundary onError={myErrorHandler} FallbackComponent={SlotErrorInfo}>
+        <SlotContext.Provider value={injectProps}>
+          <Target {...other}><span>{children}</span></Target>
+        </SlotContext.Provider>
+      </ErrorBoundary>
     );
   } as T;
   Object.defineProperty(injected, 'name', { value: target.name, writable: false, configurable: false, enumerable: false });
@@ -103,15 +130,14 @@ export function useSlots(target: any, propertyName: string) {
   if (get || set) {
     console.error('is invalid property!!');
   }
-  Object.defineProperty(target, propertyName, {
-    get() {
-      if (!this.props) {
-        return value;
-      }
-      const { slots: { ...slots }, scopedSlots: { ...scopedSlots } } = this.props;
-      // console.error('get slot', propertyName, this, slots[slotName], scopedSlots[slotName])
-      return slots[slotName] || scopedSlots[slotName] || value || (() => true?null:<span>slots-{slotName}</span>);
-    }
-  });
+  Reflect.defineProperty(target, propertyName, {
+    value(props: any) {
+      const { slots: { ...slots }, scopedSlots: { ...scopedSlots } } = React.useContext(SlotContext)
+      const Renderer = slots[slotName] || scopedSlots[slotName] || value || (() => true ? <span></span> : <span>slots-{slotName}</span>)
+      return<Renderer {...props} />
+    },
+    writable: false
+  })
+  console.error('renderer!', target.propertyName);
   // console.log('get defined', target[propertyName], Object.getOwnPropertyDescriptor(target, propertyName))
 }

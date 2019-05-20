@@ -1,3 +1,4 @@
+/// <reference types="react" />
 import { ObservableMap } from "mobx";
 import { FormStoreCore } from 'src/components/Form/FormStore/FormStoreCore';
 import { IItemConfig } from "./interface";
@@ -26,7 +27,7 @@ export declare class RuleConfig<V, FM> extends CommonStore {
         validator: (...args: any[]) => any;
     }) | {
         required: boolean;
-        validator: IValidator<string | number>;
+        validator: IValidator<import("react").ReactText>;
         trigger: string;
     };
     static ruleErrorIntercept: RuleErrorIntercept;

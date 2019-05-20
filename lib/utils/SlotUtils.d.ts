@@ -1,5 +1,5 @@
-import React from 'react';
 import { IReactComponent } from 'mobx-react';
+import React from 'react';
 export declare const SlotUtils: () => {
     react2Vue: (Target: IReactComponent<any>) => {
         functional: boolean;

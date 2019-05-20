@@ -293,7 +293,7 @@ export default {
   getEventEmitter() {
     return new EventEmitter()
   },
-  waitingPromise<V = any>(time: number, emitValue: any, isError = false): Promise<V> {
+  waitingPromise<V = any>(time: number, emitValue?: any, isError = false): Promise<V> {
     return new Promise((resolve, reject) => {
       setTimeout(isError ? reject : resolve, time, emitValue);
     })

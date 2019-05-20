@@ -23,7 +23,7 @@ export declare class OptionsTransformerStore<V, T> {
 }
 export declare class OptionsStore<V = any, T = any> extends OptionsTransformerStore<V, T> {
     shadowOption: Option;
-    readonly shadowOptionMode: "code" | "text";
+    readonly shadowOptionMode: "text" | "code";
     /**
      * 录入值的自动转化
      */

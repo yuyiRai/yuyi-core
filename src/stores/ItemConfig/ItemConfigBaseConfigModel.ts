@@ -1,4 +1,4 @@
-import { autobind } from 'core-decorators';
+import { autobind, override } from 'core-decorators';
 import { action, computed, IKeyValueMap, IValueWillChange, observable, toJS } from 'mobx';
 import { createTransformer, createViewModel, expr, IViewModel } from 'mobx-utils';
 import { FormStore } from '../../components/Form/FormStore';
@@ -133,6 +133,8 @@ export class ItemConfigBaseConfigModel<V, FM> extends CommonStore {
       return undefined;
     }
   }
+  
+  @override
   @autobind
   public export(): ExportedFormModel<IFormItemConstructor<FM>> {
     return ItemConfigBaseConfigModel.export<FM>(this)
