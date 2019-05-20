@@ -10,8 +10,10 @@ import { OFormItemCommon } from '../Interface/FormItem';
 import { commonInjectItem } from "./commonInjectItem";
 import { useOptionsStore } from './OptionsUtil';
 import { Observer } from "mobx-react-lite";
-import { SlotContext } from 'src/utils/SlotUtils';
+// import { SlotContext } from 'src/utils/SlotUtils';
+import { ScopedSlot } from 'src/utils/SlotUtils';
 import { Option } from 'src/utils';
+import { pullAll } from 'lodash';
 import { ItemConfig } from 'src/stores';
 
 export interface IAppProps extends CheckboxGroupProps, OFormItemCommon {
@@ -36,10 +38,36 @@ declare const option: Option;
 declare const i: number;
 const Check: React.FunctionComponent<IAppProps> = ({ antdForm, formStore, code, itemConfig, onChange, onBlur, ...other }) => {
   const store = useOptionsStore(itemConfig)
-  const { scopedSlots } = React.useContext(SlotContext)
+  // const { scopedSlots } = React.useContext(SlotContext)
   if (itemConfig.useSlot) {
-    const slot: CheckScopedSlot = scopedSlots[itemConfig.slot]
-    const slotFactory = (options: Option, index: number) => slot({
+    // const slot: CheckScopedSlot = scopedSlots[itemConfig.slot]
+    // const slotFactory = (options: Option, index: number) => slot({
+    //   col: {
+    //     data: other.value,
+    //     item: options,
+    //     index,
+    //     props: formStore.formSource
+    //   },
+    //   value: other.value && other.value.includes(options.value),
+    //   onChange: (checked: boolean) => {
+    //     if (checked) {
+    //       const nextV = Utils.isArrayFilter(other.value) || []
+    //       nextV.push(options.value)
+    //       onChange(nextV)
+    //     } else {
+    //       onChange(pullAll([...Utils.castArray(other.value)], [options.value]))
+    //     }
+    //   },
+    //   config: itemConfig
+    // })
+    // return (
+    //   <div className='el-checkbox-group'>
+    //     <For index='i' each='option' of={store.displayOptions}>
+    //       <span key={i}>{ slotFactory(option, i) }</span>
+    //     </For>
+    //   </div>
+    // )
+    const slotFactory = (options: Option, index: number) => ({
       col: {
         data: other.value,
         item: options,
@@ -47,13 +75,13 @@ const Check: React.FunctionComponent<IAppProps> = ({ antdForm, formStore, code, 
         props: formStore.formSource
       },
       value: other.value && other.value.includes(options.value),
-      onChange: (checked: boolean) => {
+      onChange(checked: boolean) {
         if (checked) {
           const nextV = Utils.isArrayFilter(other.value) || []
           nextV.push(options.value)
           onChange(nextV)
         } else {
-          store.selectedLablesConfig[index].remove(onChange)
+          onChange(pullAll([...Utils.castArray(other.value)], [options.value]))
         }
       },
       config: itemConfig
@@ -61,7 +89,7 @@ const Check: React.FunctionComponent<IAppProps> = ({ antdForm, formStore, code, 
     return (
       <div className='el-checkbox-group'>
         <For index='i' each='option' of={store.displayOptions}>
-          <span key={i}>{ slotFactory(option, i) }</span>
+        <ScopedSlot key={option.value} name={itemConfig.slot} {...slotFactory(option, i)} />
         </For>
       </div>
     )

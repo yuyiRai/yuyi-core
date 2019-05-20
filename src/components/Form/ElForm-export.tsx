@@ -1,6 +1,5 @@
-import { react2Vue, slotInjectContainer, useSlots } from '@/utils/SlotUtils';
+import { react2Vue, slotInjectContainer, Slot } from '@/utils/SlotUtils';
 import { autobind } from 'core-decorators';
-import { IReactComponent } from 'mobx-react';
 import React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import Vue from 'vue';
@@ -15,7 +14,6 @@ const GlobalStyle = createGlobalStyle`
 `
 @slotInjectContainer
 export class RItemGroup extends React.Component<any, any> {
-  @useSlots App: IReactComponent<any>;
   public render() {
     console.log('ElItemGroup', this)
     return <FormGroup {...this.props} config={this.props.config} />;
@@ -25,7 +23,6 @@ export const ElItemGroup = react2Vue(RItemGroup);
 
 @slotInjectContainer
 export class RCommonForm extends React.Component<any, any> {
-  @useSlots App: IReactComponent<any>;
   public render() {
     console.log('ElCommonForm', this)
     return <CommonForm {...this.props} model={this.props.model} />;
@@ -77,15 +74,13 @@ export class RCommonForm2 extends React.PureComponent<any, any> {
     }
     this.store = store
   }
-  @useSlots Inter: IReactComponent<any>;
   public render() {
-    const { Inter } = this
     const { model, config } = this.state
     const { children, config: a, slots, scopedSlots, ...other } = this.props
     // console.log('ElCommonForm2', this.context, Inter)
     return (
       <span>
-        <Inter />
+        <Slot name='w' />
         <GlobalStyle />
         { Utils.isNotEmptyArray(config) &&
           <CommonForm {...other} model={model} onItemChange={this.onChange} storeRef={this.getStoreRef}>

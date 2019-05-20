@@ -1,8 +1,6 @@
-import { IReactComponent } from 'mobx-react';
 import React from 'react';
 import { FormStore } from './FormStore';
 export declare class RItemGroup extends React.Component<any, any> {
-    App: IReactComponent<any>;
     render(): JSX.Element;
 }
 export declare const ElItemGroup: {
@@ -10,7 +8,6 @@ export declare const ElItemGroup: {
     render(h: any, vueProps: any): any;
 };
 export declare class RCommonForm extends React.Component<any, any> {
-    App: IReactComponent<any>;
     render(): JSX.Element;
 }
 export declare const ElCommonForm: {
@@ -28,7 +25,6 @@ export declare class RCommonForm2 extends React.PureComponent<any, any> {
     onChange(code: string, value: any): void;
     store: FormStore;
     getStoreRef(store: FormStore): void;
-    Inter: IReactComponent<any>;
     render(): JSX.Element;
 }
 export declare const ElCommonForm2: {

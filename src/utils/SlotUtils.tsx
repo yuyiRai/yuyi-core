@@ -25,7 +25,7 @@ const { ReactWrapper, VueInReact } = require('vuera');
 export const SlotUtils = () => ({
   react2Vue,
   slotInjectContainer,
-  useSlots
+  Slot
 });
 
 export interface ISlotSource {
@@ -46,7 +46,7 @@ const SlotSource: React.FunctionComponent<ISlotSource> = VueInReact(SlotSourceBa
 export interface ISlotProps {
   slot: ISlotSource
 }
-export class SlotComponent extends React.Component<ISlotProps> {
+export class SlotComponent extends React.PureComponent<ISlotProps> {
   render() {
     return (
       <ErrorBoundary onError={myErrorHandler} FallbackComponent={SlotErrorInfo}>
@@ -61,7 +61,9 @@ const getSlotFromVNode = (nodeFactory: IKeyValueMap<VNode[] | Function>): any =>
     (map: any, target: VNode[] | Function, key: string) => {
       // debugger
       return Object.assign(map, {
-        [key]: (props) => <SlotComponent slot={{ slotFactory: target, factoryProps: props }} />
+        [key]: function(props) {
+          return <SlotComponent slot={{ slotFactory: target, factoryProps: props }} />
+        }
       });
     }, {});
 }
@@ -95,7 +97,7 @@ export const react2Vue = (Target: IReactComponent<any>) => {
   };
 };
 
-export const SlotContext = React.createContext({ slots: {}, scopedSlots: {} });
+export const SlotContext = React.createContext({ slots: null, scopedSlots: null });
 export function slotInjectContainer<T extends IReactComponent<any>>(target: T) {
   const Target = target;
   const injected = function (nextProps: any) {
@@ -122,18 +124,22 @@ export function slotInjectContainer<T extends IReactComponent<any>>(target: T) {
   injected.displayName = Target.displayName;
   return injected;
 }
-export function useSlots(target: any, propertyName: string) {
-  const desc = Object.getOwnPropertyDescriptor(target, propertyName) || {};
-  const { value, get, set } = desc;
+export const Slot: React.FunctionComponent<{ 
+  name: string; 
+  slot?: IReactComponent;
+  [k: string]: any;
+}> = React.memo(({ name: propertyName, slot, ...other }) => {
   const slotName = lowerFirst(propertyName);
-  if (get || set) {
-    console.error('is invalid property!!');
-  }
-  Reflect.set(target.constructor.prototype, propertyName, function(props: any) {
-    const { slots: { ...slots }, scopedSlots: { ...scopedSlots } } = React.useContext(SlotContext)
-    const Renderer = slots[slotName] || scopedSlots[slotName] || value || (() => true ? <span></span> : <span>slots-{slotName}</span>)
-    return <Renderer {...props} />
-  })
-  // console.error('renderer!', target.propertyName);
-  // console.log('get defined', target[propertyName], Object.getOwnPropertyDescriptor(target, propertyName))
+  const { slots: { ...slots }, scopedSlots: { ...scopedSlots } } = React.useContext(SlotContext)
+  const Renderer = slots[slotName] || scopedSlots[slotName] || slot || (() => true ? <span></span> : <span>slots-{slotName}</span>)
+  return <Renderer {...other} />
+})
+export const ScopedSlot: React.FunctionComponent<{ 
+  name: string; 
+  [k: string]: any;
+}> = function({ name: propertyName, ...other }) {
+  const slotName = lowerFirst(propertyName);
+  const { scopedSlots: { [propertyName]: slotComponent } } = React.useContext(SlotContext)
+  const Renderer = slotComponent || (() => true ? <span></span> : <span>slots-{slotName}</span>)
+  return <span>{Renderer(other)}</span>
 }

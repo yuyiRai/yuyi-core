@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { IReactComponent } from 'mobx-react';
-import { slotInjectContainer, useSlots, react2Vue } from '../../utils/SlotUtils';
+import { slotInjectContainer, react2Vue } from '../../utils/SlotUtils';
 
 @slotInjectContainer
 export class AppTest extends React.Component<any, any> {
@@ -14,9 +13,9 @@ export class AppTest extends React.Component<any, any> {
     this.setState({ error: true })
   }
   
-  @useSlots Name0: IReactComponent<any>;
-  @useSlots Name1: IReactComponent<any>;
-  @useSlots Name2: IReactComponent<any>;
+  // @useSlots Name0: IReactComponent<any>;
+  // @useSlots Name1: IReactComponent<any>;
+  // @useSlots Name2: IReactComponent<any>;
 
   onChange = (e: string) => {
     console.log(e)
@@ -24,13 +23,14 @@ export class AppTest extends React.Component<any, any> {
   }
   
   render() {
+    return null
     // const { slots } = this.props;
-    const { Name0, Name1, Name2 } = this
-    console.log('React Component Test', this.props)
-    if(this.state.error) {
-      return <span>getError</span>
-    }
-    return <div><Name0 text={this.state.title} onChange={this.onChange}/><Name1 /><Name2 />{this.props.children}</div>
+    // const { Name0, Name1, Name2 } = this
+    // console.log('React Component Test', this.props)
+    // if(this.state.error) {
+    //   return <span>getError</span>
+    // }
+    // return <div><Name0 text={this.state.title} onChange={this.onChange}/><Name1 /><Name2 />{this.props.children}</div>
   }
 }
 
