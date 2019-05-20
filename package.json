@@ -1,6 +1,6 @@
 {
   "name": "yuyi-core",
-  "version": "0.10.5",
+  "version": "0.10.6",
   "description": "yuyi",
   "main": "lib/index.js",
   "repository": {
