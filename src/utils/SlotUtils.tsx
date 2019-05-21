@@ -128,18 +128,18 @@ export const Slot: React.FunctionComponent<{
   name: string; 
   slot?: IReactComponent;
   [k: string]: any;
-}> = React.memo(({ name: propertyName, slot, ...other }) => {
+}> = React.memo(function({ name: propertyName, slot, ...other }) {
   const slotName = lowerFirst(propertyName);
-  const { slots: { ...slots }, scopedSlots: { ...scopedSlots } } = React.useContext(SlotContext)
+  const { slots = {}, scopedSlots = {} } = React.useContext(SlotContext)
   const Renderer = slots[slotName] || scopedSlots[slotName] || slot || (() => true ? <span></span> : <span>slots-{slotName}</span>)
   return <Renderer {...other} />
 })
 export const ScopedSlot: React.FunctionComponent<{ 
   name: string; 
   [k: string]: any;
-}> = function({ name: propertyName, ...other }) {
+}> = React.memo(function({ name: propertyName, ...other }) {
   const slotName = lowerFirst(propertyName);
   const { scopedSlots: { [propertyName]: slotComponent } } = React.useContext(SlotContext)
   const Renderer = slotComponent || (() => true ? <span></span> : <span>slots-{slotName}</span>)
-  return <span>{Renderer(other)}</span>
-}
+  return Renderer(other)
+})

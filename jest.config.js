@@ -4,39 +4,44 @@ const config = {
   // setupFiles: ['<rootDir>/src/global'],
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1',
-    '^src/(.*)$': '<rootDir>/src/$1',
-    "^ttypescript/lib/(.*?)$": "<rootDir>/packages/ttypescript/src/$1",
-    "^ttypescript$": "<rootDir>/packages/ttypescript/src/typescript",
-    "^ttypescript-(.*?)$": "<rootDir>/packages/ttypescript-$1/src"
+    '^src/(.*)$': '<rootDir>/src/$1'
   },
-  "snapshotSerializers": [
-    "<rootDir>/node_modules/jest-serializer-enzyme",
-    "<rootDir>/node_modules/jest-serializer-vue"
-  ],
+  // "snapshotSerializers": [
+  //   "<rootDir>/node_modules/jest-serializer-enzyme",
+  //   "<rootDir>/node_modules/jest-serializer-vue"
+  // ],
   transform: {
     "^.+\\.(ts|tsx)$": "ts-jest"
+  },
+  globals: {
+    "ts-jest": {
+      compiler: 'ttypescript'
+    }
   }
 }
 module.exports = function override(c){
-  const keys = ['moduleNameMapper', 'snapshotSerializers', 'setupFiles']
+  const keys = ['moduleNameMapper', 'snapshotSerializers', 'setupFiles', 'globals']
   for(const key of keys) {
-    if(c[key] instanceof Object && config[key] instanceof Object) {
-      c[key] = { ...c[key], ...config[key] }
-    }
     if(c[key] instanceof Array && config[key] instanceof Array) {
       c[key] = [ ...c[key], ...config[key] ]
     }
+    if(c[key] instanceof Object && config[key] instanceof Object) {
+      c[key] = { ...c[key], ...config[key] }
+    }
+    if(!c[key]) {
+      c[key] = config[key]
+    }
   }
   c.preset = config.preset
-  c.moduleFileExtensions = c.moduleFileExtensions.sort((a,b) => {
-    if(a.indexOf('\.ts')) {
-      return 1
-    }
-    if(b.indexOf('\.ts')) {
-      return -1
-    }
-    return 0
-  })
+  // c.moduleFileExtensions = c.moduleFileExtensions.sort((a,b) => {
+  //   if(a.indexOf('\.ts')) {
+  //     return 1
+  //   }
+  //   if(b.indexOf('\.ts')) {
+  //     return -1
+  //   }
+  //   return 0
+  // })
   // c.transform = {...config.transform, ...c.transform}
   // // const a = c.transform['^.+\\.(js|jsx|ts|tsx)$']
   // // delete c.transform['^.+\\.(js|jsx|ts|tsx)$']

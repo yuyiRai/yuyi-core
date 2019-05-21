@@ -1,6 +1,6 @@
-const { override, overrideDevServer, addWebpackResolve, watchAll, fixBabelImports, addBundleVisualizer, addBabelPlugins, disableEsLint } = require('customize-cra');
+const { override, overrideDevServer, addWebpackResolve, watchAll, fixBabelImports, getBabelLoader, addBundleVisualizer, addBabelPlugins, disableEsLint } = require('customize-cra');
 
-const _ = require('lodash').default;
+const _ = require('lodash');
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin')
 const DynamicCdnWebpackPlugin = require('dynamic-cdn-webpack-plugin');
 
@@ -83,6 +83,7 @@ const ts = require("typescript");
 // 3. add getCustomTransformer method to the loader config
 function useTsLoader() {
   return (config, evn) => {
+    const babelLoader = getBabelLoader(config)
     config.module.rules.unshift({
       test: /\.(ts|tsx)$/,
       use: [
@@ -109,7 +110,7 @@ function useTsLoader() {
                         "declarationDir": "./types",
                         "allowJs": false,
                         "declaration": true,
-                        "module": "esnext",
+                        "module": "commonjs",
                         "target": "es5",
                         "sourceMap": true,
                         "noEmit": false,
@@ -117,7 +118,6 @@ function useTsLoader() {
                         "skipLibCheck": true,
                         "isolatedModules": false
                       })
-                      console.log(options)
                       return options;
                     }
                   })
@@ -125,9 +125,7 @@ function useTsLoader() {
                     const visitor = (node) => ts.visitEachChild(node, visitor, program);
                     return ts.visitNode(node, visitor)
                   }
-                },
-                statements(),
-                createStyledComponentsTransformer()
+                }
               ]
             }),
             useCache: true,
@@ -226,6 +224,13 @@ module.exports = {
       libraryDirectory: 'lib',
       style: 'css',
     })
+    // (config) => {
+    //   console.log(config, )
+    //   for(const c of config.module.rules) {
+    //     console.log(c)
+    //   }
+    //   return config;
+    // }
   ),
   devServer: overrideDevServer(
     // dev server plugin
