@@ -99,7 +99,7 @@ export class FormStore<
    * @param key 完整code
    * @param value 值
    */
-  @autobind public getV2FValue(key: string, value: any) {
+  @action.bound public getV2FValue(key: string, value: any) {
     const transforms = this.formValueTransform.get(key)
     if (transforms) {
       return transforms.V2F(value, this.formSource)
@@ -111,7 +111,7 @@ export class FormStore<
    * @param key 完整code
    * @param value form值
    */
-  @autobind public getF2VValue(key: string, value: any) {
+  @action.bound public getF2VValue(key: string, value: any) {
     const transforms = this.formValueTransform.get(key)
     if (transforms) {
       return Utils.cloneDeep(transforms.F2V(value, Utils.cloneDeep(this.formSource)))
