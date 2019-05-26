@@ -1,9 +1,10 @@
-import { autobind, override } from 'core-decorators';
-import { action, computed, IKeyValueMap, IValueWillChange, observable, toJS } from 'mobx';
-import { createTransformer, createViewModel, expr, IViewModel } from 'mobx-utils';
-import { FormStore } from '../../components/Form/FormStore';
+import { FormStore } from '@/components/Form/FormStore';
 import { EventStoreInject } from '@/stores/EventStore';
-import { Utils } from '../../utils/Utils';
+import { Utils } from '@/utils/Utils';
+import { autobind, override } from 'core-decorators';
+import { get } from 'lodash';
+import { action, computed, IKeyValueMap, observable, toJS } from 'mobx';
+import { createTransformer, createViewModel, IViewModel } from 'mobx-utils';
 import { CommonStore } from "./interface/CommonStore";
 import { IFormItemConstructor } from './interface/ItemConfig';
 import { IPropertyChangeEvent } from './ItemConfigBase';
@@ -11,8 +12,6 @@ import { IPropertyChangeEvent } from './ItemConfigBase';
 @EventStoreInject(['options-change'])
 export class ItemConfigBaseConfigModel<V, FM> extends CommonStore {
   [k: string]: any;
-  @observable.ref
-  public form: FM = {} as FM;
   @observable.ref
   public baseConfigKeys: string[] = [];
   @observable.ref
@@ -51,43 +50,33 @@ export class ItemConfigBaseConfigModel<V, FM> extends CommonStore {
           }
         }), {}) : false
   }
-
-  @action.bound
-  setForm(form: any) {
-    // console.log('setForm', form);
-    // this.objectToDiff(this.form, form)
-    // this.formStore = FormStore.registerForm(form, this, this.formStore)
-    // if (!this.formStore.getConfig(this.code)) {
-    //   this.formStore.setConfig(this.formStore.configList.concat({...this.baseConfig}))
-    //   debugger
-    // }
-    this.form = form
-    // this.form = Utils.cloneDeep(form);
-    // this.reaction(() => this.formSource[this.code], console.log)
+  
+  @computed.struct get currentValueFromStore() {
+    if(this.keyInnerCode) {
+      return get(this.formStore.formMap.get(this.keyCode), this.keyInnerCode)
+    }
+    return this.formStore.formMap.get(this.keyCode)
   }
+
   @observable.ref
   public formStore: FormStore;
   @action.bound
   public setFormStore(formStore: FormStore) {
     if (formStore instanceof FormStore) {
       this.formStore = formStore;
-      this.interceptProperty(this.formStore.formSource, this.keyCode, (event: IValueWillChange<any>) => {
-        // console.log(event, event.newValue, get(event.object, this.keyInnerCode), this.keyCode, this.keyInnerCode);
-        return event;
-      });
     }
   }
 
   @computed.struct
-  public get formSource() {
+  public get formSource(): FM {
     // console.log('this.formStore', this.formStore && this.formStore.formSource);
-    return (this.formStore && this.formStore.lastFormSource) || this.form;
+    return (this.formStore && this.formStore.formSource) || {} as FM;
   }
 
   private lastReceiveConfig: IKeyValueMap<IFormItemConstructor<FM, V>> = {}
   protected configInited: boolean = false
   @action.bound
-  public setBaseConfig(baseConfig: IFormItemConstructor<FM, V>, strict: boolean = false): boolean {
+  protected setBaseConfig(baseConfig: IFormItemConstructor<FM, V>, strict: boolean = false): boolean {
     baseConfig = baseConfig && baseConfig.i ? baseConfig.i : baseConfig
     if (strict || !Utils.isEqual(this.lastReceiveConfig, baseConfig)) {
       if (this.configInited) {
@@ -125,7 +114,7 @@ export class ItemConfigBaseConfigModel<V, FM> extends CommonStore {
     try {
       const keyValue = target[key];
       if (!(/(^refConfig$)|^(on|get(.*?))|((.*?)Method)$|(.*?)filter(.*?)/.test(key)) && (keyValue instanceof Function)) {
-        const computedValue = expr(() => keyValue(this.formSource || {}, this));
+        const computedValue = keyValue(this.formStore.formMap.toJSON(), this);
         return Utils.isNil(computedValue) ? defaultValue : computedValue;
       }
       return keyValue;

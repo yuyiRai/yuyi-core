@@ -142,8 +142,6 @@ export class FormItemStore<FM = any, V = any> extends FormItemStoreCore<FM, V> i
   // console.log('fromitem get store', stores, props, context)
   const { formStore } = stores;
   const store = formStore.registerItemStore(props.code, () => new FormItemStore(formStore, props.code))
-  store.itemConfig.setForm(formStore.formSource)
-  store.itemConfig.setConfig(formStore.configStore.getConfig(props.code))
   return { store }
 })
 @observer

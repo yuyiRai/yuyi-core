@@ -43,7 +43,7 @@ export class CommonForm extends React.Component<ICommonFormProps, ICommonFormSta
       // prevState.formStore.formItemMap.delete(prevState.formStore.formSource)
     }
     if (!Utils.isNil(nextProps.model)){
-      const formStore = FormStore.registerForm(nextProps.model, prevState.formStore.instance, prevState.formStore)
+      const formStore = FormStore.registerForm(nextProps.model, null, prevState.formStore)
       if (Utils.isFunction(nextProps.storeRef)) {
         nextProps.storeRef(formStore)
       }

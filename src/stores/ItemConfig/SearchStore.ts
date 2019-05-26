@@ -3,7 +3,7 @@ import produce from "immer";
 import { get, toString } from 'lodash';
 // import { Debounce } from 'lodash-decorators';
 import { action, computed, IArraySplice, IObservableArray, IReactionDisposer, observable, reaction } from "mobx";
-import { Option, OptionBase, Utils } from "../../utils";
+import { Option, OptionBase, Utils } from "@/utils";
 import { IItemConfig, ItemConfigEventHandler } from "./interface";
 import { CommonStore } from "./interface/CommonStore";
 
@@ -161,6 +161,7 @@ export class SearchStore<V, FM> extends CommonStore {
 
   loadDataBuffer = Utils.createSimpleTimeBufferInput(async (dataPathBuffer: Option[][]) => {
     // console.log(keyPathBuffer);
+    console.log('loadData', dataPathBuffer)
     for (const keyPath of dataPathBuffer) {
       const optionsList = await this.lazyLoadDataPromise(keyPath);
       // debugger

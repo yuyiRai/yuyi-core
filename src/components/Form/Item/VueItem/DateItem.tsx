@@ -62,8 +62,6 @@ export const DatePickerItem = {
         disabled,
         editable: false,
       },
-      attrs: {
-      },
       style: {
         width: '100%'//'auto'
       },

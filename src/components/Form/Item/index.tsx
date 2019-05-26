@@ -44,7 +44,6 @@ export interface IItemSwitchProps extends OFormItemCommon {
 }
 export const ItemSwitch = React.forwardRef(({type, ...props}: IItemSwitchProps, ref) => {
   const Component = ItemSwitchType(type);
-  // console.log(props)
   return <Component ref={ref} {...props}/>
 })
 

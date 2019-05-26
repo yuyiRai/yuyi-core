@@ -1,8 +1,8 @@
 /* eslint-disable */
 import { action, computed, IKeyValueMap, observable } from 'mobx';
-import Utils from '../../utils';
+import Utils from '@/utils';
 import { ComputedPick, ComputedPropertyCreater, IItemConfig } from './interface';
-import { FormStore } from 'src/components';
+import { FormStore } from '@/components';
 export interface IDisplayConfigCreater<FM> {
   inline?: ComputedPropertyCreater<boolean, FM>;
   isViewOnly?: ComputedPropertyCreater<boolean, FM>;

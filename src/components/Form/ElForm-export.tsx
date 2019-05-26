@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
 @slotInjectContainer
 export class RItemGroup extends React.Component<any, any> {
   public render() {
-    console.log('ElItemGroup', this)
+    // console.log('ElItemGroup', this)
     return <FormGroup {...this.props} config={this.props.config} />;
   }
 }
@@ -24,7 +24,7 @@ export const ElItemGroup = react2Vue(RItemGroup);
 @slotInjectContainer
 export class RCommonForm extends React.Component<any, any> {
   public render() {
-    console.log('ElCommonForm', this)
+    // console.log('ElCommonForm', this)
     return <CommonForm {...this.props} model={this.props.model} />;
   }
 }

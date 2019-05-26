@@ -10,7 +10,6 @@ const fs = require('fs');
 const appDirectory = fs.realpathSync(process.cwd());
 const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
-
 const outputChange = config => {
   if (process.env.NODE_ENV === "production") {
     const custom = {
@@ -49,8 +48,6 @@ const getResolveConfig = () => {
   })
 }
 
-
-
 function useCDNAuto() {
   return config => {
     if (process.env.NODE_ENV !== "production") {
@@ -72,18 +69,10 @@ function useCDNAuto() {
   };
 }
 
-const statements = require('tsx-control-statements').default;
-const keysTransformer = require('ts-transformer-keys/transformer').default;
-// 1. import default from the plugin module
-const createStyledComponentsTransformer = require('typescript-plugin-styled-components').default;
-// 2. create a transformer;
-// the factory additionally accepts an options object which described below
-
 const ts = require("typescript");
 // 3. add getCustomTransformer method to the loader config
 function useTsLoader() {
   return (config, evn) => {
-    const babelLoader = getBabelLoader(config)
     config.module.rules.unshift({
       test: /\.(ts|tsx)$/,
       use: [
@@ -91,7 +80,7 @@ function useTsLoader() {
           loader: require.resolve('awesome-typescript-loader'),
           options: {
             compiler: 'ttypescript',
-            configFileName: resolveApp('tsconfig.dev.json'),
+            configFileName: resolveApp('tsconfig.json'),
             transpileOnly: true,
             getCustomTransformers: (program) => ({
               before: [

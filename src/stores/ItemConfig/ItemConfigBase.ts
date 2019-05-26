@@ -1,13 +1,11 @@
 /* eslint-disable */
 import { autobind } from 'core-decorators';
-import { difference, forEach, get, isError, isRegExp, map, set, toString, trim } from 'lodash';
+import { difference, get, isError } from 'lodash';
 import { action, computed, extendObservable, IKeyValueMap, isComputedProp, IValueDidChange, observable, ObservableMap, toJS } from 'mobx';
-import { Option, OptionBase } from '../../utils';
+import { OptionBase } from '../../utils';
 import { EventEmitter } from '../../utils/EventEmitter';
 // import { asyncComputed } from '../../utils/AsyncProperty';
 import { Utils } from '../../utils/Utils';
-import { getDefaultRules } from './input';
-import { RuleList, RuleConfigMap } from './interface';
 import { IFormItemConstructor, IItemConfig } from './interface/ItemConfig';
 import { ItemConfigBaseConfig } from './ItemConfigBaseConfig';
 
@@ -85,13 +83,12 @@ export class ItemConfigBase<V, FM = any> extends ItemConfigBaseConfig<V, FM> imp
 
   optionsInited = false
   @action.bound setConfig(baseConfig: IFormItemConstructor<FM, V>, strict?: boolean) {
-    const isChange = this.setBaseConfig(baseConfig, strict)
+    const isChange = this.setBaseConfig({...baseConfig}, strict)
     isChange && this.registerObservables(baseConfig)
   }
 
   @action.bound init(initModel: IFormItemConstructor<FM, V>, form: IKeyValueMap, componentProps = {}) {
     this.setConfig(initModel)
-    this.setForm(form)
     this.componentProps = componentProps
   }
 
@@ -105,96 +102,13 @@ export class ItemConfigBase<V, FM = any> extends ItemConfigBaseConfig<V, FM> imp
   }
 
   @computed.struct get currentValue() {
-    const v = this.parentConfig ? get((this.parentConfig as any).currentComponentValue, this.keyInnerCode) : get(this.formSource || {}, this.code)
+    const v = this.parentConfig 
+      ? get((this.parentConfig as any).currentComponentValue, this.keyInnerCode) 
+      : this.currentValueFromStore
     return toJS(v)
   }
 
-
-  // @observable searchKeyWord;
-  // @action.bound setNextSearch(keyWord) {
-  //   if (!Utils.likeArray(this.searchKeyWord, keyWord)) {
-  //     this.searchKeyWord = keyWord
-  //   }
-  // }
-
-  @computed get remoteMethod() {
-    if (Utils.isFunction(this.i.remoteMethod)) {
-      return async (keyWord: string, form?: any) => {
-        const r = await this.i.remoteMethod(keyWord, this.form, this)
-        // console.log('remoteSearch get', keyWord, r, this.i.remoteMethod)
-        return r
-      }
-    } else if (this.type === 'search') {
-      return async (keyWord: string, form?: any) => {
-        return this.options
-      }
-    } else {
-      return async (keyWord: string, form?: any) => {
-        return this.options
-      }
-    }
-  }
-
-  get remoteOptions(): Promise<any[]> | any[] {
-    return this.remoteMethod ? this.remoteSearchBySearchName(this.searchName) : this.options
-  }
-
-  @autobind async remoteSearchBySearchName(keyWordStr: string) {
-    if (Utils.isString(keyWordStr)) {
-      return await this.remoteSearch(keyWordStr.split(','))
-    }
-    return await this.remoteSearch(keyWordStr as any)
-  }
-  @autobind async remoteSearch(keyWord: string[]) {
-    const { remoteMethod, multiple } = this;
-    let nextOptions: Option[] = []
-    if (Utils.isFunction(remoteMethod)) {
-      // runInAction(() => this.setLoading(true)) 
-      if (multiple) {
-        const keyWordArr: string[] = Utils.zipEmptyData(Utils.castArray(keyWord));
-        if (keyWordArr.length > 0) {
-          try {
-            await Promise.all(map(keyWordArr, async keyWord => {
-              // console.log('keyWord', keyWord)
-              // console.log('remoteSearch start', keyWord)
-              const data = await remoteMethod(keyWord, this.form);
-              nextOptions.push(...data)
-              return data
-            })) //.concat([Utils.waitingPromise(100, true)]))
-          } catch (e) {
-            throw e;
-          }
-          // console.log('resList', keyWordArr, this.i.label, resList)
-        }
-      } else {
-        nextOptions = await remoteMethod(toString(keyWord))
-        // console.log(this.i.label, 'start search', keyWord, nextOptions)
-        // console.log('resList', keyWord, this.i.label, r)
-      }
-      // runInAction(() => this.setLoading(false)) 
-    }
-    return nextOptions;
-  }
-  // searchMethods = (key) => {
-  //   const keyArr = _.castArray(key);
-  //   if (!Utils.isNil(key) && (keyArr!== this.selectedLables) && !Utils.likeArray(keyArr, this.selectedLables)) {
-  //     if (this.itemConfig.allowInput) {
-  //       this.setShadowOption(key)
-  //     }
-  //     this.searchEventEmitter(key)
-  //   }
-  // }
-
-  @computed.struct get rule(): RuleList {
-    const { i, componentProps: componentProps } = this
-    return this.isViewOnly ? [] : (this.getRuleList(i, componentProps) || [])
-  }
-  @action.bound setRule(v: RuleList) {
-    if (this.i.rule !== v)
-      this.i.rule = v
-  }
-
-  validateHandler = (value: any, strict: boolean = false) => {
+  @autobind validateHandler(value: any, strict: boolean = false) {
     return new Promise((resolve, reject) => {
       const resultList = []
       const ruleList = this.rules.filter((rule) => (rule.strict && strict) || (!rule.strict && !strict))
@@ -220,13 +134,6 @@ export class ItemConfigBase<V, FM = any> extends ItemConfigBaseConfig<V, FM> imp
     })
   }
 
-  @computed get allowCreate(): boolean | ((data: any, form?: any) => Option) {
-    return this.getComputedValue('allowCreate') || false
-  }
-  @computed get allowInput(): boolean {
-    return this.getComputedValue('allowInput') || (this.type == 'search' && !this.multiple && this.allowCreate)
-  }
-
   @action updateVersion() {
     this.$version = this.$version + 1
   }
@@ -243,117 +150,6 @@ export class ItemConfigBase<V, FM = any> extends ItemConfigBaseConfig<V, FM> imp
   onValidate(callback: () => void) {
     if (Utils.isFunction(callback))
       this.onValidateHandler = callback
-  }
-
-  @computed get requiredRule() {
-    const { required } = this
-    if (required) {
-      if (Utils.isObject(required) && Utils.isFunction((required as any).validator)) {
-        const { validator } = this.required as any
-        return Object.assign({}, this.required, { validator: this.shadowRuleRegister(validator) })
-      }
-      return {
-        required: true,
-        validator: this.shadowRuleRegister(
-          Utils.isFunctionFilter(this.required,
-            (rule: any, value: any, callback: any) => {
-              // value = Utils.isNotEmptyValueFilter(value, this.form[this.code])
-              if (Utils.isEmptyData(trim(value)) || (this.type === 'number' && value == 0)) {
-                return callback(new Error(this.requiredMessage || `[${this.label}]不能为${this.type === 'number' ? '0' : '空'}！`))
-              }
-              return callback();
-            })),
-        trigger: this.i.type === 'check' ? 'none' : (this.i.type == 'select' ? 'change' : 'blur') //i.type == 'select' ? 'blur' : 'change'
-      }
-    }
-  }
-
-  @autobind shadowRuleRegister(validator: any) {
-    return (rule: any, value: any, callback: { (arg0: any): void; (): void; }) => {
-      return validator(rule, value, (error: { message: any; }) => {
-        if (isError(error) || Utils.isNotEmptyString(error)) {
-          if (!this.componentProps.$store || !this.componentProps.$store.state.taskDispatcher.shadowRequired) {
-            return callback(error)
-          } else {
-            // console.log('will catch shadowform error')
-            this.componentProps.$store.dispatch('catchShadowFormError', Utils.isStringFilter(this.i.requiredMessage, error.message, error)).then(() => {
-              // console.log('catch shadowform error')
-            })
-          }
-        }
-        return callback()
-      })
-    }
-  }
-
-  @autobind getRuleList(i: IKeyValueMap<any>, componentProps: IKeyValueMap<any>): RuleList | undefined {
-    const iRules = []
-    // if (this.required) {
-    if (this.requiredRule) {
-      iRules.push(this.requiredRule)
-    }
-    let ruleGetter = Utils.isFunction(i.rule) ? i.rule(this.form, this) : i.rule;
-    if (Utils.isNotEmptyString(ruleGetter)) {
-      const [ruleName, message] = ruleGetter.split('|')
-      // console.trace(this, this.defaultRule, ruleName, message)
-      const defaultRule = Utils.castComputed(this.defaultRule[ruleName], this.form, this);
-      const defaultRuleList = Utils.castObjectArray(defaultRule, false);
-      const isTrigger = ['change', 'blur', 'none'].includes(message);
-      if (Utils.isNotEmptyString(message)) {
-        forEach(defaultRuleList, i =>
-          set(i, isTrigger ? 'trigger' : 'message', message)
-        )
-      }
-      iRules.push(...defaultRuleList)
-    } else if (Utils.isNotEmptyArray(ruleGetter)) {
-      iRules.push(...ruleGetter)
-    } else if (isRegExp(ruleGetter)) {
-      iRules.push({
-        validator(rule: any, value: any, callback: { (): void; (arg0: Error): void; }) {
-          return ruleGetter.test(value) ? callback() : callback(new Error())
-        },
-        message: i.regExpMessage || `请正确输入${i.label}！`,
-        trigger: 'blur'
-      })
-    } else if (Utils.isNotEmptyObject(ruleGetter)) {
-      iRules.push(ruleGetter)
-    }
-    if (Utils.isNotEmptyArray(componentProps.rules)) {
-      iRules.push(...componentProps.rules)
-    }
-    // _.forEach(iRules, config => {
-    //   const { validator, required } = config
-    //   if(_.isFunction(validator) && required)
-    //     config.validator = this.shadowRuleRegister(validator)
-    // })
-    // iRules.forEach(config=>{
-    //   const { validator, message } = config
-    //   config.nativeValidator = validator;
-    //   if(_.isFunction(validator))
-    //     config.validator = (r, values, callback) => {
-    //       validator(r, values, (e) => {
-    //         if(!this.hidden && (!this.componentProps.$store || !this.componentProps.$store.state.taskDispatcher.shadowRequired) && _.isError(e)) {
-    //           // Utils.$message.error(e.message || message)
-    //           // console.log(this.code, e, config)
-    //           this.onValidateHandler(this.code, false, e.message || message, this, config)
-    //         } else {
-    //           this.onValidateHandler(this.code, true, null, this, config)
-    //         }
-    //         Reflect.apply(callback, this, [e])
-    //       })
-    //     }
-    // })
-    if (this.i.type == 'select' || (this.i.type === 'search' && this.strictSearch)) {
-      iRules.push({
-        validator: this.optionsMatcher,
-        trigger: 'change',
-        get strict(): boolean {
-          return true;
-        }
-      })
-    }
-    // i.code === 'planDischargeDate' && console.log('get rule', this, $version, iRules)
-    return Utils.isNotEmptyArrayFilter(iRules, undefined)
   }
 
   @autobind async optionsMatcher(r: any, values: any, callback: any) {
@@ -382,91 +178,6 @@ export class ItemConfigBase<V, FM = any> extends ItemConfigBaseConfig<V, FM> imp
       return this.remoteOptions;
     }
     return this.options;
-  }
-
-  @computed get defaultRule() {
-    return Object.assign(ItemConfigBase.getDefaultRules(this, this.componentProps), getDefaultRules(this))
-  }
-  static getDefaultRules<V, FM>(itemConfig: IItemConfig<FM, V>, configStore: any): RuleConfigMap {
-    return {
-      phone: {
-        validator: (rule: any, value: any, callback: any) => {
-          // value = Utils.isNotEmptyValueFilter(value, this.form[this.code])
-          // console.log('check', value)
-          // console.log(rule, value, l,a, this.itemPipe.itemConfig.rule)
-          if (Utils.isEmptyValue(value)) {
-            return callback();
-          }
-          const reg = /^1[3|4|5|7|8|9][0-9]\d{8}$/
-          if (!reg.test(value + "")) {
-            // console.log()
-            return callback(new Error('请输入正确的手机号！'));
-          }
-          return callback();
-        },
-        // pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
-        trigger: 'blur',
-        message: '请录入正确的手机号！'
-      },
-      'chejiahao': [{
-        validator: (rule: any, value: any, callback: any) => {
-          if (Utils.isEmptyValue(value)) {
-            return callback();
-          }
-          if (Utils.isString(value) && value.length === 17) {
-            return callback(new Error());
-          }
-          return callback();
-        },
-        // pattern: /^1[3|4|5|7|8][0-9]\d{8}$/,
-        trigger: 'blur',
-        message: '车架号只允许17位'
-      }],
-      plusOnly: (form: any, config: { label?: any; }) => [{
-        validator($: any, value: string, callback: { (arg0: Error): void; (): void; }) {
-          // console.log(v,b)
-          if (Utils.isNotEmptyValue(value) && (Utils.isNumberFilter(parseFloat(value)) || 0) <= 0) {
-            return callback(new Error())
-          }
-          return callback();
-        },
-        tirgger: 'change',
-        message: `${config.label}必须大于0！`
-      }],
-      licanseNo: (form: { licenseType: any; }, config: any) => [{
-        validator: (rule: any, value: string, callback: { (): void; (): void; (arg0: Error): void; (): void; }) => {
-          // console.log('licenseNo', value)
-          if (Utils.isNotEmptyString(value)) {
-            if (trim(value) === '*' || value.indexOf('新车') > -1 || (itemConfig.code !== 'licanseNo' && value === '车外')) {
-              return callback()
-            } else {
-              const selected: Option = Utils.getOptionsByValue(get(configStore, '$store.state.taskDispatcher.licenseTypeList'), form.licenseType)
-              // console.log(form.licenseType, selected)
-              const res = (selected && !/警|军队|其它/ig.test(selected.label as string))
-                ? /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领]{1}[A-Z]{1}[A-Z0-9警]{5,6}$/
-                : /^[京津沪渝冀豫云辽黑湘皖鲁新苏浙赣鄂桂甘晋蒙陕吉闽贵粤青藏川宁琼使领A-Z]{1}[A-Z]{1}[A-Z0-9警]{5,6}$/;
-              if (res.test(value)) {
-                return callback()
-              } else
-                return callback(new Error());
-            }
-          }
-          return callback()
-        },
-        trigger: 'blur',
-        message: '请录入正确的车牌号！'
-      }],
-      idCard: [{
-        pattern: /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/,
-        trigger: 'blur',
-        message: '请录入正确的身份证号！'
-      }],
-      commonCode: [{
-        pattern: /(^([a-zA-z0-9].*)$)/,
-        trigger: 'blur',
-        message: `请录入正确的[${itemConfig.label}]！`
-      }]
-    }
   }
 }
 

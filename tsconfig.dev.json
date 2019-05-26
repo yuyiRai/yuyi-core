@@ -1,17 +1,15 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "module": "esnext",
+    "target": "es5",
+    "jsx": "react",
     "outDir": "./lib",
     "declarationDir": "./lib",
     "allowJs": false,
     "declaration": true,
-    "module": "commonjs",
-    "target": "es5",
-    "sourceMap": true,
     "noEmit": false,
-    "watch": true,
-    "jsx": "react",
-    "skipLibCheck": true,
-    "isolatedModules": false
+    "isolatedModules": false,
+    "watch": true
   }
 }

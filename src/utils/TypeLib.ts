@@ -141,5 +141,3 @@ export const typeFilterUtils: ITypeFilterUtils = reduce<IKeyValueMap<(v: any) =>
   }, 
   {}
 );
-
-// const a = typeFilterUtils.isArrayFilter<string>(1);

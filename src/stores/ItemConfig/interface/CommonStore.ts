@@ -1,7 +1,7 @@
 import { EventStoreProvider } from '@/stores/EventStore';
 import { autobind } from 'core-decorators';
 import { Utils } from 'src/utils';
-import { difference, forEach, cloneDeep, get, isNil, keys, set } from 'lodash';
+import { difference, forEach, cloneDeep, get, isNil, keys, set, unset } from 'lodash';
 import { action, autorun, computed, IArrayChange, IArraySplice, IArrayWillChange, IArrayWillSplice, IAutorunOptions, IComputedValue, IInterceptor, IMapDidChange, IMapWillChange, intercept, IObjectDidChange, IObjectWillChange, IObservableArray, IObservableValue, IReactionDisposer, IReactionOptions, IReactionPublic, ISetDidChange, ISetWillChange, isObservableProp, IValueDidChange, IValueWillChange, Lambda, observable, ObservableMap, ObservableSet, observe, reaction, toJS } from "mobx";
 import { createTransformer } from 'mobx-utils';
 
@@ -76,16 +76,29 @@ export abstract class CommonStore<M extends CommonStore = any> extends EventStor
     return this;
   }
 
-  public mapToDiff(map: ObservableMap<any>, source: any, cahce?: any) {
+  protected mapToDiff<T extends object>(map: ObservableMap<any>, source: T, cahce?: T, deepClone?: boolean) {
+    // console.log('map', source)
+    let useCahce = Utils.isObject(cahce)
     const push = difference(keys(source), Array.from(map.keys()));
-    forEach(map.toPOJO(), (value, key) => {
+    forEach(map.toJSON(), (value, key) => {
       if (isNil(source[key])) {
-        map.delete(key);
-      } else if (!Utils.isEqual(source[key], value)) {
+        map.delete(key)
+        if (useCahce) {
+          unset(cahce, key)
+        }
+      } else if (useCahce && !Utils.isEqual(cahce[key], source[key])) {
+        cahce[key] = cloneDeep(toJS(source[key]))
+        map.set(key, source[key]);
+      } else if (!useCahce && !Utils.isEqual(source[key], value)) {
         map.set(key, source[key]);
       }
     });
+    // console.log('map push', source)
     forEach(push, key => {
+      if(useCahce) {
+        cahce[key] = cloneDeep(toJS(source[key]))
+        // console.log('useCahce', source[key], cahce[key])
+      }
       map.set(key, source[key]);
     });
     return map;

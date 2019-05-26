@@ -1,6 +1,6 @@
 import { ItemConfig } from '@/stores';
 import { computed, observable } from 'mobx';
-import { CommonStore } from '../Interface/FormItem';
+import { CommonStore } from '@/stores/ItemConfig/interface';
 import { FormStoreCore } from './FormStoreCore';
 import { autobind } from 'core-decorators';
 
@@ -33,7 +33,7 @@ export class FormItemStoreCore<FM, V> extends CommonStore implements IFormItemSt
   }
   @computed
   public get hasError(): boolean {
-    return this.formStore.hasErrors(this.itemConfig.code);
+    return this.formStore.hasErrors(this.code);
   }
   @autobind
   public setFormStore(formStore: VMFormStore<FM, V>) {

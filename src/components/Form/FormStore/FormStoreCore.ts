@@ -1,12 +1,14 @@
 import { autobind } from 'core-decorators';
-import { action, computed, extendObservable, IKeyValueMap, IMapDidChange, observable, ObservableMap, runInAction } from 'mobx';
+import { action, computed, IKeyValueMap, IMapDidChange, observable, ObservableMap, runInAction, Lambda } from 'mobx';
 import { EventStoreInject } from 'src/stores/EventStore';
+import { unset } from 'lodash'
 import { isNotEmptyArray } from 'src/utils';
 import { FormModel } from '../Interface/FormItem';
 import { IFormItemStoreCore } from "./FormItemStoreBase";
 import { GFormStore } from './GFormStore';
 import { Utils } from 'src/utils';
 import { ConfigInit, ItemConfigGroupStore } from './ItemConfigGroupStore';
+import produce from 'immer';
 
 export type onItemChangeCallback = (code: string, value: any) => void
 
@@ -14,22 +16,65 @@ export type onItemChangeCallback = (code: string, value: any) => void
 export class FormStoreCore<FM extends FormModel, VM extends IFormItemStoreCore = any> extends GFormStore {
   @observable
   configStore: ItemConfigGroupStore<FM> = new ItemConfigGroupStore<FM>(this);
+  formSourceListerner: Lambda;
+
+  @action.bound clearValidate() {
+    this.errorGroup.clear()
+  }
+  @computed get allFormMap() {
+    return GFormStore.formMap
+  }
   constructor(config?: ConfigInit<FM>) {
     super();
-    this.configStore.setConfigSource(config || []);
+    this.setConfig(config)
+    this.observe(this.formMap, change => {
+      // console.log('change', change)
+      if(change.type==='update' || change.type==='add')
+        this.formSource[change.name] = change.newValue
+      if(change.type==='delete')
+        unset(this.formSource, change.name)
+    })
+  }
+  @action.bound setConfig<V>(config: ConfigInit<FM, V>) {
+    this.configStore.setConfigSource(config)
   }
   
   @observable.shallow formMap: ObservableMap<keyof FM, any> = observable.map({}, { deep: false });
-  @observable formSource: FM = {} as FM
-  @observable formSourceTrack: FM[] = []
-  @computed.struct get lastFormSource() {
-    return this.formSourceTrack[this.formSourceTrack.length - 1] || this.formSource
-  }
-  @computed.struct get form(): FM {
-    return extendObservable({}, this.formMap.toPOJO()) as FM;
+  @observable.ref lastFormSource: FM = {} as FM
+  @observable.struct formSource: FM = {} as FM
+
+  @action.bound setForm(formSource: FM): void {
+    this.lastFormSource = produce(this.lastFormSource, cache => {
+      this.mapToDiff(this.formMap, formSource, cache)
+    })
+    this.clearValidate()
   }
 
-  
+  @action.bound replaceForm(formMap: ObservableMap<string, any>) {
+    this.formMap = formMap;
+  }
+  @action.bound registerFormKey(target: any, deep: boolean = false) {
+    for (const code of this.configStore.itemCodeList) {
+      this.registerKey(target, code, deep)
+    }
+    for (const code in this.configStore.itemCodeNameMap) {
+      const nameCode = this.configStore.itemCodeNameMap[code]
+      this.registerGet(target, nameCode, () => {
+        return this.getValueWithName(code, nameCode)
+      })
+    }
+    return
+  }
+  @autobind getValueWithName(code: string, nameCode: string) {
+    const itemConfig = this.configStore.getItemConfig(code)
+    const { optionsStore } = itemConfig
+    // debugger
+    if (optionsStore && Utils.isNotEmptyString(nameCode) && nameCode !== code) {
+      return optionsStore.selectedLablesStr;
+    }
+    return undefined
+  }
+
   @observable formItemStores: IKeyValueMap<IFormItemStoreCore<FM, any>> = {}
   @action.bound registerItemStore<V>(code: string, init: () => VM): IFormItemStoreCore<FM, V> {
     // console.log('registerForm', form)

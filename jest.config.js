@@ -1,52 +1,62 @@
-const config = {
-  preset: 'ts-jest',
-  testEnvironment: 'node',
-  // setupFiles: ['<rootDir>/src/global'],
-  moduleNameMapper: {
+module.exports = {
+  "collectCoverageFrom": [
+    "src/**/*.{js,jsx,ts,tsx}",
+    "!src/**/*.d.ts"
+  ],
+  "setupFiles": [
+    "react-app-polyfill/jsdom"
+  ],
+  "setupFilesAfterEnv": [],
+  "testMatch": [
+    "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
+    "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
+  ],
+  "preset": 'ts-jest',
+  "testEnvironment": 'node',
+  "testEnvironment": "jest-environment-jsdom-fourteen",
+  "transform": {
+    "^.+\\.(js|jsx|ts|tsx)$": "<rootDir>/node_modules/babel-jest",
+    "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+    "^(?!.*\\.(js|jsx|ts|tsx|css|json)$)": "<rootDir>/config/jest/fileTransform.js",
+    "^.+\\.(ts|tsx)$": "ts-jest"
+  },
+  "transformIgnorePatterns": [
+    "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|ts|tsx)$",
+    "^.+\\.module\\.(css|sass|scss)$"
+  ],
+  "modulePaths": [
+    'node_modules'
+  ],
+  "moduleNameMapper": {
+    "^react-native$": "react-native-web",
+    "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
     '^@/(.*)$': '<rootDir>/src/$1',
-    '^src/(.*)$': '<rootDir>/src/$1'
+    '^src/(.*)$': '<rootDir>/src/$1',
+    '^src/(.*)$': '<rootDir>/src/$1',
+  },
+  "moduleFileExtensions": [
+    "web.js",
+    "js",
+    "web.ts",
+    "ts",
+    "web.tsx",
+    "tsx",
+    "json",
+    "web.jsx",
+    "jsx",
+    "node"
+  ],
+  "watchPlugins": [
+    "jest-watch-typeahead/filename",
+    "jest-watch-typeahead/testname"
+  ],
+  "globals": {
+    "ts-jest": {
+      "compiler": 'ttypescript'
+    }
   },
   // "snapshotSerializers": [
   //   "<rootDir>/node_modules/jest-serializer-enzyme",
   //   "<rootDir>/node_modules/jest-serializer-vue"
-  // ],
-  transform: {
-    "^.+\\.(ts|tsx)$": "ts-jest"
-  },
-  globals: {
-    "ts-jest": {
-      compiler: 'ttypescript'
-    }
-  }
+  // ]
 }
-module.exports = function override(c){
-  const keys = ['moduleNameMapper', 'snapshotSerializers', 'setupFiles', 'globals']
-  for(const key of keys) {
-    if(c[key] instanceof Array && config[key] instanceof Array) {
-      c[key] = [ ...c[key], ...config[key] ]
-    }
-    if(c[key] instanceof Object && config[key] instanceof Object) {
-      c[key] = { ...c[key], ...config[key] }
-    }
-    if(!c[key]) {
-      c[key] = config[key]
-    }
-  }
-  c.preset = config.preset
-  // c.moduleFileExtensions = c.moduleFileExtensions.sort((a,b) => {
-  //   if(a.indexOf('\.ts')) {
-  //     return 1
-  //   }
-  //   if(b.indexOf('\.ts')) {
-  //     return -1
-  //   }
-  //   return 0
-  // })
-  // c.transform = {...config.transform, ...c.transform}
-  // // const a = c.transform['^.+\\.(js|jsx|ts|tsx)$']
-  // // delete c.transform['^.+\\.(js|jsx|ts|tsx)$']
-  // // c.transform['^.+\\.(js|jsx)$'] = a
-  console.log(c)
-  return c
-}
-module.exports.config = config;

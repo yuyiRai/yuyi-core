@@ -52,6 +52,7 @@ export const StyledSelect = styled(Select).attrs(
     dropdownMenuStyle: { textAlign: props.style.textAlign }
   })
 )`
+  min-height: 32px;
   & .ant-select-selection__rendered > * { 
     text-align: ${props => props.style.textAlign};
   }

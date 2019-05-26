@@ -2,7 +2,7 @@ import { lowerFirst, reduce } from 'lodash';
 import { IKeyValueMap } from 'mobx';
 import { IReactComponent } from 'mobx-react';
 import React from 'react';
-import ErrorBoundary from 'react-error-boundary';
+import ErrorBoundary, { FallbackProps } from 'react-error-boundary';
 import { VNode } from 'vue';
 import Utils from '.';
 
@@ -11,7 +11,7 @@ const myErrorHandler = (error: Error, componentStack: string) => {
   // E.g. log to an error logging client here
   // console.log(error, componentStack)
 };
-const SlotErrorInfo = ({ componentStack, error }) => (
+const SlotErrorInfo: React.FunctionComponent<FallbackProps> = ({ componentStack, error }: FallbackProps) => (
   <div>
     <p><strong>Oops! An error occured!</strong></p>
     <p>Here’s what we know…</p>

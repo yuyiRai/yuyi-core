@@ -10,8 +10,8 @@ import { themes } from '@storybook/theming';
 
 // import '@storybook/addon-console';
 // automatically import all files ending in *.stories.tsx
-const req = require.context("../src", true, /.stories.tsx$/);
-const req2 = require.context("../src", true, /.vueStories.tsx$/);
+const req = require.context("../src", true, /\.stories\.tsx$/);
+const req2 = require.context("../src", true, /\.vueStories\.tsx$/);
 addParameters({
   backgrounds: [
     { name: 'twitter', value: '#00aced', default: true },

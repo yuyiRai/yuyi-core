@@ -3,7 +3,7 @@ import { autobind } from 'core-decorators';
 import { cloneDeep, findIndex, map, pullAll } from 'lodash';
 import { action, computed, extendObservable, observable, runInAction } from 'mobx';
 import { createTransformer, ITransformer } from 'mobx-utils';
-import Utils, { Option, OptionBase } from '../../utils';
+import Utils, { Option, OptionBase } from '@/utils';
 import { IItemConfig } from './interface';
 
 export interface PathOption extends Option {

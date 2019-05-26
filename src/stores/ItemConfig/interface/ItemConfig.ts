@@ -1,8 +1,8 @@
 import { IEventStoreBase } from "@/stores/EventStore";
 import { IKeyValueMap } from "mobx";
 import { ITransformer } from "mobx-utils";
-import { FormStore } from "../../../components/Form/FormStore";
-import { OptionBase } from "../../../utils";
+import { FormStore } from "@/components/Form/FormStore";
+import { OptionBase } from "@/utils";
 import { FilterType, IFormValueTransform, IFormValueTransformHandler, FilterTypeKey } from "../input";
 import { IDisplayConfig, IDisplayConfigCreater } from "../ItemDisplayConfig";
 import { IRuleStore, IRuleStoreCreater } from "../RuleConfigStore";
@@ -108,7 +108,6 @@ export interface IItemConfig<FM = FormModel, VALUE = any, CVALUE = VALUE> extend
   i: IFormItemConstructor<FM, VALUE>;
   formStore: FormStore<FM>;
   formSource: FM;
-  form: FM;
   currentValue?: any;
   currentComponentValue?: any;
   setOptions(options: ComputedProperty<FM, OptionBase[]>, source?: string): void;

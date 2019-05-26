@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import install from './install'
-import { demo }  from './demo'
+// import { demo }  from './demo'
 import moment from 'moment'
 // import 'tsx-control-statements/index.d'
 import './global'
@@ -14,4 +14,4 @@ const { VuePlugin } = require('vuera')
 Vue.use(VuePlugin)
 export default install;
 
-demo()
+// demo()

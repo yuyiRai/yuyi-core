@@ -1,7 +1,7 @@
 import { autobind } from 'core-decorators';
 import { action, computed, IKeyValueMap, observable } from 'mobx';
-import { OptionBase } from '../../utils';
-import { Utils } from '../../utils/Utils';
+import { OptionBase, Option } from '@/utils';
+import { Utils } from '@/utils/Utils';
 import { FormItemType, IItemConfig, RuleList } from './interface';
 import { ItemConfigBaseConfigModel } from './ItemConfigBaseConfigModel';
 import { RuleConfig } from './RuleConfigStore';
@@ -29,6 +29,14 @@ export class ItemConfigBaseConfig<V, FM> extends ItemConfigBaseConfigModel<V, FM
   @computed.struct
   public get placeholder(): string {
     return `请${['search', 'select', 'selectTree', 'cascader'].includes(this.type) && !this.allowInput ? '选择' : '输入'}${this.label}`
+  }
+
+
+  @computed get allowCreate(): boolean | ((data: any, form?: any) => Option) {
+    return this.getComputedValue('allowCreate') || false
+  }
+  @computed get allowInput(): boolean {
+    return this.getComputedValue('allowInput') || (this.type == 'search' && !this.multiple && this.allowCreate)
   }
 
   @computed.struct

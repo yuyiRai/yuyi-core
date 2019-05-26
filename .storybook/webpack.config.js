@@ -14,7 +14,7 @@ function webpack(config) {
       }]
     }),
     resolve: Object.assign({}, config.resolve, {
-      extensions: [...config.resolve.extensions, '.vue'],
+      extensions: [...config.resolve.extensions, '.vue', 'ts'],
       alias: Object.assign({}, config.resolve.alias, {
         vue$: require.resolve('vue/dist/vue.esm.js')
       })

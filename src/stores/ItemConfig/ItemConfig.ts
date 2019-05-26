@@ -10,11 +10,11 @@ import { DisplayConfig } from './ItemDisplayConfig';
 import { OptionsStore } from './OptionsStore';
 import { SearchStore } from './SearchStore';
 import { Utils } from 'src/utils';
-export const Ke = keys<DisplayConfig<any>>();
+// export const Ke = keys<DisplayConfig<any>>();
 export interface IPropertyChangeEvent<T = any> extends IValueDidChange<T> {
   name: string;
 }
-
+// export const a = keys<ItemConfig>()
 @EventStoreInject(['options-change'])
 export class ItemConfig<V = any, FM = FormModel> extends ItemConfigBase<V, FM> implements IItemConfig<FM, V> {
 
@@ -143,7 +143,7 @@ export class ItemConfig<V = any, FM = FormModel> extends ItemConfigBase<V, FM> i
     super(initModel, form, componentProps)
     this.setFormStore(formStore)
     this.autorun(() => {
-      if (this.isComputedEnable && this.computed !== this.currentValue) {
+      if (this.formStore && this.isComputedEnable && this.computed !== this.currentValue) {
         this.formStore.setFormValue(this.code, this.computed)
       }
     })
@@ -151,7 +151,6 @@ export class ItemConfig<V = any, FM = FormModel> extends ItemConfigBase<V, FM> i
       if (children !== false) {
         for (const key in children) {
           if (this.childrenConfig[key] instanceof ItemConfig) {
-            this.childrenConfig[key].setForm(this.formSource)
             this.childrenConfig[key].setFormStore(this.formStore)
           } else {
             this.childrenConfig[key] = new ItemConfig(this.children[key], this.formSource, this.componentProps, this.formStore)
