@@ -9,7 +9,7 @@ import Utils from '.';
 const myErrorHandler = (error: Error, componentStack: string) => {
   // Do something with the error
   // E.g. log to an error logging client here
-  // console.log(error, componentStack)
+  console.log(error, componentStack)
 };
 const SlotErrorInfo: React.FunctionComponent<FallbackProps> = ({ componentStack, error }: FallbackProps) => (
   <div>

@@ -15,7 +15,6 @@ export function filterToValue(v: any, defaultValue?: any) {
 export const objToForm = (model: IKeyValueMap, store: FormStore, form: WrappedFormUtils) => {
   let target = {}
   const r = {}
-    // console.log('formValueTransform', store.formValueTransform)
     for (const config of store.configStore.configList) {
       const v = Utils.toJS(get(model, config.code))
       const value = store.getF2VValue(config.code, filterToValue(v, config.value))

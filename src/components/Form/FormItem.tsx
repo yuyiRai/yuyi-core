@@ -82,7 +82,7 @@ export class FormItemStore<FM = any, V = any> extends FormItemStoreCore<FM, V> i
 
   @autobind dispose() {
     this.ruleWatcher()
-    this.validateReset()
+    this.validateReset && this.validateReset()
   }
 
   @computed get fieldDecorator() {
