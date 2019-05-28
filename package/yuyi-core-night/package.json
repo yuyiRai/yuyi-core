@@ -4,7 +4,10 @@
   "description": "",
   "author": "https://github.com/yuyiRai",
   "license": "MIT",
-  "repository": "https://github.com/yuyiRai/yuyi-core-night",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuyiRai/yuyi-core-night.git"
+  },
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
