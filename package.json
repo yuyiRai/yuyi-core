@@ -1,0 +1,27 @@
+{
+  "name": "yuyi-core",
+  "version": "0.0.0",
+  "license": "MIT",
+  "private": true,
+  "main": "package/yuyi-core-night/lib/index.js",
+  "module": "package/yuyi-core-night/lib/esm/index.js",
+  "typings": "package/yuyi-core-night/lib/esm/index.d.js",
+  "workspaces": [
+    "package/*"
+  ],
+  "scripts": {
+    "serve": "yarn workspace yuyi-core-react-demo run start",
+    "dev": "yarn workspace yuyi-core-utils run dev",
+    "dev2": "yarn workspace yuyi-core-night run dev",
+    "build": "yarn run build-utils && yarn run build-night",
+    "build-night": "yarn workspace yuyi-core-night run build",
+    "start-night": "yarn workspace yuyi-core-night run start",
+    "build-utils": "yarn workspace yuyi-core-utils run build"
+  },
+  "files": [
+    "dist",
+    "build",
+    "lib",
+    "src"
+  ]
+}
