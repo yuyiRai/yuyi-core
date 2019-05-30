@@ -3,7 +3,7 @@
   "version": "0.10.17",
   "description": "yuyi",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "main": "package/yuyi-core-night/lib/cjs/index.js",
   "module": "package/yuyi-core-night/lib/esm/index.js",
   "typings": "package/yuyi-core-night/lib/esm/index.d.js",
