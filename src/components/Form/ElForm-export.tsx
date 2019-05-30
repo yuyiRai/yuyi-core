@@ -54,10 +54,10 @@ export class RCommonForm2 extends React.PureComponent<any, any> {
       prevState.lastModel = nextProps.model
       update = true
     }
-    if (prevState.lastConfig!==nextProps.config) {
+    if (prevState.lastConfig !== nextProps.config) {
       logger.push('getDerivedStateFromProps chgange2');
       // if(!prevState.config)
-        prevState.config = Utils.cloneDeep(nextProps.config)
+      prevState.config = Utils.cloneDeep(nextProps.config)
       prevState.lastConfig = nextProps.config
       update = true
     }
@@ -69,7 +69,7 @@ export class RCommonForm2 extends React.PureComponent<any, any> {
   }
   public store: FormStore;
   @autobind getStoreRef(store: FormStore) {
-    if(this.props.storeRef) {
+    if (this.props.storeRef) {
       this.props.storeRef(store)
     }
     this.store = store
@@ -82,7 +82,7 @@ export class RCommonForm2 extends React.PureComponent<any, any> {
       <span>
         <Slot name='w' />
         <GlobalStyle />
-        { Utils.isNotEmptyArray(config) &&
+        {Utils.isNotEmptyArray(config) &&
           <CommonForm {...other} model={model} onItemChange={this.onChange} storeRef={this.getStoreRef}>
             <FormGroup config={config} >{children}</FormGroup>
           </CommonForm>

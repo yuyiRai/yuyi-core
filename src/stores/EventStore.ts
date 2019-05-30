@@ -31,10 +31,8 @@ export interface IEventStore extends IEventStoreBase, EventEmitter<any> {
 export class EventStore extends EventEmitter<any> implements IEventStore {
   private eventMap = new WeakMap<any, WeakMap<any, Subscription>>()
   // public static injectedValidEventNames: string[];
-  public eventNames: Array<string> = []
-  constructor(eventNames: string[]) {
+  constructor(public eventNames: string[]) {
     super()
-    this.eventNames = eventNames
   }
   /**
    * 是否是合法事件名

@@ -14,8 +14,8 @@ export interface IEventStore extends IEventStoreBase, EventEmitter<any> {
     isValidEventName(eventName: string): boolean;
 }
 export declare class EventStore extends EventEmitter<any> implements IEventStore {
+    eventNames: string[];
     private eventMap;
-    eventNames: Array<string>;
     constructor(eventNames: string[]);
     /**
      * 是否是合法事件名

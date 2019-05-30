@@ -57,8 +57,7 @@
         "libraryDirectory": "dist/npm/es5/src",
         "camel2DashComponentName": true,
         "style": false
-      },
-      // {"transform":"ts-react-hot-transformer","after":true}
+      }
     ],
     "lib": ["es6", "dom", "dom.iterable", "scripthost"],
     "typeRoots": [
@@ -87,12 +86,6 @@
     "sourceMap": true,
     "skipLibCheck": true,
     "isolatedModules": true
-  },
-  "paths": {
-    "src/*": ["./*"],
-    "@/*": ["./*"],
-    "src": ["./"],
-    "@": ["./"]
   },
   "exclude": [
     "node_modules",
