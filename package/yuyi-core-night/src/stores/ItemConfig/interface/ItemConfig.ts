@@ -1,7 +1,7 @@
 import { IEventStoreBase } from "@/stores/EventStore";
 import { IKeyValueMap } from "mobx";
 import { ITransformer } from "mobx-utils";
-import { FormStore } from "@/components/Form/FormStore";
+import { FormStore } from "@/stores/FormStore";
 import { OptionBase } from "@/utils";
 import { FilterType, IFormValueTransform, IFormValueTransformHandler, FilterTypeKey } from "../input";
 import { IDisplayConfig, IDisplayConfigCreater } from "../ItemDisplayConfig";
@@ -17,14 +17,16 @@ export class A implements INameKeyComponent<"text">{
   $nameKey: "text" = "text";
 }
 
-export type FormItemType = "" | "text" | "textArea" | "textarea"
-  | 'number'
-  | 'date' | 'dateTime' | 'dateToDate'
-  | 'select' | 'search' | 'selectTree'
-  | 'check' | 'radio' | 'radioOne'
-  | 'checkOne' | 'switch' | 'address' | 'cascader' | undefined | null | never | 'group'
+export type FormItemTypePublic = "text" | "textArea" | "textarea"
+| 'number'
+| 'date' | 'dateTime' | 'dateToDate'
+| 'select' | 'search' | 'selectTree'
+| 'check' | 'radio' | 'radioOne'
+| 'checkOne' | 'switch' | 'address' | 'cascader' | 'group'
 
-export type FormModel<M extends object = IKeyValueMap> = M
+export type FormItemType = "" | FormItemTypePublic | undefined | null | never
+
+export type FormModel<M extends IKeyValueMap = IKeyValueMap> = M
 
 export type ValueType<T = object> = T
 

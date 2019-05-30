@@ -1,6 +1,6 @@
-import { FormStore } from '@/components/Form/FormStore';
+import { FormStore } from '@/stores/FormStore';
 import { EventStoreInject } from '@/stores/EventStore';
-import { Utils } from '@/utils/Utils';
+import { Utils } from '@/utils';
 import { autobind, override } from 'core-decorators';
 import { get } from 'lodash';
 import { action, computed, IKeyValueMap, observable, toJS } from 'mobx';

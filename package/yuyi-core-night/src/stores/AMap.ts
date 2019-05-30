@@ -1,5 +1,5 @@
 import AMapJS from 'amap-js';
-import { Utils } from '../utils/Utils'
+import { Utils } from '../utils'
 import { autobind } from 'core-decorators';
 // import { Debounce } from 'lodash-decorators';
 

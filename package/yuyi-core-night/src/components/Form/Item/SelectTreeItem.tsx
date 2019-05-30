@@ -2,7 +2,7 @@ import * as React from 'react';
 import TreeSelect, { TreeSelectProps } from 'antd/lib/tree-select'
 import 'antd/lib/tree-select/style/css'
 import { OFormItemCommon } from '../Interface/FormItem';
-import { Utils } from 'src/utils';
+import { Utils } from '@/utils';
 import { commonInjectItem } from "./commonInjectItem";
 // import Utils from '../../../utils';
 // import classnames from 'classnames'

@@ -10,7 +10,7 @@ import { ElDatePickerItem } from './VueItem/DateItem'
 import moment from 'moment';
 import zh_CN from 'antd/lib/date-picker/locale/zh_CN';
 import 'moment/locale/zh-cn';
-import Utils from '../../../utils';
+import Utils from '@/utils';
 import { ItemConfig } from '../../../stores';
 
 moment.locale('zh-cn');

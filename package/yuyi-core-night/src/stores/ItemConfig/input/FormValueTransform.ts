@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { set } from 'lodash';
-import Utils, { computed, observable } from '../../../utils';
-import { DateFormatter, EDateFormatter, parseTime } from '../../../utils/ParseUtils';
+import Utils, { computed, observable } from '@/utils';
+import { DateFormatter, EDateFormatter, parseTime } from '@/utils';
 import { FormModel } from '../interface';
 
 export type FilterTypeKey<K = string> = 'group' | 'path' | 'dateTime' | 'date' | 'dateToDate' | K

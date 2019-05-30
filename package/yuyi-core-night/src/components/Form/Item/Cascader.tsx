@@ -3,7 +3,7 @@ import Cascader, { CascaderProps } from 'antd/lib/cascader'
 import 'antd/lib/cascader/style/css'
 import { OFormItemCommon } from '../Interface/FormItem';
 import { commonInjectItem } from "./commonInjectItem";
-import { Utils } from 'src/utils';
+import { Utils } from '@/utils';
 // import Utils from '../../../utils';
 // import classnames from 'classnames'
 // import { VueInReact } from 'vuera'

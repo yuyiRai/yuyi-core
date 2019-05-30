@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { observable, computed, action, runInAction } from 'mobx';
 import { autobind } from 'core-decorators';
-import Utils, { Option } from '../../utils';
+import Utils, { Option } from '@/utils';
 import { findIndex, cloneDeep, pullAll } from 'lodash'
 import { createTransformer, ITransformer } from 'mobx-utils'
 import { IItemConfig } from '../ItemConfig/interface';

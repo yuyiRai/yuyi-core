@@ -1,9 +1,9 @@
 import { autobind } from 'core-decorators';
 import { forEach, isRegExp, set } from 'lodash';
 import { action, computed, observable, ObservableMap } from "mobx";
-import { FormStoreCore } from '@/components/Form/FormStore/FormStoreCore';
+import { FormStoreCore } from '@/stores/FormStore/FormStoreCore';
 // import { asyncComputed } from '../../utils/AsyncProperty';
-import { Utils } from '@/utils/Utils';
+import { Utils } from '@/utils';
 import { getDefaultRules } from './input/Date';
 import { IItemConfig } from "./interface";
 import { CommonStore } from "./interface/CommonStore";

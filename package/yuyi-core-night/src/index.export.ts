@@ -5,7 +5,7 @@ import install from './install'
 import './global'
 export * from './global'
 export * from './stores'
-export * from './utils'
+export * from 'yuyi-core-utils'
 export * from './components'
 // import 'element-theme-default/lib/message.css'
 

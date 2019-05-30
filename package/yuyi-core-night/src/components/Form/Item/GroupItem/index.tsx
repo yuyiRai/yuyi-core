@@ -5,7 +5,7 @@ import { ItemSwitchType } from '..';
 import { FormItemContainer } from '../../FormItem';
 import { OFormItemCommon } from '../../Interface';
 import { commonInjectItem } from '../commonInjectItem';
-import { Utils } from 'src/utils';
+import { Utils } from '@/utils';
 import styled from 'styled-components';
 
 interface IGroupItemProps extends OFormItemCommon, React.HTMLAttributes<any>, React.PropsWithChildren<any> {

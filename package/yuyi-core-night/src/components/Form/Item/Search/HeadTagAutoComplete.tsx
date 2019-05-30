@@ -1,7 +1,7 @@
 import { AutoComplete } from 'antd';
 import { AutoCompleteProps } from 'antd/lib/auto-complete';
 import { HeadTagInput } from './HeadTagInput';
-import { Utils } from 'src/utils';
+import { Utils } from '@/utils';
 import React from 'react'
 import styled from 'styled-components';
 

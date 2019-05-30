@@ -1,4 +1,4 @@
-import React from 'react';
+import * as React from 'react';
 import { FormItemType, IItemTypeComponent, OFormItemCommon } from '../Interface/FormItem';
 import { CascaderItem } from './Cascader';
 // import { IInputItemProps, ITextAreaItemProps } from './InputItem';
@@ -35,8 +35,10 @@ export const itemType: IItemTypeComponent = {
   'group': GroupItem
 }
 
-export function ItemSwitchType<T extends FormItemType>(type?: T): IItemTypeComponent[T | 'text'] {
-  return itemType[type] || InputItem
+export function ItemSwitchType<T extends FormItemType>(type: T): IItemTypeComponent[T]
+export function ItemSwitchType<T extends FormItemType>(type?: never | ""): IItemTypeComponent['text']
+export function ItemSwitchType(type?: string) {
+  return itemType[type || 'text']
 }
 export interface IItemSwitchProps extends OFormItemCommon {
   type: FormItemType;

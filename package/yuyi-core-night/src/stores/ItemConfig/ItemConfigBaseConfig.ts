@@ -1,7 +1,7 @@
 import { autobind } from 'core-decorators';
 import { action, computed, IKeyValueMap, observable } from 'mobx';
 import { OptionBase, Option } from '@/utils';
-import { Utils } from '@/utils/Utils';
+import { Utils } from '@/utils';
 import { FormItemType, IItemConfig, RuleList } from './interface';
 import { ItemConfigBaseConfigModel } from './ItemConfigBaseConfigModel';
 import { RuleConfig } from './RuleConfigStore';

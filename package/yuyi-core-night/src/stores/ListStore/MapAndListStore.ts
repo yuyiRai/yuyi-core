@@ -1,7 +1,7 @@
 import { autobind, readonly } from 'core-decorators';
 import { assign, reduce } from 'lodash';
 import { action, computed, IKeyValueMap, keys as getKeys, observable, ObservableMap, toJS, values } from 'mobx';
-import { Utils } from 'src/utils';
+import { Utils } from '@/utils';
 import { CommonStore } from '../ItemConfig/interface';
 
 export type IKeyData<Key extends string> = IKeyValueMap<any> & {
@@ -14,9 +14,8 @@ export class KeyDataMapStore<
   TargetData extends IKeyData<DataKey> = SourceData
   > extends CommonStore {
 
-  @observable.shallow
-  @readonly
-  protected readonly sourceMap: ObservableMap<string, SourceData> = observable.map({}, { deep: false })
+  @observable
+  protected sourceMap: ObservableMap<string, SourceData> = observable.map(new Map(), { deep: false })
 
   @observable
   @readonly
@@ -92,7 +91,7 @@ export class KeyDataMapStore<
   @readonly
   public setSourceData(sourceData: SourceData[] | IKeyValueMap<SourceData>) {
     const { getConfigKey: getKey } = this;
-    // console.log('set', sourceData)
+    console.log('set', sourceData)
     this.mapToDiff(this.sourceMap,
       reduce(sourceData, (object, nextConfig: SourceData, key: string | number) => {
         if (Utils.isNumber(key) && Utils.isNil(getKey(nextConfig))) {
@@ -111,9 +110,10 @@ export class KeyDataMapStore<
     // console.log(this.sourceMap)
   }
 
-  @action register(transformer: IMapTransformer<DataKey, SourceData, TargetData>) {
-    return this.observe(this.sourceMap, listener => {
-      // console.log(listener)
+  constructor(public readonly keyName: DataKey, public transformer: IMapTransformer<DataKey, SourceData, TargetData>) {
+    super()
+    this.intercept(this.sourceMap, listener => {
+      console.log(listener, 1)
       if (listener.type === 'add') {
         this.targetMap.set(listener.name, transformer.create(listener.newValue))
       } else if (listener.type === 'delete') {
@@ -122,12 +122,8 @@ export class KeyDataMapStore<
       } else {
         transformer.update(listener.newValue, this.getTargetData(listener.name))
       }
+      return listener
     })
-  }
-  constructor(public readonly keyName: DataKey, transformer: IMapTransformer<DataKey, SourceData, TargetData>) {
-    super()
-    // console.log(transformer)
-    this.register(transformer);
   }
 }
 

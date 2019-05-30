@@ -1,7 +1,7 @@
 import { AutoComplete, Select, Spin, Tag } from 'antd';
 import { OptGroupProps, SelectProps } from 'antd/lib/select/index';
 import { Observer } from 'mobx-react-lite';
-import { Utils } from 'src/utils';
+import { Utils } from '@/utils';
 import { createTransformer } from 'mobx-utils';
 import * as React from 'react';
 import styled from 'styled-components';
@@ -12,7 +12,7 @@ import { useSearchStore } from '../OptionsUtil';
 import { ValueHintContainer } from '../OptionsUtil/ToolTipContainer';
 import { TagGroup } from './TagGroup';
 import { HeadTagAutoComplete } from './HeadTagAutoComplete';
-import { ItemConfig } from 'src/stores';
+import { ItemConfig } from '@/stores';
 export interface ISelectItemProps extends OFormItemCommon, SelectProps {
   center?: boolean;
 }

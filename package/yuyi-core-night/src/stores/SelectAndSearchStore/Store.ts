@@ -5,7 +5,7 @@ import { ItemConfigBase } from '../ItemConfig/ItemConfigBase';
 import { ItemConfig } from '../ItemConfig/ItemConfig';
 import { autobind, } from 'core-decorators';
 import { OptionsStore2 } from './OptionsStore';
-import Utils, { Option } from '../../utils';
+import { Utils, Option } from '../../utils';
 
 import { last, toString, pullAllBy, some, pullAll, map, filter, concat, get } from 'lodash'
 const _ = {

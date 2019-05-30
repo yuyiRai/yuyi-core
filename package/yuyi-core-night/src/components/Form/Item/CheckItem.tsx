@@ -10,11 +10,11 @@ import { OFormItemCommon } from '../Interface/FormItem';
 import { commonInjectItem } from "./commonInjectItem";
 import { useOptionsStore } from './OptionsUtil';
 import { Observer } from "mobx-react-lite";
-// import { SlotContext } from 'src/utils/SlotUtils';
-import { ScopedSlot } from 'src/utils/SlotUtils';
-import { Option } from 'src/utils';
+// import { SlotContext } from '@/utils/SlotUtils';
+import { ScopedSlot } from '../../../utils/SlotUtils';
+import { Option } from '@/utils';
 import { pullAll } from 'lodash';
-import { ItemConfig } from 'src/stores';
+import { ItemConfig } from '@/stores';
 
 export interface IAppProps extends CheckboxGroupProps, OFormItemCommon {
 

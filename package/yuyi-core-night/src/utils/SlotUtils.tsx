@@ -4,7 +4,7 @@ import { IReactComponent } from 'mobx-react';
 import React from 'react';
 import ErrorBoundary, { FallbackProps } from 'react-error-boundary';
 import { VNode } from 'vue';
-import Utils from '.';
+import {Utils} from '.';
 
 const myErrorHandler = (error: Error, componentStack: string) => {
   // Do something with the error

@@ -1,4 +1,4 @@
-import { FormStoreCore } from "src/components/Form/FormStore/FormStoreCore";
+import { FormStoreCore } from "@/stores/FormStore/FormStoreCore";
 import { FormModel, IItemConfig } from "./ItemConfig";
 
 export interface IValidator<V> {

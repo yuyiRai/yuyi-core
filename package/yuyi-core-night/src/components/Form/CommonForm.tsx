@@ -3,7 +3,8 @@ import LocaleProvider from 'antd/lib/locale-provider';
 import zh_CN from 'antd/lib/locale-provider/zh_CN';
 import { IKeyValueMap } from 'mobx';
 import * as React from 'react';
-import { FormStore, onItemChangeCallback } from './FormStore';
+import { FormStore, onItemChangeCallback } from '../../stores/FormStore';
+
 
 export const NativeStore = React.createContext({formStore: FormStore.prototype});
 
@@ -75,3 +76,4 @@ export class CommonForm extends React.Component<ICommonFormProps, ICommonFormSta
     );
   }
 }
+export default CommonForm;

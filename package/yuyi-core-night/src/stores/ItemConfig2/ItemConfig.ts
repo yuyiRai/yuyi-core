@@ -1,6 +1,6 @@
 /* eslint-disable */
 import { action, computed, IKeyValueMap, IValueDidChange, observable, toJS, IValueWillChange } from 'mobx';
-import { FormStore } from '../../components/Form/FormStore';
+import { FormStore } from '../FormStore';
 import { EventStoreInject } from '@/stores/EventStore';
 import { IItemConfig, BaseItemConfigTransformer } from './interface';
 import { ItemConfigBase2 } from './ItemConfigBase';

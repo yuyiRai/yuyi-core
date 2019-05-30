@@ -9,7 +9,7 @@ import { ItemConfigBase } from './ItemConfigBase';
 import { DisplayConfig } from './ItemDisplayConfig';
 import { OptionsStore } from './OptionsStore';
 import { SearchStore } from './SearchStore';
-import { Utils } from 'src/utils';
+import { Utils } from '@/utils';
 // export const Ke = keys<DisplayConfig<any>>();
 export interface IPropertyChangeEvent<T = any> extends IValueDidChange<T> {
   name: string;

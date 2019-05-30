@@ -1,10 +1,10 @@
 import { IReactComponent } from "mobx-react";
 import { Observer, useAsObservableSource } from "mobx-react-lite";
 import { ITransformer } from "mobx-utils";
-import React from 'react';
-import { ItemConfig } from "../../../../stores";
+import * as React from 'react';
+import { ItemConfig } from "@/stores";
 import 'antd/lib/input/style/css';
-import { OptionsStore } from "../../../../stores/ItemConfig/OptionsStore";
+import { OptionsStore } from "@/stores/ItemConfig/OptionsStore";
 
 export function useOptionsStore<T = JSX.Element>(itemConfig: ItemConfig, transformer?: ITransformer<OptionsStore, T[]>) {
   // reaction(()=>itemConfig.options, console.log)

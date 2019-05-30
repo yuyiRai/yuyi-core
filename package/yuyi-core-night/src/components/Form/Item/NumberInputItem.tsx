@@ -3,7 +3,7 @@ import { InputNumberProps } from 'antd/lib/input-number'
 import 'antd/lib/input-number/style/css'
 import { OFormItemCommon } from '../Interface/FormItem';
 import { commonInjectItem } from "./commonInjectItem";
-import Utils, { zipEmptyData } from '../../../utils';
+import Utils, { zipEmptyData } from '@/utils';
 import classnames from 'classnames'
 import { VueInReact } from 'vuera'
 import { InputNumber } from 'element-ui';

@@ -3,7 +3,7 @@ import { Spin, Icon } from 'antd';
 import { SpinProps } from 'antd/lib/spin/index';
 import { OFormItemCommon } from '../../Interface';
 import { commonInjectItem } from '../commonInjectItem';
-import { Utils } from 'src/utils';
+import { Utils } from '@/utils';
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 interface ILoadingProps extends SpinProps {
   loading?: boolean;

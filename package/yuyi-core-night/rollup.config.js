@@ -1,4 +1,5 @@
 import typescript from 'rollup-plugin-typescript2'
+import ttypescript from 'ttypescript'
 import commonjs from 'rollup-plugin-commonjs'
 import json from 'rollup-plugin-json';
 import external from 'rollup-plugin-peer-deps-external'
@@ -7,24 +8,56 @@ import postcss from 'rollup-plugin-postcss'
 import resolve from 'rollup-plugin-node-resolve'
 import url from 'rollup-plugin-url'
 import svgr from '@svgr/rollup'
+import path from 'path'
+// import babel from 'rollup-plugin-babel';
+
+const isDevelopment = process.env.NODE_ENV === 'development'
+const isProduction = process.env.NODE_ENV === 'production'
+console.log('welcome: ', process.env.NODE_ENV)
 
 import pkg from './package.json'
-
+let cache = {};
 export default {
-  input: 'src/index.tsx',
+  external: ['react-is', 'react','react-dom', 'mobx', 'antd', '@ant-design', 'element-ui'],
+  input: {
+    index: 'src/index.tsx'
+  },
+  treeshake: isProduction,
+  cache: isDevelopment ? cache : false,
+  inlineDynamicImports: false,
+  manualChunks(path) {
+    if(['node_modules'].some(m => path.includes(m))){
+      return 'vendor'
+    }
+  },
   output: [
     {
-      file: pkg.main,
-      format: 'cjs',
-      exports: 'named',
-      sourcemap: true,
-    },
-    {
-      file: pkg.module,
+      dir: path.dirname(pkg.module),
       format: 'es',
-      exports: 'named',
-      sourcemap: true
-    }
+      chunkFileNames: '[name].js',
+      entryFileNames: '[name].js',
+      exports: 'named'
+    },
+    // {
+    //   dir: path.dirname(pkg.main),
+    //   format: 'cjs',
+    //   sourcemap: true,
+    //   chunkFileNames: '[name].js',
+    //   entryFileNames: '[name].js',
+    //   exports: 'named'
+    // },
+    // {
+    //   file: pkg.main,
+    //   format: 'cjs',
+    //   exports: 'named',
+    //   sourcemap: true,
+    // },
+    // {
+    //   file: pkg.module,
+    //   format: 'es',
+    //   exports: 'named',
+    //   sourcemap: true
+    // }
   ],
   onwarn(warning, warn) {
     if (warning.code !== 'CIRCULAR_DEPENDENCY') {
@@ -33,22 +66,28 @@ export default {
     }
   },
   plugins: [
-    external({}),
+    external(),
     json(),
     postcss({
-      modules: true
+      modules: false
     }),
     url(),
     svgr(),
     resolve({
-      preferBuiltins: true
+      mainFields: ['module', 'main'],
+      preferBuiltins: false,
+      dedupe: ['react', 'react-dom']
     }),
     typescript({
       rollupCommonJSResolveHack: true,
       clean: true,
       tsconfig: 'tsconfig.json',
+      tsconfigOverride: {
+        target: 'es5'
+      },
       check: false,
-      typescript: require('ttypescript')
+      exclude: ['**/*.test.*', '**/*.spec.*'],
+      typescript: ttypescript
     }),
     commonjs({
       namedExports: {

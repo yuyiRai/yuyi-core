@@ -1,7 +1,7 @@
 /* eslint-disable */
 import { computed, extendObservable, IKeyValueMap } from 'mobx';
 import { SelectAndSearchStore } from './Store';
-import Utils from '../../utils';
+import { Utils } from '@/utils';
 import { map, concat } from 'lodash'
 
 export interface OptionComplier {

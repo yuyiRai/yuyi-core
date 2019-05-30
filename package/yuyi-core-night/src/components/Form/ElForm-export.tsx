@@ -1,11 +1,21 @@
-import { react2Vue, slotInjectContainer, Slot } from '@/utils/SlotUtils';
+import { react2Vue, slotInjectContainer, Slot } from '../../utils/SlotUtils';
 import { autobind } from 'core-decorators';
-import React from 'react';
+import * as React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import Vue from 'vue';
-import { CommonForm } from './CommonForm';
 import { FormGroup } from './Form';
-import { FormStore } from './FormStore';
+import { FormStore } from '../../stores/FormStore';
+import { CommonForm } from './CommonForm';
+
+// import Loadable from 'react-loadable';
+
+// function MyLoadingComponent() {
+//   return <div>Loading...</div>;
+// }
+// const CommonForm = Loadable({
+//   loader: () => import('./CommonForm'),
+//   loading: MyLoadingComponent
+// })
 
 const GlobalStyle = createGlobalStyle`
   .ant-select-dropdown {

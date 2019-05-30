@@ -1,6 +1,6 @@
 import { Input, Tag } from 'antd';
 import { InputProps } from 'antd/lib/input';
-import { Utils } from 'src/utils';
+import { Utils } from '@/utils';
 import React from 'react'
 
 import styled from 'styled-components';

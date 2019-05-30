@@ -1,5 +1,5 @@
 import { map } from 'lodash';
-import Utils from '../../../utils';
+import Utils from '@/utils';
 import { IItemConfig, RuleConfigMap } from '../interface';
 
 export const checkDateToDate = <V, FM>(date: any, itemConfig: IItemConfig<FM, V>) => ((rule: any, value: any, callback: any) => {

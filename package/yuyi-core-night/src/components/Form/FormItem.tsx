@@ -10,8 +10,8 @@ import { action, autorun, computed, IReactionDisposer, reaction, runInAction } f
 import { inject, observer, Provider } from 'mobx-react';
 import { createTransformer, expr } from 'mobx-utils';
 import * as React from 'react';
-import { FormStore } from './FormStore';
-import { FormItemStoreCore, IFormItemStoreCore } from './FormStore/FormItemStoreBase';
+import { FormStore } from '../../stores/FormStore';
+import { FormItemStoreCore, IFormItemStoreCore } from '../../stores/FormStore/FormItemStoreBase';
 import { OFormItemCommon } from './Interface/FormItem';
 import { ItemSwitch } from './Item';
 import { FormItemLoading } from './Item/common/Loading';

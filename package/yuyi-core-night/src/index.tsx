@@ -7,9 +7,10 @@ import * as React from 'react'
 import styles from './styles.css'
 
 export type Props = { text: string }
+import Install from './index.export'
 export * from './index.export'
 
-export default class ExampleComponent extends React.Component<Props> {
+export class ExampleComponent extends React.Component<Props> {
   render() {
     const {
       text
@@ -22,3 +23,4 @@ export default class ExampleComponent extends React.Component<Props> {
     )
   }
 }
+export default Install;

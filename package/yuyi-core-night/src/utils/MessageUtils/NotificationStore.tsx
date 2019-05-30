@@ -4,7 +4,7 @@ import 'antd/lib/notification/style/css';
 import { assign, concat, reduce } from 'lodash';
 import React from 'react';
 import ReactDom from 'react-dom';
-import Utils from "..";
+import Utils from "@/utils";
 import styled from 'styled-components'
 import { autobind } from 'core-decorators';
 

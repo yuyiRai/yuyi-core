@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Tooltip } from 'antd';
-import { Utils } from 'src/utils';
+import { Utils } from '@/utils';
 import 'antd/lib/tooltip/style/css';
 
 export function ValueHintContainer({ value, children, trigger, ...other }: any) {

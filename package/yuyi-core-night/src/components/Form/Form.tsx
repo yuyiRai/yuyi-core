@@ -6,7 +6,7 @@ import * as React from 'react';
 import { CommonForm, CommonFormContext, NativeStore } from './CommonForm';
 import { FormContainer } from './FormContainer';
 import FormItem from './FormItem';
-import { FormStore } from './FormStore';
+import { FormStore } from '../../stores/FormStore';
 import { IItemConfig, IFormItemConstructor } from './Interface';
 import { form } from './util';
 // import { Utils } from '../../build';

@@ -1,4 +1,4 @@
-import { FormStore } from '../FormStore';
+import { FormStore } from '@/stores/FormStore';
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { FormItemType } from '@/stores/ItemConfig/interface';
 import { ItemConfig } from '@/stores';

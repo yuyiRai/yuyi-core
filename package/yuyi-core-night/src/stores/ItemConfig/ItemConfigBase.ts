@@ -2,10 +2,10 @@
 import { autobind } from 'core-decorators';
 import { difference, get, isError } from 'lodash';
 import { action, computed, extendObservable, IKeyValueMap, isComputedProp, IValueDidChange, observable, ObservableMap, toJS } from 'mobx';
-import { OptionBase } from '../../utils';
-import { EventEmitter } from '../../utils/EventEmitter';
+import { OptionBase } from '@/utils';
+import { EventEmitter } from '@/utils';
 // import { asyncComputed } from '../../utils/AsyncProperty';
-import { Utils } from '../../utils/Utils';
+import { Utils } from '@/utils';
 import { IFormItemConstructor, IItemConfig } from './interface/ItemConfig';
 import { ItemConfigBaseConfig } from './ItemConfigBaseConfig';
 
