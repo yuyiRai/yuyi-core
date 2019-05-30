@@ -1,11 +1,22 @@
 {
   "name": "yuyi-core",
-  "version": "0.0.3",
+  "version": "0.10.14",
+  "description": "yuyi",
   "license": "MIT",
   "private": true,
-  "main": "package/yuyi-core-night/lib/index.js",
+  "main": "package/yuyi-core-night/lib/cjs/index.js",
   "module": "package/yuyi-core-night/lib/esm/index.js",
   "typings": "package/yuyi-core-night/lib/esm/index.d.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuyiRai/yuyi-core.git"
+  },
+  "author": "yuyiRai",
+  "bugs": {
+    "url": "https://github.com/yuyiRai/yuyi-core/issues"
+  },
+  "sideEffects": false,
+  "homepage": "https://github.com/yuyiRai/yuyi-core#readme",
   "workspaces": [
     "package/*"
   ],
