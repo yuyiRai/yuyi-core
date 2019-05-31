@@ -38,10 +38,8 @@
     "react-dom": "^16.0.0",
     "antd": "^3.19.1"
   },
-  "dependencies": {
-    "yuyi-core-utils": "link:../yuyi-core-utils"
-  },
   "devDependencies": {
+    "yuyi-core-utils": "link:../yuyi-core-utils",
     "yuyi-core-env": "link:../yuyi-core-env",
     "@svgr/rollup": "^4.2.0",
     "@types/jest": "^24.0.13",
