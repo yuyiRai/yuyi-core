@@ -71,7 +71,7 @@ export default {
     postcss({
       modules: false,
       inject: true,
-      extract: false
+      extract: true
     }),
     url({
       limit: 0,
