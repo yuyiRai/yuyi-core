@@ -1,5 +1,6 @@
 import { ItemConfig } from '@/stores';
 import Utils from '@/utils';
+import classnames from 'classnames'
 import { Col } from 'antd';
 import { GetFieldDecoratorOptions, WrappedFormUtils } from 'antd/lib/form/Form';
 import AntFormItem, { FormItemProps } from 'antd/lib/form/FormItem';
@@ -15,7 +16,6 @@ import { FormItemStoreCore, IFormItemStoreCore } from '../../stores/FormStore/Fo
 import { OFormItemCommon } from './Interface/FormItem';
 import { ItemSwitch } from './Item';
 import { FormItemLoading } from './Item/common/Loading';
-import styled from 'styled-components'
 
 export const ChildrenContext = React.createContext({
   children: null
@@ -29,17 +29,18 @@ export interface IFormItemState {
   instance: FormItem;
   init: boolean;
 }
-export const OAntFormItem = styled(observer((props: FormItemProps & OFormItemCommon) => {
-  const { itemConfig, children, ...other } = props
-  return <AntFormItem colon={itemConfig.isViewOnly} label={itemConfig.displayProps.label} {...other}>{children}</AntFormItem>
-}))`
-  &  > .ant-col.ant-col-1.ant-form-item-label {
-    ${(props: FormItemProps & OFormItemCommon) => !props.itemConfig.displayProps.useLabel && `display: none;`}
-  }
-  & > .ant-col.ant-col-1.ant-form-item-control-wrapper {
-    ${(props: FormItemProps & OFormItemCommon) => !props.itemConfig.displayProps.useLabel && `min-width: 100%`}
-  }
-`
+export const OAntFormItem = observer((props: FormItemProps & OFormItemCommon) => {
+  const { itemConfig, children, className, ...other } = props
+  return (
+    <AntFormItem 
+      colon={itemConfig.isViewOnly} 
+      label={itemConfig.displayProps.label} 
+      className={classnames([className, { 'unuse-label': !itemConfig.displayProps.useLabel }])} 
+      {...other}>{
+      children
+    }</AntFormItem>
+  )
+})
 
 export class FormItemStore<FM = any, V = any> extends FormItemStoreCore<FM, V> implements IFormItemStoreCore<FM, V> {
 
@@ -174,17 +175,18 @@ export default class FormItem extends React.Component<IFormItemProps, IFormItemS
     // console.log('remder', store.itemConfig.code, store.itemConfig.rule);
     // console.log(this.store.itemConfig.label)
     return store.renderer(
-    <FormItemLoading code={code}>
+      <FormItemLoading code={code}>
         <OAntFormItem
-          help={itemConfig.displayProps.isShowMessage?undefined:<span style={{display: 'none'}}/>}
+          code={code}
+          help={itemConfig.displayProps.isShowMessage ? undefined : <span style={{ display: 'none' }} />}
           itemConfig={itemConfig}
           {...other}
-          style={itemConfig.displayProps.formItemStyle}
+          style={itemConfig.displayProps.formItemStyle as any}
           validateStatus={hasError ? 'error' : 'success'}
           hasFeedback={itemConfig.useFeedback && !['check', 'checkOne', 'radio', 'radioOne', 'group', 'textArea', 'textarea'].includes(itemConfig.type)}
         >{
-          store.fieldDecorator(React.cloneElement(store.Component))
-        }</OAntFormItem>
+            store.fieldDecorator(React.cloneElement(store.Component))
+          }</OAntFormItem>
       </FormItemLoading>
     )
   }

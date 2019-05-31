@@ -27,13 +27,20 @@ export const FormContainer = styled.form`
 
   .ant-form-item {
     margin-bottom: 0 !important;
-    &  > .ant-col.ant-col-1.ant-form-item-label {
+    & > .ant-col.ant-col-1.ant-form-item-label {
       width: ${(props: IFormProps) => Utils.isNumberFilter(props.labelWidth, 150)}px;
       float: left;
     }
     & > .ant-col.ant-col-1.ant-form-item-control-wrapper {
       width: ${(props: IFormProps) => `calc(100% - ${Utils.isNumberFilter(props.labelWidth, 150)}px);`};
-      min-width: 150px;
+    }
+    &.unuse-label {
+      & > .ant-col.ant-col-1.ant-form-item-label {
+        display: none;
+      }
+      & > .ant-col.ant-col-1.ant-form-item-control-wrapper {
+        width: 100%;
+      }
     }
   }
 `;

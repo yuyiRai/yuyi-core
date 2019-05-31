@@ -30,7 +30,8 @@
     "clean-src": "rimraf src/**/*.js && rimraf src/**/*.map && rimraf src/**/*.d.ts",
     "prepare": "yarn run build",
     "predeploy": "cd example && yarn install && yarn run build",
-    "deploy": "gh-pages -d example/build"
+    "deploy": "gh-pages -d example/build",
+	"publish": "update-patch"
   },
   "peerDependencies": {
     "antd": "^3.19.1",
