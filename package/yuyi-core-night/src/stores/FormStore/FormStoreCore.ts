@@ -46,11 +46,12 @@ export class FormStoreCore<FM extends FormModel, VM extends IFormItemStoreCore =
   formCache: FM = {} as FM;
 
   @action.bound setForm(formSource: FM): void {
-    const nextCache = produce(this.formCache, cache => {
+    const lastCahce = Utils.cloneDeep(Utils.toJS(this.formCache))
+    const nextCache = produce(lastCahce, cache => {
       this.mapToDiff(this.formMap, formSource, cache)
     })
-    if(nextCache !== this.formCache) {
-      this.formCache = nextCache
+    if(nextCache !== lastCahce) {
+      this.formCache = Utils.cloneDeep(nextCache)
       this.lastFormSource = formSource;
     }
 
