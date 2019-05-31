@@ -1,6 +1,6 @@
 {
   "name": "yuyi-core-night",
-  "version": "1.0.20",
+  "version": "1.0.21",
   "description": "",
   "author": "yuyiRai",
   "license": "MIT",
@@ -31,7 +31,7 @@
     "prepare": "yarn run build",
     "predeploy": "cd example && yarn install && yarn run build",
     "deploy": "gh-pages -d example/build",
-	"publish": "update-patch"
+    "publish": "update-patch"
   },
   "peerDependencies": {
     "antd": "^3.19.1",
