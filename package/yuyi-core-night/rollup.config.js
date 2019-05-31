@@ -18,7 +18,7 @@ console.log('welcome: ', process.env.NODE_ENV)
 import pkg from './package.json'
 let cache = {};
 export default {
-  external: ['react-is', 'react','react-dom', 'mobx', 'antd', '@ant-design', 'element-ui'],
+  external: ['react-is', 'react','react-dom', 'mobx', 'mobx-react', 'antd', '@ant-design', 'element-ui'],
   input: {
     index: 'src/index.tsx'
   },
