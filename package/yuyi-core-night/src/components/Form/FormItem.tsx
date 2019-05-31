@@ -15,6 +15,7 @@ import { FormItemStoreCore, IFormItemStoreCore } from '../../stores/FormStore/Fo
 import { OFormItemCommon } from './Interface/FormItem';
 import { ItemSwitch } from './Item';
 import { FormItemLoading } from './Item/common/Loading';
+import styled from 'styled-components'
 
 export const ChildrenContext = React.createContext({
   children: null
@@ -28,10 +29,17 @@ export interface IFormItemState {
   instance: FormItem;
   init: boolean;
 }
-export const OAntFormItem = observer((props: any) => {
+export const OAntFormItem = styled(observer((props: FormItemProps & OFormItemCommon) => {
   const { itemConfig, children, ...other } = props
-  return <AntFormItem colon={itemConfig.isViewOnly} label={itemConfig.label} {...other}>{children}</AntFormItem>
-})
+  return <AntFormItem colon={itemConfig.isViewOnly} label={itemConfig.displayProps.label} {...other}>{children}</AntFormItem>
+}))`
+  &  > .ant-col.ant-col-1.ant-form-item-label {
+    ${(props: FormItemProps & OFormItemCommon) => !props.itemConfig.displayProps.useLabel && `display: none;`}
+  }
+  & > .ant-col.ant-col-1.ant-form-item-control-wrapper {
+    ${(props: FormItemProps & OFormItemCommon) => !props.itemConfig.displayProps.useLabel && `min-width: 100%`}
+  }
+`
 
 export class FormItemStore<FM = any, V = any> extends FormItemStoreCore<FM, V> implements IFormItemStoreCore<FM, V> {
 
@@ -173,7 +181,7 @@ export default class FormItem extends React.Component<IFormItemProps, IFormItemS
           {...other}
           style={itemConfig.displayProps.formItemStyle}
           validateStatus={hasError ? 'error' : 'success'}
-          hasFeedback={!['check', 'checkOne', 'radio', 'radioOne', 'group', 'textArea', 'textarea'].includes(itemConfig.type)}
+          hasFeedback={itemConfig.useFeedback && !['check', 'checkOne', 'radio', 'radioOne', 'group', 'textArea', 'textarea'].includes(itemConfig.type)}
         >{
           store.fieldDecorator(React.cloneElement(store.Component))
         }</OAntFormItem>

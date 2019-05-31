@@ -3,7 +3,7 @@ import Checkbox, { CheckboxGroupProps } from 'antd/lib/checkbox';
 import 'antd/lib/checkbox/style/css';
 // import Switch, { SwitchProps } from 'antd/lib/switch';
 // import 'antd/lib/switch/style/css';
-import 'element-theme-default/lib/switch.css';
+import 'element-ui/lib/theme-chalk/switch.css';
 import { Switch } from 'element-react'
 import * as React from 'react';
 import { OFormItemCommon } from '../Interface/FormItem';

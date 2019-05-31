@@ -91,7 +91,7 @@ export class KeyDataMapStore<
   @readonly
   public setSourceData(sourceData: SourceData[] | IKeyValueMap<SourceData>) {
     const { getConfigKey: getKey } = this;
-    console.log('set', sourceData)
+    // console.log('set', sourceData)
     this.mapToDiff(this.sourceMap,
       reduce(sourceData, (object, nextConfig: SourceData, key: string | number) => {
         if (Utils.isNumber(key) && Utils.isNil(getKey(nextConfig))) {
@@ -113,7 +113,7 @@ export class KeyDataMapStore<
   constructor(public readonly keyName: DataKey, public transformer: IMapTransformer<DataKey, SourceData, TargetData>) {
     super()
     this.intercept(this.sourceMap, listener => {
-      console.log(listener, 1)
+      // console.log(listener, 1)
       if (listener.type === 'add') {
         this.targetMap.set(listener.name, transformer.create(listener.newValue))
       } else if (listener.type === 'delete') {

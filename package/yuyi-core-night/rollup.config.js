@@ -18,7 +18,7 @@ console.log('welcome: ', process.env.NODE_ENV)
 import pkg from './package.json'
 let cache = {};
 export default {
-  external: ['react-is', 'react','react-dom', 'mobx', 'mobx-react', 'antd', '@ant-design', 'element-ui'],
+  external: ['react-is', 'react','react-dom', 'mobx', 'mobx-react', 'antd', '@ant-design', 'element-ui', 'element-react', 'element-theme-default'],
   input: {
     index: 'src/index.tsx'
   },
@@ -69,9 +69,14 @@ export default {
     external(),
     json(),
     postcss({
-      modules: false
+      modules: false,
+      inject: true,
+      extract: false
     }),
-    url(),
+    url({
+      limit: 0,
+      include:  ["**/*.svg", "**/*.png", "**/*.jpg", "**/*.gif", "**/*.ttf", "**/*.wof", "**/fonts/**"]
+    }),
     svgr(),
     resolve({
       mainFields: ['module', 'main'],

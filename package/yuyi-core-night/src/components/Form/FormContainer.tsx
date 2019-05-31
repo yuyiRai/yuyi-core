@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { IFormProps } from './Form';
+import { Utils } from '@/utils';
 export const FormContainer = styled.form`
   border-color: #f522d2;
   .has-error .el-input__inner, .has-error .el-input__inner:hover {
@@ -27,11 +28,12 @@ export const FormContainer = styled.form`
   .ant-form-item {
     margin-bottom: 0 !important;
     &  > .ant-col.ant-col-1.ant-form-item-label {
-      width: ${(props: IFormProps) => props.labelWidth}px;
+      width: ${(props: IFormProps) => Utils.isNumberFilter(props.labelWidth, 150)}px;
       float: left;
     }
     & > .ant-col.ant-col-1.ant-form-item-control-wrapper {
-      width: ${(props: IFormProps) => `calc(100% - ${props.labelWidth}px);`}
+      width: ${(props: IFormProps) => `calc(100% - ${Utils.isNumberFilter(props.labelWidth, 150)}px);`};
+      min-width: 150px;
     }
   }
 `;

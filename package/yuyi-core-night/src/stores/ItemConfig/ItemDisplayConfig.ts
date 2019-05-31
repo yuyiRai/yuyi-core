@@ -54,6 +54,11 @@ export class DisplayConfig<FM> {
   @computed.struct get showSize() {
     return this.props.size || this.itemConfig.size
   }
+
+  @computed get useLabel() {
+    const { useLabel, label } = this.itemConfig
+    return !(useLabel == false || label == undefined) 
+  }
   @computed get label() {
     const { useLabel, label } = this.itemConfig
     if (useLabel == false || label == undefined)

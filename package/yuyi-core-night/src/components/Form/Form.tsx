@@ -19,6 +19,7 @@ export interface IFormProps<FM = object> {
   config: IFormItemConstructor<any, FM>[];
   form?: WrappedFormUtils<any>;
   labelWidth?: number;
+  formContainerRow?: any;
   formItemLayout?: typeof defaultFormItemLayout;
   [key: string]: any;
 }
@@ -63,13 +64,13 @@ export default class Form extends React.Component<IFormProps, any> {
   }
   public render() {
     const { form } = this.state
-    const { children, className } = this.props
+    const { children, className, formContainerRow, ...other } = this.props
     // console.log(form, children)
     return (
-      <FormContainer {...this.props}>
+      <FormContainer {...other}>
         <Provider antdForm={form} formStore={this.props.formStore}>
           <>
-            <Row className={className}>
+            <Row className={className} {...formContainerRow}>
               <FormItemGroup {...this.props}/>
             </Row>
             <div>{children}</div>
@@ -77,9 +78,6 @@ export default class Form extends React.Component<IFormProps, any> {
         </Provider>
       </FormContainer>
     );
-  }
-  public static defaultProps = {
-    labelWidth: 150
   }
 }
 
