@@ -10,7 +10,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "module": "esnext",
     "target": "es5",
-    "lib": ["es6", "dom", "dom.iterable", "scripthost"],
+    "lib": ["es6", "dom", "dom.iterable", "scripthost", "esnext"],
     "sourceMap": true,
     "strict": false,
     "allowJs": false,

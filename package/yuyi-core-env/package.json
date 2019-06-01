@@ -4,8 +4,11 @@
   "main": "src/index.ts",
   "license": "MIT",
   "private": true,
+  "scripts": {
+    "clean": "rimraf src/**/*.js && rimraf src/**/*.map && rimraf src/**/*.d.ts"
+  },
   "dependencies": {
-    "yuyi-core-utils": "link:../yuyi-core-utils"
+    "yuyi-core-utils": "link:package/yuyi-core-utils"
   },
   "devDependencies": {
     "@avensia-oss/ts-transform-hoist-objects-in-props": "0.0.5",

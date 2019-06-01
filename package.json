@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/yuyiRai/yuyi-core.git"
   },
-  "author": "yuyiRai",
+  "author": "yuyiRai<yuyi919606952@foxmail.com>",
   "bugs": {
     "url": "https://github.com/yuyiRai/yuyi-core/issues"
   },
@@ -21,6 +21,7 @@
     "package/*"
   ],
   "scripts": {
+    "publish": "update-patch.cmd",
     "serve": "yarn workspace yuyi-core-react-demo run start",
     "dev": "yarn workspace yuyi-core-utils run dev",
     "dev2": "yarn workspace yuyi-core-night run dev",
@@ -28,11 +29,5 @@
     "build-night": "yarn workspace yuyi-core-night run build",
     "start-night": "yarn workspace yuyi-core-night run start",
     "build-utils": "yarn workspace yuyi-core-utils run build"
-  },
-  "files": [
-    "dist",
-    "build",
-    "lib",
-    "src"
-  ]
+  }
 }

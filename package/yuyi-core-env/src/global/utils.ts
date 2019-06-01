@@ -1,4 +1,4 @@
-import { IUtils, Utils as GlobalUtils } from '@/utils'
+import { IUtils, Utils as GlobalUtils } from 'yuyi-core-utils'
 import { keys as Keys } from 'ts-transformer-keys';
 import { oc as Oc } from 'ts-optchain';
 window.oc = Oc
