@@ -1,10 +1,11 @@
 {
   "name": "yuyi-core-env",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "main": "src/index.ts",
   "license": "MIT",
   "private": true,
   "scripts": {
+    "cli": "node -r ./config/run-ts.js scripts/commit.ts",
     "clean": "rimraf src/**/*.js && rimraf src/**/*.map && rimraf src/**/*.d.ts"
   },
   "dependencies": {
@@ -12,6 +13,8 @@
   },
   "devDependencies": {
     "@avensia-oss/ts-transform-hoist-objects-in-props": "0.0.5",
+    "@types/argparse": "^1.0.36",
+    "argparse": "^1.0.10",
     "ts-import-plugin": "^1.5.5",
     "ts-jest": "^24.0.2",
     "ts-nameof": "^3.0.3",
