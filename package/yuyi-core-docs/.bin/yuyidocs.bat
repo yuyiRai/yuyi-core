@@ -24,6 +24,6 @@ if "%allparam:~0,1%"==" " set "allparam=%allparam:~1%"&goto intercept_left
 if "%allparam:~-1%"==" " set "allparam=%allparam:~0,-1%"&goto intercept_right
 
 :eof
-node -r ../yuyi-core-env/config/run-ts.js ../yuyi-core-docs/main.ts %allparam%
+node -r ./node_modules/yuyi-core-env/config/run-ts.js ./node_modules/yuyi-core-docs/main.ts %allparam%
 
 pause
