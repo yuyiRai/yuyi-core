@@ -1786,6 +1786,14 @@
     "@types/react" "*"
     "@types/webpack" "*"
 
+"@types/react-native@*":
+  version "0.57.60"
+  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.57.60.tgz#61e97a84e2f64ed971e7d238bb30cec188898235"
+  integrity sha512-zObrnRsCbpM7qDm97d8+5qiSIMMYRaWgpqu6orjbjzLUAcJaKnpBMXgW6bRXWkFBjHgm3hjDAdVVGMWlrYJBdw==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/react" "*"
+
 "@types/react-slick@^0.23.3":
   version "0.23.4"
   resolved "https://registry.yarnpkg.com/@types/react-slick/-/react-slick-0.23.4.tgz#c97e2a9e7e3d1933c68593b8e82752fab1e8ce53"
@@ -1828,6 +1836,15 @@
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-1.0.1.tgz#0a851d3bd96498fa25c33ab7278ed3bd65f06c3e"
   integrity sha512-l42BggppR6zLmpfU6fq9HEa2oGPEI8yrSPL3GITjfRInppYFahObbIQOQK3UGxEnyQpltZLaPe75046NOZQikw==
+
+"@types/styled-components@^4.1.15":
+  version "4.1.15"
+  resolved "https://registry.yarnpkg.com/@types/styled-components/-/styled-components-4.1.15.tgz#532b6738ec633b2911e0470522c23e3c658952f2"
+  integrity sha512-DMr4Kq3i5Em2K1ThlqZlC8nrsiO3VaiQS2M+7cOPnseHLtfDUrDjHx6Jv11V6uVIoK8ERYhmfn42RvSIg47rnA==
+  dependencies:
+    "@types/react" "*"
+    "@types/react-native" "*"
+    csstype "^2.2.0"
 
 "@types/tapable@*":
   version "1.0.4"
@@ -15209,6 +15226,11 @@ typedoc-plugin-no-inherit@^1.1.8:
   resolved "https://registry.yarnpkg.com/typedoc-plugin-no-inherit/-/typedoc-plugin-no-inherit-1.1.8.tgz#4abc1ca18babb1ad73ff303fb358ffff111b76bc"
   integrity sha512-bcyYnRxXG1Wz1pA9ZUeFQHoO1sZJsgbPc7ynC+HxSCfeamUX228pVed03OzMJPFsmSNdV0/OmD/SPYhQ6jQXig==
 
+typedoc-plugin-toc-group@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/typedoc-plugin-toc-group/-/typedoc-plugin-toc-group-0.0.5.tgz#b1de3dee40a0f0b648722cfe7d86bd87d0961aac"
+  integrity sha512-B8ayO3QFWNOLY4bsGZ8zEh3RDgvYpFshY9Ztt/FvFdz6d9V2GLvZfo7Q38WsAvTL9pB7FNQatFeWOcrwzdtiQg==
+
 typedoc@^0.11.1:
   version "0.11.1"
   resolved "https://registry.yarnpkg.com/typedoc/-/typedoc-0.11.1.tgz#9f033887fd2218c769e1045feb88a1efed9f12c9"
@@ -16472,7 +16494,7 @@ yup@^0.27.0:
     toposort "^2.0.2"
 
 "yuyi-core-env@link:package/yuyi-core-env":
-  version "1.0.0"
+  version "2.0.0"
   dependencies:
     yuyi-core-utils "link:package/yuyi-core-env/package/yuyi-core-utils"
 
