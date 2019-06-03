@@ -1,16 +1,18 @@
 {
   "name": "yuyi-core-env",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "main": "src/index.ts",
   "license": "MIT",
   "private": true,
   "scripts": {
     "test": "yuyidocs",
-    "cli": "node -r ./config/run-ts.js scripts/commit.ts",
     "clean": "rimraf src/**/*.js && rimraf src/**/*.map && rimraf src/**/*.d.ts"
   },
   "dependencies": {
     "yuyi-core-utils": "link:package/yuyi-core-utils"
+  },
+  "bin": {
+    "yuyienv": ".bin/yuyienv.bat"
   },
   "devDependencies": {
     "@avensia-oss/ts-transform-hoist-objects-in-props": "0.0.5",

@@ -1,0 +1,27 @@
+{
+  "name": "yuyi-core-docs",
+  "description": "Documentation Theme for Yuyi-core",
+  "version": "0.0.0",
+  "homepage": "http://typedoc.org/",
+  "main": "bin/plugin.js",
+  "bin": {
+    "yuyidocs": ".bin\\yuyidocs.bat"
+  },
+  "files": [
+    ".bin",
+    "bin",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">= 4"
+  },
+  "keywords": [
+    "typescript",
+    "documentation",
+    "generator"
+  ],
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-replace": "^1.0.0"
+  }
+}

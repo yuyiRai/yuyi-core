@@ -1,0 +1,22 @@
+<aside class="tsd-sources">
+    {{#if implementationOf}}
+        <p>{{#localize}}Implementation of{{/localize}} {{#with implementationOf}}{{> typeAndParent}}{{/with}}</p>
+    {{/if}}
+    {{#if inheritedFrom}}
+        <p>{{#localize}}Inherited from{{/localize}} {{#with inheritedFrom}}{{> typeAndParent}}{{/with}}</p>
+    {{/if}}
+    {{#if overwrites}}
+        <p>{{#localize}}Overrides{{/localize}} {{#with overwrites}}{{> typeAndParent}}{{/with}}</p>
+    {{/if}}
+    {{#if sources}}
+        <ul>
+            {{#each sources}}
+                {{#if url}}
+                    <li>{{#localize}}Defined in{{/localize}} <a href="{{url}}">{{fileName}}:{{line}}</a></li>
+                {{else}}
+                    <li>{{#localize}}Defined in{{/localize}} {{fileName}}:{{line}}</li>
+                {{/if}}
+            {{/each}}
+        </ul>
+    {{/if}}
+</aside>
