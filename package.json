@@ -26,7 +26,7 @@
     "commit": "yuyienv",
     "serve": "yarn workspace yuyi-core-react-demo run start",
     "ts": "node -r ./package/yuyi-core-env/config/run-ts.js -r ./scripts/publish.ts",
-    "pub": "yarn commit && lerna publish",
+    "pub": "yarn allcommit && lerna publish",
     "dev": "lerna run --no-private dev",
     "dev:utils": "yarn workspace yuyi-core-utils run dev",
     "dev:night": "yarn workspace yuyi-core-night run dev",
