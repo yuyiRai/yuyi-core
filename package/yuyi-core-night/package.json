@@ -1,6 +1,6 @@
 {
   "name": "yuyi-core-night",
-  "version": "1.0.38",
+  "version": "1.0.39",
   "description": "",
   "author": "yuyiRai",
   "license": "MIT",
@@ -30,8 +30,7 @@
     "clean-src": "rimraf src/**/*.js && rimraf src/**/*.map && rimraf src/**/*.d.ts",
     "prepare": "yarn run build",
     "predeploy": "cd example && yarn install && yarn run build",
-    "deploy": "gh-pages -d example/build",
-    "publish": "update-patch"
+    "deploy": "gh-pages -d example/build"
   },
   "peerDependencies": {
     "antd": "^3.19.1",
