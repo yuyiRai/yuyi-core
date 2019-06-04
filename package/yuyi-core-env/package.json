@@ -1,6 +1,6 @@
 {
   "name": "yuyi-core-env",
-  "version": "2.0.10",
+  "version": "2.0.11",
   "main": "src/index.ts",
   "license": "MIT",
   "private": true,
