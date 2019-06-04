@@ -1,4 +1,4 @@
-# Documentation Theme for Vortex
+# Documentation Theme for Yuyi-core
 
 This is a plugin made to be used with TypeDoc.
 
