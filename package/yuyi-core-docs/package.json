@@ -1,0 +1,39 @@
+{
+  "name": "yuyi-core-docs",
+  "description": "Documentation Theme for Yuyi-core",
+  "version": "0.0.19",
+  "private": true,
+  "homepage": "http://typedoc.org/",
+  "main": "bin/plugin.js",
+  "bin": {
+    "yuyidocs": ".bin\\yuyidocs.bat"
+  },
+  "files": [
+    ".bin",
+    "bin",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">= 4"
+  },
+  "keywords": [
+    "typescript",
+    "documentation",
+    "generator"
+  ],
+  "devDependencies": {
+    "gulp": "^4.0.2",
+    "gulp-replace": "^1.0.0",
+    "typedoc": "^0.14.2",
+    "typedoc-plugin-example-tag": "^1.0.2",
+    "typedoc-plugin-external-module-map": "^1.0.0",
+    "typedoc-plugin-external-module-name": "^2.1.0",
+    "typedoc-plugin-folder-modules": "^0.1.8",
+    "typedoc-plugin-internal-external": "^2.0.2",
+    "typedoc-plugin-localization": "^1.4.1",
+    "typedoc-plugin-no-inherit": "^1.1.8",
+    "typedoc-plugin-npm-externals": "^1.0.0",
+    "typedoc-plugin-toc-group": "^0.0.5",
+    "yuyi-core-env": "file:..\\yuyi-core-env"
+  }
+}

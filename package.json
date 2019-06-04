@@ -1,15 +1,27 @@
 {
   "name": "yuyi-core",
-  "version": "0.0.0",
+  "version": "0.10.29",
+  "description": "yuyi",
   "license": "MIT",
   "private": true,
-  "main": "package/yuyi-core-night/lib/index.js",
+  "main": "package/yuyi-core-night/lib/cjs/index.js",
   "module": "package/yuyi-core-night/lib/esm/index.js",
   "typings": "package/yuyi-core-night/lib/esm/index.d.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuyiRai/yuyi-core.git"
+  },
+  "author": "yuyiRai<yuyi919606952@foxmail.com>",
+  "bugs": {
+    "url": "https://github.com/yuyiRai/yuyi-core/issues"
+  },
+  "sideEffects": false,
+  "homepage": "https://github.com/yuyiRai/yuyi-core#readme",
   "workspaces": [
     "package/*"
   ],
   "scripts": {
+    "commit:patch": "lerna exec --no-private -- yuyienv -t patch",
     "serve": "yarn workspace yuyi-core-react-demo run start",
     "dev": "yarn workspace yuyi-core-utils run dev",
     "dev2": "yarn workspace yuyi-core-night run dev",
@@ -18,10 +30,7 @@
     "start-night": "yarn workspace yuyi-core-night run start",
     "build-utils": "yarn workspace yuyi-core-utils run build"
   },
-  "files": [
-    "dist",
-    "build",
-    "lib",
-    "src"
-  ]
+  "devDependencies": {
+    "lerna": "^3.14.1"
+  }
 }

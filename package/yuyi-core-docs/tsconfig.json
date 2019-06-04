@@ -1,0 +1,5 @@
+{
+  "compilerOptions": {
+  },
+  "include": [ "./main.ts", "src", "node_modules/@types", "../../node_modules/@types" ]
+}

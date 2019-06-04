@@ -1,0 +1,16 @@
+{
+  "mode": "modules",
+  "module": "commonjs",
+  "target": "es5",
+  "out": "docs",
+  "tsconfig": "tsconfig.json",
+  "includes": "src",
+  "exclude": ["**/**test**.*", "**/test/*.*"],
+  "ignoreCompilerErrors": true,
+  "hideGenerator": false,
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "excludeProtected": true,
+  "excludeNotExported": true,
+  "includeDeclarations": true
+}
