@@ -14,7 +14,7 @@ export function getExecStr() {
     "theme": relativePaths.typedocTheme,
     // typedoc配置文件
     "options": relativePaths.typedocConfig,
-    "plugin": pluginList.sort((a, b) => a === 'typedoc-plugin-external-module-name' && b === 'typedoc-plugin-external-module-map' ? -1 : 0).join(','),
+    "plugin": pluginList.join(','),
     "preferred-example-language": "javascript",
     // 根据路径配置模块展示
     // "external-modulemap": `".*\/src\/((.*?Utils.*?)|[\\w-_]+)"`,
