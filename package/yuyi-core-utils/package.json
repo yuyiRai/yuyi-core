@@ -23,7 +23,7 @@
     "lint": "tslint --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "dev": "ttsc --project tsconfig.json --watch",
     "docs": "yuyidocs",
-    "docs:full": "yuyidocs -i",
+    "docs:full": "yuyidocs -i ",
     "docs:watch": "yuyidocs -w",
     "prebuild": "rimraf dist",
     "prebuild2": "rimraf dist/**/*.js && rimraf dist/**/*.map",
