@@ -121,7 +121,7 @@ export default class CommonDto<T extends object = IKeyValueMap> {
       // debugger
       return defaultValue;
     }
-    if (!Utils.isEmptyValue(keyStr)) {
+    if (!Utils.isEmptyValue(keyStr )) {
       const express = Utils.getExpressByStr(keyStr, defaultValue);
       // console.log(this.$$___source_dto, keyStr, express, Reflect.apply(Utils.getInnerWarpField, this, [this.$$___source_dto, ...express]))
       return Utils.getPropertyFieldByCreate(this.$$___source_dto, ...express);
