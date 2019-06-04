@@ -21,8 +21,7 @@
     "package/*"
   ],
   "scripts": {
-    "prepackagecommit": "lerna exec --no-private -- git add .",
-    "packagecommit": "lerna exec --no-private -- git commit -a -m 'NEXT'",
+    "packagecommit": "lerna exec --no-private -- yuyienv",
     "commit": "git add . && git commit -a -m 'NEXT'",
     "allcommit": "yarn packagecommit && git add . && git commit -a -m 'NEXT'",
     "serve": "yarn workspace yuyi-core-react-demo run start",
