@@ -3,7 +3,7 @@
 set allparam=
 
 :param
-set str=%1
+set str=%2
 if "%str%"=="" (
     goto end
 )
@@ -24,6 +24,6 @@ if "%allparam:~0,1%"==" " set "allparam=%allparam:~1%"&goto intercept_left
 if "%allparam:~-1%"==" " set "allparam=%allparam:~0,-1%"&goto intercept_right
 
 :eof
-node -r ./node_modules/yuyi-core-env/config/run-ts.js ./node_modules/yuyi-core-docs/main.ts %allparam%
+node -r %1./node_modules/yuyi-core-env/config/run-ts.js %1./node_modules/yuyi-core-docs/main.ts %allparam%
 
 pause
