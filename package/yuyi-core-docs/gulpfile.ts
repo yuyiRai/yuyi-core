@@ -25,30 +25,22 @@ const pre: typeof gulp.series = (...func: any[]) => {
 const startIndex = process.argv.findIndex(key => /^typedoc/.test(key)) + 1
 const arg = process.argv.splice(startIndex, process.argv.length - startIndex)
 
-
-const paramData = {
-  // typedoc样式配置
-  "theme": relativePaths.typedocTheme,
-  // typedoc配置文件
-  "options": relativePaths.typedocConfig,
-  // 根据路径配置模块展示
-  "external-modulemap": `".*\/src\/([\\w-_]+)\/"`,
-  // 本地化配置
-  "localize": "ch",
-  "templateStrings": relativePaths.typedocStringTemplate,
-  "toc": 1
-}
-const execStr = `typedoc ${reduce(paramData, (argStr, value, key) => {
-  return `${argStr} --${key} ${value}`
-}, '')} ${relativePaths.clintSrc}`
-
 // 生成文档
-gulp.task("typedoc", shell.task([execStr]))
+gulp.task("typedoc", shell.task(require('./typedoc.ts').getExecStr()))
 const defaultTask = gulp.series('typedoc');
 
 // watch 模式
 gulp.task("typedoc-watch", gulp.parallel('typedoc', function () {
-  gulp.watch(["src/**/*.ts", "src/**/*.tsx"], defaultTask)
+  gulp.watch(
+    ["src/**/*.ts", "src/**/*.tsx", paths.typedocConfigAsync, paths.typedocConfig], 
+    shell.task(`gulp --require ${
+      paths.requirePath
+    } -f ${
+      paths.typedocGulpFile
+    } --cwd ${
+      process.cwd()
+    } typedoc`)
+  )
 }))
 
 // 预先生产模板

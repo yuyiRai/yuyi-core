@@ -36,6 +36,6 @@
     "Requires": "必须",
     "Default value": "默认值",
     "Optional": "Optional",
-    "Rest": "残りの引数"
+    "Rest": "Rest"
   }
 }

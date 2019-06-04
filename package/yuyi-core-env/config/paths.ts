@@ -64,6 +64,7 @@ const pathsBase = {
   requirePath: resolveProject('./config/run-ts.js'),
   typedocGulpFile: resolveProject('../yuyi-core-docs/gulpfile.ts'),
   typedocConfig: resolveProject('../yuyi-core-docs/typedoc.json'),
+  typedocConfigAsync: resolveProject('../yuyi-core-docs/typedoc.ts'),
   typedocStringTemplate: resolveProject('../yuyi-core-docs/config/stringTemplate.json'),
   typedocTheme: resolveProject('../yuyi-core-docs/bin/default'),
   dotenv: resolveApp('.env'),

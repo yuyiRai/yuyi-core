@@ -7647,6 +7647,11 @@ is-generator-fn@^2.0.0:
   resolved "https://registry.yarnpkg.com/is-generator-fn/-/is-generator-fn-2.1.0.tgz#7d140adc389aaf3011a8f2a2a4cfa6faadffb118"
   integrity sha512-cTIB4yPYL/Grw0EaSzASzg6bBy9gqCofvWN8okThAYIxKJZC+udlRAmGbM0XLeniEJSs8uEgHPGuHSe1XsOLSQ==
 
+is-git-url@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/is-git-url/-/is-git-url-1.0.0.tgz#53f684cd143285b52c3244b4e6f28253527af66b"
+  integrity sha1-U/aEzRQyhbUsMkS05vKCU1J69ms=
+
 is-glob@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/is-glob/-/is-glob-3.1.0.tgz#7ba5ae24217804ac70707b96922567486cc3e84a"
@@ -10864,7 +10869,7 @@ parse-filepath@^1.0.1:
     map-cache "^0.2.0"
     path-root "^0.1.1"
 
-parse-github-url@^1.0.1:
+parse-github-url@^1.0.1, parse-github-url@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/parse-github-url/-/parse-github-url-1.0.2.tgz#242d3b65cbcdda14bb50439e3242acf6971db395"
   integrity sha512-kgBf6avCbO3Cn6+RnzRGLkUsv4ZVqv/VfAYkRsyBcgkshNvVBkRn1FEZcW0Jb+npXQWm2vHPnnOqFteZxRRGNw==
@@ -11133,6 +11138,11 @@ plugin-error@^1.0.1:
     arr-diff "^4.0.0"
     arr-union "^3.1.0"
     extend-shallow "^3.0.2"
+
+pluralize@^7.0.0:
+  version "7.0.0"
+  resolved "https://registry.yarnpkg.com/pluralize/-/pluralize-7.0.0.tgz#298b89df8b93b0221dbf421ad2b1b1ea23fc6777"
+  integrity sha512-ARhBOdzS3e41FbkW/XWrTEtukqqLoK5+Z/4UeDaLuSW+39JPeFgs4gCGqsrJHVZX0fUrx//4OF0K1CUGwlIFow==
 
 pn@^1.1.0:
   version "1.1.0"
@@ -12035,6 +12045,13 @@ protoduck@^5.0.1:
   integrity sha512-WxoCeDCoCBY55BMvj4cAEjdVUFGRWed9ZxPlqTKYyw1nDDTQ4pqmnIMAGfJlg7Dx35uB/M+PHJPTmGOvaCaPTg==
   dependencies:
     genfun "^5.0.0"
+
+prototyped.js@^0.10.1:
+  version "0.10.1"
+  resolved "https://registry.yarnpkg.com/prototyped.js/-/prototyped.js-0.10.1.tgz#b4b4301fa6a248e4872666c67290be4eeb542c9c"
+  integrity sha512-T1vL7I5/4g/emktxMOShwEc5sha4J9CV9TwwyUZnq9wZ03jdmzZTwV2OVA72CZ3cnVucqhlaneK2lbL8VNoC6Q==
+  dependencies:
+    pluralize "^7.0.0"
 
 proxy-addr@~2.0.5:
   version "2.0.5"
@@ -15279,10 +15296,32 @@ typedoc-default-themes@^0.5.0:
   resolved "https://registry.yarnpkg.com/typedoc-default-themes/-/typedoc-default-themes-0.5.0.tgz#6dc2433e78ed8bea8e887a3acde2f31785bd6227"
   integrity sha1-bcJDPnjti+qOiHo6zeLzF4W9Yic=
 
+typedoc-plugin-example-tag@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/typedoc-plugin-example-tag/-/typedoc-plugin-example-tag-1.0.2.tgz#164e1ddff1af3b0805c0b72449a5e319c5ddbe07"
+  integrity sha512-LbI6gnba+23toF0yAUWN2i/hblR1KHU+B/ujqNRu4LSvaYy78f7oTLxmfJqlBbooUHTQZtJOGhKchMOSL5rhOg==
+  dependencies:
+    prototyped.js "^0.10.1"
+
 typedoc-plugin-external-module-map@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/typedoc-plugin-external-module-map/-/typedoc-plugin-external-module-map-1.0.0.tgz#7021d0e2bc9a98b7266f4ea2eab593b7c63802ce"
   integrity sha512-OtlTOmanX0yqRYUVLBuGSBjrffLLAjWNn8mqh6k6FkvfXAIIe3Yfg0kCeKZDN/65v4dt3MJ9AuGXTGLPue3Kqg==
+
+typedoc-plugin-external-module-name@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/typedoc-plugin-external-module-name/-/typedoc-plugin-external-module-name-2.1.0.tgz#25f108e99673ad34f3424719c10c299ee50e92f0"
+  integrity sha512-uYYe1yj6COwgyhl3Of71lkkhbEw7LVBEqAlXVvd7b9INGhJq59M1q9wdQdIWfpqe/9JegWSIR9ZDfY6mkPedJg==
+
+typedoc-plugin-folder-modules@^0.1.8:
+  version "0.1.8"
+  resolved "https://registry.yarnpkg.com/typedoc-plugin-folder-modules/-/typedoc-plugin-folder-modules-0.1.8.tgz#fc4d3eaa1e000bf080c5af0c7ce6493a5edb473c"
+  integrity sha512-7PcXPcQAq83JSyVY6Jwywe8QETJTwKZPkKDr9Mf6k+uDMR59o4uDqz0AbzBCr9Bkcz+trIjZumQSqVQjXeM00w==
+
+typedoc-plugin-internal-external@^2.0.2:
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/typedoc-plugin-internal-external/-/typedoc-plugin-internal-external-2.0.2.tgz#6ced269be25e1b23559443c2ce6a5483860d53c3"
+  integrity sha512-ZWDJvHT2TGIKSkOkyKc7fiSbz/mBHjXzppyzuQlEEAFJmi9YElEVRC34v0xJz4qGUtVT5nNw7gbD1umKowG4wQ==
 
 typedoc-plugin-localization@^1.4.1:
   version "1.4.1"
@@ -15296,6 +15335,14 @@ typedoc-plugin-no-inherit@^1.1.8:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/typedoc-plugin-no-inherit/-/typedoc-plugin-no-inherit-1.1.8.tgz#4abc1ca18babb1ad73ff303fb358ffff111b76bc"
   integrity sha512-bcyYnRxXG1Wz1pA9ZUeFQHoO1sZJsgbPc7ynC+HxSCfeamUX228pVed03OzMJPFsmSNdV0/OmD/SPYhQ6jQXig==
+
+typedoc-plugin-npm-externals@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/typedoc-plugin-npm-externals/-/typedoc-plugin-npm-externals-1.0.0.tgz#1d7041ecbca35b7967fe75c880a215c2987b7ac0"
+  integrity sha512-wWvhP2Jh87ILln+4nSAncTP/W4eWopnjhrmhZS2JBLbN1Qv3HNuJw0PwTdzNXsPJfuaMRmzdDJZTQZbggtFhLg==
+  dependencies:
+    is-git-url "^1.0.0"
+    parse-github-url "^1.0.2"
 
 typedoc-plugin-toc-group@^0.0.5:
   version "0.0.5"
@@ -16578,4 +16625,4 @@ yup@^0.27.0:
   uid ""
 
 "yuyi-core-utils@link:package/yuyi-core-utils":
-  version "0.1.2"
+  version "0.1.5"

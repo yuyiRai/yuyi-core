@@ -7,9 +7,10 @@
   "includes": "src",
   "exclude": ["**/**test**.*", "**/test/*.*"],
   "ignoreCompilerErrors": true,
-  "hideGenerator": true,
+  "hideGenerator": false,
   "excludeExternals": true,
   "excludePrivate": true,
   "excludeProtected": true,
-  "excludeNotExported": true
+  "excludeNotExported": true,
+  "includeDeclarations": true
 }

@@ -22,6 +22,16 @@
   ],
   "devDependencies": {
     "gulp": "^4.0.2",
-    "gulp-replace": "^1.0.0"
+    "gulp-replace": "^1.0.0",
+    "typedoc": "^0.14.2",
+    "typedoc-plugin-example-tag": "^1.0.2",
+    "typedoc-plugin-external-module-map": "^1.0.0",
+    "typedoc-plugin-external-module-name": "^2.1.0",
+    "typedoc-plugin-folder-modules": "^0.1.8",
+    "typedoc-plugin-internal-external": "^2.0.2",
+    "typedoc-plugin-localization": "^1.4.1",
+    "typedoc-plugin-no-inherit": "^1.1.8",
+    "typedoc-plugin-npm-externals": "^1.0.0",
+    "typedoc-plugin-toc-group": "^0.0.5"
   }
 }
