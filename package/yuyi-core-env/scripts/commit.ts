@@ -1,6 +1,6 @@
 import { exec } from "shelljs";
 import Args from './args';
-const colors = require("colors")
+import colors from 'colors';
 const type = ['patch', 'minor', 'major']
 const args = new Args().addArgument(['-t', '-type'], {
   action: 'store',
@@ -17,7 +17,7 @@ if (!type.includes(args.type)) {
   throw new Error()
 }
 
-console.log(colors.cyan('no commit'))
+console.log(colors.cyan('run git commit -a -m "NEXT"'))
 try {
   exec(`git add .`)
   // exec(`yarn version --new-version ${args.type} && git add .`)
