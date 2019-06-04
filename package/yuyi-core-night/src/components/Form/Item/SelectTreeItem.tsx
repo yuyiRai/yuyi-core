@@ -56,7 +56,7 @@ export function convertTreeNodeToLoadData(treeNode: any) {
   const path: any[] = [treeNode]
   let current = treeNode.parentOption;
   while(!Utils.isNil(current)) {
-    debugger
+    // debugger
     path.unshift(current)
     current = current.parentOption
   }

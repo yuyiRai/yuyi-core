@@ -66,12 +66,13 @@ export default {
     }
   },
   plugins: [
-    external(),
+    external('element-ui'),
     json(),
     postcss({
       modules: false,
       inject: true,
-      extract: true
+      extract: true,
+      onImport: id => console.log('post css: ' +id)
     }),
     url({
       limit: 0,

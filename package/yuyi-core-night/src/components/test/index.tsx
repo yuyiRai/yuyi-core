@@ -1,6 +1,9 @@
 import * as React from 'react'
 import { slotInjectContainer, react2Vue } from '../../utils/SlotUtils';
 
+/**
+ * @noInheritDoc
+ */
 @slotInjectContainer
 export class AppTest extends React.Component<any, any> {
   state: any = {
