@@ -19,4 +19,4 @@ if (!type.includes(args.type)) {
 exec(`yarn version --new-version ${args.type} && git add .`)
 exec('git commit -a -m "NEXT"')
 exec('git push --set-upstream origin master')
-exec('yarn publish')
+// exec('yarn publish')
