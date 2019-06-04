@@ -1,5 +1,5 @@
 
-import { paths, relativePaths } from "yuyi-core-env/config/paths";
+import { paths, relativePaths } from "../yuyi-core-env/config/paths";
 import { reduce } from 'lodash'
 
 const excludePlugins = ['typedoc-plugin-folder-modules', 'typedoc-plugin-npm-externals']

@@ -1,5 +1,6 @@
 @echo off
 
+set rootpath= %1./node_modules
 set allparam=
 
 :param
@@ -24,6 +25,6 @@ if "%allparam:~0,1%"==" " set "allparam=%allparam:~1%"&goto intercept_left
 if "%allparam:~-1%"==" " set "allparam=%allparam:~0,-1%"&goto intercept_right
 
 :eof
-node -r %1./node_modules/yuyi-core-env/config/run-ts.js %1./node_modules/yuyi-core-docs/main.ts %allparam%
+node -r %rootpath%/yuyi-core-env/config/run-ts.js %rootpath%/yuyi-core-docs/main.ts %allparam%
 
 pause

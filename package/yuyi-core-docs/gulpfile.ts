@@ -3,7 +3,8 @@ import { TaskFunction } from 'gulp'
 import replace from 'gulp-replace'
 import shell from 'gulp-shell'
 import { reduce } from "lodash";
-import { paths, relativePaths } from "yuyi-core-env/config/paths";
+import { paths, relativePaths } from "../yuyi-core-env/config/paths";
+import colors from 'colors';
 
 const stringTemplate = require('./config/stringTemplate.json')
 
@@ -31,15 +32,18 @@ const defaultTask = gulp.series('typedoc');
 
 // watch 模式
 gulp.task("typedoc-watch", gulp.parallel('typedoc', function () {
+  const run = `gulp --require ${
+    paths.requirePath
+  } -f ${
+    paths.typedocGulpFile
+  } --cwd ${
+    process.cwd()
+  } typedoc`
+
+  console.log(colors.cyan(run))
   gulp.watch(
     ["src/**/*.ts", "src/**/*.tsx", paths.typedocConfigAsync, paths.typedocConfig], 
-    shell.task(`gulp --require ${
-      paths.requirePath
-    } -f ${
-      paths.typedocGulpFile
-    } --cwd ${
-      process.cwd()
-    } typedoc`)
+    shell.task(run)
   )
 }))
 
