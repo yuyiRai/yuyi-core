@@ -1,6 +1,6 @@
 {
   "name": "yuyi-core",
-  "version": "0.10.25",
+  "version": "0.10.26",
   "description": "yuyi",
   "license": "MIT",
   "private": true,
@@ -29,5 +29,8 @@
     "build-night": "yarn workspace yuyi-core-night run build",
     "start-night": "yarn workspace yuyi-core-night run start",
     "build-utils": "yarn workspace yuyi-core-utils run build"
+  },
+  "devDependencies": {
+    "lerna": "^3.14.1"
   }
 }
