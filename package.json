@@ -21,7 +21,7 @@
     "package/*"
   ],
   "scripts": {
-    "allcommit": "lerna exec --no-private -- yuyienv ../. -p",
+    "allcommit": "lerna exec --no-private -- yuyienv ../. -p && yarn",
     "commit": "yuyienv",
     "serve": "yarn workspace yuyi-core-react-demo run start",
     "ts": "node -r ./package/yuyi-core-env/config/run-ts.js -r ./scripts/publish.ts",
