@@ -9,7 +9,12 @@ const args = new Args().addArgument(['-t', '-type'], {
   constant: 'patch',
   defaultValue: 'patch',
   help: `'patch', 'minor', 'major'`
-}).init()
+}).addArgument(
+  ['-p', '-push'], {
+    action: 'storeTrue',
+    dest: 'push'
+  }
+).init()
 
 console.log(args)
 
@@ -22,7 +27,9 @@ try {
   exec(`git add .`)
   // exec(`yarn version --new-version ${args.type} && git add .`)
   exec('git commit -a -m "NEXT"')
-  // exec('git push --set-upstream origin master')
+  if (args.push) {
+    exec('git push --set-upstream origin master')
+  }
   // exec('yarn publish')
 } catch (error) {
 

@@ -21,7 +21,7 @@
     "package/*"
   ],
   "scripts": {
-    "preallcommit": "lerna exec --no-private -- yuyienv",
+    "preallcommit": "lerna exec --no-private -- yuyienv ../. -p",
     "allcommit": "yarn commit",
     "commit": "yuyienv",
     "serve": "yarn workspace yuyi-core-react-demo run start",
