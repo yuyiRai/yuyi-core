@@ -21,10 +21,15 @@
     "package/*"
   ],
   "scripts": {
-    "commit:patch": "lerna exec --no-private -- yuyienv -t patch",
+    "preallcommit": "lerna exec --no-private -- yuyienv ../. -p",
+    "allcommit": "yarn commit",
+    "commit": "yuyienv",
     "serve": "yarn workspace yuyi-core-react-demo run start",
-    "dev": "yarn workspace yuyi-core-utils run dev",
-    "dev2": "yarn workspace yuyi-core-night run dev",
+    "ts": "node -r ./package/yuyi-core-env/config/run-ts.js -r ./scripts/publish.ts",
+    "pub": "yarn allcommit && lerna publish",
+    "dev": "lerna run --no-private dev",
+    "dev:utils": "yarn workspace yuyi-core-utils run dev",
+    "dev:night": "yarn workspace yuyi-core-night run dev",
     "build": "yarn run build-utils && yarn run build-night",
     "build-night": "yarn workspace yuyi-core-night run build",
     "start-night": "yarn workspace yuyi-core-night run start",

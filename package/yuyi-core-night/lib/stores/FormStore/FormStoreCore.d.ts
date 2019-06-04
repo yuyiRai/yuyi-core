@@ -1,0 +1,31 @@
+import { IKeyValueMap, IMapDidChange, ObservableMap, Lambda } from 'mobx';
+import { FormModel } from '../../components/Form/Interface/FormItem';
+import { IFormItemStoreCore } from "./FormItemStoreBase";
+import { GFormStore } from './GFormStore';
+import { ConfigInit, ItemConfigGroupStore } from './ItemConfigGroupStore';
+export declare type onItemChangeCallback = (code: string, value: any) => void;
+export declare class FormStoreCore<FM extends FormModel, VM extends IFormItemStoreCore = any> extends GFormStore {
+    configStore: ItemConfigGroupStore<FM>;
+    formSourceListerner: Lambda;
+    clearValidate(): void;
+    readonly allFormMap: WeakMap<any, import("./FormStore").FormStore<any, any>>;
+    constructor(config?: ConfigInit<FM>);
+    setConfig<V>(config: ConfigInit<FM, V>): void;
+    formMap: ObservableMap<keyof FM, any>;
+    lastFormSource: FM;
+    formSource: FM;
+    setForm(formSource: FM): void;
+    replaceForm(formMap: ObservableMap<string, any>): void;
+    registerFormKey(target: any, deep?: boolean): void;
+    getValueWithName(code: string, nameCode: string): string;
+    formItemStores: IKeyValueMap<IFormItemStoreCore<FM, any>>;
+    registerItemStore<V>(code: string, init: () => VM): IFormItemStoreCore<FM, V>;
+    onItemChange(callback: onItemChangeCallback): void;
+    onItemChangeEmit(code: string, value: any): void;
+    errorTack: IMapDidChange[];
+    errorGroup: ObservableMap<string, Error[] | undefined>;
+    readonly errors: IKeyValueMap<Error[]>;
+    getErrors(itemKey: string): Error[];
+    hasErrors(itemKey: string): boolean;
+    updateError(itemKey: string, errors?: Error[] | undefined): void;
+}
