@@ -25,7 +25,7 @@
     "allcommit": "yarn commit",
     "commit": "yuyienv",
     "serve": "yarn workspace yuyi-core-react-demo run start",
-    "pub": "yarn allcommit && lerna publish",
+    "pub": "yarn commit && lerna publish",
     "dev": "yarn workspace yuyi-core-utils run dev",
     "dev2": "yarn workspace yuyi-core-night run dev",
     "build": "yarn run build-utils && yarn run build-night",
