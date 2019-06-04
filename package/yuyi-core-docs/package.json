@@ -32,6 +32,11 @@
     "typedoc-plugin-localization": "^1.4.1",
     "typedoc-plugin-no-inherit": "^1.1.8",
     "typedoc-plugin-npm-externals": "^1.0.0",
-    "typedoc-plugin-toc-group": "^0.0.5"
+    "typedoc-plugin-toc-group": "^0.0.5",
+    "yuyi-core-env": "file:..\\yuyi-core-env",
+    "yuyi-core-utils": "file:..\\yuyi-core-utils"
+  },
+  "dependencies": {
+    "yuyi-core-env": "file:..\\yuyi-core-env"
   }
 }

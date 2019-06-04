@@ -8,9 +8,6 @@
     "test": "yuyidocs",
     "clean": "rimraf src/**/*.js && rimraf src/**/*.map && rimraf src/**/*.d.ts"
   },
-  "dependencies": {
-    "yuyi-core-utils": "link:package/yuyi-core-utils"
-  },
   "bin": {
     "yuyienv": ".bin/yuyienv.bat"
   },
@@ -29,6 +26,7 @@
     "ttypescript": "^1.5.6",
     "typescript": "3.5.1",
     "typescript-plugin-styled-components": "^1.4.2",
-    "typescript-transform-paths": "^1.1.0"
+    "typescript-transform-paths": "^1.1.0",
+    "yuyi-core-utils": "file:..\\yuyi-core-utils"
   }
 }
