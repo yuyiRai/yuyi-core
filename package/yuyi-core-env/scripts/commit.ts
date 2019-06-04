@@ -17,7 +17,6 @@ if (!type.includes(args.type)) {
   throw new Error()
 }
 
-console.log(colors.cyan('run git commit -a -m "NEXT"'))
 try {
   exec(`git add .`)
   // exec(`yarn version --new-version ${args.type} && git add .`)
@@ -25,4 +24,6 @@ try {
   // exec('git push --set-upstream origin master')
   // exec('yarn publish')
 } catch (error) {
+
+  console.log(colors.cyan('run git commit -a -m "NEXT"'))
 }
