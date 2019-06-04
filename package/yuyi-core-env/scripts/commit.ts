@@ -20,7 +20,7 @@ if (!type.includes(args.type)) {
 try {
   exec(`git add .`)
   // exec(`yarn version --new-version ${args.type} && git add .`)
-  exec('git commit -a -m "NEXT"').exec('')
+  exec('git commit -a -m "NEXT"')
   // exec('git push --set-upstream origin master')
   // exec('yarn publish')
 } catch (error) {
