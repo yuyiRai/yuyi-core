@@ -22,9 +22,9 @@
     "npm": ">=5"
   },
   "scripts": {
-    "docs": "yuyidocs ../.",
-    "docs:full": "yuyidocs ../. -i",
-    "docs:watch": "yuyidocs ../. -w",
+    "docs": "yuyidocs ../..",
+    "docs:full": "yuyidocs ../.. -i",
+    "docs:watch": "yuyidocs ../.. -w",
     "predeploy-docs": "yarn run docs:full",
     "deploy-docs": "gh-pages -d docs",
     "dev": "ttsc --project tsconfig.json --watch",

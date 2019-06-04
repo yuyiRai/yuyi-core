@@ -1,6 +1,6 @@
 @echo off
 
-set rootpath= %1./node_modules
+set rootpath= %1/node_modules
 set allparam=
 
 :param
