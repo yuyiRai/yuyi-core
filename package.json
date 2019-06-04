@@ -21,7 +21,7 @@
     "package/*"
   ],
   "scripts": {
-    "commit:patch": "lerna exec --no-private -- yuyienv -t patch",
+    "commit:patch": "lerna exec --no-private -- git add . && git commit -a -m 'NEXT'",
     "serve": "yarn workspace yuyi-core-react-demo run start",
     "dev": "yarn workspace yuyi-core-utils run dev",
     "dev2": "yarn workspace yuyi-core-night run dev",
