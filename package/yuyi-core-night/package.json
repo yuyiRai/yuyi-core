@@ -1,6 +1,6 @@
 {
   "name": "yuyi-core-night",
-  "version": "1.0.32",
+  "version": "1.0.33",
   "description": "",
   "author": "yuyiRai",
   "license": "MIT",
@@ -98,8 +98,8 @@
     "typescript-plugin-styled-components": "^1.4.2",
     "typescript-transform-paths": "^1.1.0",
     "vue": "^2.6.10",
-    "yuyi-core-env": "link:../yuyi-core-env",
-    "yuyi-core-utils": "link:../yuyi-core-utils"
+    "yuyi-core-env": "file:..\\yuyi-core-env",
+    "yuyi-core-utils": "file:..\\yuyi-core-utils"
   },
   "files": [
     "dist"
