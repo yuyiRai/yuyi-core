@@ -1,5 +1,5 @@
-import { cd, exec, echo, touch } from "shelljs"
-import Args from './args'
+import { exec } from "shelljs";
+import Args from './args';
 const type = ['patch', 'minor', 'major']
 const args = new Args().addArgument(['-t', '-type'], {
   action: 'store',
