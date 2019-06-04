@@ -2,7 +2,7 @@
   "name": "yuyi-core-utils",
   "version": "0.1.40",
   "description": "",
-  "keywords": [],
+  "keywords": ["mobx", "lodash", "typescript"],
   "main": "dist/index.js",
   "module": "dist/index.es5.js",
   "typings": "types",
