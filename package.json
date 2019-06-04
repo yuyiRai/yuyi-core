@@ -22,8 +22,8 @@
   ],
   "scripts": {
     "preallcommit": "lerna exec --no-private -- yuyienv",
-    "allcommit": "yarn commit && yarn",
-    "commit": "git add . && git commit -a -m 'NEXT'",
+    "allcommit": "yarn commit",
+    "commit": "git add . && git commit -a -m 'NEXT' && yarn",
     "serve": "yarn workspace yuyi-core-react-demo run start",
     "pub": "yarn allcommit && lerna publish",
     "dev": "yarn workspace yuyi-core-utils run dev",
