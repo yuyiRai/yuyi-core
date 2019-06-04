@@ -21,7 +21,7 @@
     "package/*"
   ],
   "scripts": {
-    "publish": "update-patch.cmd",
+    "commit:patch": "lerna exec -- yuyienv",
     "serve": "yarn workspace yuyi-core-react-demo run start",
     "dev": "yarn workspace yuyi-core-utils run dev",
     "dev2": "yarn workspace yuyi-core-night run dev",
