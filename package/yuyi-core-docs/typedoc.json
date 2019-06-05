@@ -5,12 +5,17 @@
   "out": "docs",
   "tsconfig": "tsconfig.json",
   "includes": "src",
-  "exclude": ["**/**test**.*", "**/test/*.*"],
+  "exclude": ["**/**test**.*", "**/test/*.*", "**/*.tsx"],
   "ignoreCompilerErrors": true,
-  "hideGenerator": false,
+  "hideGenerator": true,
+  "experimentalDecorators": true,
+  "emitDecoratorMetadata": true,
+  "jsx": "react",
+  "typescript": "typescript",
   "excludeExternals": true,
   "excludePrivate": true,
   "excludeProtected": true,
+  "disableOutputCheck": true,
   "excludeNotExported": true,
-  "includeDeclarations": true
+  "includeDeclarations": false
 }

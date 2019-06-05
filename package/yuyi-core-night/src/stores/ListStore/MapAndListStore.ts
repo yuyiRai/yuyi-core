@@ -8,10 +8,11 @@ export type IKeyData<Key extends string> = IKeyValueMap<any> & {
   readonly [K in Key]-?: string;
 }
 
+
 export class KeyDataMapStore<
   DataKey extends string,
   SourceData extends IKeyData<DataKey>,
-  TargetData extends IKeyData<DataKey> = SourceData
+  TargetData extends IKeyData<DataKey> = SourceData,
   > extends CommonStore {
 
   @observable
@@ -38,17 +39,17 @@ export class KeyDataMapStore<
   }
 
   @computed.struct
-  public get sourceValueList(): readonly SourceData[] {
-    return toJS(values(this.sourceMap));
+  public get sourceValueList(): ReadonlyArray<SourceData> {
+    return toJS(values(this.sourceMap))
   }
 
   @computed.struct
   public get keyList(): string[] {
-    return getKeys(this.sourceMap) as string[];
+    return getKeys(this.sourceMap) as string[]
   }
   @computed.struct
-  public get valueList(): readonly TargetData[] {
-    return toJS(values(this.targetMap));
+  public get valueList(): ReadonlyArray<TargetData> {
+    return toJS(values(this.targetMap))
   }
 
   @computed.struct
@@ -57,12 +58,12 @@ export class KeyDataMapStore<
       return config.nameCode ? assign(obj, {
         [config.code]: config.nameCode
       }) : obj;
-    }, {});
+    }, {})
   }
 
   @computed.struct
   public get itemCodeNameList() {
-    return values(this.itemCodeNameMap);
+    return values(this.itemCodeNameMap)
   }
 
   @autobind
@@ -127,11 +128,7 @@ export class KeyDataMapStore<
   }
 }
 
-export interface IMapTransformer<
-  DataKey extends string,
-  SourceData extends IKeyData<DataKey>,
-  TargetData extends IKeyData<DataKey> = SourceData
-  > {
+export interface IMapTransformer<DataKey extends string, SourceData extends IKeyData<DataKey>, TargetData extends IKeyData<DataKey> = SourceData> {
   create(source: Readonly<SourceData>): TargetData;
   update(newSource: Readonly<SourceData>, prevTarget: TargetData): TargetData;
   delete?(target: TargetData, source?: SourceData): void;

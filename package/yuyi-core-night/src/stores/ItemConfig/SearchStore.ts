@@ -9,7 +9,7 @@ import { CommonStore } from "./interface/CommonStore";
 
 export type KeyString = string;
 export interface ISearchConfigBase<FM> {
-  remoteMethod?: ItemConfigEventHandler<KeyString, Promise<OptionBase[]>>;
+  remoteMethod?: ItemConfigEventHandler<KeyString, FM, Promise<OptionBase[]>>;
   allowCreate?: boolean | ItemConfigEventHandler<KeyString, FM, Option>
   multiple?: boolean;
   loadDataDeep?: number;

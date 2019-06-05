@@ -46,7 +46,7 @@ export class ItemConfigGroupStore<FM = FormModel, VKeys = any> extends CommonSto
   }
 
   @computed
-  public get configList(): readonly IFormItemConstructor<FM, VKeys, VKeys>[] {
+  public get configList(): ReadonlyArray<IFormItemConstructor<any, VKeys, VKeys>> {
     return this.configSourceMap.sourceValueList
   }
 

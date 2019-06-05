@@ -17,7 +17,7 @@ export function getExecStr() {
     "plugin": pluginList.join(','),
     "preferred-example-language": "javascript",
     // 根据路径配置模块展示
-    // "external-modulemap": `".*\/src\/((.*?Utils.*?)|[\\w-_]+)"`,
+    "external-modulemap": `".*\/src\/((.*?Utils.*?)|[\\w-_]+)"`,
     // 本地化配置
     "localize": "ch",
     "templateStrings": relativePaths.typedocStringTemplate
