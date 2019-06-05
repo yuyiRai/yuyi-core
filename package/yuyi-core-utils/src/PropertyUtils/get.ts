@@ -10,51 +10,21 @@
  * 
  * @see _.get
  */
-import get from 'lodash/get'
-import { NumericDictionary, PropertyPath } from 'lodash'
+import { get as lodashGet, NumericDictionary, PropertyPath } from 'lodash';
 
-export namespace Lodash {
-  /**
-   * @see _.get
-   */
-  export function get<TObject extends object, TKey extends keyof TObject>(object: TObject, path: TKey | [TKey]): TObject[TKey];
-  /**
-   * @see _.get
-   */
-  export function get<TObject extends object, TKey extends keyof TObject>(object: TObject | null | undefined, path: TKey | [TKey]): TObject[TKey] | undefined;
-  /**
-   * @see _.get
-   */
-  export function get<TObject extends object, TKey extends keyof TObject, TDefault>(object: TObject | null | undefined, path: TKey | [TKey], defaultValue: TDefault): Exclude<TObject[TKey], undefined> | TDefault;
-  /**
-   * @see _.get
-   */
-  export function get<T>(object: NumericDictionary<T>, path: number): T;
-  /**
-   * @see _.get
-   */
-  export function get<T>(object: NumericDictionary<T> | null | undefined, path: number): T | undefined;
-  /**
-   * @see _.get
-   */
-  export function get<T, TDefault>(object: NumericDictionary<T> | null | undefined, path: number, defaultValue: TDefault): T | TDefault;
-  /**
-   * @see _.get
-   */
-  export function get<TDefault>(object: null | undefined, path: PropertyPath, defaultValue: TDefault): TDefault;
-  /**
-   * @see _.get
-   */
-  export function get(object: null | undefined, path: PropertyPath): undefined;
-  /**
-   * @see _.get
-   */
-  export function get(object: any, path: PropertyPath, defaultValue?: any): any;
+export function get<TObject extends object, TKey extends keyof TObject>(object: TObject, path: TKey | [TKey]): TObject[TKey];
+export function get<TObject extends object, TKey extends keyof TObject>(object: TObject | null | undefined, path: TKey | [TKey]): TObject[TKey] | undefined;
+export function get<TObject extends object, TKey extends keyof TObject, TDefault>(object: TObject | null | undefined, path: TKey | [TKey], defaultValue: TDefault): Exclude<TObject[TKey], undefined> | TDefault;
+export function get<T>(object: NumericDictionary<T>, path: number): T;
+export function get<T>(object: NumericDictionary<T> | null | undefined, path: number): T | undefined;
+export function get<T, TDefault>(object: NumericDictionary<T> | null | undefined, path: number, defaultValue: TDefault): T | TDefault;
+export function get<TDefault>(object: null | undefined, path: PropertyPath, defaultValue: TDefault): TDefault;
+export function get(object: null | undefined, path: PropertyPath): undefined;
+export function get(object: any, path: PropertyPath, defaultValue?: any): any;
 
-  export const get = get
+// tslint:disable-next-line: no-empty
+export function get(...a: any[]): any { }
+module.exports.get = lodashGet
 
-}
-
-export { get }
 
 

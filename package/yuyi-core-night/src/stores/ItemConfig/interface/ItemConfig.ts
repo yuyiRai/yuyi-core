@@ -11,7 +11,7 @@ import { FilterType, IFormValueTransform, IFormValueTransformHandler, FilterType
 import { IDisplayConfig, IDisplayConfigCreater } from "../ItemDisplayConfig";
 import { IRuleStore, IRuleStoreCreater } from "../RuleConfigStore";
 import { ISearchConfig, ISearchConfigCreater } from "../SearchStore";
-import { CommonStore } from "./CommonStore";
+import { CommonStore } from "../../CommonStore";
 import { IRuleConfig } from "./RuleConfig";
 
 export interface FormItemTypeDescription {

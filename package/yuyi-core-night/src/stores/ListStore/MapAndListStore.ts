@@ -2,7 +2,7 @@ import { autobind, readonly } from 'core-decorators';
 import { assign, reduce } from 'lodash';
 import { action, computed, IKeyValueMap, keys as getKeys, observable, ObservableMap, toJS, values } from 'mobx';
 import { Utils } from '@/utils';
-import { CommonStore } from '../ItemConfig/interface';
+import { CommonStore } from '../CommonStore';
 
 export type IKeyData<Key extends string> = IKeyValueMap<any> & {
   readonly [K in Key]-?: string;
@@ -39,7 +39,7 @@ export class KeyDataMapStore<
   }
 
   @computed.struct
-  public get sourceValueList(): ReadonlyArray<SourceData> {
+  public get sourceValueList() {
     return toJS(values(this.sourceMap))
   }
 

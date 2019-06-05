@@ -17,5 +17,5 @@
   "excludeProtected": true,
   "disableOutputCheck": true,
   "excludeNotExported": true,
-  "includeDeclarations": false
+  "includeDeclarations": true
 }

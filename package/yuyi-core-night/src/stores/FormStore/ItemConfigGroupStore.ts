@@ -2,10 +2,11 @@ import { autobind } from 'core-decorators';
 import { assign, reduce, values } from 'lodash';
 import { Memoize } from 'lodash-decorators/memoize';
 import { action, computed, IKeyValueMap, observable } from 'mobx';
-import { ItemConfig } from '@/stores';
-import { KeyDataMapStore } from '@/stores/ListStore/MapAndListStore';
-import { CommonStore, FormModel, IFormItemConstructor } from '@/stores/ItemConfig/interface';
+import { ItemConfig } from '../ItemConfig';
+import { KeyDataMapStore } from '../ListStore/MapAndListStore';
+import { FormModel, IFormItemConstructor } from '../ItemConfig';
 import { FormStoreCore } from './FormStoreCore';
+import { CommonStore } from '../CommonStore';
 
 export type ConfigInit<FM = FormModel, VKeys = any> = IFormItemConstructor<FM, VKeys>[] | IKeyValueMap<IFormItemConstructor<FM, VKeys>>
 
