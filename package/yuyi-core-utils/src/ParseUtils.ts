@@ -1,3 +1,6 @@
+/**
+ * @module ParseUtils
+ */
 import { isDate } from "lodash";
 import moment from "moment";
 import { typeUtils } from "./TypeLib";

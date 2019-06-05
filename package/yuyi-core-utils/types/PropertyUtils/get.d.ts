@@ -1,7 +1,7 @@
 /**
  * @module PropertyUtils
  */
-import { NumericDictionary, PropertyPath } from 'lodash';
+/// <reference types="lodash" />
 /**
  * Gets the property value at path of object. If the resolved value is undefined the defaultValue is used
  * in its place.
@@ -22,24 +22,24 @@ export declare function get<TObject extends object, TKey extends keyof TObject, 
 /**
  * @see lodash.get
  */
-export declare function get<T>(object: NumericDictionary<T>, path: number): T;
+export declare function get<T>(object: _.NumericDictionary<T>, path: number): T;
 /**
  * @see lodash.get
  */
-export declare function get<T>(object: NumericDictionary<T> | null | undefined, path: number): T | undefined;
+export declare function get<T>(object: _.NumericDictionary<T> | null | undefined, path: number): T | undefined;
 /**
  * @see lodash.get
  */
-export declare function get<T, TDefault>(object: NumericDictionary<T> | null | undefined, path: number, defaultValue: TDefault): T | TDefault;
+export declare function get<T, TDefault>(object: _.NumericDictionary<T> | null | undefined, path: number, defaultValue: TDefault): T | TDefault;
 /**
  * @see lodash.get
  */
-export declare function get<TDefault>(object: null | undefined, path: PropertyPath, defaultValue: TDefault): TDefault;
+export declare function get<TDefault>(object: null | undefined, path: _.PropertyPath, defaultValue: TDefault): TDefault;
 /**
  * @see lodash.get
  */
-export declare function get(object: null | undefined, path: PropertyPath): undefined;
+export declare function get(object: null | undefined, path: _.PropertyPath): undefined;
 /**
  * @see lodash.get
  */
-export declare function get(object: any, path: PropertyPath, defaultValue?: any): any;
+export declare function get(object: any, path: _.PropertyPath, defaultValue?: any): any;

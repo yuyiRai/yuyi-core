@@ -1,3 +1,6 @@
+/**
+ * @module UtilClass
+ */
 import { Subscription } from 'rxjs/internal/Subscription';
 import { share } from 'rxjs/operators';
 import { Subject } from 'rxjs/internal/Subject';

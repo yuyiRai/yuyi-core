@@ -9,26 +9,25 @@
  *
  * 
  */
-import { get } from './get';
-import { set } from './set';
+import { get, set } from 'lodash';
+import { asyncComputed } from './AsyncProperty';
+import { get as Get } from './get';
+import { getPropByPath } from './getPropByPath';
 import { getExpressByStr, getPropertyFieldByCreate } from './getPropertyFieldByCreate';
-import { getPropByPath } from './getPropByPath'
+import { set as Set } from './set';
 
 export interface IPropertyUtils {
-  get: typeof get;
-  set: typeof set;
-  getPropByPath: typeof getPropByPath, 
-  getPropertyFieldByCreate: typeof getPropertyFieldByCreate, 
-  getExpressByStr: typeof getExpressByStr, 
+  get: typeof Get;
+  set: typeof Set;
+  getPropByPath: typeof getPropByPath;
+  getPropertyFieldByCreate: typeof getPropertyFieldByCreate;
+  getExpressByStr: typeof getExpressByStr;
+  asyncComputed: typeof asyncComputed;
 }
 
-export { 
-  getPropByPath, 
-  getPropertyFieldByCreate, 
-  getExpressByStr
-}
-export { get, set } from 'lodash';
+export { getPropByPath, getPropertyFieldByCreate, getExpressByStr, asyncComputed, get, set };
 
-/** 
+
+/**
  * 123456
  */

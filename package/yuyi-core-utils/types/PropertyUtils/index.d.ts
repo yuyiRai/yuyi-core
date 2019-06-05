@@ -9,37 +9,21 @@
  *
  *
  */
-import { LoDashStatic } from 'lodash';
-import { getExpressByStr, getPropertyFieldByCreate } from './getPropertyFieldByCreate';
+import { get, set } from 'lodash';
+import { asyncComputed } from './AsyncProperty';
+import { get as Get } from './get';
 import { getPropByPath } from './getPropByPath';
-declare const PropertyUtils: {
-    getPropByPath: typeof getPropByPath;
-    getPropertyFieldByCreate: typeof getPropertyFieldByCreate;
-    getExpressByStr: typeof getExpressByStr;
-    get: {
-        <TObject extends object, TKey extends keyof TObject>(object: TObject, path: TKey | [TKey]): TObject[TKey];
-        <TObject extends object, TKey extends keyof TObject>(object: TObject, path: TKey | [TKey]): TObject[TKey];
-        <TObject extends object, TKey extends keyof TObject, TDefault>(object: TObject, path: TKey | [TKey], defaultValue: TDefault): TDefault | Exclude<TObject[TKey], undefined>;
-        <T>(object: import("lodash").NumericDictionary<T>, path: number): T;
-        <T>(object: import("lodash").NumericDictionary<T>, path: number): T;
-        <T, TDefault>(object: import("lodash").NumericDictionary<T>, path: number, defaultValue: TDefault): T | TDefault;
-        <TDefault>(object: null, path: import("lodash").Many<string | number | symbol>, defaultValue: TDefault): TDefault;
-        (object: null, path: import("lodash").Many<string | number | symbol>): undefined;
-        (object: any, path: import("lodash").Many<string | number | symbol>, defaultValue?: any): any;
-    };
-    set: {
-        <T extends object>(object: T, path: import("lodash").Many<string | number | symbol>, value: any): T;
-        <TResult>(object: object, path: import("lodash").Many<string | number | symbol>, value: any): TResult;
-    };
-};
+import { getExpressByStr, getPropertyFieldByCreate } from './getPropertyFieldByCreate';
+import { set as Set } from './set';
 export interface IPropertyUtils {
-    get: LoDashStatic['get'];
-    set: LoDashStatic['set'];
+    get: typeof Get;
+    set: typeof Set;
     getPropByPath: typeof getPropByPath;
     getPropertyFieldByCreate: typeof getPropertyFieldByCreate;
     getExpressByStr: typeof getExpressByStr;
+    asyncComputed: typeof asyncComputed;
 }
-export default PropertyUtils;
+export { getPropByPath, getPropertyFieldByCreate, getExpressByStr, asyncComputed, get, set };
 /**
  * 123456
  */ 

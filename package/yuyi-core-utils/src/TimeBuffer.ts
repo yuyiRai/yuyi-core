@@ -1,4 +1,6 @@
-/* eslint-disable */
+/**
+ * @module TimeUtils
+ */
 import { forEach, isArray, isEqual, last } from 'lodash';
 import { from, merge, MonoTypeOperatorFunction, of, timer } from 'rxjs';
 import { bufferTime, bufferWhen, distinctUntilChanged, first, shareReplay, switchMap, tap } from 'rxjs/operators';

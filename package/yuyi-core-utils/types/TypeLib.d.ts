@@ -25,6 +25,17 @@ export declare function isNotEmptyData(value: any): boolean;
 export declare function isEmptyObject(value: any, checkValue?: boolean): value is {};
 export declare function isNotEmptyObject(value: any): value is object;
 export declare function isEventEmitter(emitter: any): boolean;
+/**
+* 判断非空字符串
+* @param {*} str
+*/
+export declare function isNotEmptyString(str: any): str is string;
+export declare function isNotFunction(func: any): boolean;
+export declare function isNotNaN(v: any): boolean;
+export declare function isNilAll(...valueArr: any[]): boolean;
+/**
+ * @external
+ */
 export declare const typeUtils: {
     isArrayLike: {
         <T extends {
@@ -46,18 +57,14 @@ export declare const typeUtils: {
     isEmptyData: typeof isEmptyData;
     isNotEmptyData: typeof isNotEmptyData;
     isEventEmitter: typeof isEventEmitter;
-    /**
-     * 判断非空字符串
-     * @param {*} str
-     */
-    isNotEmptyString(str: any): str is string;
+    isNotEmptyString: typeof isNotEmptyString;
     isFunction: (value: any) => value is (...args: any[]) => any;
-    isNotFunction(func: any): boolean;
     isNil: (value: any) => value is null;
     isDate: (value?: any) => value is Date;
     isNaN: (value?: any) => boolean;
-    isNotNaN(v: any): boolean;
-    isNilAll(...valueArr: any[]): boolean;
+    isNotFunction: typeof isNotFunction;
+    isNotNaN: typeof isNotNaN;
+    isNilAll: typeof isNilAll;
     isBooleanOrNumber: typeof isBooleanOrNumber;
     isEmptyValue: typeof isEmptyValue;
     isNotEmptyValue: typeof isNotEmptyValue;
@@ -69,22 +76,29 @@ export declare const typeUtils: {
     isNotEmptyObject: typeof isNotEmptyObject;
     toJS: typeof toJS;
 };
-export declare type FilterFunction<T = any> = <ST = T>(...key: (any | ST | T)[]) => ST | T | undefined;
-export declare type FilterArrayFunction = <T = any>(...key: any[]) => Array<T> | undefined;
-export declare type FilterFunctionGroup = IKeyValueMap<FilterFunction>;
+export declare type IsAny<T = unknown, TRUE = true, FALSE = false> = unknown extends T ? TRUE : FALSE;
+export declare type IsArray<T = unknown, TRUE = true, FALSE = false> = IsAny<T, FALSE, T extends Array<any> ? TRUE : FALSE>;
+export declare type IsBaseType<T = unknown, TRUE = true, FALSE = false> = IsAny<T, FALSE, T extends (string | number | boolean | Function) ? TRUE : FALSE>;
+export declare type IsObject<T = unknown, TRUE = true, FALSE = false> = IsAny<T, FALSE, IsBaseType<T, FALSE, IsArray<T, FALSE, T extends object ? TRUE : FALSE>>>;
+export declare type AA = IsArray<any>;
+export declare type FilterFunction<T = any> = <ST extends (IsBaseType<T, T, (IsArray<T, any, (IsObject<T, any, (IsAny<T, any, T>)>)>)>) = any>(...key: any[]) => (IsBaseType<T, T, (IsArray<T, Array<ST>, (IsObject<T, IsObject<ST, ST, IKeyValueMap<ST>>, (IsAny<ST, T, ST>)>)>)>) | undefined;
 export declare function todoFilter(handler: (v: any) => boolean): FilterFunction;
 export interface ITypeFilterUtils {
     isNumberFilter: FilterFunction<number>;
     isBooleanFilter: FilterFunction<boolean>;
     isStringFilter: FilterFunction<string>;
     isNotEmptyStringFilter: FilterFunction<string>;
-    isArrayFilter: FilterArrayFunction;
-    isObjectFilter: FilterFunction;
-    isNotEmptyArrayFilter: FilterArrayFunction;
-    isNotEmptyValueFilter: FilterFunction<boolean | string | number | any>;
+    isArrayFilter: FilterFunction<Array<any>>;
+    isObjectFilter: FilterFunction<object>;
+    isNotEmptyArrayFilter: FilterFunction<Array<any>>;
+    isNotEmptyValueFilter: FilterFunction;
     isFunctionFilter: FilterFunction<(...arg: any[]) => any>;
 }
+declare type Type<T> = T;
+export interface ITypeUtils extends Type<typeof typeUtils>, ITypeFilterUtils {
+}
 /**
- *
+ * @external
  */
 export declare const typeFilterUtils: ITypeFilterUtils;
+export {};

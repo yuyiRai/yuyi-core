@@ -2,7 +2,7 @@
  * @module Main
  */
 import { assign } from 'lodash';
-import commonUtils from './commonUtils';
+import * as commonUtils from './commonUtils';
 import * as CustomUtils from './CustomUtils';
 import * as MobxUtils from './MobxUtils';
 import * as OptionsUtils from './OptionsUtils';

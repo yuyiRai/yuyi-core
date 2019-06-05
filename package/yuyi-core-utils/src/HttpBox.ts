@@ -1,5 +1,7 @@
-/* eslint-disable */
-import Utils from '.'
+/**
+ * @module UtilClass
+ */
+import { Utils } from './Utils'
 import { includes } from 'lodash'
 import { autobind } from 'core-decorators';
 import { IKeyValueMap } from 'mobx';
@@ -54,8 +56,9 @@ export class HttpBox {
       }
     }).catch(function(e){
       console.log(e, e.message, Utils.isNotEmptyValueFilter(e.message, e))
+      const message = Utils.isNotEmptyValueFilter(e.message, e)
       for(const i of list){
-        i.reject(new Error(Utils.isNotEmptyValueFilter(e.message, e)))
+        i.reject(new Error(message))
       }
     })
   }

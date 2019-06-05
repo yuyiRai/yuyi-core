@@ -1,7 +1,10 @@
+/**
+ * @module PropertyUtils
+ */
 import { autobind } from 'core-decorators';
 import { last } from 'lodash';
 import { action, computed, extendObservable, observable, reaction, runInAction, ObservableMap, isComputed, getDebugName } from 'mobx';
-import { Utils } from '.';
+import { Utils } from '../Utils';
 
 export class AsyncLoadProperty<V = any> {
   @observable.ref type: any;

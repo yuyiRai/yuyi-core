@@ -1,4 +1,6 @@
-/* eslint-disable */
+/**
+ * @module TypeUtils
+ */
 import { assign, filter, isArray, isArrayLike, isBoolean, isDate, isEmpty, isFunction, isNaN, isNil, isNumber as isNumberLodash, isObject, isString, map, reduce, trim, values } from 'lodash';
 import { IKeyValueMap, toJS } from 'mobx';
 import { Utils } from '.';
@@ -56,39 +58,44 @@ export function isNotEmptyObject(value: any): value is object {
 export function isEventEmitter(emitter: any): boolean {
   return emitter instanceof EventEmitter;
 }
+
+/**
+* 判断非空字符串
+* @param {*} str
+*/
+export function isNotEmptyString(str: any): str is string {
+  return isString(str) && str.length > 0;
+}
+export function isNotFunction(func: any) {
+  return !isFunction(func);
+}
+export function isNotNaN(v: any): boolean {
+  return !isNaN(v);
+}
+export function isNilAll(...valueArr: any[]): boolean {
+  return filter(map(valueArr, value => isNil(value)), is => is).length === valueArr.length;
+}
+/**
+ * @external
+ */
 export const typeUtils = {
   isArrayLike,
   isArray,
   isBoolean,
   isObject,
-  // isObject<T extends object>(value?: any): value is T {
-  //   return isObject(value); // && !isArray(value)
-  // },
   isNumber,
   isString,
   isEmptyData,
   isNotEmptyData,
   isEventEmitter,
-  /**
-   * 判断非空字符串
-   * @param {*} str
-   */
-  isNotEmptyString(str: any): str is string {
-    return isString(str) && str.length > 0;
-  },
+  isNotEmptyString,
   isFunction,
-  isNotFunction(func: any) {
-    return !isFunction(func);
-  },
   isNil,
   isDate,
   isNaN,
-  isNotNaN(v: any): boolean {
-    return !isNaN(v);
-  },
-  isNilAll(...valueArr: any[]): boolean {
-    return filter(map(valueArr, value => isNil(value)), is => is).length === valueArr.length;
-  },
+  isNotFunction,
+  isNotNaN,
+  isNilAll,
   isBooleanOrNumber,
   isEmptyValue,
   isNotEmptyValue,
@@ -101,9 +108,34 @@ export const typeUtils = {
   toJS
 };
 
-export type FilterFunction<T = any> = <ST = T>(...key: (any | ST | T )[]) => ST | T | undefined
-export type FilterArrayFunction = <T = any>(...key: any[]) => Array<T> | undefined
-export type FilterFunctionGroup = IKeyValueMap<FilterFunction>
+export type IsAny<T = unknown, TRUE = true, FALSE = false> = unknown extends T ? TRUE : FALSE
+export type IsArray<T = unknown, TRUE = true, FALSE = false> = IsAny<T, FALSE, T extends Array<any> ? TRUE : FALSE>
+export type IsBaseType<T = unknown, TRUE = true, FALSE = false> = IsAny<T, FALSE, T extends (string | number | boolean | Function) ? TRUE : FALSE>
+export type IsObject<T = unknown, TRUE = true, FALSE = false> = IsAny<T, FALSE, IsBaseType<T, FALSE, IsArray<T, FALSE, T extends object ? TRUE : FALSE>>>
+export type AA = IsArray<any>
+
+export type FilterFunction<T = any> = <
+  ST extends (
+    IsBaseType<T, T, (
+      IsArray<T, any, (
+        IsObject<T, any, (
+          IsAny<T, any, T>
+        )>
+      )>
+    )>
+  ) = any
+  >(...key: any[]) => (
+    IsBaseType<T, T, (
+      IsArray<T, Array<ST>, (
+        IsObject<T, IsObject<ST, ST, IKeyValueMap<ST>>,(
+          IsAny<ST, T, ST>
+        )>
+      )>
+    )>
+  ) | undefined
+
+
+
 export function todoFilter(handler: (v: any) => boolean): FilterFunction {
   function Filter<T>(...values: any[]): T | undefined {
     for (const v of values) {
@@ -121,21 +153,32 @@ export interface ITypeFilterUtils {
   isBooleanFilter: FilterFunction<boolean>;
   isStringFilter: FilterFunction<string>;
   isNotEmptyStringFilter: FilterFunction<string>;
-  isArrayFilter: FilterArrayFunction; 
-  isObjectFilter: FilterFunction; 
-  isNotEmptyArrayFilter: FilterArrayFunction;  
-  isNotEmptyValueFilter: FilterFunction<boolean | string | number | any>;
+  isArrayFilter: FilterFunction<Array<any>>;
+  isObjectFilter: FilterFunction<object>;
+  isNotEmptyArrayFilter: FilterFunction<Array<any>>;
+  isNotEmptyValueFilter: FilterFunction;
   isFunctionFilter: FilterFunction<(...arg: any[]) => any>
 }
+type Type<T> = T
+export interface ITypeUtils extends Type<typeof typeUtils>, ITypeFilterUtils { }
 /**
- * 
+ * @external
  */
 export const typeFilterUtils: ITypeFilterUtils = reduce<IKeyValueMap<(v: any) => boolean>, any>(
-  typeUtils, 
+  typeUtils,
   function (group, func: (v: any) => boolean, key) {
-    return assign(group, { 
-      [key + "Filter"]: todoFilter(func) 
+    return assign(group, {
+      [key + "Filter"]: todoFilter(func)
     });
-  }, 
+  },
   {}
 );
+
+typeFilterUtils.isObjectFilter<number>({}, [])
+typeFilterUtils.isNumberFilter<number>({})
+typeFilterUtils.isArrayFilter<number>({})
+typeFilterUtils.isArrayFilter({})
+typeFilterUtils.isNotEmptyValueFilter({})
+typeFilterUtils.isNotEmptyValueFilter<number>({})
+typeFilterUtils.isStringFilter({})
+typeFilterUtils.isNotEmptyStringFilter('')

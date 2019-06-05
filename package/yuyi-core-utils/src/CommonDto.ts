@@ -1,4 +1,6 @@
-/* eslint-disable */
+/**
+ * @module UtilClass
+ */
 import { cloneDeep, isEqual, property, camelCase, set } from 'lodash';
 import { action, extendObservable, observable, IKeyValueMap } from 'mobx';
 import { Utils } from './Utils';
