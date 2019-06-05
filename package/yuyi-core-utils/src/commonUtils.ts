@@ -37,6 +37,7 @@ export function jsxIf(bool: any, when: any, elseValue?: any) {
 export default {
   jsxIf,
   stubArray: stubArray,
+// tslint:disable-next-line: no-empty
   stubFunction(...args: any[]) { },
   stubObject() {
     return {};
@@ -78,26 +79,26 @@ export default {
     return arr
   },
   arrayMap(array: any[], iteratee: any) {
-    var length = array.length;
-    var result = Array(length);
+    let length = array.length;
+    let result = Array(length);
     while (length--) {
       result[length] = iteratee(array[length], length);
     }
     return result;
   },
   arrayMap2(array: any[], iteratee: any) {
-    var rLength = array.length % 8, length = rLength, pLength = array.length - rLength, result = Array(array.length);
+    let rLength = array.length % 8, length = rLength, pLength = array.length - rLength, result = Array(array.length);
     while (length--) {
       result[length] = iteratee(array[length], length);
     }
     while (pLength--) {
-      var index = rLength + pLength
+      let index = rLength + pLength
       result[index] = iteratee(array[index], index);
     }
     return result;
   },
   arrayMap3(array: any[], iteratee: any) {
-    var index = -1, length = array.length, result = Array(length);
+    let index = -1, length = array.length, result = Array(length);
     while (++index < length) {
       result[index] = iteratee(array[index], index, array);
     }
@@ -106,16 +107,18 @@ export default {
   arrayMapDive(array: any[], iteratee: any) {
     let rLength = array.length % 8, length = rLength, pLength = (array.length - rLength), result = Array(array.length);
     while (length--) {
-      if (array[length])
+      if (array[length]) {
         result[length] = iteratee(array[length], length, array);
+      }
     }
     while (pLength) {
       let wlength = 8
       const tmp = rLength + pLength;
       while (wlength) {
         const index = tmp - wlength--
-        if (array[index])
+        if (array[index]) {
           result[index] = iteratee(array[index], index, array);
+        }
       }
       pLength -= 8
     }
@@ -181,9 +184,9 @@ export default {
     }
   },
   // test(length: number, pi = 8) {
-  //   var test = Utils.getTestArray(length)
-  //   var test2 = (item: any, index: any) => item > length / 2
-  //   var test3 = (item: any, index: any) => Utils.arrayMapDive(test, test2)
+  //   let test = Utils.getTestArray(length)
+  //   let test2 = (item: any, index: any) => item > length / 2
+  //   let test3 = (item: any, index: any) => Utils.arrayMapDive(test, test2)
   //   setTimeout(() => {
   //     console.time('arrayMap')
   //     Utils.arrayMap(test, test3)
@@ -226,7 +229,7 @@ export default {
   //   }, 0)
   //   setTimeout(() => {
   //     console.time('arrayForEachDive')
-  //     var r8 = []
+  //     let r8 = []
   //     Utils.arrayForEachDive(test, (item: any, index: any) => {
   //       r8.push(test3(item, index))
   //     })
@@ -234,7 +237,7 @@ export default {
   //   }, 0)
   //   setTimeout(() => {
   //     console.time('_.forEach')
-  //     var r8 = []
+  //     let r8 = []
   //     _.forEach(test, (item, index) => {
   //       r8.push(test3(item, index))
   //     })
