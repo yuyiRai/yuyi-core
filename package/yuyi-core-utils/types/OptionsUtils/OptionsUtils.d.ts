@@ -1,3 +1,6 @@
+/**
+ * @module OptionsUtils
+ */
 import { ArrayIterator } from 'lodash';
 import { IKeyValueMap } from 'mobx';
 export declare type SearchKey<T = any> = keyMatcher | RegExp | T[] | T;

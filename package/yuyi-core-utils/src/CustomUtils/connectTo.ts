@@ -1,3 +1,6 @@
+/**
+ * @module CustomUtils
+ */
 import Utils from '../';
 export function connectTo(target: any, source: any, ...keyNames: string[]) {
   if (Utils.isNil(target) || Utils.isNil(source)) {

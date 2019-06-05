@@ -1,3 +1,6 @@
+/**
+ * @module CustomUtils
+ */
 import Utils from '../';
 import CommonDto from "../CommonDto";
 export function getDtoOrFormValue(key: string, formOrDto: any) {

@@ -70,4 +70,7 @@ export function getExpressByStr(keyStr: string, defaultValue: any): PrototeryMat
   }, []);
 }
 
+/**
+ * @external
+ */
 export type PrototeryMatcher = string | [string, any];

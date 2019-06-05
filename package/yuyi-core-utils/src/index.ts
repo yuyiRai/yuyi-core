@@ -1,3 +1,6 @@
+/**
+ * @module Main
+ */
 // Import here Polyfills if needed. Recommended core-js (npm i -D core-js)
   // import "core-js/fn/array.find"
   // ...
@@ -12,7 +15,4 @@ export * from './ParseUtils'
 export * from './MobxUtils'
 export * from './EventEmitter'
 export { Utils, IUtils }
-export class UtilsStore {
-  
-}
 export default Utils

@@ -1,3 +1,6 @@
+/**
+ * @module CustomUtils
+ */
 import { assign, filter, isArray, keys, reduce } from 'lodash';
 import Utils from '../';
 import { IKeyValueMap } from 'mobx';

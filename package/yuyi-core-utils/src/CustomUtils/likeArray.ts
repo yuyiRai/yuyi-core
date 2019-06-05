@@ -1,3 +1,6 @@
+/**
+ * @module CustomUtils
+ */
 import { find } from 'lodash';
 import Utils from '../';
 /**

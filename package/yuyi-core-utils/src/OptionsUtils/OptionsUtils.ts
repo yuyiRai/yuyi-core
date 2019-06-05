@@ -1,4 +1,7 @@
-/* eslint-disable */
+/**
+ * @module OptionsUtils
+ */
+
 import { ArrayIterator, castArray, filter, find, isArray, isEqual, isFunction, isNil, isRegExp, join, map, some } from 'lodash';
 import { IKeyValueMap } from 'mobx';
 import { isNotEmptyArray, isNotEmptyArrayStrict, isNotEmptyValue, typeFilterUtils } from '../TypeLib';
@@ -6,13 +9,13 @@ import { Utils } from '../Utils';
 
 export type SearchKey<T = any> = keyMatcher | RegExp | T[] | T
 export type keyMatcher = (key?: string, arg1?: any, arg2?: any) => boolean;
-export type Option = { 
-  value?: string, 
-  label?: string, 
+export type Option = {
+  value?: string,
+  label?: string,
   children?: Option[],
   disabled?: boolean,
   isLeaf?: boolean,
-  [key: string]: any 
+  [key: string]: any
 }
 export type OptionBase = Option | string
 
@@ -264,14 +267,14 @@ export function getCodeListByKey(codeType: Option[] | OptionSearcher, optionFact
   } else if (isFunction(codeType)) {
     return async function (keyWord: string, isOnlySearch?: boolean): Promise<Option[]> {
       const res = isArrayFilter(await codeType(keyWord, isOnlySearch)) || [];
-      return optionFactory ? map(res, optionFactory): res
+      return optionFactory ? map(res, optionFactory) : res
     }
   }
   return async function () { return [] }
 }
 
 export function convertValueOption(valueList: string[], isFull: boolean = false): Option[] {
-  return map(valueList, value => Object.assign({value}, isFull?{label: value}: {}))
+  return map(valueList, value => Object.assign({ value }, isFull ? { label: value } : {}))
 }
 
 export default {

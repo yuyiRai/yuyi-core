@@ -1,4 +1,7 @@
 /**
+ * @module CustomUtils
+ */
+/**
  * 生成uuid
  */
 export function uuid() {

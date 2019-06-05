@@ -1,3 +1,6 @@
+/**
+ * @module CustomUtils
+ */
 import { reduce } from 'lodash';
 import Utils from '../';
 /**

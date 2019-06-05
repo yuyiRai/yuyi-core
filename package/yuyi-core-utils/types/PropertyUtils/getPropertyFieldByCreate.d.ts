@@ -30,4 +30,7 @@ export declare function getPropertyFieldByCreate<V = any>(main: IKeyValueMap, ..
  * console.log(matcher) // [ ["a", []] , [1, {}] , ["b", []] , [0, {}] , ["d", 123] ]
  */
 export declare function getExpressByStr(keyStr: string, defaultValue: any): PrototeryMatcher[];
+/**
+ * @external
+ */
 export declare type PrototeryMatcher = string | [string, any];

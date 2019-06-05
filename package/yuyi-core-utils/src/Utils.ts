@@ -1,32 +1,36 @@
-/* eslint-disable */
+/**
+ * @module Main
+ */
+import { assign } from 'lodash';
 import commonUtils from './commonUtils';
-import * as OptionsUtils from './OptionsUtils';
-import * as PropertyUtils from './PropertyUtils';
 import * as CustomUtils from './CustomUtils';
+import * as MobxUtils from './MobxUtils';
+import * as OptionsUtils from './OptionsUtils';
+import * as ParseUtils from "./ParseUtils";
+import * as PropertyUtils from './PropertyUtils';
+import { IPropertyUtils } from './PropertyUtils';
 import TimeBufferUtils from './TimeBuffer';
 import { typeFilterUtils, typeUtils } from "./TypeLib";
-import * as ParseUtils from "./ParseUtils";
-import * as MobxUtils from './MobxUtils'
 
-export type IUtils = typeof CustomUtils 
-& typeof OptionsUtils 
-& typeof typeUtils 
-& typeof commonUtils 
-& typeof TimeBufferUtils 
-& typeof PropertyUtils
-& typeof typeFilterUtils
-& typeof ParseUtils
-& typeof MobxUtils
+export type IUtils = typeof CustomUtils
+  & typeof OptionsUtils
+  & typeof typeUtils
+  & typeof commonUtils
+  & typeof TimeBufferUtils
+  & IPropertyUtils
+  & typeof typeFilterUtils
+  & typeof ParseUtils
+  & typeof MobxUtils
 
-export const Utils: IUtils = ({
-  ...commonUtils,
-  ...OptionsUtils,
-  ...TimeBufferUtils,
-  ...typeUtils,
-  ...PropertyUtils,
-  ...typeFilterUtils,
-  ...CustomUtils,
-  ...ParseUtils,
-  ...MobxUtils
-}) as IUtils;
+export const Utils: IUtils = assign(
+  commonUtils,
+  OptionsUtils,
+  TimeBufferUtils,
+  typeUtils,
+  PropertyUtils,
+  typeFilterUtils,
+  CustomUtils,
+  ParseUtils,
+  MobxUtils
+) as IUtils;
 

@@ -1,6 +1,5 @@
 /**
  * @module CustomUtils
- * 
  */
 
 import { zipEmptyData } from './zipEmptyData';

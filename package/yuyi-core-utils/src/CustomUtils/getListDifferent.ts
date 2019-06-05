@@ -1,3 +1,6 @@
+/**
+ * @module CustomUtils
+ */
 import { differenceWith, isEqual } from 'lodash';
 export function getListDifferent(listA: any[], listB: any[], deep = false) {
   return {

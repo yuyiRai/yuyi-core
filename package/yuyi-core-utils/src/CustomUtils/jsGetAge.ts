@@ -1,3 +1,6 @@
+/**
+ * @module CustomUtils
+ */
 export function jsGetAge(strBirthday: string) {
   let returnAge;
   let strBirthdayArr = strBirthday.split("-");
