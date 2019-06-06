@@ -23,6 +23,7 @@ export type IUtils = typeof CustomUtils
   & typeof MobxUtils
 
 export const Utils: IUtils = assign(
+  {},
   commonUtils,
   OptionsUtils,
   TimeBufferUtils,

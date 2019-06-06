@@ -2,6 +2,8 @@
   "ch": {
     "Returns": "返回值",
     "Parameters": "参数",
+    "Type alias": "类型定义",
+    "Type alias with type parameters": "类型定义(泛型参数)",
     "Type parameters": "泛型参数",
     "Type declaration": "类型定义",
     "Globals": "全局",

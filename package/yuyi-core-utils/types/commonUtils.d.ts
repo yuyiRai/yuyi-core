@@ -1,7 +1,7 @@
 /**
  * @module CommonUtils
  */
-import { cloneDeep, concat, escapeRegExp, forEach, last, reduce, stubArray, toArray, toString, values } from 'lodash';
+import { cloneDeep, concat, escapeRegExp, forEach, isString, last, reduce, stubArray, toArray, toString, values } from 'lodash';
 import { IKeyValueMap } from 'mobx';
 import { EventEmitter } from './EventEmitter';
 import { HttpBox } from './HttpBox';
@@ -52,4 +52,4 @@ export declare function pathReturn(instance: {
     $route: any;
 }, params: any, isConfirm: boolean, useBack: boolean): any;
 export declare function isEqual<A = any, B = any>(valueA: A | any, valueB: B | any, noStrict?: boolean): boolean;
-export { HttpBox, last, cloneDeep, toArray, stubArray, toString, reduce, forEach, concat, escapeRegExp };
+export { HttpBox, last, cloneDeep, toArray, stubArray, toString, reduce, forEach, concat, escapeRegExp, isString };

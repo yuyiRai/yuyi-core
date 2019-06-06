@@ -4,7 +4,9 @@ declare type NextEvent<T> = (value: T) => void;
 declare type ErrorEvent<T> = (error: any) => void;
 declare type CompletedEvent<T> = () => void;
 /**
+ * 事件发射器
  * @noInheritDoc
+ *
  */
 export declare class EventEmitter<T = any> extends Subject<T> {
     private sub;

@@ -341,4 +341,4 @@ export function isEqual<A = any, B = any>(valueA: A | any, valueB: B | any, noSt
 }
 
 
-export { HttpBox, last, cloneDeep, toArray, stubArray, toString, reduce, forEach, concat, escapeRegExp };
+export { HttpBox, last, cloneDeep, toArray, stubArray, toString, reduce, forEach, concat, escapeRegExp, isString };

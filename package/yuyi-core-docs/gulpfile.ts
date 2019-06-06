@@ -5,12 +5,14 @@ import shell from 'gulp-shell'
 import { reduce } from "lodash";
 import { paths, relativePaths } from "../yuyi-core-env/config/paths";
 import colors from 'colors';
+import console = require('console');
 
 const stringTemplate = require('./config/stringTemplate.json')
 
 const keys = Object.keys(stringTemplate.ch).sort((a: string, b: string) => b.length - a.length)
 keys.push(`\{\{this\}\}`)
 gulp.task('pre-init', function () {
+  console.log(keys)
   return keys.reduce(
     (pipe, key) => pipe.pipe(
       replace(new RegExp(`([a-z0-9"' ])\>${key}`, 'g'), `$1\>{{#localize}}${key}{{/localize}}`)
