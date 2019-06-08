@@ -9,7 +9,7 @@ import { Utils } from '../Utils';
 
 export type SearchKey<T = any> = keyMatcher | RegExp | T[] | T
 export type keyMatcher = (key?: string, arg1?: any, arg2?: any) => boolean;
-export type Option = {
+export interface Option {
   value?: string,
   label?: string,
   children?: Option[],
