@@ -40,5 +40,15 @@
   },
   "devDependencies": {
     "lerna": "^3.14.1"
-  }
+  },
+  "postcss": {
+    "plugins": {
+      "autoprefixer": {}
+    }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 10"
+  ]
 }

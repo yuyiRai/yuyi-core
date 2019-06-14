@@ -1,6 +1,6 @@
-import { message } from 'ant-design-vue/es'
+// import { message } from 'ant-design-vue/es'
 // import defaultSettings from '../defaultSettings';
-import themeColor from './themeColor.js'
+// import themeColor from './themeColor.js'
 
 // let lessNodesAppended
 
@@ -32,10 +32,10 @@ const colorList = [
 ]
 
 const updateTheme = newPrimaryColor => {
-  const hideMessage = message.loading('正在切换主题！', 0)
-  themeColor.changeColor(newPrimaryColor).finally(t => {
-    hideMessage()
-  })
+  // const hideMessage = message.loading('正在切换主题！', 0)
+  // themeColor.changeColor(newPrimaryColor).finally(t => {
+  //   hideMessage()
+  // })
 }
 
 /*

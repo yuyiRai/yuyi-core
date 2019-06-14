@@ -39,6 +39,21 @@ export const asyncRouterMap = [
           }
         ]
       },
+      // forms
+      {
+        path: '/demo',
+        redirect: '/form/comm-form',
+        component: PageView,
+        meta: { title: 'DEMO', icon: 'form' },
+        children: [
+          {
+            path: '/form/comm-form',
+            name: 'commonForm',
+            component: () => import('@/views/demo/index'),
+            meta: { title: '通用表单渲染', keepAlive: true }
+          }
+        ]
+      },
 
       // forms
       {
