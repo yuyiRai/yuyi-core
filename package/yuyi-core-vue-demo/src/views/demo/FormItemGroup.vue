@@ -1,11 +1,14 @@
 <template>
-  <ElCommonForm2
-    :model="form"
-    :config="config"
-    ref="store"
-    :storeRef="getStore"
-    :scopedSlots="$scopedSlots"
-  />
+  <div>
+    <ElCommonForm2
+      :model="cForm.model || form"
+      :config="config"
+      ref="store"
+      :storeRef="getStore"
+      :scopedSlots="$scopedSlots"
+    />
+    <slot></slot>
+  </div>
 </template>
 
 <script>

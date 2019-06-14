@@ -1,5 +1,13 @@
 **/build/*.js
+**/dist/*.js
+**/dist/**/*.js
+**/lib/*.js
 **/config/*.js
-**/node_modules/**
+**/*.config.js
+**/node_modules/**/*
+**/package/yuyi-**/**/*
 **/src/assets
 **/*.ts
+
+**/index.js
+**/vendor.js

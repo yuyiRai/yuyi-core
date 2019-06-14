@@ -6,9 +6,9 @@ export default ({
   render(h) {
     const { viewOnly, inline, model, labelWidthStr, rules, onValidated, disabled } = this;
     return (
-      <elForm ref='form' class={[{ viewOnly }]} style={{ position: 'relative' }} {...{ props: { inline, model, rules, disabled } }} label-width={labelWidthStr} onValidate={onValidated}>
+      <form ref='form' class={[{ viewOnly }]} style={{ position: 'relative' }} {...{ props: { inline, model, rules, disabled } }} label-width={labelWidthStr} onValidate={onValidated}>
         {this.$slots.default}
-      </elForm>
+      </form>
     )
   },
   name: 'CForm',
@@ -25,6 +25,10 @@ export default ({
     },
     formStatus() {
       return (this.cForm.formStatus === 'view' || this.viewOnly) ? 'view' : 'common'
+    },
+    store() {
+      const list = Array.from(this.groupMap.keys())
+      return list[list.length-1].store
     }
   },
   inject: {
@@ -48,10 +52,11 @@ export default ({
   methods: {
     async validate(callback) {
       this.fieldValidateResultMap = {}
-      const valid = await Promise.race([
-        new Promise(r => { this.$refs.form.validate().then(r).catch(r) }),
-        Utils.waitingPromise(1000)
-      ])
+      const valid = true 
+      // await Promise.race([
+      //   new Promise(r => { this.$refs.form.validate().then(r).catch(r) }),
+      //   Utils.waitingPromise(1000)
+      // ])
       for await (const r of Array.from(this.groupMap.values()).map(validate => validate())) {
         console.error(r)
         for (const key in (r.errors || {})) {
