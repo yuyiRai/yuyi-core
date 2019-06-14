@@ -1,7 +1,9 @@
 import * as INI from 'js-ini';
 import { forEach, fromPairs, groupBy, keys, map, pick, reduce, toPairs, values } from 'lodash';
+import { getSnapshot, onSnapshot, Store, ViewModel, inject, postConstruct } from 'mmlpx';
 import { action, computed, observable, ObservableMap, ObservableSet, toJS } from 'mobx';
 import { Utils } from 'yuyi-core-utils';
+
 
 export class GroupStore {
   @observable.shallow
@@ -104,7 +106,7 @@ export class AulObjectBase {
     this[type] = undefined as any
   }
 
-  export(obj?: any) {
+  public export(obj?: any) {
     const { group } = this;
     return { ...this._obj, ...obj, group }
   }
@@ -124,10 +126,14 @@ export class AulObject implements IObject {
   setBase(obj: any) {
     this.base = new AulObjectBase(obj, this)
   }
+  export() {
+    return { base: this.base.export({}), children: this.children }
+  }
 }
 
+
 export class AulUtils {
-  static objectToList(obj: any): IObject[] {
+  static objectToList(obj: any): AulObject[] {
     const list = values(groupBy(toPairs(obj), ([key, obj]) => {
       return key.split('.')[0]
     }))
@@ -145,7 +151,7 @@ export class AulUtils {
     })
   }
 
-  static listToMap(list: IObject[], targetMap = new Map<string, IObject>()) {
+  static listToMap(list: AulObject[], targetMap = new Map<string, IObject>()) {
     return reduce(list, ((map, obj) => reduce(
       obj.children,
       (childMap, child, index) => childMap.set(`${obj.idNum}.${index}`, child),
@@ -153,10 +159,10 @@ export class AulUtils {
     )), targetMap)
   }
 
-  static listToObj(list: IObject[]) {
+  static listToObj(list: AulObject[]) {
     return fromPairs(toPairs(this.listToMap(list)))
   }
-  static listToString(list: IObject[], strict: boolean = true) {
+  static listToString(list: AulObject[], strict: boolean = true) {
     return strict ? reduce(
       toPairs(this.listToMap(list)),
       (str, [key, obj]) => str + INI.stringify({ [key]: pick(obj, ...(keys(obj).sort((a, b) => -1))) } as any, {}),
@@ -165,15 +171,21 @@ export class AulUtils {
   }
 }
 
-
+@Store('Exoutils')
 export class ExoUtils {
+  public sourceStr: string = ''
   @observable source: any;
-  @computed get target(): IObject[] {
+  @computed get target(): AulObject[] {
     return AulUtils.objectToList(toJS(this.source))
   };
+
+  @computed.struct get targetNative(): any[] {
+    return this.target.map(row => row.export())
+  }
   exedit: any;
 
-  constructor(public sourceStr: string) {
+  readFile(sourceStr: string) {
+    this.sourceStr = sourceStr
     this.parse(sourceStr)
   }
 
@@ -182,9 +194,9 @@ export class ExoUtils {
   }
 
   init(obj: any) {
-    const { exedit, ...source } = obj;
+    const { exedit: {length, ...other}, ...source } = obj;
     this.source = source
-    this.exedit = exedit
+    this.exedit = {_length: length, ...other}
     console.log(this.output(), GroupStore, GroupStore.view)
   }
 
@@ -194,5 +206,10 @@ export class ExoUtils {
     const exeditStr = INI.stringify({ exedit }, { blankLine: false, spaceBefore: false, spaceAfter: false })
     console.log(this, source, valid, Utils.isEqual(source, valid))
     return exeditStr + AulUtils.listToString(target);
+  }
+
+  @action.bound
+  public snap() {
+    return getSnapshot()
   }
 }

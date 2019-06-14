@@ -15,7 +15,7 @@ export default class CommonDto<T extends object = IKeyValueMap> {
      * get value by key
      * @param { string } keyName
      */
-    get(keyNameStr: string, defaultValue?: any, useCreater?: boolean): any;
+    get(keyNameStr: string, defaultValue?: any, useCreater?: boolean): string | number | boolean | object | Function;
     /**
      * 创建缓存，使用安全方法
      * @param { string } keyName

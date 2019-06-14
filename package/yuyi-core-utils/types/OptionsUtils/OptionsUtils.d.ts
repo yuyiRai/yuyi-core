@@ -5,14 +5,14 @@ import { ArrayIterator } from 'lodash';
 import { IKeyValueMap } from 'mobx';
 export declare type SearchKey<T = any> = keyMatcher | RegExp | T[] | T;
 export declare type keyMatcher = (key?: string, arg1?: any, arg2?: any) => boolean;
-export declare type Option = {
+export interface Option {
     value?: string;
     label?: string;
     children?: Option[];
     disabled?: boolean;
     isLeaf?: boolean;
     [key: string]: any;
-};
+}
 export declare type OptionBase = Option | string;
 /**
  * 提供匹配方法/正则/匹配项数组/其它，返回通用匹配方法

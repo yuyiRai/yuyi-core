@@ -3,16 +3,23 @@
   "version": "0.1.1",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.1.0",
     "@types/jest": "24.0.13",
     "@types/node": "12.0.7",
     "@types/react": "16.8.19",
     "@types/react-dom": "16.8.4",
     "antd": "^3.19.2",
     "js-ini": "^1.1.2",
+    "localforage": "^1.7.3",
+    "mmlpx": "^4.0.2",
+    "rc-queue-anim": "^1.6.12",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-router": "^5.0.1",
+    "react-router-dom": "^5.0.1",
     "react-scripts": "3.0.1",
-    "typescript": "3.5.1"
+    "typescript": "3.5.1",
+    "zangodb": "^1.0.7"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -34,5 +41,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-router": "^5.0.1",
+    "@types/react-router-dom": "^4.3.3"
   }
 }
