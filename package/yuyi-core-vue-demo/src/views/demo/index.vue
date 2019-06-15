@@ -56,7 +56,7 @@ export default {
     handleValidate() {
       console.log(this)
       this.$refs.form.validate()
-      console.log(this, this.store, this.store.formSource)
+      console.log(this, this.store, this.store.formSource, this.model)
     }
   }
 }
