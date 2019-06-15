@@ -1,5 +1,5 @@
 import { AMapService, Utils } from 'yuyi-core-night'
-import { Input } from 'ant-design-vue'
+import { Input, Row, Col } from 'ant-design-vue'
 AMapService.setKey('70a802cd733e9a9a96bedd0ae23f19a2')
 
 const voiceroid = ['1', '2', '3', '4', '5']
@@ -72,7 +72,14 @@ export const config = [
     code: 'password3',
     type: 'custom',
     component: (h, value, onChange, itemConfig) => {
-      return <span><Input value={value} onChange={onChange} /></span>
+      return (
+        <span>
+          <Row>
+            <Col span={12}><Input value={value} onChange={onChange} /></Col>
+            <Col span={12}><Input value={value} onChange={onChange} /></Col>
+          </Row>
+        </span>
+      )
     }
   },
   { label: '生日', code: 'info.birthday', value: new Date(), type: 'date', rule: 'futureDate' },
