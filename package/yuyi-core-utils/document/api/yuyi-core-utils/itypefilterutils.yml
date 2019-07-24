@@ -1,0 +1,118 @@
+### YamlMime:UniversalReference
+items:
+  - uid: yuyi-core-utils.ITypeFilterUtils
+    name: ITypeFilterUtils
+    fullName: ITypeFilterUtils
+    langs:
+      - typeScript
+    type: interface
+    package: yuyi-core-utils
+    children:
+      - yuyi-core-utils.ITypeFilterUtils.isArrayFilter
+      - yuyi-core-utils.ITypeFilterUtils.isBooleanFilter
+      - yuyi-core-utils.ITypeFilterUtils.isFunctionFilter
+      - yuyi-core-utils.ITypeFilterUtils.isNotEmptyArrayFilter
+      - yuyi-core-utils.ITypeFilterUtils.isNotEmptyStringFilter
+      - yuyi-core-utils.ITypeFilterUtils.isNotEmptyValueFilter
+      - yuyi-core-utils.ITypeFilterUtils.isNumberFilter
+      - yuyi-core-utils.ITypeFilterUtils.isObjectFilter
+      - yuyi-core-utils.ITypeFilterUtils.isStringFilter
+  - uid: yuyi-core-utils.ITypeFilterUtils.isArrayFilter
+    name: isArrayFilter
+    fullName: isArrayFilter
+    langs:
+      - typeScript
+    type: property
+    syntax:
+      content: 'isArrayFilter: FilterFunction<Array<any>>;'
+      return:
+        type:
+          - FilterFunction<Array<any>>
+  - uid: yuyi-core-utils.ITypeFilterUtils.isBooleanFilter
+    name: isBooleanFilter
+    fullName: isBooleanFilter
+    langs:
+      - typeScript
+    type: property
+    syntax:
+      content: 'isBooleanFilter: FilterFunction<boolean>;'
+      return:
+        type:
+          - FilterFunction<boolean>
+  - uid: yuyi-core-utils.ITypeFilterUtils.isFunctionFilter
+    name: isFunctionFilter
+    fullName: isFunctionFilter
+    langs:
+      - typeScript
+    type: property
+    syntax:
+      content: 'isFunctionFilter: FilterFunction<(...arg: any[]) => any>;'
+      return:
+        type:
+          - 'FilterFunction<(...arg: any[]) => any>'
+  - uid: yuyi-core-utils.ITypeFilterUtils.isNotEmptyArrayFilter
+    name: isNotEmptyArrayFilter
+    fullName: isNotEmptyArrayFilter
+    langs:
+      - typeScript
+    type: property
+    syntax:
+      content: 'isNotEmptyArrayFilter: FilterFunction<Array<any>>;'
+      return:
+        type:
+          - FilterFunction<Array<any>>
+  - uid: yuyi-core-utils.ITypeFilterUtils.isNotEmptyStringFilter
+    name: isNotEmptyStringFilter
+    fullName: isNotEmptyStringFilter
+    langs:
+      - typeScript
+    type: property
+    syntax:
+      content: 'isNotEmptyStringFilter: FilterFunction<string>;'
+      return:
+        type:
+          - FilterFunction<string>
+  - uid: yuyi-core-utils.ITypeFilterUtils.isNotEmptyValueFilter
+    name: isNotEmptyValueFilter
+    fullName: isNotEmptyValueFilter
+    langs:
+      - typeScript
+    type: property
+    syntax:
+      content: 'isNotEmptyValueFilter: FilterFunction;'
+      return:
+        type:
+          - FilterFunction
+  - uid: yuyi-core-utils.ITypeFilterUtils.isNumberFilter
+    name: isNumberFilter
+    fullName: isNumberFilter
+    langs:
+      - typeScript
+    type: property
+    syntax:
+      content: 'isNumberFilter: FilterFunction<number>;'
+      return:
+        type:
+          - FilterFunction<number>
+  - uid: yuyi-core-utils.ITypeFilterUtils.isObjectFilter
+    name: isObjectFilter
+    fullName: isObjectFilter
+    langs:
+      - typeScript
+    type: property
+    syntax:
+      content: 'isObjectFilter: FilterFunction<object>;'
+      return:
+        type:
+          - FilterFunction<object>
+  - uid: yuyi-core-utils.ITypeFilterUtils.isStringFilter
+    name: isStringFilter
+    fullName: isStringFilter
+    langs:
+      - typeScript
+    type: property
+    syntax:
+      content: 'isStringFilter: FilterFunction<string>;'
+      return:
+        type:
+          - FilterFunction<string>

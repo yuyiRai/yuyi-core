@@ -1,4 +1,4 @@
-import {UtilsStore as DummyClass} from "../src"
+import { OptionsUtils } from "../src";
 
 /**
  * Dummy test
@@ -9,6 +9,6 @@ describe("Dummy test", () => {
   })
 
   it("DummyClass is instantiable", () => {
-    expect(new DummyClass()).toBeInstanceOf(DummyClass)
+    expect(OptionsUtils).toBeInstanceOf(Object)
   })
 })

@@ -11,3 +11,4 @@ export declare function getPropByPath(obj: any, path: string, strict?: boolean):
     k: string;
     v: any;
 };
+//# sourceMappingURL=getPropByPath.d.ts.map

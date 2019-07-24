@@ -1,8 +1,8 @@
 import { Button } from 'antd';
-import { Observer, useComputed } from 'mobx-react-lite';
+import { Observer } from 'yuyi-core-night';
 import * as React from 'react';
 import { AppContext } from '../../App';
-import DragUpload from '../../components/DragUpload';
+import DragUpload, { Upload } from '../../components/DragUpload';
 import '../../DAT';
 
 interface IExaManagerProps {
@@ -10,11 +10,11 @@ interface IExaManagerProps {
 
 const ExaManager: React.FunctionComponent<IExaManagerProps> = (props) => {
   const store = React.useContext(AppContext)
-  const { exoUtils } = store
   const onFileLoaded = React.useCallback(async (fileStr) => {
-    exoUtils.readFile(fileStr)
+    store.exoUtils.readFile(fileStr)
     await store.storeSnapshot()
-  }, [])
+  }, [store])
+  const { exoUtils } = store
   React.useEffect(() => {
     console.log(exoUtils)
   }, [exoUtils])
@@ -22,7 +22,9 @@ const ExaManager: React.FunctionComponent<IExaManagerProps> = (props) => {
     <div>
       <Observer>{() => <div>version: {store.trackStore.version}</div>}</Observer>
       <Observer>{() => <span>{ exoUtils.target.length}</span>}</Observer>
-      <DragUpload onFileLoaded={onFileLoaded}></DragUpload>
+      <DragUpload acceptList={['.exo', '.exa']} fileLoader={store.fileLoader} onFileLoaded={onFileLoaded}></DragUpload>
+      <Upload acceptList={['.txt']} fileLoader={store.fileLoader} />
+      <DragUpload fileLoader={store.fileLoader} directory showUploadList={true} text='123'></DragUpload>
       <Button onClick={() => console.log('plus', store.plus(), store.storeSnapshot())}>plus</Button>
       <Button onClick={() => console.log('snap', store.snap())}>getSnapshot</Button>
       <Button onClick={() => console.log('snap', store.clearSnapshot())}>clear</Button>

@@ -5,6 +5,7 @@ import { settingLf } from "./utils/Setting";
 import { IReactionDisposer, observable, action, runInAction } from "mobx";
 import { Snapshot } from "mmlpx/esm/core/dependency-inject/Injector";
 import { Utils } from "yuyi-core-utils";
+import { FileLoader } from "./components/DragUpload";
 
 let staticReactional: IReactionDisposer | null = null;
 let defaultSnapshot: Snapshot = {}
@@ -20,7 +21,7 @@ export class SnapshotTrackStore {
     this.update(this.version - 1)
   }
 
-  @action.bound 
+  @action
   private update(count: number) {
     this.version = count
   }
@@ -29,7 +30,8 @@ export class SnapshotTrackStore {
 @ViewModel('AppStore')
 export class AppStore {
   @inject(ExoUtils) exoUtils: ExoUtils;
-  @inject(DbManager) dbManager: DbManager;
+  // @inject(DbManager) dbManager: DbManager;
+  fileLoader: FileLoader = new FileLoader();
   @inject(SnapshotTrackStore) trackStore: SnapshotTrackStore;
   @observable.shallow snapshotTrack = observable.array([], { deep: false });
 
@@ -37,24 +39,30 @@ export class AppStore {
     this.applySnapshot()
   }
 
-  @action.bound
+  @action
   public snap() {
     return getSnapshot()
   }
 
-  @action.bound
+  @action
   public plus() {
     this.trackStore.forward()
   }
 
 
-  @action.bound
-  public async storeSnapshot() {
+  @action
+  public async storeSnapshot(path?: string) {
     const snap = getSnapshot()
-    await settingLf.setItem('yuyiAppStore', snap)
+    if (Utils.isString(path)) {
+      const item = (await settingLf.getItem<any>('yuyiAppStore')) || {}
+      Utils.set(item, path, Utils.get(snap, path))
+      await settingLf.setItem('yuyiAppStore', item)
+    } else {
+      await settingLf.setItem('yuyiAppStore', snap)
+    }
   }
 
-  @action.bound
+  @action
   public async clearSnapshot(sync: boolean = false) {
     await settingLf.removeItem('yuyiAppStore')
     if (sync) {
@@ -63,12 +71,12 @@ export class AppStore {
   }
 
 
-  @action.bound setSnapListener() {
+  @action setSnapListener() {
     if (staticReactional) {
       staticReactional()
     }
     staticReactional = onSnapshot(snap => {
-      if(!Utils.isEqual(snap, this.snapshotTrack[this.snapshotTrack.length])) {
+      if (!Utils.isEqual(snap, this.snapshotTrack[this.snapshotTrack.length])) {
         runInAction(() => this.snapshotTrack.push(snap))
       }
       console.log('onSnap', this, snap)
@@ -76,7 +84,7 @@ export class AppStore {
     return staticReactional
   }
 
-  @action.bound
+  @action
   public async applySnapshot() {
     const snap = await settingLf.getItem('yuyiAppStore')
     console.log('yuyiAppStore', snap)
@@ -93,5 +101,5 @@ declare global {
     global_db: DbManager;
   }
 }
-window.global_db = store.dbManager
+// window.global_db = store.dbManager
 window.global_store = store

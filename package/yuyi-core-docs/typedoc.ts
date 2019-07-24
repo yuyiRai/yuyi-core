@@ -2,7 +2,7 @@
 import { paths, relativePaths } from "../yuyi-core-env/config/paths";
 import { reduce } from 'lodash'
 
-const excludePlugins = ['typedoc-plugin-folder-modules', 'typedoc-plugin-npm-externals', 'typedoc-plugin-external-module-map']
+const excludePlugins = []
 
 const pkg = require('./package.json')
 const pluginList = reduce(pkg.devDependencies, (list, v, key) => {

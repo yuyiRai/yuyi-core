@@ -1,7 +1,7 @@
 /**
  * @module PropertyUtils
  */
-import { IKeyValueMap } from 'mobx';
+import { IKeyValueMap } from '../TsUtils/interface';
 /**
  * 从对象中提取成员，不存在则新建一个成员（默认为一个空对象）
  * 提取对象逐渐深入，一个对象一次只能提取一个成员（或他的子成员的子成员）
@@ -11,11 +11,13 @@ import { IKeyValueMap } from 'mobx';
  *
  * @group PropertyUtils
  * @example
+ * ```
  * const obj = {}
  * const a = getPropertyFieldByCreate(obj, 'a', ['a'], ['a', 'b'])
  *
  * console.log(a) // 'b'
  * console.log(obj) // {"a":{"a":{"a":"b"}}}
+ * ```
  *
  */
 export declare function getPropertyFieldByCreate<V = any>(main: IKeyValueMap, ...proteryNames: PrototeryMatcher[]): V;
@@ -23,7 +25,7 @@ export declare function getPropertyFieldByCreate<V = any>(main: IKeyValueMap, ..
  * 代码解释器，返回getPropertyFieldByCreate解释数组
  * @param keyStr
  * @param defaultValue
- * @return 二维数组
+ * @returns 二维数组
  * @group PropertyUtils
  * @example
  * const matcher = getExpressByStr('a[1].b[0].d', 123)
@@ -34,3 +36,4 @@ export declare function getExpressByStr(keyStr: string, defaultValue: any): Prot
  * @external
  */
 export declare type PrototeryMatcher = string | [string, any];
+//# sourceMappingURL=getPropertyFieldByCreate.d.ts.map

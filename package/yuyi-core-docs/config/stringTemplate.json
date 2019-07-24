@@ -1,6 +1,6 @@
 {
   "ch": {
-    "Returns": "返回值",
+    "Returns": "返回类型",
     "Parameters": "参数",
     "Type alias": "类型定义",
     "Type alias with type parameters": "类型定义(泛型参数)",
@@ -17,6 +17,7 @@
     "Defined in": "定义于",
     "Properties": "成员",
     "Methods": "方法",
+    "Functions": "函数",
     "Accessors": "Accessors",
     "Constructor": "构造函数",
     "Constructors": "构造函数",
@@ -30,13 +31,13 @@
     "Name": "Name",
     "Description": "介绍",
     "Type": "类型",
-    "Default Value": "默认值",
+    "Default Value": "缺省值",
     "Authors": "作者",
     "Example": "例子",
     "Used by": "使用于",
     "See": "参照",
     "Requires": "必须",
-    "Default value": "默认值",
+    "Default value": "缺省值",
     "Optional": "Optional",
     "Rest": "Rest"
   }

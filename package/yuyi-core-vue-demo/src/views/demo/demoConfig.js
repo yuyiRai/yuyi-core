@@ -58,7 +58,7 @@ export const model = {
   showVoiceroid: undefined
 }
 const amap = new AMapService()
-export const config = [
+export const config = (This) => [
   { label: '姓名', code: 'name', useLabel: false, required: form => form.showVoiceroid !== '1', rule: 'commonCode' },
   {
     label: '密码',
@@ -180,8 +180,8 @@ export const config = [
       }
     }
   },
-  { label: 'B', code: 'info.voiceroid', type: 'check', options: voiceroid, hidden: form => form.showVoiceroid !== '1' },
-  { label: 'C', code: 'info.voiceroid2', type: 'radio', options: voiceroid, hidden: form => form.showVoiceroid !== '1' },
+  { label: 'B', code: 'info.voiceroid', type: 'check', options: This.voiceroid, hidden: form => form.showVoiceroid !== '1' },
+  { label: 'C', code: 'info.voiceroid2', type: 'radio', options: This.voiceroid, hidden: form => form.showVoiceroid !== '1' },
   // { label: '产品介绍', code: 'info.introduce', type: "textarea", options: voiceroid, hidden: form => form.showVoiceroid !== '1' },
   { label: '产品c', code: 'info.trree', transformer: 'path', type: 'cascader', options: treeOptions },
   {

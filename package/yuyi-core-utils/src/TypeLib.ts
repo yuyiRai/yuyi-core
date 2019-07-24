@@ -1,9 +1,16 @@
 /**
  * @module TypeUtils
  */
-import { assign, filter, isArray, isArrayLike, isBoolean, isDate, isEmpty, isFunction, isNaN, isNil, isNumber as isNumberLodash, isObject, isString, map, reduce, trim, values } from 'lodash';
-import { IKeyValueMap } from 'mobx';
+import {
+  assign, filter, isArray,
+  isArrayLike, isBoolean, isDate,
+  isEmpty, isFunction, isNil,
+  isObject,
+  isString, map, reduce, trim, values,
+  isNumber
+} from './LodashExtra';
 import { EventEmitter } from './EventEmitter';
+import { IKeyValueMap, IsBaseType, IsArray, IsObject, IsAny } from './TsUtils';
 // Array.prototype.map = ()
 /**
  * 是否为空或异常值，不包括0
@@ -26,9 +33,6 @@ export function isNotEmptyValue(value: any): value is (string | number | boolean
   return !isEmptyValue(value);
 }
 
-export function isNumber(value: any): value is number {
-  return isNumberLodash(value) && !isNaN(value);
-}
 export function isBooleanOrNumber(value: any): value is (boolean | number) {
   return isBoolean(value) || isNumber(value);
 }
@@ -45,10 +49,10 @@ export function isEmptyArrayStrict(value: any): value is any[] {
   return isArray(value) && filter(value, i => isNotEmptyValue(i)).length === 0;
 }
 export function isEmptyData(value: any): value is any[] {
-  return !isBoolean(value) && !isNumberLodash(value) && (isEmptyArrayStrict(value) || isEmpty(value));
+  return !isBoolean(value) && !isNumber._(value) && (isEmptyArrayStrict(value) || isEmpty(value));
 }
 export function isNotEmptyData(value: any): boolean {
-  return isBoolean(value) || isNumberLodash(value) || !(isEmptyArrayStrict(value) || isEmpty(value));
+  return isBoolean(value) || isNumber._(value) || !(isEmptyArrayStrict(value) || isEmpty(value));
 }
 export function isEmptyObject(value: any, checkValue: boolean = false): value is {} {
   return isObject(value) && !isArray(value) && (checkValue ? filter(values(value), v => isNotEmptyData(v)).length === 0 : isEmpty(value));
@@ -108,10 +112,6 @@ export const typeUtils = {
   isNotEmptyObject
 };
 
-export type IsAny<T = unknown, TRUE = true, FALSE = false> = unknown extends T ? TRUE : FALSE
-export type IsArray<T = unknown, TRUE = true, FALSE = false> = IsAny<T, FALSE, T extends Array<any> ? TRUE : FALSE>
-export type IsBaseType<T = unknown, TRUE = true, FALSE = false> = IsAny<T, FALSE, T extends (string | number | boolean | Function) ? TRUE : FALSE>
-export type IsObject<T = unknown, TRUE = true, FALSE = false> = IsAny<T, FALSE, IsBaseType<T, FALSE, IsArray<T, FALSE, T extends object ? TRUE : FALSE>>>
 // export type AA = IsArray<any>
 
 export type FilterFunction<T = any> = <
@@ -127,7 +127,7 @@ export type FilterFunction<T = any> = <
   >(...key: any[]) => (
     IsBaseType<T, T, (
       IsArray<T, Array<ST>, (
-        IsObject<T, IsObject<ST, ST, IKeyValueMap<ST>>,(
+        IsObject<T, IsObject<ST, ST, IKeyValueMap<ST>>, (
           IsAny<ST, T, ST>
         )>
       )>
@@ -160,7 +160,9 @@ export interface ITypeFilterUtils {
   isFunctionFilter: FilterFunction<(...arg: any[]) => any>
 }
 type Type<T> = T
+
 export interface ITypeUtils extends Type<typeof typeUtils>, ITypeFilterUtils { }
+
 /**
  * @external
  */

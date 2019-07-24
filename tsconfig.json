@@ -1,0 +1,45 @@
+{
+  "extends": "./tsconfig.env.json",
+  "compilerOptions": {
+    "downlevelIteration": true,
+    "forceConsistentCasingInFileNames": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": false,
+    "noImplicitAny": false,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "strictNullChecks": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "module": "commonjs",
+    "target": "es5",
+    "lib": [
+      "es6",
+      "dom",
+      "dom.iterable",
+      "scripthost",
+      "esnext"
+    ],
+    "sourceMap": true,
+    "strict": false,
+    "allowJs": false,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "noUnusedLocals": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "allowUnreachableCode": true,
+    "esModuleInterop": true,
+    "noUnusedParameters": false
+  },
+  "include": [
+    "./package",
+    "./scripts"
+  ],
+  "exclude": [
+    "./node_modules",
+    "./package/**/lib",
+    "./package/**/dist"
+  ]
+}

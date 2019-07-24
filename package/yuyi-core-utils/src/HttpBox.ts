@@ -1,10 +1,11 @@
 /**
  * @module UtilClass
  */
-import { Utils } from './Utils'
-import { includes } from 'lodash'
-import { autobind } from 'core-decorators';
-import { IKeyValueMap } from 'mobx';
+import { includes, last } from './LodashExtra'
+import { IKeyValueMap } from './TsUtils';
+import { typeFilterUtils } from './TypeLib';
+import { createObjectKey } from './CustomUtils';
+import { simpleTimeBufferInput } from './TimeBuffer';
 export type Service = (...params: any[]) => Promise<any>
 export class HttpBox {
   _map = {}
@@ -18,46 +19,55 @@ export class HttpBox {
     this.service = service
     this.whiteList = cacheWhiteList
     this.useKey = cacheKeyMap
+    this.getRes = this.getRes.bind(this)
+    this.getReq = this.getReq.bind(this)
+    this.todo = this.todo.bind(this)
   }
-  @autobind getRes(param: any) {
-    const { isObjectFilter, createObjectKey } = Utils
+
+  getRes(param: any) {
+    const { isObjectFilter } = typeFilterUtils
+
     // console.time(param.url)
-    param.__res_key = [param.url, createObjectKey({...isObjectFilter(param.params, param.data)})].join('')
+    param.__res_key = [param.url, createObjectKey({ ...isObjectFilter(param.params, param.data) })].join('')
     // console.timeEnd(param.url)
     // if('params' in param)
-    //   param.params = Utils.zipEmptyData(param.params)
+    //   param.params =zipEmptyData(param.params)
     // if('data' in param)
-    //   param.data = Utils.zipEmptyData(param.data)
+    //   param.data =zipEmptyData(param.data)
     return new Promise((resolve, reject) => {
-      if(this.getCahce(param.__res_key)){
-        return resolve(this.getCahce(param.__res_key)) 
+      if (this.getCahce(param.__res_key)) {
+        return resolve(this.getCahce(param.__res_key))
       }
+      // tslint:disable-next-line: no-floating-promises
       this.getReq(param, resolve, reject)
     })
   }
-  @autobind getReq(param: any, resolve: any, reject: any) {
-    Utils.simpleTimeBufferInput(param.__res_key, {param, resolve, reject}, this.todo, 20)
+  getReq(param: any, resolve: any, reject: any) {
+    // tslint:disable-next-line: no-floating-promises
+    simpleTimeBufferInput(param.__res_key, { param, resolve, reject }, this.todo, 20)
   }
-  @autobind setCahce(__res_key: string, value: any) {
+  // tslint:disable-next-line: variable-name
+  setCahce(__res_key: string, value: any) {
     this._map[__res_key] = value;
   }
-  @autobind getCahce(__res_key: string) {
+  // tslint:disable-next-line: variable-name
+  getCahce(__res_key: string) {
     return this._map[__res_key];
   }
-  @autobind todo(list: any[]) {
-    const { param: req } = Utils.last(list)
+  todo(list: any[]) {
+    const { param: req } = last(list)
     this.service(req).then((res) => {
-      if(includes(this.whiteList, req.url) && this.useKey[req.url]==req.useKey){
+      if (includes(this.whiteList, req.url) && this.useKey[req.url] === req.useKey) {
         this.setCahce(req.__res_key, res)
-        setTimeout(this.setCahce, 30*60*1000, req.__res_key, undefined);
+        setTimeout(this.setCahce, 30 * 60 * 1000, req.__res_key, undefined);
       }
-      for(const i of list){
+      for (const i of list) {
         i.resolve(res)
       }
-    }).catch(function(e){
-      console.log(e, e.message, Utils.isNotEmptyValueFilter(e.message, e))
-      const message = Utils.isNotEmptyValueFilter(e.message, e)
-      for(const i of list){
+    }).catch(function (e) {
+      console.log(e, e.message, typeFilterUtils.isNotEmptyValueFilter(e.message, e))
+      const message = typeFilterUtils.isNotEmptyValueFilter(e.message, e)
+      for (const i of list) {
         i.reject(new Error(message))
       }
     })

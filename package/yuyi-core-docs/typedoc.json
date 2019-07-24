@@ -5,7 +5,12 @@
   "out": "docs",
   "tsconfig": "tsconfig.json",
   "includes": "src",
-  "exclude": ["**/**test**.*", "**/test/*.*", "**/*.tsx"],
+  "exclude": [
+    "**/**test**.*",
+    "**/test/*.*",
+    "**/*.tsx",
+    "*.ts"
+  ],
   "ignoreCompilerErrors": true,
   "hideGenerator": true,
   "experimentalDecorators": true,

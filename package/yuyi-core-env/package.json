@@ -5,29 +5,33 @@
   "license": "MIT",
   "private": true,
   "scripts": {
+    "tsc": "ttsc --build && yarn tsc:env",
+    "tsc:env": "ttsc -p tsconfig.env.json",
     "test": "yuyidocs",
     "clean": "rimraf src/**/*.js && rimraf src/**/*.map && rimraf src/**/*.d.ts"
   },
   "bin": {
-    "yuyienv": ".bin/yuyienv.bat"
+    "yuyienv": ".bin/yuyienv.bat",
+    "tsccc": ".bin/tsccc.bat"
   },
   "devDependencies": {
     "@avensia-oss/ts-transform-hoist-objects-in-props": "0.0.5",
     "@types/argparse": "^1.0.36",
     "argparse": "^1.0.10",
     "colors": "^1.3.2",
-    "ts-import-plugin": "^1.5.5",
+    "gulp-json-editor": "^2.5.2",
+    "json5": "^2.1.0",
+    "ts-import-plugin": "^1.6.1",
     "ts-jest": "^24.0.2",
-    "ts-nameof": "^3.0.3",
-    "ts-node": "^8.2.0",
+    "ts-nameof": "^3.1.0",
+    "ts-node": "^8.3.0",
     "ts-optchain": "^0.1.6",
     "ts-plugin-mmlpx": "0.0.3",
     "ts-transformer-keys": "^0.3.5",
-    "tsx-control-statements": "^2.13.0",
-    "ttypescript": "^1.5.6",
-    "typescript": "3.5.1",
+    "tsx-control-statements": "^2.14.0",
+    "ttypescript": "^1.5.7",
+    "typescript": "3.5.2",
     "typescript-plugin-styled-components": "^1.4.2",
-    "typescript-transform-paths": "^1.1.0",
-    "yuyi-core-utils": "file:..\\yuyi-core-utils"
+    "typescript-transform-paths": "^1.1.4"
   }
 }

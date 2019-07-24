@@ -22,12 +22,15 @@ export default {
   data () {
     return {
       model,
-      config
+      voiceroid: ['A','B','C','D','E']
     }
   },
   computed: {
     store () {
       return this.$refs.form.store
+    },
+    config() {
+      return config(this)
     }
   },
   methods: {
@@ -37,9 +40,7 @@ export default {
     handleTest() {
       console.log(this, this.config)
       // debugger
-      this.config[10].options = [...this.config[10].options, 'qqq']
-      this.config[11].options = [...this.config[11].options, 'qqq']
-      this.config = [...this.config]
+      this.voiceroid = [...this.voiceroid, 'qqq']
       // voiceroid.push('aaa')
     },
     //

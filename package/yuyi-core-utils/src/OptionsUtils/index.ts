@@ -1,5 +1,5 @@
 /**
  * @module Main
  */
-
-export * from './OptionsUtils';
+export { IOptionsUtils } from './interface'
+export * from './OptionsUtils'

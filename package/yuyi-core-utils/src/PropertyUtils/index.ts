@@ -9,7 +9,7 @@
  *
  * 
  */
-import { get, set } from 'lodash';
+import { get, set } from '../LodashExtra';
 import { asyncComputed } from './AsyncProperty';
 import { get as Get } from './get';
 import { getPropByPath } from './getPropByPath';

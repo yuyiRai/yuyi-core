@@ -2,9 +2,9 @@
  * @module PropertyUtils
  */
 
-import { includes, reduce } from 'lodash';
-import Utils from '..';
-import { IKeyValueMap } from 'mobx';
+import { includes, reduce, isObject, isString } from '@/LodashExtra';
+import { IKeyValueMap } from '../TsUtils/interface';
+import { isEmptyValue, isNotEmptyArray } from '@/TypeLib';
 
 /**
  * 从对象中提取成员，不存在则新建一个成员（默认为一个空对象）
@@ -15,21 +15,23 @@ import { IKeyValueMap } from 'mobx';
  * 
  * @group PropertyUtils
  * @example 
+ * ```
  * const obj = {}
  * const a = getPropertyFieldByCreate(obj, 'a', ['a'], ['a', 'b'])
  * 
  * console.log(a) // 'b'
  * console.log(obj) // {"a":{"a":{"a":"b"}}}
+ * ```
  * 
  */
 export function getPropertyFieldByCreate<V = any>(main: IKeyValueMap, ...proteryNames: PrototeryMatcher[]): V {
-  const { isObject, isEmptyValue, isNotEmptyArray, isString } = Utils;
   return reduce(proteryNames, function (final, next, index, list) {
     if (isString(next)) {
-      if (isEmptyValue(final[next])) {
-        final[next] = {};
+      const keyName: string = next;
+      if (isEmptyValue(final[keyName])) {
+        final[keyName] = {};
       }
-      return final[next];
+      return final[keyName];
     }
     if (!isObject(next)) {
       return undefined;
@@ -49,7 +51,7 @@ export function getPropertyFieldByCreate<V = any>(main: IKeyValueMap, ...protery
  * 代码解释器，返回getPropertyFieldByCreate解释数组
  * @param keyStr
  * @param defaultValue
- * @return 二维数组
+ * @returns 二维数组
  * @group PropertyUtils
  * @example 
  * const matcher = getExpressByStr('a[1].b[0].d', 123) 

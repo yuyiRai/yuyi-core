@@ -1,0 +1,12 @@
+### YamlMime:UniversalReference
+items:
+  - uid: yuyi-core-utils.ITypeUtils
+    name: ITypeUtils
+    fullName: ITypeUtils
+    langs:
+      - typeScript
+    type: interface
+    extends:
+      - Type<typeof typeUtils>
+      - yuyi-core-utils.ITypeFilterUtils
+    package: yuyi-core-utils

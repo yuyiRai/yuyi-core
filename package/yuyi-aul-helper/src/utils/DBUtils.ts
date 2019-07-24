@@ -103,7 +103,7 @@ export class SelectPipe<T = any> {
   }
 }
 
-console.log(Object.entries(EDbExpressionOperator));
+// console.log(Object.entries(EDbExpressionOperator));
 export async function insert(data: any, into: zango.Collection): Promise<boolean> {
   try {
     if (!Utils.isObject(data)){

@@ -9,7 +9,7 @@
  *
  *
  */
-import { get, set } from 'lodash';
+import { get, set } from '../LodashExtra';
 import { asyncComputed } from './AsyncProperty';
 import { get as Get } from './get';
 import { getPropByPath } from './getPropByPath';
@@ -27,3 +27,4 @@ export { getPropByPath, getPropertyFieldByCreate, getExpressByStr, asyncComputed
 /**
  * 123456
  */ 
+//# sourceMappingURL=index.d.ts.map

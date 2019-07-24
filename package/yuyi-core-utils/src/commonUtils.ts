@@ -1,12 +1,14 @@
 /**
  * @module CommonUtils
  */
-import { castArray as castArrayLodash, cloneDeep, concat, escapeRegExp, forEach, isEqual as isEqualLodash, isFunction, isRegExp, isString, keys, last, property, reduce, stubArray, takeRight, toArray, toString, values } from 'lodash';
-import { IKeyValueMap } from 'mobx';
-import Utils from '.';
+import {
+  isFunction, isRegExp,
+  keys, property,
+  takeRight, values, isEqual, isObject
+} from './LodashExtra';
 import { EventEmitter } from './EventEmitter';
-import { HttpBox } from './HttpBox';
 import { typeFilterUtils } from './TypeLib';
+import { IFunction } from './TsUtils';
 
 // const _ = {
 //   filter,map,forEach
@@ -24,8 +26,14 @@ if (!Object.values) {
   Object.values = values
 }
 
+/**
+ * @beta
+ * @param bool 
+ * @param when 
+ * @param elseValue 
+ */
 export function jsxIf(bool: any, when: any, elseValue?: any) {
-  if ((Utils.isFunctionFilter(bool) || (() => bool))()) {
+  if ((typeFilterUtils.isFunctionFilter(bool) || (() => bool))()) {
     return when;
   } else {
     return elseValue
@@ -34,39 +42,26 @@ export function jsxIf(bool: any, when: any, elseValue?: any) {
 export const testEmitter = new EventEmitter()
 
 // tslint:disable-next-line: no-empty
-export function stubFunction(...args: any[]) { }
-export function stubObject() {
-  return {};
-}
-/**
- * cast computed
- * @param {*} functionOrValue 
- * @param  {...any} computedArgs 计算用参数 
- */
-export function castComputed<T>(functionOrValue: T extends Function ? T : any, ...computedArgs: any[]) {
-  return isFunction(functionOrValue) ? functionOrValue(...computedArgs) : functionOrValue
-}
-export function castFunction(value: any) {
-  return isFunction(value) ? value : function () { return value; };
-}
-export function castString(value: any) {
-  return isString(value) ? value : toString(value)
-}
 export function argShifter(todoFunc: any, startIndex = 1) {
   return function (...args: any[]) {
     return todoFunc(...takeRight(args, args.length - startIndex))
   }
 }
-export function modelValidator<T>(fieldName: any, validator: any) {
+
+export function modelValidator<T>(fieldName: string, validator: RegExp | IFunction | T) {
   const fieldSearcher = property<any, string>(fieldName)
   if (isRegExp(validator)) {
     return (model: T) => validator.test(fieldSearcher(model));
   } else if (isFunction(validator)) {
     return (model: T) => validator(fieldSearcher(model), model, fieldName, validator);
   } else {
-    return (model: T) => isEqualLodash(fieldSearcher(model), validator)
+    return (model: T) => isEqual._(fieldSearcher(model), validator)
   }
 }
+export function validateModelField(model: any, fieldName: any, validator: any) {
+  return modelValidator(fieldName, validator)(model)
+}
+
 export function getTestArray(length: number) {
   const arr = []
   for (let i = length; i > 0; i--) {
@@ -95,7 +90,7 @@ export function arrayMap2(array: any[], iteratee: any) {
   return result;
 }
 export function arrayMap3(array: any[], iteratee: any) {
-// tslint:disable-next-line: one-variable-per-declaration
+  // tslint:disable-next-line: one-variable-per-declaration
   let index = -1, length = array.length, result = Array(length);
   while (++index < length) {
     result[index] = iteratee(array[index], index, array);
@@ -103,7 +98,7 @@ export function arrayMap3(array: any[], iteratee: any) {
   return result;
 }
 export function arrayMapDive(array: any[], iteratee: any) {
-// tslint:disable-next-line: one-variable-per-declaration
+  // tslint:disable-next-line: one-variable-per-declaration
   let rLength = array.length % 8, length = rLength, pLength = (array.length - rLength), result = Array(array.length);
   while (length--) {
     if (array[length]) {
@@ -124,24 +119,24 @@ export function arrayMapDive(array: any[], iteratee: any) {
   return result;
 }
 export function arrayMapToKeysDive(array: any[], key: any) {
-// tslint:disable-next-line: one-variable-per-declaration
+  // tslint:disable-next-line: one-variable-per-declaration
   let rLength = array.length % 8, length = rLength, pLength = (array.length - rLength), result = Array(array.length);
   while (length--) {
-    result[length] = Utils.isObject(array[length]) ? array[length][key] : undefined;
+    result[length] = isObject(array[length]) ? array[length][key] : undefined;
   }
   while (pLength) {
     let wlength = 8
     const tmp = rLength + pLength;
     while (wlength) {
       const index = tmp - wlength--
-      result[index] = Utils.isObject(array[index]) ? array[index][key] : undefined;
+      result[index] = isObject(array[index]) ? array[index][key] : undefined;
     }
     pLength -= 8
   }
   return result;
 }
 export function arrayForEachDive(array: any[], iteratee: any) {
-// tslint:disable-next-line: one-variable-per-declaration
+  // tslint:disable-next-line: one-variable-per-declaration
   let rLength = array.length % 8, length = rLength, pLength = (array.length - rLength);
   while (length--) {
     iteratee(array[length], length, array);
@@ -158,7 +153,7 @@ export function arrayForEachDive(array: any[], iteratee: any) {
 }
 export function arrayPush(array: any[], values: any[]) {
   const values2 = values
-// tslint:disable-next-line: one-variable-per-declaration
+  // tslint:disable-next-line: one-variable-per-declaration
   let index = 0,
     length = values2.length,
     offset = array.length;
@@ -170,9 +165,9 @@ export function arrayPush(array: any[], values: any[]) {
   return array;
 }
 export function arrayPushDive(arrayTarget: any[], array: any[]) {
-// tslint:disable-next-line: one-variable-per-declaration
+  // tslint:disable-next-line: one-variable-per-declaration
   const rLength = array.length % 8, tLength = values.length
-// tslint:disable-next-line: one-variable-per-declaration
+  // tslint:disable-next-line: one-variable-per-declaration
   let length = rLength, pLength = array.length - rLength, offset = 0
   while (length--) {
     arrayTarget[tLength + offset++] = array[rLength - length - 1]
@@ -188,27 +183,27 @@ export function arrayPushDive(arrayTarget: any[], array: any[]) {
   }
 }
 // test(length: number, pi = 8) {
-//   let test = Utils.getTestArray(length)
+//   let test = getTestArray(length)
 //   let test2 = (item: any, index: any) => item > length / 2
-//   let test3 = (item: any, index: any) => Utils.arrayMapDive(test, test2)
+//   let test3 = (item: any, index: any) => arrayMapDive(test, test2)
 //   setTimeout(() => {
 //     console.time('arrayMap')
-//     Utils.arrayMap(test, test3)
+//     arrayMap(test, test3)
 //     console.timeEnd('arrayMap')
 //   }, 0)
 //   setTimeout(() => {
 //     console.time('arrayMap2')
-//     Utils.arrayMap2(test, test3)
+//     arrayMap2(test, test3)
 //     console.timeEnd('arrayMap2')
 //   }, 0)
 //   setTimeout(() => {
 //     console.time('arrayMap3')
-//     Utils.arrayMap3(test, test3)
+//     arrayMap3(test, test3)
 //     console.timeEnd('arrayMap3')
 //   }, 0)
 //   setTimeout(() => {
 //     console.time('arrayMapDive')
-//     Utils.arrayMapDive(test, test3)
+//     arrayMapDive(test, test3)
 //     console.timeEnd('arrayMapDive')
 //   }, 0)
 //   setTimeout(() => {
@@ -218,12 +213,12 @@ export function arrayPushDive(arrayTarget: any[], array: any[]) {
 //   }, 0)
 //   setTimeout(() => {
 //     console.time('arrayFilter')
-//     Utils.arrayFilter(test, test3)
+//     arrayFilter(test, test3)
 //     console.timeEnd('arrayFilter')
 //   }, 0)
 //   setTimeout(() => {
 //     console.time('arrayFilterDive')
-//     Utils.arrayFilterDive(test, test3)
+//     arrayFilterDive(test, test3)
 //     console.timeEnd('arrayFilterDive')
 //   }, 0)
 //   setTimeout(() => {
@@ -234,7 +229,7 @@ export function arrayPushDive(arrayTarget: any[], array: any[]) {
 //   setTimeout(() => {
 //     console.time('arrayForEachDive')
 //     let r8 = []
-//     Utils.arrayForEachDive(test, (item: any, index: any) => {
+//     arrayForEachDive(test, (item: any, index: any) => {
 //       r8.push(test3(item, index))
 //     })
 //     console.timeEnd('arrayForEachDive')
@@ -276,36 +271,6 @@ export function arrayFilterDive(array: any[], iteratee: any) {
   }
   return result;
 }
-export function validateModelField(model: any, fieldName: any, validator: any) {
-  return Utils.modelValidator(fieldName, validator)(model)
-}
-export function castArray(value: any, allowEmpty = true) {
-  return allowEmpty ? castArrayLodash(value) : (Utils.isNotEmptyValue(value) ? castArrayLodash(value) : [])
-}
-export function castObjectArray(objOrArr: any[], allowEmpty = true): any[] {
-  return typeFilterUtils.isArrayFilter(
-    objOrArr,
-    allowEmpty
-      ? Utils.isObject(objOrArr) && [objOrArr]
-      : Utils.isNotEmptyObject(objOrArr) && [objOrArr],
-  ) || []
-}
-export function createGroupWith<T = any>(list: T[], keyOrWith: string | ((item: T) => string)): IKeyValueMap<T[]> {
-  return reduce(Utils.isArrayFilter(list, []), function (map, item) {
-    const mapKey = isString(keyOrWith) ? item[keyOrWith] : (isFunction(keyOrWith) ? keyOrWith(item) : "default")
-    map[mapKey] = typeFilterUtils.isArrayFilter(map[mapKey], [])
-    map[mapKey].push(item)
-    return map;
-  }, {})
-}
-export function getEventEmitter() {
-  return new EventEmitter()
-}
-export function waitingPromise<V = any>(time: number, emitValue?: any, isError = false): Promise<V> {
-  return new Promise((resolve, reject) => {
-    setTimeout(isError ? reject : resolve, time, emitValue);
-  })
-}
 /**
  * 组件返回
  * @param instance 
@@ -316,12 +281,12 @@ export function pathReturn(instance: { $router: any, $route: any }, params: any,
   if (useBack) {
     return instance.$router.back()
   }
-  const { query = {}, path: pathSet = undefined, ...other } = Utils.isObjectFilter(params) || {}
+  const { query = {}, path: pathSet = undefined, ...other } = typeFilterUtils.isObjectFilter(params) || {}
   const path = instance.$route.path.split('\/');
   path.pop() // 吐出当前页
   instance.$router.push({
     ...other,
-    path: path.join('\/'),
+    path: path.join('/'),
     query: {
       ...typeFilterUtils.isObjectFilter(query, {}),
       force: isConfirm === false || isConfirm === true
@@ -330,15 +295,4 @@ export function pathReturn(instance: { $router: any, $route: any }, params: any,
     }
   })
 }
-export function isEqual<A = any, B = any>(valueA: A | any, valueB: B | any, noStrict: boolean = false): boolean {
-  const ia = Utils.isNotEmptyValueFilter
-  if (noStrict) {
-    return ia(valueA) === ia(valueB) || isEqualLodash(ia(valueA), ia(valueB))
-  } else if (valueA === valueB) {
-    return true
-  }
-  return isEqualLodash(valueA, valueB)
-}
 
-
-export { HttpBox, last, cloneDeep, toArray, stubArray, toString, reduce, forEach, concat, escapeRegExp, isString };

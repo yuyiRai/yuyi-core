@@ -48,3 +48,4 @@ declare const _default: {
     createSimpleTimeBufferInput: typeof createSimpleTimeBufferInput;
 };
 export default _default;
+//# sourceMappingURL=TimeBuffer.d.ts.map

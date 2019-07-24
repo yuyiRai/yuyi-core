@@ -1,0 +1,150 @@
+### YamlMime:UniversalReference
+items:
+  - uid: yuyi-core-utils.EventEmitter
+    summary: |-
+      事件发射器
+
+      订阅事件 见<!-- -->.subscribe()
+
+      发射事件 见[emit()](xref:yuyi-core-utils.EventEmitter.emit)
+
+      销毁 见[dispose()](xref:yuyi-core-utils.EventEmitter.dispose)
+    isPreview: true
+    name: EventEmitter
+    fullName: EventEmitter
+    langs:
+      - typeScript
+    type: class
+    extends:
+      - 'Subject<EventType> '
+    package: yuyi-core-utils
+    children:
+      - yuyi-core-utils.EventEmitter.(constructor)
+      - yuyi-core-utils.EventEmitter.dispose
+      - yuyi-core-utils.EventEmitter.emit
+      - yuyi-core-utils.EventEmitter.getLastValue
+      - yuyi-core-utils.EventEmitter.once
+      - yuyi-core-utils.EventEmitter.takeUntil
+      - yuyi-core-utils.EventEmitter.toPromise
+  - uid: yuyi-core-utils.EventEmitter.(constructor)
+    summary: 实例化EventEmitter
+    isPreview: true
+    name: '(constructor)(next, error, complete)'
+    fullName: '(constructor)(next, error, complete)'
+    langs:
+      - typeScript
+    type: constructor
+    syntax:
+      content: 'constructor(next?: NextEvent<EventType>, error?: ErrorEvent<EventType>, complete?: CompletedEvent<EventType>);'
+      parameters:
+        - id: next
+          description: ''
+          type:
+            - NextEvent<EventType>
+        - id: error
+          description: ''
+          type:
+            - ErrorEvent<EventType>
+        - id: complete
+          description: ''
+          type:
+            - CompletedEvent<EventType>
+  - uid: yuyi-core-utils.EventEmitter.dispose
+    summary: 注销
+    isPreview: true
+    name: dispose()
+    fullName: dispose()
+    langs:
+      - typeScript
+    type: method
+    syntax:
+      content: 'dispose(): void;'
+      return:
+        type:
+          - void
+        description: ''
+  - uid: yuyi-core-utils.EventEmitter.emit
+    summary: 发射值
+    isPreview: true
+    name: emit(value)
+    fullName: emit(value)
+    langs:
+      - typeScript
+    type: method
+    syntax:
+      content: 'emit(value: EventType): void;'
+      return:
+        type:
+          - void
+        description: ''
+      parameters:
+        - id: value
+          description: ''
+          type:
+            - EventType
+  - uid: yuyi-core-utils.EventEmitter.getLastValue
+    summary: 取得最后发射的值
+    isPreview: true
+    name: getLastValue()
+    fullName: getLastValue()
+    langs:
+      - typeScript
+    type: method
+    syntax:
+      content: 'getLastValue(): EventType;'
+      return:
+        type:
+          - EventType
+        description: ''
+  - uid: yuyi-core-utils.EventEmitter.once
+    summary: 发射一个事件后立即销毁监听器
+    isPreview: true
+    name: once(value)
+    fullName: once(value)
+    langs:
+      - typeScript
+    type: method
+    syntax:
+      content: 'once(value: EventType): void;'
+      return:
+        type:
+          - void
+        description: ''
+      parameters:
+        - id: value
+          description: ''
+          type:
+            - EventType
+  - uid: yuyi-core-utils.EventEmitter.takeUntil
+    summary: 设置条件注销
+    isPreview: true
+    name: takeUntil(emit)
+    fullName: takeUntil(emit)
+    langs:
+      - typeScript
+    type: method
+    syntax:
+      content: 'takeUntil(emit: Observable<any>): this;'
+      return:
+        type:
+          - this
+        description: ''
+      parameters:
+        - id: emit
+          description: ''
+          type:
+            - Observable<any>
+  - uid: yuyi-core-utils.EventEmitter.toPromise
+    summary: 转化成标准Promise
+    isPreview: true
+    name: toPromise()
+    fullName: toPromise()
+    langs:
+      - typeScript
+    type: method
+    syntax:
+      content: 'toPromise(): Promise<unknown>;'
+      return:
+        type:
+          - Promise<unknown>
+        description: ''

@@ -1,15 +1,37 @@
 {
-  "extends": "../yuyi-core-env/tsconfig.json",
+  "extends": "../../tsconfig.json",
+  "references": [
+    {
+      "path": "../yuyi-core-env"
+    }
+  ],
   "compilerOptions": {
-    "baseUrl": ".",
-    "moduleResolution": "node",
-    "target": "es5",
-    "module":"esnext",
-    "declarationDir": "types",
-    "outDir": "lib",
-    "typeRoots": ["**/*.d.ts", "node_modules/@types", "../../node_modules/@types", "../../node_modules/@types"]
+    "composite": true,
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@": [
+        "./"
+      ]
+    },
+    "outDir": "./lib",
+    "declarationDir": "./types",
+    "tsBuildInfoFile": "../.tsBuildInfo/utils.json",
+    "incremental": true,
+    "module": "esnext",
+    "typeRoots": [
+      "node_modules/@types",
+      "../../node_modules/@types"
+    ]
   },
   "include": [
-    "src", "node_modules/@types", "../../node_modules/@types"
+    "src"
+  ],
+  "exclude": [
+    "tools",
+    "../../node_modules"
   ]
 }

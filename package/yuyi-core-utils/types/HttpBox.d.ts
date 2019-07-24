@@ -1,4 +1,4 @@
-import { IKeyValueMap } from 'mobx';
+import { IKeyValueMap } from './TsUtils';
 export declare type Service = (...params: any[]) => Promise<any>;
 export declare class HttpBox {
     _map: {};
@@ -12,3 +12,4 @@ export declare class HttpBox {
     getCahce(__res_key: string): any;
     todo(list: any[]): void;
 }
+//# sourceMappingURL=HttpBox.d.ts.map

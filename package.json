@@ -25,7 +25,8 @@
     "commit": "yuyienv .",
     "serve": "yarn workspace yuyi-core-react-demo run start",
     "serve:vue": "yarn workspace yuyi-core-vue-demo run serve",
-    "ts": "node -r ./package/yuyi-core-env/config/run-ts.js -r ./scripts/publish.ts",
+    "ts": "tsccc ./scripts/tsconfig.mix.ts",
+    "project:init": "gulp --require ./package/yuyi-core-env/config/run-ts.js --cwd . -f ./scripts/tsconfig.mix.ts -t default",
     "pub": "yarn commit && lerna publish && yarn run allcommit",
     "start": "lerna run --no-private dev",
     "start:utils": "yarn workspace yuyi-core-utils run start",
@@ -39,7 +40,7 @@
     "build-utils": "yarn workspace yuyi-core-utils run build"
   },
   "devDependencies": {
-    "lerna": "^3.14.1"
+    "lerna": "^3.15.0"
   },
   "postcss": {
     "plugins": {

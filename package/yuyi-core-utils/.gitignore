@@ -12,3 +12,8 @@ compiled
 docs
 types
 lib
+temp
+
+markdown
+*.d.ts
+*.map

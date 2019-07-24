@@ -1,0 +1,29 @@
+items:
+  - name: SharePoint Framework reference
+    href: ~/overview/sharepoint.md
+    items:
+      - name: yuyi-core-utils
+        uid: yuyi-core-utils
+        items:
+          - name: App
+          - name: CommonDto
+            uid: yuyi-core-utils.CommonDto
+          - name: EDateFormatter
+            uid: yuyi-core-utils.EDateFormatter
+          - name: EventEmitter
+            uid: yuyi-core-utils.EventEmitter
+          - name: IOptionsUtils
+            items:
+              - name: Option
+                uid: yuyi-core-utils.IOptionsUtils.Option
+          - name: IPropertyUtils
+            uid: yuyi-core-utils.IPropertyUtils
+          - name: isEqual
+          - name: isNumber
+          - name: ITypeFilterUtils
+            uid: yuyi-core-utils.ITypeFilterUtils
+          - name: ITypeUtils
+            uid: yuyi-core-utils.ITypeUtils
+          - name: OptionsUtils
+            uid: yuyi-core-utils.OptionsUtils
+          - name: reduceExtra

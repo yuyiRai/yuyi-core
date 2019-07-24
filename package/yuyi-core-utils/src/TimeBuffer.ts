@@ -1,19 +1,20 @@
 /**
  * @module TimeUtils
  */
-import { forEach, isArray, isEqual, last } from 'lodash';
+import { isNil, forEach, isArray, isEqual, last, stubFunction } from './LodashExtra';
 import { from, merge, MonoTypeOperatorFunction, of, timer } from 'rxjs';
 import { bufferTime, bufferWhen, distinctUntilChanged, first, shareReplay, switchMap, tap } from 'rxjs/operators';
-import { Utils } from '.';
-import { EventEmitter } from './EventEmitter';
+import { EventEmitter, getEventEmitter } from './EventEmitter';
+import { typeFilterUtils } from './TypeLib';
+import { waitingPromise } from './TestUtil';
 // import rx from 'rxjs'
 // import * as rx2 from 'rxjs/operators';
 // window.rx = rx;
 // window.rx2 = rx2;
 export const testGroup = {
   shareTest(...data: any[]) {
-    var emitter = Utils.getEventEmitter();
-    var line = from(emitter).pipe(distinctUntilChanged((x, b) => Utils.isEqual(x, b)), switchMap((item) => {
+    const emitter = getEventEmitter();
+    const line = from(emitter).pipe(distinctUntilChanged((x, b) => isEqual(x, b)), switchMap((item) => {
       return merge(of(item), of(item)).pipe(bufferTime(100), tap(console.log));
     }), shareReplay());
     line.subscribe(console.log.bind(this, 1));
@@ -42,7 +43,7 @@ export function simpleTimeBuffer<V = any>(
   callback: CallbackFunction<V>,
   emitter: EventEmitter<V> = new EventEmitter<V>()
 ): TimeBufferConfig<V> {
-  const timeInput = Utils.isNumberFilter(time, 500);
+  const timeInput = typeFilterUtils.isNumberFilter(time, 500);
   const $emitter = from(emitter);
   const diff: MonoTypeOperatorFunction<V> = (isDeepDiff ? timeBufferFactory.deepDiff as any : timeBufferFactory.diff as any);
   const $source = of(null).pipe(
@@ -60,7 +61,7 @@ export function simpleTimeBuffer<V = any>(
         resolve(valueGroup);
         sub.unsubscribe();
         // console.log(this)
-      }, Utils.stubFunction, () => {
+      }, stubFunction, () => {
         callback();
       });
     }),
@@ -68,7 +69,9 @@ export function simpleTimeBuffer<V = any>(
   ]);
 }
 
+// tslint:disable-next-line: variable-name
 const ___timeBufferList = new Map<any, TimeBufferConfig<any> | null>();
+// tslint:disable-next-line: variable-name
 const ___timeBufferValueMap = new WeakMap<TimeBufferConfig<any>, any>();
 export const BufferCacheGroup = { ___timeBufferList, ___timeBufferValueMap };
 /**
@@ -96,7 +99,7 @@ export function simpleTimeBufferInput<K extends object, V = any>(
   } else {
     config[2]++;
   }
-  if (!Utils.isNil(config)) {
+  if (!isNil(config)) {
     // console.log(config)
     let [emitter, pro] = config;
     emitter.emit(value);
@@ -109,13 +112,13 @@ export function simpleTimeBufferInput<K extends object, V = any>(
       }
       config[2]--;
       const rValue = ___timeBufferValueMap.get(config);
-      if (config[2] == 0) {
+      if (config[2] === 0 || isNil(config[2])) {
         ___timeBufferValueMap.delete(config);
       }
       return rValue;
     });
   }
-  return Utils.waitingPromise(0)
+  return waitingPromise(0)
 }
 /**
  * 

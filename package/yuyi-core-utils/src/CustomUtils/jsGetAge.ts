@@ -1,6 +1,11 @@
 /**
  * @module CustomUtils
  */
+/**
+ * 
+ * 比较生日和当前日期取得年龄
+ * @param strBirthday 生日字符串 yyyy-MM-dd
+ */
 export function jsGetAge(strBirthday: string) {
   let returnAge;
   let strBirthdayArr = strBirthday.split("-");

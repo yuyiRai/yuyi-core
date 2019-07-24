@@ -1,8 +1,10 @@
 import * as React from 'react';
-import { withRouter, Switch, RouteComponentProps } from 'react-router-dom';
+import { StaticContext, __RouterContext } from 'react-router';
+import { RouteComponentProps, Switch } from 'react-router-dom';
 import { IRouteCommonProps, useRoute } from '../views/useRoute';
 import { Routes } from './Routes';
-import { StaticContext } from 'react-router';
+import { useLocalStore, useObserver } from 'yuyi-core-night';
+import { observable } from 'mobx';
 
 
 export interface IRouteConfig extends IRouteCommonProps {
@@ -18,23 +20,29 @@ export interface IRootRouteProps extends Pick<RouteComponentProps<any, StaticCon
   container: any;
 }
 
-export const RootRoute: React.ComponentClass<IRootRouteProps, any> = withRouter(((props: IRootRouteProps) => {
-  const [routes] = React.useState(Routes)
-  const { container: Container } = props
-  return (
-    <Container>
-      <RoutesList routes={routes} location={props.location} />
-    </Container>
-  );
-}) as any) as any;
+export function useRouter() {
+  return React.useContext(__RouterContext)
+}
+export type RouterContext = React.ContextType<typeof __RouterContext>
 
-export const RoutesList = React.memo((({ routes, location }: { routes: IRouteConfig[], location: any }) => {
+export const RootRoute: React.SFC<IRootRouteProps> = ((props: IRootRouteProps) => {
+  const routes = useLocalStore(() => observable.box(Routes, { name: 'Routes' }), [])
+  const context = useRouter()
+  const { container: Container } = props
+  return useObserver(() => (
+    <Container>
+      <RoutesList location={context.location} routes={routes.get()}/>
+    </Container>
+  ));
+}) as any;
+
+export const RoutesList = React.memo((({ routes, location }: { routes: IRouteConfig[]; location: RouterContext['location'] }) => {
   return <Switch location={location}>{
     routes.map(
       ({ component: Component, path, exact, children = [] }) => {
         // const routes = useRoutes(children)
         return (
-          <Component key={path} path={path} exact={exact}>
+          location.pathname === path && <Component key={path} path={path} exact={exact}>
             <RoutesList routes={children} />
           </Component>
         )

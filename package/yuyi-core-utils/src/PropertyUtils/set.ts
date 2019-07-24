@@ -10,11 +10,11 @@ import { PropertyPath } from 'lodash';
  * @param object The object to modify.
  * @param path The path of the property to set.
  * @param value The value to set.
- * @return Returns object.
+ * @returns Returns object.
  */
 export function set<T extends object>(object: T, path: PropertyPath, value: any): T;
 /**
- * @see set
+ * @remarks see:  set
  */
 export function set<TResult>(object: object, path: PropertyPath, value: any): TResult;
 

@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { AppRoutesContext } from '../../route/Routes';
-import { useLocalStore } from 'mobx-react-lite';
+import { useLocalStore } from 'yuyi-core-night';
 import { ILayoutProps } from '.';
 import { IRouteConfig } from '../../route';
+import { action } from 'mobx';
 
 export function createStore(routes: IRouteConfig[]) {
   const store = {
     collapsed: false,
-    toggleCollapsed() {
+    toggleCollapsed: action(function () {
       this.collapsed = !this.collapsed;
-    },
+    }),
     menu: [...routes],
     routes: [...routes]
   };
@@ -20,9 +21,9 @@ export type LayoutChildren = React.Context<LayoutStore>['Consumer']['prototype']
 
 export const layoutStoreContext = React.createContext<LayoutStore>(null as any)
 
-export const LayoutProvider: React.FunctionComponent<ILayoutProps> = (props) => {
+export const useLayoutProvider = (children: (store: LayoutStore) => any) => {
   const routes = React.useContext(AppRoutesContext)
-  const store = useLocalStore(() => createStore(routes))
-  const { Provider, Consumer } = layoutStoreContext
-  return <Provider value={store}><Consumer>{props.children}</Consumer></Provider>
+  const store = useLocalStore(() => createStore(routes), [routes])
+  const { Provider } = layoutStoreContext
+  return <Provider value={store}>{children(store)}</Provider>
 }

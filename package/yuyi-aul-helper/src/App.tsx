@@ -1,10 +1,10 @@
-import React from 'react';
 // import './App.css';
 import 'antd/dist/antd.css';
-import { LayoutContainer } from './components/Layout';
-import { HashRouter, Route, Switch, Link } from 'react-router-dom'
+import React from 'react';
+import { HashRouter, Route, Switch } from 'react-router-dom';
 // import { DragUpload, ExaManagerRoute } from './views';
 import { AppStore, store as app } from './App.store';
+import { LayoutContainer } from './components/Layout';
 import { RootRoute } from './route';
 
 export const AppContext = React.createContext<AppStore>(app)

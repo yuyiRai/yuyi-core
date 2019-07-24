@@ -1,6 +1,10 @@
 /// <reference types="lodash" />
-import { IKeyValueMap } from 'mobx';
+/**
+ * @module TypeUtils
+ */
+import { isNumber } from './LodashExtra';
 import { EventEmitter } from './EventEmitter';
+import { IKeyValueMap, IsBaseType, IsArray, IsObject, IsAny } from './TsUtils';
 /**
  * 是否为空或异常值，不包括0
  * 空值: null/undefined/''
@@ -16,7 +20,6 @@ export declare function isEmptyValue(value: any): value is (null | undefined | '
  * @param value
  */
 export declare function isNotEmptyValue(value: any): value is (string | number | boolean | object | Function);
-export declare function isNumber(value: any): value is number;
 export declare function isBooleanOrNumber(value: any): value is (boolean | number);
 export declare function isEmptyArray(value: any): value is boolean;
 export declare function isNotEmptyArray(value: any): value is any[];
@@ -63,7 +66,7 @@ export declare const typeUtils: {
     isFunction: (value: any) => value is (...args: any[]) => any;
     isNil: (value: any) => value is null;
     isDate: (value?: any) => value is Date;
-    isNaN: (value?: any) => boolean;
+    isNaN: typeof isNaN;
     isNotFunction: typeof isNotFunction;
     isNotNaN: typeof isNotNaN;
     isNilAll: typeof isNilAll;
@@ -77,10 +80,6 @@ export declare const typeUtils: {
     isEmptyObject: typeof isEmptyObject;
     isNotEmptyObject: typeof isNotEmptyObject;
 };
-export declare type IsAny<T = unknown, TRUE = true, FALSE = false> = unknown extends T ? TRUE : FALSE;
-export declare type IsArray<T = unknown, TRUE = true, FALSE = false> = IsAny<T, FALSE, T extends Array<any> ? TRUE : FALSE>;
-export declare type IsBaseType<T = unknown, TRUE = true, FALSE = false> = IsAny<T, FALSE, T extends (string | number | boolean | Function) ? TRUE : FALSE>;
-export declare type IsObject<T = unknown, TRUE = true, FALSE = false> = IsAny<T, FALSE, IsBaseType<T, FALSE, IsArray<T, FALSE, T extends object ? TRUE : FALSE>>>;
 export declare type FilterFunction<T = any> = <ST extends (IsBaseType<T, T, (IsArray<T, any, (IsObject<T, any, (IsAny<T, any, T>)>)>)>) = any>(...key: any[]) => (IsBaseType<T, T, (IsArray<T, Array<ST>, (IsObject<T, IsObject<ST, ST, IKeyValueMap<ST>>, (IsAny<ST, T, ST>)>)>)>) | undefined;
 export declare function todoFilter(handler: (v: any) => boolean): FilterFunction;
 export interface ITypeFilterUtils {
@@ -102,3 +101,4 @@ export interface ITypeUtils extends Type<typeof typeUtils>, ITypeFilterUtils {
  */
 export declare const typeFilterUtils: ITypeFilterUtils;
 export {};
+//# sourceMappingURL=TypeLib.d.ts.map

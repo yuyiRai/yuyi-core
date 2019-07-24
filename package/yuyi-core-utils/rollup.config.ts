@@ -5,6 +5,7 @@ import json from 'rollup-plugin-json'
 import typescript from 'rollup-plugin-typescript2';
 import ttypescript from 'ttypescript';
 import external from 'rollup-plugin-peer-deps-external'
+import minify from 'rollup-plugin-babel-minify'
 
 
 const pkg = require('./package.json')
@@ -42,7 +43,14 @@ export default {
     // which external modules to include in the bundle
     // https://github.com/rollup/rollup-plugin-node-resolve#usage
     resolve(),
-
+    minify({
+      // 清除注释
+      comments: false,
+      // 清除debugger
+      removeDebugger: true,
+      // 清除console
+      removeConsole: true
+    }),
     // Resolve source maps to the original source
     sourceMaps(),
   ],

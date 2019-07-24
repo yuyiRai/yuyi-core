@@ -1,0 +1,2341 @@
+{
+  "metadata": {
+    "toolPackage": "@microsoft/api-extractor",
+    "toolVersion": "7.3.4",
+    "schemaVersion": 1002,
+    "oldestForwardsCompatibleVersion": 1001
+  },
+  "kind": "Package",
+  "docComment": "",
+  "name": "rxjs",
+  "members": [{
+    "kind": "EntryPoint",
+    "name": "",
+    "members": [{
+      "kind": "Interface",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export interface "
+      }, {
+        "kind": "Reference",
+        "text": "CompletionObserver"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> "
+      }],
+      "releaseTag": "Public",
+      "typeParameters": [{
+        "typeParameterName": "T",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        }
+      }],
+      "name": "CompletionObserver",
+      "members": [{
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "closed"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Content",
+          "text": "boolean"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "closed",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 3
+        }
+      }, {
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "complete"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Content",
+          "text": "() => void"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "complete",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 3
+        }
+      }, {
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "error"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "err"
+        }, {
+          "kind": "Content",
+          "text": ": any) => void"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "error",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 5
+        }
+      }, {
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "next"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "value"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Reference",
+          "text": "T"
+        }, {
+          "kind": "Content",
+          "text": ") => void"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "next",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 7
+        }
+      }],
+      "extendsTokenRanges": []
+    }, {
+      "kind": "Interface",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export interface "
+      }, {
+        "kind": "Reference",
+        "text": "ErrorObserver"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> "
+      }],
+      "releaseTag": "Public",
+      "typeParameters": [{
+        "typeParameterName": "T",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        }
+      }],
+      "name": "ErrorObserver",
+      "members": [{
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "closed"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Content",
+          "text": "boolean"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "closed",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 3
+        }
+      }, {
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "complete"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Content",
+          "text": "() => void"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "complete",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 3
+        }
+      }, {
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "error"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "err"
+        }, {
+          "kind": "Content",
+          "text": ": any) => void"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "error",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 5
+        }
+      }, {
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "next"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "value"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Reference",
+          "text": "T"
+        }, {
+          "kind": "Content",
+          "text": ") => void"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "next",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 7
+        }
+      }],
+      "extendsTokenRanges": []
+    }, {
+      "kind": "TypeAlias",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare type "
+      }, {
+        "kind": "Reference",
+        "text": "FactoryOrValue"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> = "
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": " | (() => "
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ")"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "releaseTag": "Public",
+      "name": "FactoryOrValue",
+      "typeParameters": [{
+        "typeParameterName": "T",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        }
+      }],
+      "typeTokenRange": {
+        "startIndex": 5,
+        "endIndex": 9
+      }
+    }, {
+      "kind": "TypeAlias",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare type "
+      }, {
+        "kind": "Reference",
+        "text": "InteropObservable"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> = "
+      }, {
+        "kind": "Content",
+        "text": "{\n    ["
+      }, {
+        "kind": "Reference",
+        "text": "Symbol"
+      }, {
+        "kind": "Content",
+        "text": "."
+      }, {
+        "kind": "Reference",
+        "text": "observable"
+      }, {
+        "kind": "Content",
+        "text": "]: () => "
+      }, {
+        "kind": "Reference",
+        "text": "Subscribable"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ">;\n}"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "releaseTag": "Public",
+      "name": "InteropObservable",
+      "typeParameters": [{
+        "typeParameterName": "T",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        }
+      }],
+      "typeTokenRange": {
+        "startIndex": 5,
+        "endIndex": 14
+      }
+    }, {
+      "kind": "Interface",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export interface "
+      }, {
+        "kind": "Reference",
+        "text": "MonoTypeOperatorFunction"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> extends "
+      }, {
+        "kind": "Reference",
+        "text": "OperatorFunction"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ", "
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> "
+      }],
+      "releaseTag": "Public",
+      "typeParameters": [{
+        "typeParameterName": "T",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        }
+      }],
+      "name": "MonoTypeOperatorFunction",
+      "members": [],
+      "extendsTokenRanges": [{
+        "startIndex": 5,
+        "endIndex": 11
+      }]
+    }, {
+      "kind": "Interface",
+      "docComment": "/**\n * OBSERVER INTERFACES\n */\n",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export interface "
+      }, {
+        "kind": "Reference",
+        "text": "NextObserver"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> "
+      }],
+      "releaseTag": "Public",
+      "typeParameters": [{
+        "typeParameterName": "T",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        }
+      }],
+      "name": "NextObserver",
+      "members": [{
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "closed"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Content",
+          "text": "boolean"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "closed",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 3
+        }
+      }, {
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "complete"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Content",
+          "text": "() => void"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "complete",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 3
+        }
+      }, {
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "error"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "err"
+        }, {
+          "kind": "Content",
+          "text": ": any) => void"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "error",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 5
+        }
+      }, {
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "next"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "value"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Reference",
+          "text": "T"
+        }, {
+          "kind": "Content",
+          "text": ") => void"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "next",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 7
+        }
+      }],
+      "extendsTokenRanges": []
+    }, {
+      "kind": "TypeAlias",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare type "
+      }, {
+        "kind": "Reference",
+        "text": "ObservableInput"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> = "
+      }, {
+        "kind": "Reference",
+        "text": "SubscribableOrPromise"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> | "
+      }, {
+        "kind": "Reference",
+        "text": "ArrayLike"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> | "
+      }, {
+        "kind": "Reference",
+        "text": "Iterable"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ">"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "releaseTag": "Public",
+      "name": "ObservableInput",
+      "typeParameters": [{
+        "typeParameterName": "T",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        }
+      }],
+      "typeTokenRange": {
+        "startIndex": 5,
+        "endIndex": 17
+      }
+    }, {
+      "kind": "TypeAlias",
+      "docComment": "/**\n * @deprecated\n *\n * use {@link InteropObservable}\n */\n",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare type "
+      }, {
+        "kind": "Reference",
+        "text": "ObservableLike"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> = "
+      }, {
+        "kind": "Reference",
+        "text": "InteropObservable"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ">"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "releaseTag": "Public",
+      "name": "ObservableLike",
+      "typeParameters": [{
+        "typeParameterName": "T",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        }
+      }],
+      "typeTokenRange": {
+        "startIndex": 5,
+        "endIndex": 9
+      }
+    }, {
+      "kind": "TypeAlias",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare type "
+      }, {
+        "kind": "Reference",
+        "text": "ObservedValueOf"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "O"
+      }, {
+        "kind": "Content",
+        "text": "> = "
+      }, {
+        "kind": "Reference",
+        "text": "O"
+      }, {
+        "kind": "Content",
+        "text": " extends "
+      }, {
+        "kind": "Reference",
+        "text": "ObservableInput"
+      }, {
+        "kind": "Content",
+        "text": "<infer "
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> ? "
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": " : never"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "releaseTag": "Public",
+      "name": "ObservedValueOf",
+      "typeParameters": [{
+        "typeParameterName": "O",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        }
+      }],
+      "typeTokenRange": {
+        "startIndex": 5,
+        "endIndex": 13
+      }
+    }, {
+      "kind": "TypeAlias",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare type "
+      }, {
+        "kind": "Reference",
+        "text": "ObservedValuesFromArray"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "X"
+      }, {
+        "kind": "Content",
+        "text": "> = "
+      }, {
+        "kind": "Reference",
+        "text": "X"
+      }, {
+        "kind": "Content",
+        "text": " extends "
+      }, {
+        "kind": "Reference",
+        "text": "Array"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "ObservableInput"
+      }, {
+        "kind": "Content",
+        "text": "<infer "
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ">> ? "
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": " : never"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "releaseTag": "Public",
+      "name": "ObservedValuesFromArray",
+      "typeParameters": [{
+        "typeParameterName": "X",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        }
+      }],
+      "typeTokenRange": {
+        "startIndex": 5,
+        "endIndex": 15
+      }
+    }, {
+      "kind": "Interface",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export interface "
+      }, {
+        "kind": "Reference",
+        "text": "Observer"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> "
+      }],
+      "releaseTag": "Public",
+      "typeParameters": [{
+        "typeParameterName": "T",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        }
+      }],
+      "name": "Observer",
+      "members": [{
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "closed"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Content",
+          "text": "boolean"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "closed",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 3
+        }
+      }, {
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "complete"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Content",
+          "text": "() => void"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "complete",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 3
+        }
+      }, {
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "error"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "err"
+        }, {
+          "kind": "Content",
+          "text": ": any) => void"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "error",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 5
+        }
+      }, {
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "next"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "value"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Reference",
+          "text": "T"
+        }, {
+          "kind": "Content",
+          "text": ") => void"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "next",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 7
+        }
+      }],
+      "extendsTokenRanges": []
+    }, {
+      "kind": "Interface",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export interface "
+      }, {
+        "kind": "Reference",
+        "text": "OperatorFunction"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ", "
+      }, {
+        "kind": "Reference",
+        "text": "R"
+      }, {
+        "kind": "Content",
+        "text": "> extends "
+      }, {
+        "kind": "Reference",
+        "text": "UnaryFunction"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "Observable"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ">, "
+      }, {
+        "kind": "Reference",
+        "text": "Observable"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "R"
+      }, {
+        "kind": "Content",
+        "text": ">> "
+      }],
+      "releaseTag": "Public",
+      "typeParameters": [{
+        "typeParameterName": "T",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        }
+      }, {
+        "typeParameterName": "R",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        }
+      }],
+      "name": "OperatorFunction",
+      "members": [],
+      "extendsTokenRanges": [{
+        "startIndex": 7,
+        "endIndex": 17
+      }]
+    }, {
+      "kind": "TypeAlias",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare type "
+      }, {
+        "kind": "Reference",
+        "text": "PartialObserver"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> = "
+      }, {
+        "kind": "Reference",
+        "text": "NextObserver"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> | "
+      }, {
+        "kind": "Reference",
+        "text": "ErrorObserver"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> | "
+      }, {
+        "kind": "Reference",
+        "text": "CompletionObserver"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ">"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "releaseTag": "Public",
+      "name": "PartialObserver",
+      "typeParameters": [{
+        "typeParameterName": "T",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        }
+      }],
+      "typeTokenRange": {
+        "startIndex": 5,
+        "endIndex": 17
+      }
+    }, {
+      "kind": "Interface",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export interface "
+      }, {
+        "kind": "Reference",
+        "text": "SchedulerAction"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> extends "
+      }, {
+        "kind": "Reference",
+        "text": "Subscription"
+      }, {
+        "kind": "Content",
+        "text": " "
+      }],
+      "releaseTag": "Public",
+      "typeParameters": [{
+        "typeParameterName": "T",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        }
+      }],
+      "name": "SchedulerAction",
+      "members": [{
+        "kind": "MethodSignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "schedule"
+        }, {
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "state"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Reference",
+          "text": "T"
+        }, {
+          "kind": "Content",
+          "text": ", "
+        }, {
+          "kind": "Reference",
+          "text": "delay"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Content",
+          "text": "number"
+        }, {
+          "kind": "Content",
+          "text": "): "
+        }, {
+          "kind": "Reference",
+          "text": "Subscription"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "returnTypeTokenRange": {
+          "startIndex": 10,
+          "endIndex": 11
+        },
+        "releaseTag": "Public",
+        "overloadIndex": 0,
+        "parameters": [{
+          "parameterName": "state",
+          "parameterTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 5
+          }
+        }, {
+          "parameterName": "delay",
+          "parameterTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 9
+          }
+        }],
+        "name": "schedule"
+      }],
+      "extendsTokenRanges": [{
+        "startIndex": 5,
+        "endIndex": 7
+      }]
+    }, {
+      "kind": "Interface",
+      "docComment": "/**\n * SCHEDULER INTERFACES\n */\n",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export interface "
+      }, {
+        "kind": "Reference",
+        "text": "SchedulerLike"
+      }, {
+        "kind": "Content",
+        "text": " "
+      }],
+      "releaseTag": "Public",
+      "name": "SchedulerLike",
+      "members": [{
+        "kind": "MethodSignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "now"
+        }, {
+          "kind": "Content",
+          "text": "(): "
+        }, {
+          "kind": "Content",
+          "text": "number"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "returnTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 3
+        },
+        "releaseTag": "Public",
+        "overloadIndex": 0,
+        "parameters": [],
+        "name": "now"
+      }, {
+        "kind": "MethodSignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "schedule"
+        }, {
+          "kind": "Content",
+          "text": "<"
+        }, {
+          "kind": "Reference",
+          "text": "T"
+        }, {
+          "kind": "Content",
+          "text": ">("
+        }, {
+          "kind": "Reference",
+          "text": "work"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "this"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Reference",
+          "text": "SchedulerAction"
+        }, {
+          "kind": "Content",
+          "text": "<"
+        }, {
+          "kind": "Reference",
+          "text": "T"
+        }, {
+          "kind": "Content",
+          "text": ">, "
+        }, {
+          "kind": "Reference",
+          "text": "state"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Reference",
+          "text": "T"
+        }, {
+          "kind": "Content",
+          "text": ") => void"
+        }, {
+          "kind": "Content",
+          "text": ", "
+        }, {
+          "kind": "Reference",
+          "text": "delay"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Content",
+          "text": "number"
+        }, {
+          "kind": "Content",
+          "text": ", "
+        }, {
+          "kind": "Reference",
+          "text": "state"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Reference",
+          "text": "T"
+        }, {
+          "kind": "Content",
+          "text": "): "
+        }, {
+          "kind": "Reference",
+          "text": "Subscription"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "returnTypeTokenRange": {
+          "startIndex": 26,
+          "endIndex": 27
+        },
+        "releaseTag": "Public",
+        "overloadIndex": 0,
+        "parameters": [{
+          "parameterName": "work",
+          "parameterTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 17
+          }
+        }, {
+          "parameterName": "delay",
+          "parameterTypeTokenRange": {
+            "startIndex": 20,
+            "endIndex": 21
+          }
+        }, {
+          "parameterName": "state",
+          "parameterTypeTokenRange": {
+            "startIndex": 24,
+            "endIndex": 25
+          }
+        }],
+        "typeParameters": [{
+          "typeParameterName": "T",
+          "constraintTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          },
+          "defaultTypeTokenRange": {
+            "startIndex": 0,
+            "endIndex": 0
+          }
+        }],
+        "name": "schedule"
+      }],
+      "extendsTokenRanges": []
+    }, {
+      "kind": "Interface",
+      "docComment": "/**\n * OBSERVABLE INTERFACES\n */\n",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export interface "
+      }, {
+        "kind": "Reference",
+        "text": "Subscribable"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> "
+      }],
+      "releaseTag": "Public",
+      "typeParameters": [{
+        "typeParameterName": "T",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        }
+      }],
+      "name": "Subscribable",
+      "members": [{
+        "kind": "MethodSignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "subscribe"
+        }, {
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "observer"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Reference",
+          "text": "PartialObserver"
+        }, {
+          "kind": "Content",
+          "text": "<"
+        }, {
+          "kind": "Reference",
+          "text": "T"
+        }, {
+          "kind": "Content",
+          "text": ">"
+        }, {
+          "kind": "Content",
+          "text": "): "
+        }, {
+          "kind": "Reference",
+          "text": "Unsubscribable"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "returnTypeTokenRange": {
+          "startIndex": 9,
+          "endIndex": 10
+        },
+        "releaseTag": "Public",
+        "overloadIndex": 1,
+        "parameters": [{
+          "parameterName": "observer",
+          "parameterTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 8
+          }
+        }],
+        "name": "subscribe"
+      }, {
+        "kind": "MethodSignature",
+        "docComment": "/**\n * @deprecated\n *\n * Use an observer instead of a complete callback\n */\n",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "subscribe"
+        }, {
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "next"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Content",
+          "text": "null | undefined"
+        }, {
+          "kind": "Content",
+          "text": ", "
+        }, {
+          "kind": "Reference",
+          "text": "error"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Content",
+          "text": "null | undefined"
+        }, {
+          "kind": "Content",
+          "text": ", "
+        }, {
+          "kind": "Reference",
+          "text": "complete"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Content",
+          "text": "() => void"
+        }, {
+          "kind": "Content",
+          "text": "): "
+        }, {
+          "kind": "Reference",
+          "text": "Unsubscribable"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "returnTypeTokenRange": {
+          "startIndex": 14,
+          "endIndex": 15
+        },
+        "releaseTag": "Public",
+        "overloadIndex": 2,
+        "parameters": [{
+          "parameterName": "next",
+          "parameterTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 5
+          }
+        }, {
+          "parameterName": "error",
+          "parameterTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 9
+          }
+        }, {
+          "parameterName": "complete",
+          "parameterTypeTokenRange": {
+            "startIndex": 12,
+            "endIndex": 13
+          }
+        }],
+        "name": "subscribe"
+      }, {
+        "kind": "MethodSignature",
+        "docComment": "/**\n * @deprecated\n *\n * Use an observer instead of an error callback\n */\n",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "subscribe"
+        }, {
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "next"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Content",
+          "text": "null | undefined"
+        }, {
+          "kind": "Content",
+          "text": ", "
+        }, {
+          "kind": "Reference",
+          "text": "error"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "error"
+        }, {
+          "kind": "Content",
+          "text": ": any) => void"
+        }, {
+          "kind": "Content",
+          "text": ", "
+        }, {
+          "kind": "Reference",
+          "text": "complete"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Content",
+          "text": "() => void"
+        }, {
+          "kind": "Content",
+          "text": "): "
+        }, {
+          "kind": "Reference",
+          "text": "Unsubscribable"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "returnTypeTokenRange": {
+          "startIndex": 16,
+          "endIndex": 17
+        },
+        "releaseTag": "Public",
+        "overloadIndex": 3,
+        "parameters": [{
+          "parameterName": "next",
+          "parameterTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 5
+          }
+        }, {
+          "parameterName": "error",
+          "parameterTypeTokenRange": {
+            "startIndex": 8,
+            "endIndex": 11
+          }
+        }, {
+          "parameterName": "complete",
+          "parameterTypeTokenRange": {
+            "startIndex": 14,
+            "endIndex": 15
+          }
+        }],
+        "name": "subscribe"
+      }, {
+        "kind": "MethodSignature",
+        "docComment": "/**\n * @deprecated\n *\n * Use an observer instead of a complete callback\n */\n",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "subscribe"
+        }, {
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "next"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "value"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Reference",
+          "text": "T"
+        }, {
+          "kind": "Content",
+          "text": ") => void"
+        }, {
+          "kind": "Content",
+          "text": ", "
+        }, {
+          "kind": "Reference",
+          "text": "error"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Content",
+          "text": "null | undefined"
+        }, {
+          "kind": "Content",
+          "text": ", "
+        }, {
+          "kind": "Reference",
+          "text": "complete"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Content",
+          "text": "() => void"
+        }, {
+          "kind": "Content",
+          "text": "): "
+        }, {
+          "kind": "Reference",
+          "text": "Unsubscribable"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "returnTypeTokenRange": {
+          "startIndex": 18,
+          "endIndex": 19
+        },
+        "releaseTag": "Public",
+        "overloadIndex": 4,
+        "parameters": [{
+          "parameterName": "next",
+          "parameterTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 9
+          }
+        }, {
+          "parameterName": "error",
+          "parameterTypeTokenRange": {
+            "startIndex": 12,
+            "endIndex": 13
+          }
+        }, {
+          "parameterName": "complete",
+          "parameterTypeTokenRange": {
+            "startIndex": 16,
+            "endIndex": 17
+          }
+        }],
+        "name": "subscribe"
+      }, {
+        "kind": "MethodSignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "subscribe"
+        }, {
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "next"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "value"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Reference",
+          "text": "T"
+        }, {
+          "kind": "Content",
+          "text": ") => void"
+        }, {
+          "kind": "Content",
+          "text": ", "
+        }, {
+          "kind": "Reference",
+          "text": "error"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "error"
+        }, {
+          "kind": "Content",
+          "text": ": any) => void"
+        }, {
+          "kind": "Content",
+          "text": ", "
+        }, {
+          "kind": "Reference",
+          "text": "complete"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Content",
+          "text": "() => void"
+        }, {
+          "kind": "Content",
+          "text": "): "
+        }, {
+          "kind": "Reference",
+          "text": "Unsubscribable"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "returnTypeTokenRange": {
+          "startIndex": 20,
+          "endIndex": 21
+        },
+        "releaseTag": "Public",
+        "overloadIndex": 5,
+        "parameters": [{
+          "parameterName": "next",
+          "parameterTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 9
+          }
+        }, {
+          "parameterName": "error",
+          "parameterTypeTokenRange": {
+            "startIndex": 12,
+            "endIndex": 15
+          }
+        }, {
+          "parameterName": "complete",
+          "parameterTypeTokenRange": {
+            "startIndex": 18,
+            "endIndex": 19
+          }
+        }],
+        "name": "subscribe"
+      }],
+      "extendsTokenRanges": []
+    }, {
+      "kind": "TypeAlias",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare type "
+      }, {
+        "kind": "Reference",
+        "text": "SubscribableOrPromise"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> = "
+      }, {
+        "kind": "Reference",
+        "text": "Subscribable"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> | "
+      }, {
+        "kind": "Reference",
+        "text": "Subscribable"
+      }, {
+        "kind": "Content",
+        "text": "<never> | "
+      }, {
+        "kind": "Reference",
+        "text": "PromiseLike"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> | "
+      }, {
+        "kind": "Reference",
+        "text": "InteropObservable"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ">"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "releaseTag": "Public",
+      "name": "SubscribableOrPromise",
+      "typeParameters": [{
+        "typeParameterName": "T",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        }
+      }],
+      "typeTokenRange": {
+        "startIndex": 5,
+        "endIndex": 19
+      }
+    }, {
+      "kind": "Interface",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export interface "
+      }, {
+        "kind": "Reference",
+        "text": "SubscriptionLike"
+      }, {
+        "kind": "Content",
+        "text": " extends "
+      }, {
+        "kind": "Reference",
+        "text": "Unsubscribable"
+      }, {
+        "kind": "Content",
+        "text": " "
+      }],
+      "releaseTag": "Public",
+      "name": "SubscriptionLike",
+      "members": [{
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Content",
+          "text": "readonly "
+        }, {
+          "kind": "Reference",
+          "text": "closed"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Content",
+          "text": "boolean"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "closed",
+        "propertyTypeTokenRange": {
+          "startIndex": 3,
+          "endIndex": 4
+        }
+      }, {
+        "kind": "MethodSignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "unsubscribe"
+        }, {
+          "kind": "Content",
+          "text": "(): "
+        }, {
+          "kind": "Content",
+          "text": "void"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "returnTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 3
+        },
+        "releaseTag": "Public",
+        "overloadIndex": 0,
+        "parameters": [],
+        "name": "unsubscribe"
+      }],
+      "extendsTokenRanges": [{
+        "startIndex": 3,
+        "endIndex": 5
+      }]
+    }, {
+      "kind": "TypeAlias",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare type "
+      }, {
+        "kind": "Reference",
+        "text": "TeardownLogic"
+      }, {
+        "kind": "Content",
+        "text": " = "
+      }, {
+        "kind": "Reference",
+        "text": "Unsubscribable"
+      }, {
+        "kind": "Content",
+        "text": " | "
+      }, {
+        "kind": "Reference",
+        "text": "Function"
+      }, {
+        "kind": "Content",
+        "text": " | void"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "releaseTag": "Public",
+      "name": "TeardownLogic",
+      "typeTokenRange": {
+        "startIndex": 3,
+        "endIndex": 7
+      }
+    }, {
+      "kind": "Interface",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export interface "
+      }, {
+        "kind": "Reference",
+        "text": "TimeInterval"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> "
+      }],
+      "releaseTag": "Public",
+      "typeParameters": [{
+        "typeParameterName": "T",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        }
+      }],
+      "name": "TimeInterval",
+      "members": [{
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "interval"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Content",
+          "text": "number"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "interval",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 3
+        }
+      }, {
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "value"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Reference",
+          "text": "T"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "value",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 3
+        }
+      }],
+      "extendsTokenRanges": []
+    }, {
+      "kind": "Interface",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export interface "
+      }, {
+        "kind": "Reference",
+        "text": "Timestamp"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "> "
+      }],
+      "releaseTag": "Public",
+      "typeParameters": [{
+        "typeParameterName": "T",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        }
+      }],
+      "name": "Timestamp",
+      "members": [{
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "timestamp"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Content",
+          "text": "number"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "timestamp",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 3
+        }
+      }, {
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "value"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Reference",
+          "text": "T"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "value",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 3
+        }
+      }],
+      "extendsTokenRanges": []
+    }, {
+      "kind": "Interface",
+      "docComment": "/**\n * OPERATOR INTERFACES\n */\n",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export interface "
+      }, {
+        "kind": "Reference",
+        "text": "UnaryFunction"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ", "
+      }, {
+        "kind": "Reference",
+        "text": "R"
+      }, {
+        "kind": "Content",
+        "text": "> "
+      }],
+      "releaseTag": "Public",
+      "typeParameters": [{
+        "typeParameterName": "T",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        }
+      }, {
+        "typeParameterName": "R",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        }
+      }],
+      "name": "UnaryFunction",
+      "members": [{
+        "kind": "CallSignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "source"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Reference",
+          "text": "T"
+        }, {
+          "kind": "Content",
+          "text": "): "
+        }, {
+          "kind": "Reference",
+          "text": "R"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "returnTypeTokenRange": {
+          "startIndex": 5,
+          "endIndex": 6
+        },
+        "releaseTag": "Public",
+        "overloadIndex": 0,
+        "parameters": [{
+          "parameterName": "source",
+          "parameterTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          }
+        }]
+      }],
+      "extendsTokenRanges": []
+    }, {
+      "kind": "Interface",
+      "docComment": "/**\n * SUBSCRIPTION INTERFACES\n */\n",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export interface "
+      }, {
+        "kind": "Reference",
+        "text": "Unsubscribable"
+      }, {
+        "kind": "Content",
+        "text": " "
+      }],
+      "releaseTag": "Public",
+      "name": "Unsubscribable",
+      "members": [{
+        "kind": "MethodSignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "unsubscribe"
+        }, {
+          "kind": "Content",
+          "text": "(): "
+        }, {
+          "kind": "Content",
+          "text": "void"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "returnTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 3
+        },
+        "releaseTag": "Public",
+        "overloadIndex": 0,
+        "parameters": [],
+        "name": "unsubscribe"
+      }],
+      "extendsTokenRanges": []
+    }]
+  }]
+}

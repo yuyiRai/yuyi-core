@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { DragUpload, ExaManagerRoute, Index } from '../views';
+import { DragUpload, ExaManagerRoute, Index, DemoRoute } from '../views';
 import { IRouteConfig } from './index';
 
 export const Routes: IRouteConfig[] = [
@@ -20,6 +20,11 @@ export const Routes: IRouteConfig[] = [
         component: DragUpload
       }
     ]
+  },
+  {
+    title: 'Demo',
+    path: '/demo',
+    component: DemoRoute
   },
   {
     title: 'DragUpload',

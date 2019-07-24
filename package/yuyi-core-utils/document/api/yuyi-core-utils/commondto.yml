@@ -1,0 +1,326 @@
+### YamlMime:UniversalReference
+items:
+  - uid: yuyi-core-utils.CommonDto
+    name: CommonDto
+    fullName: CommonDto
+    langs:
+      - typeScript
+    type: class
+    package: yuyi-core-utils
+    children:
+      - yuyi-core-utils.CommonDto.(constructor)
+      - yuyi-core-utils.CommonDto.$$___instance
+      - yuyi-core-utils.CommonDto.$$___source_dto
+      - yuyi-core-utils.CommonDto.clone
+      - yuyi-core-utils.CommonDto.createComputed
+      - yuyi-core-utils.CommonDto.equals
+      - yuyi-core-utils.CommonDto.export
+      - yuyi-core-utils.CommonDto.get
+      - yuyi-core-utils.CommonDto.getAndCreateDeepPropertyByStr
+      - yuyi-core-utils.CommonDto.getComputed
+      - yuyi-core-utils.CommonDto.getPropertyByStr
+      - yuyi-core-utils.CommonDto.hasComputed
+      - yuyi-core-utils.CommonDto.set
+      - yuyi-core-utils.CommonDto.setLastValue
+      - yuyi-core-utils.CommonDto.setPropertyByStr
+      - yuyi-core-utils.CommonDto.setSafeComputed
+  - uid: yuyi-core-utils.CommonDto.(constructor)
+    summary: sourceDto
+    name: (constructor)(dto)
+    fullName: (constructor)(dto)
+    langs:
+      - typeScript
+    type: constructor
+    syntax:
+      content: 'constructor(dto: T);'
+      parameters:
+        - id: dto
+          description: ''
+          type:
+            - T
+  - uid: yuyi-core-utils.CommonDto.$$___instance
+    name: $$___instance
+    fullName: $$___instance
+    langs:
+      - typeScript
+    type: property
+    syntax:
+      content: |-
+        protected $$___instance: {
+                dto: T;
+            };
+      return:
+        type:
+          - |-
+            {
+                    dto: T;
+                }
+  - uid: yuyi-core-utils.CommonDto.$$___source_dto
+    name: $$___source_dto
+    fullName: $$___source_dto
+    langs:
+      - typeScript
+    type: property
+    syntax:
+      content: 'protected $$___source_dto: T;'
+      return:
+        type:
+          - T
+  - uid: yuyi-core-utils.CommonDto.clone
+    name: clone()
+    fullName: clone()
+    langs:
+      - typeScript
+    type: method
+    syntax:
+      content: 'clone(): T;'
+      return:
+        type:
+          - T
+        description: ''
+  - uid: yuyi-core-utils.CommonDto.createComputed
+    summary: 创建缓存，使用安全方法
+    name: createComputed(keyName)
+    fullName: createComputed(keyName)
+    langs:
+      - typeScript
+    type: method
+    syntax:
+      content: |-
+        createComputed(keyName: string): this & {
+                [x: string]: any;
+            };
+      return:
+        type:
+          - |-
+            this & {
+                    [x: string]: any;
+                }
+        description: ''
+      parameters:
+        - id: keyName
+          description: ''
+          type:
+            - string
+  - uid: yuyi-core-utils.CommonDto.equals
+    name: 'equals(dto, deep)'
+    fullName: 'equals(dto, deep)'
+    langs:
+      - typeScript
+    type: method
+    syntax:
+      content: 'equals(dto: T, deep?: boolean): boolean;'
+      return:
+        type:
+          - boolean
+        description: ''
+      parameters:
+        - id: dto
+          description: ''
+          type:
+            - T
+        - id: deep
+          description: ''
+          type:
+            - boolean
+  - uid: yuyi-core-utils.CommonDto.export
+    name: export()
+    fullName: export()
+    langs:
+      - typeScript
+    type: method
+    syntax:
+      content: 'export(): T;'
+      return:
+        type:
+          - T
+        description: ''
+  - uid: yuyi-core-utils.CommonDto.get
+    summary: get value by key
+    name: 'get(keyNameStr, defaultValue, useCreater)'
+    fullName: 'get(keyNameStr, defaultValue, useCreater)'
+    langs:
+      - typeScript
+    type: method
+    syntax:
+      content: 'get(keyNameStr: string, defaultValue?: any, useCreater?: boolean): string | number | boolean | object;'
+      return:
+        type:
+          - string | number | boolean | object
+        description: ''
+      parameters:
+        - id: keyNameStr
+          description: ''
+          type:
+            - string
+        - id: defaultValue
+          description: ''
+          type:
+            - any
+        - id: useCreater
+          description: ''
+          type:
+            - boolean
+  - uid: yuyi-core-utils.CommonDto.getAndCreateDeepPropertyByStr
+    name: 'getAndCreateDeepPropertyByStr(keyStr, defaultValue)'
+    fullName: 'getAndCreateDeepPropertyByStr(keyStr, defaultValue)'
+    langs:
+      - typeScript
+    type: method
+    syntax:
+      content: 'getAndCreateDeepPropertyByStr(keyStr: string, defaultValue: any): any;'
+      return:
+        type:
+          - any
+        description: ''
+      parameters:
+        - id: keyStr
+          description: ''
+          type:
+            - string
+        - id: defaultValue
+          description: ''
+          type:
+            - any
+  - uid: yuyi-core-utils.CommonDto.getComputed
+    name: getComputed
+    fullName: getComputed
+    langs:
+      - typeScript
+    type: property
+    syntax:
+      content: 'getComputed: (keyName: string) => any;'
+      return:
+        type:
+          - '(keyName: string) => any'
+  - uid: yuyi-core-utils.CommonDto.getPropertyByStr
+    summary: 根据字符串解析指针，如果没有值或解析不正确则返回undefined
+    name: 'getPropertyByStr(keyName, defaultValue)'
+    fullName: 'getPropertyByStr(keyName, defaultValue)'
+    langs:
+      - typeScript
+    type: method
+    syntax:
+      content: 'getPropertyByStr(keyName: string, defaultValue: any): any;'
+      return:
+        type:
+          - any
+        description: ''
+      parameters:
+        - id: keyName
+          description: ''
+          type:
+            - string
+        - id: defaultValue
+          description: ''
+          type:
+            - any
+  - uid: yuyi-core-utils.CommonDto.hasComputed
+    summary: 是否已创建缓存
+    name: hasComputed(keyName)
+    fullName: hasComputed(keyName)
+    langs:
+      - typeScript
+    type: method
+    syntax:
+      content: 'hasComputed(keyName: string): boolean;'
+      return:
+        type:
+          - boolean
+        description: ''
+      parameters:
+        - id: keyName
+          description: ''
+          type:
+            - string
+  - uid: yuyi-core-utils.CommonDto.set
+    summary: 设置值
+    name: 'set(keyName, value, isSafe)'
+    fullName: 'set(keyName, value, isSafe)'
+    langs:
+      - typeScript
+    type: method
+    syntax:
+      content: 'set(keyName: string, value?: any, isSafe?: boolean): boolean;'
+      return:
+        type:
+          - boolean
+        description: ''
+      parameters:
+        - id: keyName
+          description: ''
+          type:
+            - string
+        - id: value
+          description: ''
+          type:
+            - any
+        - id: isSafe
+          description: ''
+          type:
+            - boolean
+  - uid: yuyi-core-utils.CommonDto.setLastValue
+    name: 'setLastValue(keyName, value)'
+    fullName: 'setLastValue(keyName, value)'
+    langs:
+      - typeScript
+    type: method
+    syntax:
+      content: 'setLastValue(keyName: string, value: any): boolean;'
+      return:
+        type:
+          - boolean
+        description: ''
+      parameters:
+        - id: keyName
+          description: ''
+          type:
+            - string
+        - id: value
+          description: ''
+          type:
+            - any
+  - uid: yuyi-core-utils.CommonDto.setPropertyByStr
+    name: 'setPropertyByStr(keyName, value)'
+    fullName: 'setPropertyByStr(keyName, value)'
+    langs:
+      - typeScript
+    type: method
+    syntax:
+      content: 'setPropertyByStr(keyName: string, value: any): boolean;'
+      return:
+        type:
+          - boolean
+        description: ''
+      parameters:
+        - id: keyName
+          description: ''
+          type:
+            - string
+        - id: value
+          description: ''
+          type:
+            - any
+  - uid: yuyi-core-utils.CommonDto.setSafeComputed
+    name: setSafeComputed(keyName)
+    fullName: setSafeComputed(keyName)
+    langs:
+      - typeScript
+    type: method
+    syntax:
+      content: |-
+        setSafeComputed(keyName: string): this & {
+                [x: string]: any;
+            };
+      return:
+        type:
+          - |-
+            this & {
+                    [x: string]: any;
+                }
+        description: ''
+      parameters:
+        - id: keyName
+          description: ''
+          type:
+            - string

@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Icon, Menu } from 'antd';
 import { Utils } from 'yuyi-core-utils'
 import { MenuProps, ClickParam } from 'antd/lib/menu';
-import { Observer, useObserver } from 'mobx-react-lite';
+import { Observer, useObserver, observer } from 'yuyi-core-night';
 import { NavLink, NavLinkProps } from 'react-router-dom';
 import { IRouteConfig } from '../../route';
 import { layoutStoreContext } from './LayoutStore';
@@ -47,16 +47,16 @@ export const AntMenuNavLink = styled(NavLink)`
 export const useAntMenuNavLink = (isSubmenu: boolean): [(param: ClickParam) => void, React.Ref<HTMLAnchorElement>] => {
   const [linkRef, innerRef] = React.useState(null)
   const ref: any = React.useRef()
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     ref.current = linkRef
   })
   const click = React.useCallback((e: ClickParam) => {
     !isSubmenu && ref.current.click()
-  }, [ref])
+  }, [ref, isSubmenu])
   return [click as any, innerRef]
 }
 
-const MenuChild: React.FunctionComponent<IMenuChildProps> = React.memo(
+const MenuChild: React.FunctionComponent<IMenuChildProps> = observer(
   ({ item, index, parentKey = 'root', ...props }) => {
     const { key = item.path, icon, path, mode, title, component, children, ...other } = item;
     const hasChildren = Utils.isArrayLike(item.children)
@@ -72,8 +72,8 @@ const MenuChild: React.FunctionComponent<IMenuChildProps> = React.memo(
       return match !== null && (
         (!hasChildren && match.url === location.pathname) || hasChildren
       );
-    }), [item]);
-    const context = React.useMemo(() => {
+    }), [hasChildren]);
+    const context = useObserver(() => {
       const linkprops = {
         className: "nav-text"
       }
@@ -94,7 +94,7 @@ const MenuChild: React.FunctionComponent<IMenuChildProps> = React.memo(
           )}</Observer>
         </>
       )
-    }, [item]);
+    });
     return (
       isSubmenu ?
         <QueueAnim

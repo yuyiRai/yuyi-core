@@ -2,9 +2,10 @@
  * @module PropertyUtils
  */
 import { autobind } from 'core-decorators';
-import { last } from 'lodash';
+import { last, cloneDeep, isString, isBoolean, isFunction, isArray, isNumber, isNil } from '../LodashExtra';
 import { action, computed, extendObservable, observable, reaction, runInAction, ObservableMap, isComputed, getDebugName } from 'mobx';
-import { Utils } from '../Utils';
+import { typeFilterUtils } from '@/TypeLib';
+import { createSimpleTimeBufferInput } from '@/TimeBuffer';
 
 export class AsyncLoadProperty<V = any> {
   @observable.ref type: any;
@@ -45,7 +46,7 @@ export class AsyncLoadProperty<V = any> {
     return this.currentValue
   }
 
-  @action.bound reset(nextDefaultValue: V, force?: boolean) {
+  @action reset(nextDefaultValue: V, force?: boolean) {
     if (this.isTypedValue(nextDefaultValue)) {
       this.defaultValue = nextDefaultValue
       this.currentValue = this.defaultValue
@@ -56,7 +57,8 @@ export class AsyncLoadProperty<V = any> {
     return this;
   }
 
-  @action.bound async updateValue(nextValue: V) {
+  @action async updateValue(nextValue: V) {
+    // tslint:disable-next-line: await-promise
     const value = await nextValue
     console.log('update value', value, this.currentValue)
     if (this.isTypedValue(value)) {
@@ -67,15 +69,17 @@ export class AsyncLoadProperty<V = any> {
       this.loadingEnd()
     }
   }
-  @action.bound registerGetter(getter: any) {
-    this.getterFunc = Utils.isFunctionFilter(getter, this.getterFunc);
+  @action registerGetter(getter: any) {
+    this.getterFunc = typeFilterUtils.isFunctionFilter(getter, this.getterFunc);
   }
   @computed.struct get valueGetter() {
     if (this.timeBuffer > 0) {
-      const emitter = Utils.createSimpleTimeBufferInput((resList) => {
+      const emitter = createSimpleTimeBufferInput((resList) => {
+        // tslint:disable-next-line: no-floating-promises
         this.updateValue(this.getterFunc(last(resList)))
       }, this, this.timeBuffer, true)
       return action((param) => {
+        // tslint:disable-next-line: no-floating-promises
         runInAction(async () => {
           this.loadingStart()
           return emitter(param)
@@ -85,32 +89,35 @@ export class AsyncLoadProperty<V = any> {
     return action((param) => {
       runInAction(() => {
         this.loadingStart()
+        // tslint:disable-next-line: no-floating-promises
         this.updateValue(this.getterFunc(param))
       })
     })
   }
 
-  @action.bound loadingStart() {
-    if (!this.loading)
+  @action loadingStart() {
+    if (!this.loading) {
       this.loading = true
+    }
   }
-  @action.bound loadingEnd() {
-    if (this.loading)
+  @action loadingEnd() {
+    if (this.loading) {
       this.loading = false
+    }
   }
 
   @autobind isTypedValue(value: any) {
     if (value == null) {
       return true
-    } else if (Utils.isFunction(this.type)) {
+    } else if (isFunction(this.type)) {
       return this.type(value)
     } else {
       const { type } = this
       switch (type) {
-        case String: return Utils.isString(value)
-        case Boolean: return Utils.isBoolean(value)
-        case Array: return Utils.isArray(value)
-        case Number: return Utils.isNumber(value)
+        case String: return isString(value)
+        case Boolean: return isBoolean(value)
+        case Array: return isArray(value)
+        case Number: return isNumber(value)
         default: return value instanceof type
       }
     }
@@ -143,7 +150,7 @@ function createInstance<V>(nextValue: V, asyncName: string, config: AsyncLoadPro
 }
 export type AsyncComputedConfig<V> = { type: any, defaultValue: V, watcher: any, time: number }
 /**
- * @return { PropertyDecorator }
+ * @returns { PropertyDecorator }
  */
 export function asyncComputed<V = any>({ type, defaultValue, watcher, time }: AsyncComputedConfig<V>): PropertyDecorator {
   /**
@@ -156,10 +163,10 @@ export function asyncComputed<V = any>({ type, defaultValue, watcher, time }: As
     const asyncName = getAsyncPropertyName(propertyName)
     const { get: getter } = descriptor
     if (getter) {
-      descriptor.get = function(): V | AsyncProperty<V> {
+      descriptor.get = function (): V | AsyncProperty<V> {
         let sourceInstance = this;
         console.log('getter', this, isComputed(this))
-        if(!this[asyncPropertyMapKey]) {
+        if (!this[asyncPropertyMapKey]) {
           const map = new Map<string, AsyncLoadProperty>()
           extendObservable(this, { get [asyncPropertyMapKey]() { return map } })
         }
@@ -168,8 +175,8 @@ export function asyncComputed<V = any>({ type, defaultValue, watcher, time }: As
         if (!this[asyncName]) {
           const asyncConfig = new AsyncLoadProperty<V>(type, () => Reflect.apply(getter, sourceInstance, []), defaultValue, time)
           extendObservable(this, { get [asyncName]() { return asyncConfig } })
-          store.set(asyncName, asyncConfig) 
-          if (!Utils.isNil(watcher)) {
+          store.set(asyncName, asyncConfig)
+          if (!isNil(watcher)) {
             reaction(
               () => this[watcher],
               trigger => {
@@ -187,11 +194,11 @@ export function asyncComputed<V = any>({ type, defaultValue, watcher, time }: As
             )
           }
         }
-        
+
         const currentValue = asyncConfig.getValue(this[watcher])
-        if(currentValue === defaultValue) {
+        if (currentValue === defaultValue) {
           console.log('get init value now!')
-          return createInstance<V>(Utils.cloneDeep(currentValue), asyncName, asyncConfig)
+          return createInstance<V>(cloneDeep(currentValue), asyncName, asyncConfig)
         } else {
           console.log('get update value now!')
         }
@@ -206,7 +213,7 @@ export function asyncComputed<V = any>({ type, defaultValue, watcher, time }: As
 export class AsyncPropertyGetter {
   @observable name: string;
   @observable t: any
-  @computed get tt(){
+  @computed get tt() {
     return this.t
   }
   get(t: any, key: string) {
