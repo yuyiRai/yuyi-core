@@ -127,7 +127,7 @@
      * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
      * DEFAULT VALUE: "<projectFolder>/temp/"
      */
-    "reportTempFolder": "<projectFolder>/temp/"
+    "reportTempFolder": "<projectFolder>/etc/temp/"
   },
   /**
    * Configures how the doc model file (*.api.json) will be generated.

@@ -7,7 +7,7 @@
   },
   "kind": "Package",
   "docComment": "/**\n * @author yuyi\n *\n * @packageDocumentation\n */\n",
-  "name": "yuyi-core-utils",
+  "name": "index",
   "members": [{
     "kind": "EntryPoint",
     "name": "",

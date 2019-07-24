@@ -2,28 +2,59 @@ items:
   - name: SharePoint Framework reference
     href: ~/overview/sharepoint.md
     items:
-      - name: yuyi-core-utils
-        uid: yuyi-core-utils
+      - name: index
+        uid: index
         items:
           - name: App
           - name: CommonDto
-            uid: yuyi-core-utils.CommonDto
+            uid: index.CommonDto
           - name: EDateFormatter
-            uid: yuyi-core-utils.EDateFormatter
+            uid: index.EDateFormatter
           - name: EventEmitter
-            uid: yuyi-core-utils.EventEmitter
+            uid: index.EventEmitter
           - name: IOptionsUtils
             items:
               - name: Option
-                uid: yuyi-core-utils.IOptionsUtils.Option
+                uid: index.IOptionsUtils.Option
           - name: IPropertyUtils
-            uid: yuyi-core-utils.IPropertyUtils
+            uid: index.IPropertyUtils
           - name: isEqual
           - name: isNumber
           - name: ITypeFilterUtils
-            uid: yuyi-core-utils.ITypeFilterUtils
+            uid: index.ITypeFilterUtils
           - name: ITypeUtils
-            uid: yuyi-core-utils.ITypeUtils
+            uid: index.ITypeUtils
           - name: OptionsUtils
-            uid: yuyi-core-utils.OptionsUtils
+            uid: index.OptionsUtils
           - name: reduceExtra
+      - name: rxjs
+        uid: rxjs
+        items:
+          - name: CompletionObserver
+            uid: rxjs.CompletionObserver
+          - name: ErrorObserver
+            uid: rxjs.ErrorObserver
+          - name: MonoTypeOperatorFunction
+            uid: rxjs.MonoTypeOperatorFunction
+          - name: NextObserver
+            uid: rxjs.NextObserver
+          - name: Observer
+            uid: rxjs.Observer
+          - name: OperatorFunction
+            uid: rxjs.OperatorFunction
+          - name: SchedulerAction
+            uid: rxjs.SchedulerAction
+          - name: SchedulerLike
+            uid: rxjs.SchedulerLike
+          - name: Subscribable
+            uid: rxjs.Subscribable
+          - name: SubscriptionLike
+            uid: rxjs.SubscriptionLike
+          - name: TimeInterval
+            uid: rxjs.TimeInterval
+          - name: Timestamp
+            uid: rxjs.Timestamp
+          - name: UnaryFunction
+            uid: rxjs.UnaryFunction
+          - name: Unsubscribable
+            uid: rxjs.Unsubscribable

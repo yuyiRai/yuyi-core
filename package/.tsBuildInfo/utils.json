@@ -1750,9 +1750,9 @@
       }
     },
     "options": {
-      "module": 6,
       "declaration": true,
       "declarationDir": "D:/WorkSpace/yuyi-core/package/yuyi-core-utils/types",
+      "allowJs": false,
       "declarationMap": true,
       "outDir": "D:/WorkSpace/yuyi-core/package/yuyi-core-utils/lib",
       "rootDirs": [
@@ -1895,6 +1895,7 @@
       "resolveJsonModule": true,
       "strictNullChecks": false,
       "suppressImplicitAnyIndexErrors": true,
+      "module": 6,
       "target": 1,
       "lib": [
         "lib.es2015.d.ts",
@@ -1905,7 +1906,6 @@
       ],
       "sourceMap": true,
       "strict": false,
-      "allowJs": false,
       "jsx": 2,
       "moduleResolution": 2,
       "experimentalDecorators": true,
@@ -7587,6 +7587,8 @@
       "d:/workspace/yuyi-core/package/yuyi-core-utils/src/commondto/createcommondto.ts",
       "d:/workspace/yuyi-core/package/yuyi-core-utils/src/commondto/getdtoorformvalue.ts",
       "d:/workspace/yuyi-core/package/yuyi-core-utils/src/commondto/index.ts",
+      "d:/workspace/yuyi-core/package/yuyi-core-utils/src/index.ts",
+      "d:/workspace/yuyi-core/package/yuyi-core-utils/src/index.export.ts",
       "d:/workspace/yuyi-core/node_modules/@types/jest-diff/index.d.ts",
       "d:/workspace/yuyi-core/package/yuyi-core-utils/node_modules/@types/jest/index.d.ts",
       "d:/workspace/yuyi-core/package/yuyi-core-utils/node_modules/@types/node/globals.d.ts",
@@ -7701,9 +7703,7 @@
       "d:/workspace/yuyi-core/node_modules/vfile-message/types/index.d.ts",
       "d:/workspace/yuyi-core/node_modules/@types/vfile/index.d.ts",
       "d:/workspace/yuyi-core/node_modules/@types/vfile-message/index.d.ts",
-      "d:/workspace/yuyi-core/node_modules/@types/yargs/index.d.ts",
-      "d:/workspace/yuyi-core/package/yuyi-core-utils/src/index.ts",
-      "d:/workspace/yuyi-core/package/yuyi-core-utils/src/index.export.ts"
+      "d:/workspace/yuyi-core/node_modules/@types/yargs/index.d.ts"
     ]
   },
   "version": "3.5.2"

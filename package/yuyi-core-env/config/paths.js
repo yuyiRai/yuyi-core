@@ -1,3 +1,4 @@
+"use strict";
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -25,23 +26,27 @@ var __read = (this && this.__read) || function (o, n) {
     }
     return ar;
 };
-import fs from 'fs-extra';
-import path from 'path';
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var fs_extra_1 = __importDefault(require("fs-extra"));
+var path_1 = __importDefault(require("path"));
 // Make sure any symlinks in the project folder are resolved:
 // https://github.com/facebook/create-react-app/issues/637
 /**
  * 本项目的目录
  */
-export var envDirectory = path.join(fs.realpathSync(__dirname), '..');
-export var clintDirectory = fs.realpathSync(process.cwd());
-export var resolveProject = function (relativePath) { return path.resolve(envDirectory, relativePath); };
-export var resolveApp = function (relativePath) { return path.resolve(clintDirectory, relativePath); };
-export var envPublicUrl = process.env.PUBLIC_URL;
-export var getPublicUrl = function (clintPackageJson) {
+exports.envDirectory = path_1.default.join(fs_extra_1.default.realpathSync(__dirname), '..');
+exports.clintDirectory = fs_extra_1.default.realpathSync(process.cwd());
+exports.resolveProject = function (relativePath) { return path_1.default.resolve(exports.envDirectory, relativePath); };
+exports.resolveApp = function (relativePath) { return path_1.default.resolve(exports.clintDirectory, relativePath); };
+exports.envPublicUrl = process.env.PUBLIC_URL;
+exports.getPublicUrl = function (clintPackageJson) {
     console.log(clintPackageJson);
-    return envPublicUrl || require(clintPackageJson).homepage;
+    return exports.envPublicUrl || require(clintPackageJson).homepage;
 };
-export var moduleFileExtensions = [
+exports.moduleFileExtensions = [
     'web.mjs',
     'mjs',
     'web.js',
@@ -59,16 +64,16 @@ export var moduleFileExtensions = [
  * @param resolveFn
  * @param filePath
  */
-export var resolveModule = function (resolveFn, filePath) {
-    var extension = moduleFileExtensions.find(function (extension) {
-        return fs.existsSync(resolveFn(filePath + "." + extension));
+exports.resolveModule = function (resolveFn, filePath) {
+    var extension = exports.moduleFileExtensions.find(function (extension) {
+        return fs_extra_1.default.existsSync(resolveFn(filePath + "." + extension));
     });
     if (extension) {
         return resolveFn(filePath + "." + extension);
     }
     return resolveFn(filePath + ".js");
 };
-export var distKeyName = {
+exports.distKeyName = {
     jsDir: 'js',
     cssDir: 'css',
     publicDir: 'static',
@@ -77,42 +82,43 @@ export var distKeyName = {
     entryJsName: 'index.js'
 };
 var pathsBase = {
-    requirePath: resolveProject('./config/run-ts.js'),
-    typedocGulpFile: resolveProject('../yuyi-core-docs/gulpfile.ts'),
-    typedocConfig: resolveProject('../yuyi-core-docs/typedoc.json'),
-    typedocConfigAsync: resolveProject('../yuyi-core-docs/typedoc.ts'),
-    typedocStringTemplate: resolveProject('../yuyi-core-docs/config/stringTemplate.json'),
-    typedocTheme: resolveProject('../yuyi-core-docs/bin/default'),
-    dotenv: resolveApp('.env'),
-    clintPath: resolveApp('.'),
-    clintDist: resolveApp('dist'),
-    clintBuild: resolveApp('build'),
-    clintDepregistry: resolveApp('dist/registry.json'),
-    clintPublic: resolveApp('public'),
-    clintLib: resolveApp('lib'),
-    clintHtml: resolveApp('public/index.html'),
-    clintIndexJs: resolveModule(resolveApp, 'src/index'),
-    clintPackageJson: resolveApp('package.json'),
-    clintSrc: resolveApp('src'),
-    clintTsConfig: resolveProject('tsconfig.json'),
-    clintTsConfigDev: resolveProject('tsconfig.dev.json'),
-    clintNodeModules: resolveApp('node_modules'),
-    publicUrl: getPublicUrl(resolveApp('package.json')),
+    requirePath: exports.resolveProject('./config/run-ts.js'),
+    typedocGulpFile: exports.resolveProject('../yuyi-core-docs/gulpfile.ts'),
+    typedocConfig: exports.resolveProject('../yuyi-core-docs/typedoc.json'),
+    typedocConfigAsync: exports.resolveProject('../yuyi-core-docs/typedoc.ts'),
+    typedocStringTemplate: exports.resolveProject('../yuyi-core-docs/config/stringTemplate.json'),
+    typedocTheme: exports.resolveProject('../yuyi-core-docs/bin/default'),
+    dotenv: exports.resolveApp('.env'),
+    clintPath: exports.resolveApp('.'),
+    clintDist: exports.resolveApp('dist'),
+    clintBuild: exports.resolveApp('build'),
+    clintDepregistry: exports.resolveApp('dist/registry.json'),
+    clintPublic: exports.resolveApp('public'),
+    clintLib: exports.resolveApp('lib'),
+    clintHtml: exports.resolveApp('public/index.html'),
+    clintIndexJs: exports.resolveModule(exports.resolveApp, 'src/index'),
+    clintPackageJson: exports.resolveApp('package.json'),
+    clintSrc: exports.resolveApp('src'),
+    clintTsConfig: exports.resolveProject('tsconfig.json'),
+    clintTsConfigDev: exports.resolveProject('tsconfig.dev.json'),
+    clintNodeModules: exports.resolveApp('node_modules'),
+    publicUrl: exports.getPublicUrl(exports.resolveApp('package.json')),
 };
-export var paths = __assign({}, pathsBase);
-export var pathSearcher = function (dir, suffix) {
+exports.paths = __assign({}, pathsBase);
+exports.pathSearcher = function (dir, suffix) {
     if (suffix === void 0) { suffix = "*"; }
-    return path.join(dir, "**/*." + suffix);
+    return path_1.default.join(dir, "**/*." + suffix);
 };
-export function preventPath(path) {
-    if (!fs.existsSync(path)) {
-        fs.ensureDirSync(path);
+function preventPath(path) {
+    if (!fs_extra_1.default.existsSync(path)) {
+        fs_extra_1.default.ensureDirSync(path);
     }
     return path;
 }
-export var relativePaths = Object.entries(pathsBase).reduce(function (obj, _a) {
+exports.preventPath = preventPath;
+exports.relativePaths = Object.entries(pathsBase).reduce(function (obj, _a) {
     var _b;
     var _c = __read(_a, 2), key = _c[0], value = _c[1];
-    return value ? (__assign({}, obj, (_b = {}, _b[key] = path.relative(process.cwd(), value), _b))) : obj;
+    return value ? (__assign({}, obj, (_b = {}, _b[key] = path_1.default.relative(process.cwd(), value), _b))) : obj;
 }, {});
-export default __assign({}, paths, { clintDistMainHTML: path.join(paths.clintDist, distKeyName.entryHtmlName), clintDistCssDir: path.join(paths.clintDist, distKeyName.cssDir), clintDistScriptsDir: path.join(paths.clintDist, distKeyName.jsDir), clintDistPublicDir: path.join(paths.clintDist, distKeyName.publicDir), clintJsMatcher: pathSearcher(paths.clintLib, 'js'), clintTsMatcher: [pathSearcher(paths.clintSrc, 'ts'), pathSearcher(paths.clintSrc, 'tsx'), "!" + pathSearcher(paths.clintSrc, 'd.ts')], clintDTsMatcher: pathSearcher(paths.clintLib, 'd.ts'), clintCssMatcher: pathSearcher(paths.clintSrc, 'css'), clintSvgMatcher: pathSearcher(paths.clintSrc, 'svg'), clintEntryJs: path.join(paths.clintLib, distKeyName.entryJsName), clintBrowserifyCache: path.join(paths.clintDist, 'browserify-cache.json') });
+exports.default = __assign({}, exports.paths, { clintDistMainHTML: path_1.default.join(exports.paths.clintDist, exports.distKeyName.entryHtmlName), clintDistCssDir: path_1.default.join(exports.paths.clintDist, exports.distKeyName.cssDir), clintDistScriptsDir: path_1.default.join(exports.paths.clintDist, exports.distKeyName.jsDir), clintDistPublicDir: path_1.default.join(exports.paths.clintDist, exports.distKeyName.publicDir), clintJsMatcher: exports.pathSearcher(exports.paths.clintLib, 'js'), clintTsMatcher: [exports.pathSearcher(exports.paths.clintSrc, 'ts'), exports.pathSearcher(exports.paths.clintSrc, 'tsx'), "!" + exports.pathSearcher(exports.paths.clintSrc, 'd.ts')], clintDTsMatcher: exports.pathSearcher(exports.paths.clintLib, 'd.ts'), clintCssMatcher: exports.pathSearcher(exports.paths.clintSrc, 'css'), clintSvgMatcher: exports.pathSearcher(exports.paths.clintSrc, 'svg'), clintEntryJs: path_1.default.join(exports.paths.clintLib, exports.distKeyName.entryJsName), clintBrowserifyCache: path_1.default.join(exports.paths.clintDist, 'browserify-cache.json') });

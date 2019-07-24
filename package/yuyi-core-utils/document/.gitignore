@@ -7,3 +7,7 @@
 /**/bin/
 /**/obj/
 _site
+
+*.yml
+**/*.yml
+!toc.yml

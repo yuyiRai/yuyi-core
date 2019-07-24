@@ -22149,6 +22149,9 @@ yup@^0.27.0:
     synchronous-promise "^2.0.6"
     toposort "^2.0.2"
 
+"yuyi-core-env@file:package/yuyi-core-env":
+  version "2.0.34"
+
 zangodb@^1.0.7:
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/zangodb/-/zangodb-1.0.7.tgz#99eda854815df865b5a785d9b9be3bd92be451a4"

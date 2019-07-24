@@ -10,6 +10,7 @@
       },
       {
         "files": [
+          "overview/**/*.md",
           "articles/**/*.md",
           "**/toc.yml",
           "**/*.md"

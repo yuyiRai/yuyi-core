@@ -2,7 +2,7 @@
   href: api/
   homepage: overview/sharepoint.md
 - name: Api Documentation
-  href: api/yuyi-core-utils.yml
+  href: api/index.yml
 - name: Articles
   href: articles/
   homepage: articles/index.md

@@ -25,11 +25,12 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "build:api": "ttsc --build && yarn api && yarn markdown",
+    "build:api": "ttsc --build && yarn api && yarn markdown && rimraf ./tmp && rimraf ./temp",
     "api:main": "api-extractor run --local --verbose",
     "api:rx": "api-extractor run -c config/api-extractor-rxjs.json --local --verbose",
-    "preapi2": "yarn api:main && yarn api:rx",
-    "api": "gulp --require yuyi-core-env/config/run-ts.js --cwd . -f ./config/gulpfile.ts -t default",
+    "fix:api": "gulp --require yuyi-core-env/config/run-ts.js --cwd . -f ./config/gulpfile.ts -t default",
+    "api": "yarn api:main && yarn api:rx && yarn fix:api",
+    "presave": "yarn api",
     "markdown": "api-documenter markdown -i ./etc -o ./document/articles/docs",
     "yaml": "api-documenter yaml -i ./etc -o ./document/api",
     "docfx": "yarn docfx:build",
@@ -157,6 +158,7 @@
     "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.15.0",
     "tslint-config-standard": "^8.0.1",
-    "typescript": "3.5.2"
+    "typescript": "3.5.2",
+    "yuyi-core-env": "file:../yuyi-core-env"
   }
 }

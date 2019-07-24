@@ -7,7 +7,7 @@ import JSON5 from 'json5'
 JSON.parse = JSON5.parse;
 const suffix = '.api.json'
 const files = fs.readdirSync('./etc')
-  .filter(name => new RegExp(`^(.*?)${escapeRegExp(suffix)}$`).test(name) && name.indexOf('index') < 0)
+  .filter(name => new RegExp(`^(.*?)${escapeRegExp(suffix)}$`).test(name))
   .map(name => name.replace(suffix, ''))
 
 function taskFactroy(name: string) {
