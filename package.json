@@ -22,7 +22,7 @@
     "serve": "yarn workspace @yuyi/react-demo run start",
     "serve:vue": "yarn workspace @yuyi/vue-demo run serve",
     "ts": "tsccc ./scripts/publish.ts",
-    "project:init": "gulp --require ./packages/env/config/run-ts.js --cwd . -f ./scripts/tsconfig.mix.ts -t default",
+    "project:init": "gulp --require @yuyi/env/config/run-ts.js --cwd . -f ./scripts/tsconfig.mix.ts -t default",
     "pub": "yarn commit && lerna publish && yarn run allcommit",
     "env": "lerna publish patch @yuyi/env",
     "start": "lerna run --no-private dev",
