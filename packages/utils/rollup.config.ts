@@ -33,7 +33,7 @@ export default {
         target: 'es5'
       },
       check: false,
-      exclude: ['**/*.test.*', '**/*.spec.*'],
+      exclude: ['**/*.test.*', '**/*.spec.*', '../../node_modules'],
       typescript: ttypescript,
       useTsconfigDeclarationDir: true
     }),
