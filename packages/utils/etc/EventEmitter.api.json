@@ -1,0 +1,403 @@
+{
+  "metadata": {
+    "toolPackage": "@microsoft/api-extractor",
+    "toolVersion": "7.3.4",
+    "schemaVersion": 1002,
+    "oldestForwardsCompatibleVersion": 1001
+  },
+  "kind": "Package",
+  "docComment": "",
+  "name": "EventEmitter",
+  "members": [{
+    "kind": "EntryPoint",
+    "name": "",
+    "members": [{
+      "kind": "Class",
+      "docComment": "/**\n * 事件发射器\n *\n * 订阅事件 见{@link rxjs#Subscribable}.subscribe()\n *\n * 发射事件 见{@link EventEmitter.emit | emit()}\n *\n * 销毁 见{@link EventEmitter.dispose | dispose()}\n *\n * @typeParam EventType - 事件类型 1.2.2  @noInheritDoc\n *\n * @beta\n */\n",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare class "
+      }, {
+        "kind": "Reference",
+        "text": "EventEmitter"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "EventType"
+      }, {
+        "kind": "Content",
+        "text": " = "
+      }, {
+        "kind": "Content",
+        "text": "any"
+      }, {
+        "kind": "Content",
+        "text": "> extends "
+      }, {
+        "kind": "Reference",
+        "text": "Subject"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "EventType"
+      }, {
+        "kind": "Content",
+        "text": "> "
+      }],
+      "releaseTag": "Beta",
+      "typeParameters": [{
+        "typeParameterName": "EventType",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 5,
+          "endIndex": 6
+        }
+      }],
+      "name": "EventEmitter",
+      "members": [{
+        "kind": "Constructor",
+        "docComment": "/**\n * 实例化EventEmitter\n *\n * @param  - next 订阅事件方法\n *\n * @param  - error 订阅错误事件方法\n *\n * @param  - complete 订阅completed事件方法\n */\n",
+        "excerptTokens": [{
+          "kind": "Content",
+          "text": "constructor("
+        }, {
+          "kind": "Reference",
+          "text": "next"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Reference",
+          "text": "NextEvent"
+        }, {
+          "kind": "Content",
+          "text": "<"
+        }, {
+          "kind": "Reference",
+          "text": "EventType"
+        }, {
+          "kind": "Content",
+          "text": ">"
+        }, {
+          "kind": "Content",
+          "text": ", "
+        }, {
+          "kind": "Reference",
+          "text": "error"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Reference",
+          "text": "ErrorEvent"
+        }, {
+          "kind": "Content",
+          "text": "<"
+        }, {
+          "kind": "Reference",
+          "text": "EventType"
+        }, {
+          "kind": "Content",
+          "text": ">"
+        }, {
+          "kind": "Content",
+          "text": ", "
+        }, {
+          "kind": "Reference",
+          "text": "complete"
+        }, {
+          "kind": "Content",
+          "text": "?: "
+        }, {
+          "kind": "Reference",
+          "text": "CompletedEvent"
+        }, {
+          "kind": "Content",
+          "text": "<"
+        }, {
+          "kind": "Reference",
+          "text": "EventType"
+        }, {
+          "kind": "Content",
+          "text": ">"
+        }, {
+          "kind": "Content",
+          "text": ");"
+        }],
+        "releaseTag": "Beta",
+        "overloadIndex": 0,
+        "parameters": [{
+          "parameterName": "next",
+          "parameterTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 7
+          }
+        }, {
+          "parameterName": "error",
+          "parameterTypeTokenRange": {
+            "startIndex": 10,
+            "endIndex": 14
+          }
+        }, {
+          "parameterName": "complete",
+          "parameterTypeTokenRange": {
+            "startIndex": 17,
+            "endIndex": 21
+          }
+        }]
+      }, {
+        "kind": "Method",
+        "docComment": "/**\n * 注销\n */\n",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "dispose"
+        }, {
+          "kind": "Content",
+          "text": "(): "
+        }, {
+          "kind": "Content",
+          "text": "void"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "isStatic": false,
+        "returnTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 3
+        },
+        "releaseTag": "Beta",
+        "overloadIndex": 0,
+        "parameters": [],
+        "name": "dispose"
+      }, {
+        "kind": "Method",
+        "docComment": "/**\n * 发射值\n *\n * @param  - value\n */\n",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "emit"
+        }, {
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "value"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Reference",
+          "text": "EventType"
+        }, {
+          "kind": "Content",
+          "text": "): "
+        }, {
+          "kind": "Content",
+          "text": "void"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "isStatic": false,
+        "returnTypeTokenRange": {
+          "startIndex": 6,
+          "endIndex": 7
+        },
+        "releaseTag": "Beta",
+        "overloadIndex": 0,
+        "parameters": [{
+          "parameterName": "value",
+          "parameterTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 5
+          }
+        }],
+        "name": "emit"
+      }, {
+        "kind": "Method",
+        "docComment": "/**\n * 取得最后发射的值\n */\n",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "getLastValue"
+        }, {
+          "kind": "Content",
+          "text": "(): "
+        }, {
+          "kind": "Reference",
+          "text": "EventType"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "isStatic": false,
+        "returnTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 3
+        },
+        "releaseTag": "Beta",
+        "overloadIndex": 0,
+        "parameters": [],
+        "name": "getLastValue"
+      }, {
+        "kind": "Method",
+        "docComment": "/**\n * 发射一个事件后立即销毁监听器\n *\n * @param  - value\n */\n",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "once"
+        }, {
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "value"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Reference",
+          "text": "EventType"
+        }, {
+          "kind": "Content",
+          "text": "): "
+        }, {
+          "kind": "Content",
+          "text": "void"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "isStatic": false,
+        "returnTypeTokenRange": {
+          "startIndex": 6,
+          "endIndex": 7
+        },
+        "releaseTag": "Beta",
+        "overloadIndex": 0,
+        "parameters": [{
+          "parameterName": "value",
+          "parameterTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 5
+          }
+        }],
+        "name": "once"
+      }, {
+        "kind": "Method",
+        "docComment": "/**\n * 设置条件注销\n *\n * @param  - emit 条件observable，发射任意值即注销\n */\n",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "takeUntil"
+        }, {
+          "kind": "Content",
+          "text": "("
+        }, {
+          "kind": "Reference",
+          "text": "emit"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Reference",
+          "text": "Observable"
+        }, {
+          "kind": "Content",
+          "text": "<any>"
+        }, {
+          "kind": "Content",
+          "text": "): "
+        }, {
+          "kind": "Content",
+          "text": "this"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "isStatic": false,
+        "returnTypeTokenRange": {
+          "startIndex": 7,
+          "endIndex": 8
+        },
+        "releaseTag": "Beta",
+        "overloadIndex": 0,
+        "parameters": [{
+          "parameterName": "emit",
+          "parameterTypeTokenRange": {
+            "startIndex": 4,
+            "endIndex": 6
+          }
+        }],
+        "name": "takeUntil"
+      }, {
+        "kind": "Method",
+        "docComment": "/**\n * 转化成标准Promise\n */\n",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "toPromise"
+        }, {
+          "kind": "Content",
+          "text": "(): "
+        }, {
+          "kind": "Reference",
+          "text": "Promise"
+        }, {
+          "kind": "Content",
+          "text": "<unknown>"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "isStatic": false,
+        "returnTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 4
+        },
+        "releaseTag": "Beta",
+        "overloadIndex": 0,
+        "parameters": [],
+        "name": "toPromise"
+      }],
+      "extendsTokenRange": {
+        "startIndex": 7,
+        "endIndex": 11
+      },
+      "implementsTokenRanges": []
+    }, {
+      "kind": "Function",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare function "
+      }, {
+        "kind": "Reference",
+        "text": "getEventEmitter"
+      }, {
+        "kind": "Content",
+        "text": "(): "
+      }, {
+        "kind": "Reference",
+        "text": "EventEmitter"
+      }, {
+        "kind": "Content",
+        "text": "<any>"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "returnTypeTokenRange": {
+        "startIndex": 3,
+        "endIndex": 5
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 0,
+      "parameters": [],
+      "name": "getEventEmitter"
+    }]
+  }]
+}

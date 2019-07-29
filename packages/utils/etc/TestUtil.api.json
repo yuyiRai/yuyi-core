@@ -1,0 +1,242 @@
+{
+  "metadata": {
+    "toolPackage": "@microsoft/api-extractor",
+    "toolVersion": "7.3.4",
+    "schemaVersion": 1002,
+    "oldestForwardsCompatibleVersion": 1001
+  },
+  "kind": "Package",
+  "docComment": "/**\n * 测试工具方法集合\n *\n * @packageDocumentation\n */\n",
+  "name": "TestUtil",
+  "members": [{
+    "kind": "EntryPoint",
+    "name": "",
+    "members": [{
+      "kind": "Function",
+      "docComment": "/**\n * 异步等候\n *\n * @param time - 等候时间\n *\n * @param emitValue - 默认不需要\n *\n * @param isError - 是否以reject\n *\n * @returns 返回Promise<emitValue>\n *\n * @public\n */\n",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare function "
+      }, {
+        "kind": "Reference",
+        "text": "sleep"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "V"
+      }, {
+        "kind": "Content",
+        "text": " = "
+      }, {
+        "kind": "Content",
+        "text": "any"
+      }, {
+        "kind": "Content",
+        "text": ">("
+      }, {
+        "kind": "Reference",
+        "text": "time"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Content",
+        "text": "number"
+      }, {
+        "kind": "Content",
+        "text": ", "
+      }, {
+        "kind": "Reference",
+        "text": "emitValue"
+      }, {
+        "kind": "Content",
+        "text": "?: "
+      }, {
+        "kind": "Content",
+        "text": "any"
+      }, {
+        "kind": "Content",
+        "text": ", "
+      }, {
+        "kind": "Reference",
+        "text": "isError"
+      }, {
+        "kind": "Content",
+        "text": "?: "
+      }, {
+        "kind": "Content",
+        "text": "boolean"
+      }, {
+        "kind": "Content",
+        "text": "): "
+      }, {
+        "kind": "Reference",
+        "text": "Promise"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "V"
+      }, {
+        "kind": "Content",
+        "text": ">"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "returnTypeTokenRange": {
+        "startIndex": 19,
+        "endIndex": 23
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 0,
+      "parameters": [{
+        "parameterName": "time",
+        "parameterTypeTokenRange": {
+          "startIndex": 9,
+          "endIndex": 10
+        }
+      }, {
+        "parameterName": "emitValue",
+        "parameterTypeTokenRange": {
+          "startIndex": 13,
+          "endIndex": 14
+        }
+      }, {
+        "parameterName": "isError",
+        "parameterTypeTokenRange": {
+          "startIndex": 17,
+          "endIndex": 18
+        }
+      }],
+      "typeParameters": [{
+        "typeParameterName": "V",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 5,
+          "endIndex": 6
+        }
+      }],
+      "name": "sleep"
+    }, {
+      "kind": "Function",
+      "docComment": "/**\n * 异步等候\n *\n * @deprecated\n *\n * 该方法迟早被弃用，使用 {@link sleep | sleep()} 代替\n *\n * @param time - 等候时间\n *\n * @param emitValue - 默认不需要\n *\n * @param isError - 是否以reject\n *\n * @returns 返回Promise<emitValue>\n */\n",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare function "
+      }, {
+        "kind": "Reference",
+        "text": "waitingPromise"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "V"
+      }, {
+        "kind": "Content",
+        "text": " = "
+      }, {
+        "kind": "Content",
+        "text": "any"
+      }, {
+        "kind": "Content",
+        "text": ">("
+      }, {
+        "kind": "Reference",
+        "text": "time"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Content",
+        "text": "number"
+      }, {
+        "kind": "Content",
+        "text": ", "
+      }, {
+        "kind": "Reference",
+        "text": "emitValue"
+      }, {
+        "kind": "Content",
+        "text": "?: "
+      }, {
+        "kind": "Content",
+        "text": "any"
+      }, {
+        "kind": "Content",
+        "text": ", "
+      }, {
+        "kind": "Reference",
+        "text": "isError"
+      }, {
+        "kind": "Content",
+        "text": "?: "
+      }, {
+        "kind": "Content",
+        "text": "boolean"
+      }, {
+        "kind": "Content",
+        "text": "): "
+      }, {
+        "kind": "Reference",
+        "text": "Promise"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "V"
+      }, {
+        "kind": "Content",
+        "text": ">"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "returnTypeTokenRange": {
+        "startIndex": 19,
+        "endIndex": 23
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 0,
+      "parameters": [{
+        "parameterName": "time",
+        "parameterTypeTokenRange": {
+          "startIndex": 9,
+          "endIndex": 10
+        }
+      }, {
+        "parameterName": "emitValue",
+        "parameterTypeTokenRange": {
+          "startIndex": 13,
+          "endIndex": 14
+        }
+      }, {
+        "parameterName": "isError",
+        "parameterTypeTokenRange": {
+          "startIndex": 17,
+          "endIndex": 18
+        }
+      }],
+      "typeParameters": [{
+        "typeParameterName": "V",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 5,
+          "endIndex": 6
+        }
+      }],
+      "name": "waitingPromise"
+    }]
+  }]
+}

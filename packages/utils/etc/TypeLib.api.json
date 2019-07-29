@@ -1,0 +1,1855 @@
+{
+  "metadata": {
+    "toolPackage": "@microsoft/api-extractor",
+    "toolVersion": "7.3.4",
+    "schemaVersion": 1002,
+    "oldestForwardsCompatibleVersion": 1001
+  },
+  "kind": "Package",
+  "docComment": "",
+  "name": "TypeLib",
+  "members": [{
+    "kind": "EntryPoint",
+    "name": "",
+    "members": [{
+      "kind": "TypeAlias",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare type "
+      }, {
+        "kind": "Reference",
+        "text": "FilterFunction"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": " = "
+      }, {
+        "kind": "Content",
+        "text": "any"
+      }, {
+        "kind": "Content",
+        "text": "> = "
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "ST"
+      }, {
+        "kind": "Content",
+        "text": " extends ("
+      }, {
+        "kind": "Reference",
+        "text": "IsBaseType"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ", "
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ", ("
+      }, {
+        "kind": "Reference",
+        "text": "IsArray"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ", any, ("
+      }, {
+        "kind": "Reference",
+        "text": "IsObject"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ", any, ("
+      }, {
+        "kind": "Reference",
+        "text": "IsAny"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ", any, "
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ">)>)>)>) = any>(..."
+      }, {
+        "kind": "Reference",
+        "text": "key"
+      }, {
+        "kind": "Content",
+        "text": ": any[]) => ("
+      }, {
+        "kind": "Reference",
+        "text": "IsBaseType"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ", "
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ", ("
+      }, {
+        "kind": "Reference",
+        "text": "IsArray"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ", "
+      }, {
+        "kind": "Reference",
+        "text": "Array"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "ST"
+      }, {
+        "kind": "Content",
+        "text": ">, ("
+      }, {
+        "kind": "Reference",
+        "text": "IsObject"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ", "
+      }, {
+        "kind": "Reference",
+        "text": "IsObject"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "ST"
+      }, {
+        "kind": "Content",
+        "text": ", "
+      }, {
+        "kind": "Reference",
+        "text": "ST"
+      }, {
+        "kind": "Content",
+        "text": ", "
+      }, {
+        "kind": "Reference",
+        "text": "IKeyValueMap"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "ST"
+      }, {
+        "kind": "Content",
+        "text": ">>, ("
+      }, {
+        "kind": "Reference",
+        "text": "IsAny"
+      }, {
+        "kind": "Content",
+        "text": "<"
+      }, {
+        "kind": "Reference",
+        "text": "ST"
+      }, {
+        "kind": "Content",
+        "text": ", "
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ", "
+      }, {
+        "kind": "Reference",
+        "text": "ST"
+      }, {
+        "kind": "Content",
+        "text": ">)>)>)>) | undefined"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "releaseTag": "Public",
+      "name": "FilterFunction",
+      "typeParameters": [{
+        "typeParameterName": "T",
+        "constraintTokenRange": {
+          "startIndex": 0,
+          "endIndex": 0
+        },
+        "defaultTypeTokenRange": {
+          "startIndex": 5,
+          "endIndex": 6
+        }
+      }],
+      "typeTokenRange": {
+        "startIndex": 7,
+        "endIndex": 68
+      }
+    }, {
+      "kind": "Function",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare function "
+      }, {
+        "kind": "Reference",
+        "text": "isBooleanOrNumber"
+      }, {
+        "kind": "Content",
+        "text": "("
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Content",
+        "text": "any"
+      }, {
+        "kind": "Content",
+        "text": "): "
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": " is (boolean | number)"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "returnTypeTokenRange": {
+        "startIndex": 7,
+        "endIndex": 9
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 0,
+      "parameters": [{
+        "parameterName": "value",
+        "parameterTypeTokenRange": {
+          "startIndex": 5,
+          "endIndex": 6
+        }
+      }],
+      "name": "isBooleanOrNumber"
+    }, {
+      "kind": "Function",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare function "
+      }, {
+        "kind": "Reference",
+        "text": "isEmptyArray"
+      }, {
+        "kind": "Content",
+        "text": "("
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Content",
+        "text": "any"
+      }, {
+        "kind": "Content",
+        "text": "): "
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": " is boolean"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "returnTypeTokenRange": {
+        "startIndex": 7,
+        "endIndex": 9
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 0,
+      "parameters": [{
+        "parameterName": "value",
+        "parameterTypeTokenRange": {
+          "startIndex": 5,
+          "endIndex": 6
+        }
+      }],
+      "name": "isEmptyArray"
+    }, {
+      "kind": "Function",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare function "
+      }, {
+        "kind": "Reference",
+        "text": "isEmptyArrayStrict"
+      }, {
+        "kind": "Content",
+        "text": "("
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Content",
+        "text": "any"
+      }, {
+        "kind": "Content",
+        "text": "): "
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": " is any[]"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "returnTypeTokenRange": {
+        "startIndex": 7,
+        "endIndex": 9
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 0,
+      "parameters": [{
+        "parameterName": "value",
+        "parameterTypeTokenRange": {
+          "startIndex": 5,
+          "endIndex": 6
+        }
+      }],
+      "name": "isEmptyArrayStrict"
+    }, {
+      "kind": "Function",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare function "
+      }, {
+        "kind": "Reference",
+        "text": "isEmptyData"
+      }, {
+        "kind": "Content",
+        "text": "("
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Content",
+        "text": "any"
+      }, {
+        "kind": "Content",
+        "text": "): "
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": " is any[]"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "returnTypeTokenRange": {
+        "startIndex": 7,
+        "endIndex": 9
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 0,
+      "parameters": [{
+        "parameterName": "value",
+        "parameterTypeTokenRange": {
+          "startIndex": 5,
+          "endIndex": 6
+        }
+      }],
+      "name": "isEmptyData"
+    }, {
+      "kind": "Function",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare function "
+      }, {
+        "kind": "Reference",
+        "text": "isEmptyObject"
+      }, {
+        "kind": "Content",
+        "text": "("
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Content",
+        "text": "any"
+      }, {
+        "kind": "Content",
+        "text": ", "
+      }, {
+        "kind": "Reference",
+        "text": "checkValue"
+      }, {
+        "kind": "Content",
+        "text": "?: "
+      }, {
+        "kind": "Content",
+        "text": "boolean"
+      }, {
+        "kind": "Content",
+        "text": "): "
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": " is {}"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "returnTypeTokenRange": {
+        "startIndex": 11,
+        "endIndex": 13
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 0,
+      "parameters": [{
+        "parameterName": "value",
+        "parameterTypeTokenRange": {
+          "startIndex": 5,
+          "endIndex": 6
+        }
+      }, {
+        "parameterName": "checkValue",
+        "parameterTypeTokenRange": {
+          "startIndex": 9,
+          "endIndex": 10
+        }
+      }],
+      "name": "isEmptyObject"
+    }, {
+      "kind": "Function",
+      "docComment": "/**\n * 是否为空或异常值，不包括0 空值: null/undefined/'' 异常值: NaN 不包括空对象/空数组\n *\n * @param  - value\n */\n",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare function "
+      }, {
+        "kind": "Reference",
+        "text": "isEmptyValue"
+      }, {
+        "kind": "Content",
+        "text": "("
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Content",
+        "text": "any"
+      }, {
+        "kind": "Content",
+        "text": "): "
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": " is (null | undefined | '')"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "returnTypeTokenRange": {
+        "startIndex": 7,
+        "endIndex": 9
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 0,
+      "parameters": [{
+        "parameterName": "value",
+        "parameterTypeTokenRange": {
+          "startIndex": 5,
+          "endIndex": 6
+        }
+      }],
+      "name": "isEmptyValue"
+    }, {
+      "kind": "Function",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare function "
+      }, {
+        "kind": "Reference",
+        "text": "isEventEmitter"
+      }, {
+        "kind": "Content",
+        "text": "("
+      }, {
+        "kind": "Reference",
+        "text": "emitter"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Content",
+        "text": "any"
+      }, {
+        "kind": "Content",
+        "text": "): "
+      }, {
+        "kind": "Reference",
+        "text": "emitter"
+      }, {
+        "kind": "Content",
+        "text": " is "
+      }, {
+        "kind": "Reference",
+        "text": "EventEmitter"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "returnTypeTokenRange": {
+        "startIndex": 7,
+        "endIndex": 10
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 0,
+      "parameters": [{
+        "parameterName": "emitter",
+        "parameterTypeTokenRange": {
+          "startIndex": 5,
+          "endIndex": 6
+        }
+      }],
+      "name": "isEventEmitter"
+    }, {
+      "kind": "Function",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare function "
+      }, {
+        "kind": "Reference",
+        "text": "isNilAll"
+      }, {
+        "kind": "Content",
+        "text": "(..."
+      }, {
+        "kind": "Reference",
+        "text": "valueArr"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Content",
+        "text": "any[]"
+      }, {
+        "kind": "Content",
+        "text": "): "
+      }, {
+        "kind": "Content",
+        "text": "boolean"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "returnTypeTokenRange": {
+        "startIndex": 7,
+        "endIndex": 8
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 0,
+      "parameters": [{
+        "parameterName": "valueArr",
+        "parameterTypeTokenRange": {
+          "startIndex": 5,
+          "endIndex": 6
+        }
+      }],
+      "name": "isNilAll"
+    }, {
+      "kind": "Function",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare function "
+      }, {
+        "kind": "Reference",
+        "text": "isNotEmptyArray"
+      }, {
+        "kind": "Content",
+        "text": "("
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Content",
+        "text": "any"
+      }, {
+        "kind": "Content",
+        "text": "): "
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": " is any[]"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "returnTypeTokenRange": {
+        "startIndex": 7,
+        "endIndex": 9
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 0,
+      "parameters": [{
+        "parameterName": "value",
+        "parameterTypeTokenRange": {
+          "startIndex": 5,
+          "endIndex": 6
+        }
+      }],
+      "name": "isNotEmptyArray"
+    }, {
+      "kind": "Function",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare function "
+      }, {
+        "kind": "Reference",
+        "text": "isNotEmptyArrayStrict"
+      }, {
+        "kind": "Content",
+        "text": "("
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Content",
+        "text": "any"
+      }, {
+        "kind": "Content",
+        "text": "): "
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": " is any[]"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "returnTypeTokenRange": {
+        "startIndex": 7,
+        "endIndex": 9
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 0,
+      "parameters": [{
+        "parameterName": "value",
+        "parameterTypeTokenRange": {
+          "startIndex": 5,
+          "endIndex": 6
+        }
+      }],
+      "name": "isNotEmptyArrayStrict"
+    }, {
+      "kind": "Function",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare function "
+      }, {
+        "kind": "Reference",
+        "text": "isNotEmptyData"
+      }, {
+        "kind": "Content",
+        "text": "("
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Content",
+        "text": "any"
+      }, {
+        "kind": "Content",
+        "text": "): "
+      }, {
+        "kind": "Content",
+        "text": "boolean"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "returnTypeTokenRange": {
+        "startIndex": 7,
+        "endIndex": 8
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 0,
+      "parameters": [{
+        "parameterName": "value",
+        "parameterTypeTokenRange": {
+          "startIndex": 5,
+          "endIndex": 6
+        }
+      }],
+      "name": "isNotEmptyData"
+    }, {
+      "kind": "Function",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare function "
+      }, {
+        "kind": "Reference",
+        "text": "isNotEmptyObject"
+      }, {
+        "kind": "Content",
+        "text": "("
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Content",
+        "text": "any"
+      }, {
+        "kind": "Content",
+        "text": "): "
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": " is object"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "returnTypeTokenRange": {
+        "startIndex": 7,
+        "endIndex": 9
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 0,
+      "parameters": [{
+        "parameterName": "value",
+        "parameterTypeTokenRange": {
+          "startIndex": 5,
+          "endIndex": 6
+        }
+      }],
+      "name": "isNotEmptyObject"
+    }, {
+      "kind": "Function",
+      "docComment": "/**\n * 判断非空字符串\n *\n * @param  - str\n */\n",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare function "
+      }, {
+        "kind": "Reference",
+        "text": "isNotEmptyString"
+      }, {
+        "kind": "Content",
+        "text": "("
+      }, {
+        "kind": "Reference",
+        "text": "str"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Content",
+        "text": "any"
+      }, {
+        "kind": "Content",
+        "text": "): "
+      }, {
+        "kind": "Reference",
+        "text": "str"
+      }, {
+        "kind": "Content",
+        "text": " is string"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "returnTypeTokenRange": {
+        "startIndex": 7,
+        "endIndex": 9
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 0,
+      "parameters": [{
+        "parameterName": "str",
+        "parameterTypeTokenRange": {
+          "startIndex": 5,
+          "endIndex": 6
+        }
+      }],
+      "name": "isNotEmptyString"
+    }, {
+      "kind": "Function",
+      "docComment": "/**\n * 是否非空且非异常值，不包括0 空值: null/undefined/'' 不包括空对象/空数组\n *\n * @param  - value\n */\n",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare function "
+      }, {
+        "kind": "Reference",
+        "text": "isNotEmptyValue"
+      }, {
+        "kind": "Content",
+        "text": "("
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Content",
+        "text": "any"
+      }, {
+        "kind": "Content",
+        "text": "): "
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": " is (string | number | boolean | object | "
+      }, {
+        "kind": "Reference",
+        "text": "Function"
+      }, {
+        "kind": "Content",
+        "text": ")"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "returnTypeTokenRange": {
+        "startIndex": 7,
+        "endIndex": 11
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 0,
+      "parameters": [{
+        "parameterName": "value",
+        "parameterTypeTokenRange": {
+          "startIndex": 5,
+          "endIndex": 6
+        }
+      }],
+      "name": "isNotEmptyValue"
+    }, {
+      "kind": "Function",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare function "
+      }, {
+        "kind": "Reference",
+        "text": "isNotFunction"
+      }, {
+        "kind": "Content",
+        "text": "("
+      }, {
+        "kind": "Reference",
+        "text": "func"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Content",
+        "text": "any"
+      }, {
+        "kind": "Content",
+        "text": "): "
+      }, {
+        "kind": "Content",
+        "text": "boolean"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "returnTypeTokenRange": {
+        "startIndex": 7,
+        "endIndex": 8
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 0,
+      "parameters": [{
+        "parameterName": "func",
+        "parameterTypeTokenRange": {
+          "startIndex": 5,
+          "endIndex": 6
+        }
+      }],
+      "name": "isNotFunction"
+    }, {
+      "kind": "Function",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare function "
+      }, {
+        "kind": "Reference",
+        "text": "isNotNaN"
+      }, {
+        "kind": "Content",
+        "text": "("
+      }, {
+        "kind": "Reference",
+        "text": "v"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Content",
+        "text": "any"
+      }, {
+        "kind": "Content",
+        "text": "): "
+      }, {
+        "kind": "Content",
+        "text": "boolean"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "returnTypeTokenRange": {
+        "startIndex": 7,
+        "endIndex": 8
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 0,
+      "parameters": [{
+        "parameterName": "v",
+        "parameterTypeTokenRange": {
+          "startIndex": 5,
+          "endIndex": 6
+        }
+      }],
+      "name": "isNotNaN"
+    }, {
+      "kind": "Interface",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export interface "
+      }, {
+        "kind": "Reference",
+        "text": "ITypeFilterUtils"
+      }, {
+        "kind": "Content",
+        "text": " "
+      }],
+      "releaseTag": "Public",
+      "name": "ITypeFilterUtils",
+      "members": [{
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "isArrayFilter"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Reference",
+          "text": "FilterFunction"
+        }, {
+          "kind": "Content",
+          "text": "<"
+        }, {
+          "kind": "Reference",
+          "text": "Array"
+        }, {
+          "kind": "Content",
+          "text": "<any>>"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "isArrayFilter",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 6
+        }
+      }, {
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "isBooleanFilter"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Reference",
+          "text": "FilterFunction"
+        }, {
+          "kind": "Content",
+          "text": "<boolean>"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "isBooleanFilter",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 4
+        }
+      }, {
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "isFunctionFilter"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Reference",
+          "text": "FilterFunction"
+        }, {
+          "kind": "Content",
+          "text": "<(..."
+        }, {
+          "kind": "Reference",
+          "text": "arg"
+        }, {
+          "kind": "Content",
+          "text": ": any[]) => any>"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "isFunctionFilter",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 6
+        }
+      }, {
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "isNotEmptyArrayFilter"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Reference",
+          "text": "FilterFunction"
+        }, {
+          "kind": "Content",
+          "text": "<"
+        }, {
+          "kind": "Reference",
+          "text": "Array"
+        }, {
+          "kind": "Content",
+          "text": "<any>>"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "isNotEmptyArrayFilter",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 6
+        }
+      }, {
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "isNotEmptyStringFilter"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Reference",
+          "text": "FilterFunction"
+        }, {
+          "kind": "Content",
+          "text": "<string>"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "isNotEmptyStringFilter",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 4
+        }
+      }, {
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "isNotEmptyValueFilter"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Reference",
+          "text": "FilterFunction"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "isNotEmptyValueFilter",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 3
+        }
+      }, {
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "isNumberFilter"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Reference",
+          "text": "FilterFunction"
+        }, {
+          "kind": "Content",
+          "text": "<number>"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "isNumberFilter",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 4
+        }
+      }, {
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "isObjectFilter"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Reference",
+          "text": "FilterFunction"
+        }, {
+          "kind": "Content",
+          "text": "<object>"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "isObjectFilter",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 4
+        }
+      }, {
+        "kind": "PropertySignature",
+        "docComment": "",
+        "excerptTokens": [{
+          "kind": "Reference",
+          "text": "isStringFilter"
+        }, {
+          "kind": "Content",
+          "text": ": "
+        }, {
+          "kind": "Reference",
+          "text": "FilterFunction"
+        }, {
+          "kind": "Content",
+          "text": "<string>"
+        }, {
+          "kind": "Content",
+          "text": ";"
+        }],
+        "releaseTag": "Public",
+        "name": "isStringFilter",
+        "propertyTypeTokenRange": {
+          "startIndex": 2,
+          "endIndex": 4
+        }
+      }],
+      "extendsTokenRanges": []
+    }, {
+      "kind": "Interface",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export interface "
+      }, {
+        "kind": "Reference",
+        "text": "ITypeUtils"
+      }, {
+        "kind": "Content",
+        "text": " extends "
+      }, {
+        "kind": "Reference",
+        "text": "Type"
+      }, {
+        "kind": "Content",
+        "text": "<typeof "
+      }, {
+        "kind": "Reference",
+        "text": "typeUtils"
+      }, {
+        "kind": "Content",
+        "text": ">"
+      }, {
+        "kind": "Content",
+        "text": ", "
+      }, {
+        "kind": "Reference",
+        "text": "ITypeFilterUtils"
+      }, {
+        "kind": "Content",
+        "text": " "
+      }],
+      "releaseTag": "Public",
+      "name": "ITypeUtils",
+      "members": [],
+      "extendsTokenRanges": [{
+        "startIndex": 3,
+        "endIndex": 7
+      }, {
+        "startIndex": 8,
+        "endIndex": 10
+      }]
+    }, {
+      "kind": "Function",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Content",
+        "text": "export declare function "
+      }, {
+        "kind": "Reference",
+        "text": "todoFilter"
+      }, {
+        "kind": "Content",
+        "text": "("
+      }, {
+        "kind": "Reference",
+        "text": "handler"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Content",
+        "text": "("
+      }, {
+        "kind": "Reference",
+        "text": "v"
+      }, {
+        "kind": "Content",
+        "text": ": any) => boolean"
+      }, {
+        "kind": "Content",
+        "text": "): "
+      }, {
+        "kind": "Reference",
+        "text": "FilterFunction"
+      }, {
+        "kind": "Content",
+        "text": ";"
+      }],
+      "returnTypeTokenRange": {
+        "startIndex": 9,
+        "endIndex": 10
+      },
+      "releaseTag": "Public",
+      "overloadIndex": 0,
+      "parameters": [{
+        "parameterName": "handler",
+        "parameterTypeTokenRange": {
+          "startIndex": 5,
+          "endIndex": 8
+        }
+      }],
+      "name": "todoFilter"
+    }, {
+      "kind": "Variable",
+      "docComment": "/**\n * @external\n */\n",
+      "excerptTokens": [{
+        "kind": "Reference",
+        "text": "typeFilterUtils"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Reference",
+        "text": "ITypeFilterUtils"
+      }],
+      "releaseTag": "Public",
+      "name": "typeFilterUtils",
+      "variableTypeTokenRange": {
+        "startIndex": 2,
+        "endIndex": 3
+      }
+    }, {
+      "kind": "Variable",
+      "docComment": "/**\n * @external\n */\n",
+      "excerptTokens": [{
+        "kind": "Reference",
+        "text": "typeUtils"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Content",
+        "text": "{\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isArrayLike"
+      }, {
+        "kind": "Content",
+        "text": ": {\n        <"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": " extends {\n            "
+      }, {
+        "kind": "Reference",
+        "text": "__lodashAnyHack"
+      }, {
+        "kind": "Content",
+        "text": ": any;\n        }>("
+      }, {
+        "kind": "Reference",
+        "text": "t"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": "): boolean;\n        ("
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": ": (..."
+      }, {
+        "kind": "Reference",
+        "text": "args"
+      }, {
+        "kind": "Content",
+        "text": ": any[]) => any): "
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": " is never;\n        ("
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": ": any): "
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": " is {\n            "
+      }, {
+        "kind": "Reference",
+        "text": "length"
+      }, {
+        "kind": "Content",
+        "text": ": number;\n        };\n    };\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isArray"
+      }, {
+        "kind": "Content",
+        "text": ": {\n        ("
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": "?: any): "
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": " is any[];\n        <"
+      }, {
+        "kind": "Reference",
+        "text": "T"
+      }, {
+        "kind": "Content",
+        "text": ">("
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": "?: any): "
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": " is any[];\n    };\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isBoolean"
+      }, {
+        "kind": "Content",
+        "text": ": ("
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": "?: any) => "
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": " is boolean;\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isObject"
+      }, {
+        "kind": "Content",
+        "text": ": ("
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": "?: any) => "
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": " is object;\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isNumber"
+      }, {
+        "kind": "Content",
+        "text": ": typeof "
+      }, {
+        "kind": "Reference",
+        "text": "isNumber"
+      }, {
+        "kind": "Content",
+        "text": ";\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isString"
+      }, {
+        "kind": "Content",
+        "text": ": ("
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": "?: any) => "
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": " is string;\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isEmptyData"
+      }, {
+        "kind": "Content",
+        "text": ": typeof "
+      }, {
+        "kind": "Reference",
+        "text": "isEmptyData"
+      }, {
+        "kind": "Content",
+        "text": ";\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isNotEmptyData"
+      }, {
+        "kind": "Content",
+        "text": ": typeof "
+      }, {
+        "kind": "Reference",
+        "text": "isNotEmptyData"
+      }, {
+        "kind": "Content",
+        "text": ";\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isEventEmitter"
+      }, {
+        "kind": "Content",
+        "text": ": typeof "
+      }, {
+        "kind": "Reference",
+        "text": "isEventEmitter"
+      }, {
+        "kind": "Content",
+        "text": ";\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isNotEmptyString"
+      }, {
+        "kind": "Content",
+        "text": ": typeof "
+      }, {
+        "kind": "Reference",
+        "text": "isNotEmptyString"
+      }, {
+        "kind": "Content",
+        "text": ";\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isFunction"
+      }, {
+        "kind": "Content",
+        "text": ": ("
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": ": any) => "
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": " is (..."
+      }, {
+        "kind": "Reference",
+        "text": "args"
+      }, {
+        "kind": "Content",
+        "text": ": any[]) => any;\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isNil"
+      }, {
+        "kind": "Content",
+        "text": ": ("
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": ": any) => "
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": " is null;\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isDate"
+      }, {
+        "kind": "Content",
+        "text": ": ("
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": "?: any) => "
+      }, {
+        "kind": "Reference",
+        "text": "value"
+      }, {
+        "kind": "Content",
+        "text": " is "
+      }, {
+        "kind": "Reference",
+        "text": "Date"
+      }, {
+        "kind": "Content",
+        "text": ";\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isNaN"
+      }, {
+        "kind": "Content",
+        "text": ": typeof "
+      }, {
+        "kind": "Reference",
+        "text": "isNaN"
+      }, {
+        "kind": "Content",
+        "text": ";\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isNotFunction"
+      }, {
+        "kind": "Content",
+        "text": ": typeof "
+      }, {
+        "kind": "Reference",
+        "text": "isNotFunction"
+      }, {
+        "kind": "Content",
+        "text": ";\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isNotNaN"
+      }, {
+        "kind": "Content",
+        "text": ": typeof "
+      }, {
+        "kind": "Reference",
+        "text": "isNotNaN"
+      }, {
+        "kind": "Content",
+        "text": ";\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isNilAll"
+      }, {
+        "kind": "Content",
+        "text": ": typeof "
+      }, {
+        "kind": "Reference",
+        "text": "isNilAll"
+      }, {
+        "kind": "Content",
+        "text": ";\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isBooleanOrNumber"
+      }, {
+        "kind": "Content",
+        "text": ": typeof "
+      }, {
+        "kind": "Reference",
+        "text": "isBooleanOrNumber"
+      }, {
+        "kind": "Content",
+        "text": ";\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isEmptyValue"
+      }, {
+        "kind": "Content",
+        "text": ": typeof "
+      }, {
+        "kind": "Reference",
+        "text": "isEmptyValue"
+      }, {
+        "kind": "Content",
+        "text": ";\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isNotEmptyValue"
+      }, {
+        "kind": "Content",
+        "text": ": typeof "
+      }, {
+        "kind": "Reference",
+        "text": "isNotEmptyValue"
+      }, {
+        "kind": "Content",
+        "text": ";\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isEmptyArray"
+      }, {
+        "kind": "Content",
+        "text": ": typeof "
+      }, {
+        "kind": "Reference",
+        "text": "isEmptyArray"
+      }, {
+        "kind": "Content",
+        "text": ";\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isNotEmptyArray"
+      }, {
+        "kind": "Content",
+        "text": ": typeof "
+      }, {
+        "kind": "Reference",
+        "text": "isNotEmptyArray"
+      }, {
+        "kind": "Content",
+        "text": ";\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isEmptyArrayStrict"
+      }, {
+        "kind": "Content",
+        "text": ": typeof "
+      }, {
+        "kind": "Reference",
+        "text": "isEmptyArrayStrict"
+      }, {
+        "kind": "Content",
+        "text": ";\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isNotEmptyArrayStrict"
+      }, {
+        "kind": "Content",
+        "text": ": typeof "
+      }, {
+        "kind": "Reference",
+        "text": "isNotEmptyArrayStrict"
+      }, {
+        "kind": "Content",
+        "text": ";\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isEmptyObject"
+      }, {
+        "kind": "Content",
+        "text": ": typeof "
+      }, {
+        "kind": "Reference",
+        "text": "isEmptyObject"
+      }, {
+        "kind": "Content",
+        "text": ";\n    "
+      }, {
+        "kind": "Reference",
+        "text": "isNotEmptyObject"
+      }, {
+        "kind": "Content",
+        "text": ": typeof "
+      }, {
+        "kind": "Reference",
+        "text": "isNotEmptyObject"
+      }, {
+        "kind": "Content",
+        "text": ";\n}"
+      }],
+      "releaseTag": "Public",
+      "name": "typeUtils",
+      "variableTypeTokenRange": {
+        "startIndex": 2,
+        "endIndex": 149
+      }
+    }]
+  }]
+}

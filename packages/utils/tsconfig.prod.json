@@ -1,0 +1,31 @@
+{
+  "extends": "../../tsconfig.env.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "resolveJsonModule": true,
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@": [
+        "./"
+      ]
+    },
+    "outDir": "./lib",
+    "declarationDir": "./types",
+    "module": "esnext",
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types",
+      "../../node_modules/@types"
+    ]
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "tools",
+    "../../node_modules"
+  ]
+}
