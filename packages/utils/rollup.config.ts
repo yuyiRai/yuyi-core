@@ -10,7 +10,7 @@ import minify from 'rollup-plugin-babel-minify'
 
 const pkg = require('./package.json')
 export default {
-  input: `src/index.ts`,
+  input: `lib/index.js`,
   output: [
     { file: pkg.main, name: 'Utils', exports: 'named', format: 'cjs', sourcemap: true },
     { file: pkg.module, format: 'es', exports: 'named', sourcemap: true },
@@ -25,18 +25,18 @@ export default {
     // Allow json resolution
     json(),
     // Compile TypeScript files
-    typescript({
-      rollupCommonJSResolveHack: true,
-      clean: true,
-      tsconfig: 'tsconfig.prod.json',
-      tsconfigOverride: {
-        target: 'es5'
-      },
-      check: false,
-      exclude: ['**/*.test.*', '**/*.spec.*', '../../node_modules'],
-      typescript: ttypescript,
-      useTsconfigDeclarationDir: true
-    }),
+    // typescript({
+    //   rollupCommonJSResolveHack: true,
+    //   clean: true,
+    //   tsconfig: 'tsconfig.prod.json',
+    //   tsconfigOverride: {
+    //     target: 'es5'
+    //   },
+    //   check: false,
+    //   exclude: ['**/*.test.*', '**/*.spec.*', '../../node_modules'],
+    //   typescript: ttypescript,
+    //   useTsconfigDeclarationDir: true
+    // }),
     // Allow bundling cjs modules (unlike webpack, rollup doesn't understand cjs)
     commonjs(),
     // Allow node_modules resolution, so you can use 'external' to control
