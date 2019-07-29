@@ -1,5 +1,5 @@
 {
-  "name": "yuyi-core-docs",
+  "name": "@yuyi/docs",
   "description": "Documentation Theme for Yuyi-core",
   "version": "0.0.43",
   "private": true,

@@ -1,5 +1,5 @@
 {
-  "name": "yuyi-core-vue-demo",
+  "name": "@yuyi/vue-demo",
   "version": "2.0.3",
   "private": true,
   "scripts": {

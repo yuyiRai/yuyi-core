@@ -1,5 +1,5 @@
 {
-  "name": "yuyi-core-react-demo",
+  "name": "@yuyi/react-demo",
   "version": "0.1.36",
   "private": true,
   "dependencies": {

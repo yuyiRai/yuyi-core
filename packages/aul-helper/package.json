@@ -1,5 +1,5 @@
 {
-  "name": "yuyi-aul-helper",
+  "name": "@yuyi/aul-helper",
   "version": "0.1.2",
   "private": true,
   "dependencies": {
