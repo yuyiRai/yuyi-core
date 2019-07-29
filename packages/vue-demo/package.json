@@ -8,8 +8,7 @@
     "build:preview": "vue-cli-service build --mode preview",
     "lint": "vue-cli-service lint",
     "lint:nofix": "vue-cli-service lint --no-fix",
-    "test:unit": "vue-cli-service test:unit",
-    "postinstall": "opencollective-postinstall"
+    "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
     "@antv/data-set": "^0.10.1",
@@ -53,8 +52,6 @@
     "eslint-plugin-vue": "^5.0.0",
     "less": "^3.8.1",
     "less-loader": "^4.1.0",
-    "opencollective": "^1.0.3",
-    "opencollective-postinstall": "^2.0.2",
     "vue-svg-icon-loader": "^2.1.1",
     "vue-template-compiler": "^2.5.22",
     "webpack-theme-color-replacer": "^1.2.15"
@@ -68,9 +65,5 @@
     "> 1%",
     "last 2 versions",
     "not ie <= 10"
-  ],
-  "collective": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/ant-design-pro-vue"
-  }
+  ]
 }
