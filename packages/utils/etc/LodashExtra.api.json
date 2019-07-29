@@ -1400,6 +1400,25 @@
         "startIndex": 2,
         "endIndex": 3
       }
+    }, {
+      "kind": "Variable",
+      "docComment": "",
+      "excerptTokens": [{
+        "kind": "Reference",
+        "text": "test2"
+      }, {
+        "kind": "Content",
+        "text": ": "
+      }, {
+        "kind": "Content",
+        "text": "any[]"
+      }],
+      "releaseTag": "Public",
+      "name": "test2",
+      "variableTypeTokenRange": {
+        "startIndex": 2,
+        "endIndex": 3
+      }
     }]
   }]
 }

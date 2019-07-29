@@ -134,6 +134,10 @@ items:
             name: test
             homepage: lodashextra.test.md
             items: []
+          -
+            name: test2
+            homepage: lodashextra.test2.md
+            items: []
       -
         name: OptionsUtils
         homepage: OptionsUtils.md

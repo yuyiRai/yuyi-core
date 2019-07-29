@@ -27,6 +27,7 @@
 |  --- | --- |
 |  [emptyObject](./lodashextra.emptyobject.md) | 一个静态的不可变空对象 |
 |  [test](./lodashextra.test.md) |  |
+|  [test2](./lodashextra.test2.md) |  |
 
 ## Type Aliases
 

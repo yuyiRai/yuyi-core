@@ -1,6 +1,6 @@
 items:
   -
-    name: @yuyi/utils
+    name: yuyi-core-utils
     href: ~/overview/sharepoint.md
     items:
       -
