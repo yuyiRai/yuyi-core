@@ -1281,8 +1281,8 @@
         "signature": "2aec6ebe38c73c9a9e9e620553adf1f5234b31d76792e17e5e7b86c1bb5ce181"
       },
       "d:/workspace/@yuyi/packages/utils/src/index.ts": {
-        "version": "6dd8e2ea353b4e97e45af2115f92c629ebc7f339deb72bd7e1d0fdc28f78e629",
-        "signature": "d93a830af7459201166d26cf23dcde93db4db4e9db0129d640fb719978cf86b5"
+        "version": "0114120f71f8356e6578959bfa754abd88efa26b1be6fa332debcf3096b463ea",
+        "signature": "bc1125c5d45c74c3fd673727c41a9ac80342064c45cffd805e015b6d7ad5cca8"
       },
       "d:/workspace/@yuyi/packages/utils/src/index.export.ts": {
         "version": "5dff41b0b1e85ba8a35e088d2cfdb5741e6f05cb4f46f8a77e268a112d1954e9",
@@ -1952,7 +1952,6 @@
         "d:/WorkSpace/@yuyi/node_modules/@types",
         "d:/WorkSpace/@yuyi/packages/utils/@yuyi/env/src/global/index.ts"
       ],
-      "watch": true,
       "configFilePath": "d:/WorkSpace/@yuyi/packages/utils/tsconfig.json"
     },
     "referencedMap": {
@@ -4068,6 +4067,7 @@
         "d:/workspace/@yuyi/packages/utils/src/parseutils.ts",
         "d:/workspace/@yuyi/packages/utils/src/mobxutils.ts",
         "d:/workspace/@yuyi/packages/utils/src/eventemitter/index.ts",
+        "d:/workspace/@yuyi/packages/utils/src/utils.ts",
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/util.d.ts",
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/ts3.2/util.d.ts"
       ],
@@ -5949,6 +5949,9 @@
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/util.d.ts",
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "d:/workspace/@yuyi/packages/utils/src/lodashextra/castutils.ts": [
+        "d:/workspace/@yuyi/packages/env/types/index.d.ts"
+      ],
       "d:/workspace/@yuyi/node_modules/@types/lodash/ts3.1/isnumber.d.ts": [
         "d:/workspace/@yuyi/node_modules/@types/lodash/ts3.1/index.d.ts",
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/util.d.ts",
@@ -6673,7 +6676,8 @@
         "d:/workspace/@yuyi/packages/utils/src/propertyutils/index.ts",
         "d:/workspace/@yuyi/packages/utils/src/parseutils.ts",
         "d:/workspace/@yuyi/packages/utils/src/mobxutils.ts",
-        "d:/workspace/@yuyi/packages/utils/src/eventemitter/index.ts"
+        "d:/workspace/@yuyi/packages/utils/src/eventemitter/index.ts",
+        "d:/workspace/@yuyi/packages/utils/src/utils.ts"
       ],
       "d:/workspace/@yuyi/packages/utils/src/index.export.ts": [
         "d:/workspace/@yuyi/packages/utils/src/utils.ts",
@@ -7345,9 +7349,6 @@
       "d:/workspace/@yuyi/node_modules/@types/yargs/index.d.ts": [
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/util.d.ts",
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "d:/workspace/@yuyi/packages/utils/src/lodashextra/castutils.ts": [
-        "d:/workspace/@yuyi/packages/env/types/index.d.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -7533,11 +7534,13 @@
       "d:/workspace/@yuyi/packages/env/src/global/utils.ts",
       "d:/workspace/@yuyi/packages/env/src/global/index.ts",
       "d:/workspace/@yuyi/packages/env/src/index.ts",
+      "d:/workspace/@yuyi/packages/utils/src/lodashextra/castutils.ts",
       "d:/workspace/@yuyi/node_modules/@types/lodash/ts3.1/isnumber.d.ts",
       "d:/workspace/@yuyi/packages/utils/src/lodashextra/isnumber.ts",
       "d:/workspace/@yuyi/packages/utils/src/lodashextra/stub.ts",
       "d:/workspace/@yuyi/packages/utils/src/lodashextra/reducemap.ts",
       "d:/workspace/@yuyi/packages/utils/src/lodashextra/creategroupwith.ts",
+      "d:/workspace/@yuyi/packages/utils/src/lodashextra/index.ts",
       "d:/workspace/@yuyi/node_modules/@types/lodash/ts3.1/isarray.d.ts",
       "d:/workspace/@yuyi/node_modules/@types/lodash/ts3.1/isfunction.d.ts",
       "d:/workspace/@yuyi/packages/utils/src/customutils/pipe.ts",
@@ -7669,8 +7672,6 @@
       "d:/workspace/@yuyi/packages/utils/src/propertyutils/commondto/index.ts",
       "d:/workspace/@yuyi/packages/utils/src/propertyutils/index.ts",
       "d:/workspace/@yuyi/packages/utils/src/utils.ts",
-      "d:/workspace/@yuyi/packages/utils/src/index.ts",
-      "d:/workspace/@yuyi/packages/utils/src/index.export.ts",
       "d:/workspace/@yuyi/packages/utils/src/propertyutils/get.ts",
       "d:/workspace/@yuyi/packages/utils/src/propertyutils/set.ts",
       "d:/workspace/@yuyi/node_modules/typescript/lib/typescript.d.ts",
@@ -7793,8 +7794,8 @@
       "d:/workspace/@yuyi/node_modules/@types/vfile/index.d.ts",
       "d:/workspace/@yuyi/node_modules/@types/vfile-message/index.d.ts",
       "d:/workspace/@yuyi/node_modules/@types/yargs/index.d.ts",
-      "d:/workspace/@yuyi/packages/utils/src/lodashextra/castutils.ts",
-      "d:/workspace/@yuyi/packages/utils/src/lodashextra/index.ts"
+      "d:/workspace/@yuyi/packages/utils/src/index.ts",
+      "d:/workspace/@yuyi/packages/utils/src/index.export.ts"
     ]
   },
   "version": "3.5.2"
