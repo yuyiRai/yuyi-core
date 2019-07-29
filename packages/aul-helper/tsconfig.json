@@ -1,0 +1,24 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "paths": {
+      "@": ["./"],
+      "@/*": ["./*"]
+    },
+    "outDir": "./lib",
+    "declarationDir": "./types",
+    "tsBuildInfoFile": "../.tsBuildInfo/aul-helper.json",
+    "incremental": true,
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "allowJs": true,
+    "noStrictGenericChecks": true,
+    "forceConsistentCasingInFileNames": true,
+    "module": "esnext",
+    "noEmit": true,
+    "jsx": "preserve"
+  },
+  "include": ["src"]
+}

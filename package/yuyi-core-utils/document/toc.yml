@@ -1,8 +1,0 @@
-- name: Overview
-  href: api/
-  homepage: overview/sharepoint.md
-- name: Api Documentation
-  href: api/index.yml
-- name: Articles
-  href: articles/
-  homepage: articles/index.md

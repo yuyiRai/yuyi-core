@@ -10,7 +10,7 @@ const defaultCompilerOptions = { ...envDefaultOptions.compilerOptions, ...Defaul
 type CompilerOptions = typeof defaultCompilerOptions;
 JSON.parse = JSON5.parse;
 
-const dirs = fs.readdirSync('./package').filter(name => /^yuyi-core-(.*?)/g.test(name) && !/demo/.test(name))
+const dirs = fs.readdirSync('./packages').filter(name => !/demo/.test(name))
 console.error(dirs)
 
 const getAppendPaths = (appendDir: string = "") => ({
@@ -45,7 +45,7 @@ function diffPlugins(plugins: CompilerOptions['plugins'] = []) {
 }
 
 function taskFactroy(folder: string) {
-  const srcs = ['./package/' + folder + '/tsconfig.json']
+  const srcs = ['./packages/' + folder + '/tsconfig.json']
   return function () {
     return gulp.src(srcs, { allowEmpty: true }).pipe(jeditor(function (json) {
       console.error('loading', json.extends, json.extends === './tsconfig.json')
@@ -84,7 +84,7 @@ function taskFactroy(folder: string) {
       }
       // console.log(r, rootDir, baseUrl, paths)
       return r
-    })).pipe(gulp.dest("./package/" + folder));
+    })).pipe(gulp.dest("./packages/" + folder));
   }
 }
 
