@@ -1,23 +1,40 @@
 {
   "extends": "../../tsconfig.json",
-  "references": [{
-    "path": "../env"
-  }],
+  "references": [
+    {
+      "path": "../env"
+    }
+  ],
   "compilerOptions": {
     "composite": true,
     "rootDir": "./src",
     "baseUrl": "./src",
     "paths": {
-      "@/*": ["./*"],
-      "@": ["./"]
+      "@/*": [
+        "./*"
+      ],
+      "@": [
+        "./"
+      ]
     },
     "outDir": "./lib",
     "declarationDir": "./types",
     "tsBuildInfoFile": "../.tsBuildInfo/utils.json",
     "incremental": true,
     "module": "esnext",
-    "typeRoots": ["node_modules/@types", "../../node_modules/@types", "@yuyi/env/src/global/index.ts"]
+    "types": [
+      "../env/types/global"
+    ],
+    "typeRoots": [
+      "node_modules/@types",
+      "../../node_modules/@types"
+    ]
   },
-  "include": ["src"],
-  "exclude": ["tools", "../../node_modules"]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "tools",
+    "../../node_modules"
+  ]
 }

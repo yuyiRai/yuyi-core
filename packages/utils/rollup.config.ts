@@ -2,8 +2,8 @@ import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
 import sourceMaps from 'rollup-plugin-sourcemaps'
 import json from 'rollup-plugin-json'
-import typescript from 'rollup-plugin-typescript2';
-import ttypescript from 'ttypescript';
+// import typescript from 'rollup-plugin-typescript2';
+// import ttypescript from 'ttypescript';
 import external from 'rollup-plugin-peer-deps-external'
 import minify from 'rollup-plugin-babel-minify'
 

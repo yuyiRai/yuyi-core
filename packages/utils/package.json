@@ -7,8 +7,8 @@
     "lodash",
     "typescript"
   ],
-  "main": "dist/index.js",
-  "module": "dist/index.es5.js",
+  "main": "dist/index.min.js",
+  "module": "dist/index.es5.min.js",
   "types": "dist/index.d.ts",
   "typings": "types",
   "files": [

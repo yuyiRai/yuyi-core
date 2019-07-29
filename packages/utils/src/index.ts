@@ -7,7 +7,7 @@
 // import "core-js/fn/array.find"
 // ...
 // import { LodashExtraUtils } from './LodashExtra'
-import '@yuyi/env'
+// import '@yuyi/env'
 
 // const A = Type
 
