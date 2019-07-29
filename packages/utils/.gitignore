@@ -13,6 +13,7 @@ docs
 types
 lib
 temp
+etc
 
 markdown
 *.d.ts

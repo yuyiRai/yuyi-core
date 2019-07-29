@@ -5,7 +5,7 @@ import { action, observable } from 'mobx';
 import * as zango from 'zangodb';
 import { DBUtils } from '../utils';
 
-const db = new zango.Db('yuyi-aul-helper', 1, { 'ExaData': [], 'TrackData': [] });
+const db = new zango.Db('@yuyi/aul-helper', 1, { 'ExaData': [], 'TrackData': [] });
 @Store('GlobalDBManager')
 export class DbManager {
   @observable inited: boolean = false;
