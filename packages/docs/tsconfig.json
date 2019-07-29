@@ -17,7 +17,13 @@
     }, {
       "transform": "ts-optchain/transform",
       "after": false
+    }, {
+      "transform": "typescript-transform-paths"
+    }, {
+      "transform": "ts-optchain/transform",
+      "after": false
     }],
+    "types": ["@yuyi/env/types/global"],
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": false,
     "suppressImplicitAnyIndexErrors": false,

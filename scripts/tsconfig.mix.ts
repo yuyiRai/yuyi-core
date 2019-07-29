@@ -41,7 +41,7 @@ function definedOutput() {
 function diffPlugins(plugins: CompilerOptions['plugins'] = []) {
   const defaultPlugins = defaultCompilerOptions.plugins
   const r = plugins.filter(plugin => !defaultPlugins.find(df => isEqual(df, plugin)))
-  return r.length > 0 ? r : undefined
+  return r.length > 0 ? r.concat(plugins) : undefined
 }
 
 function taskFactroy(folder: string) {
@@ -56,13 +56,17 @@ function taskFactroy(folder: string) {
       }
       const { rootDir, baseUrl, paths } = definedRoot(compilerOptions, true)
       const { outDir, declarationDir } = definedOutput()
-      const { plugins, ...otherCompilerOptions } = compilerOptions;
+      const { plugins, types, ...otherCompilerOptions } = compilerOptions;
       const forceOptions = {
         composite: true,
         rootDir, baseUrl, paths, outDir, declarationDir,
         tsBuildInfoFile: '../.tsBuildInfo/' + folder.replace('yuyi-core-', '') + '.json',
         incremental: true,
-        plugins: diffPlugins(plugins)
+        plugins: diffPlugins(plugins),
+        types
+      }
+      if (folder !== 'env') {
+        forceOptions.types = Array.from(new Set((types || []).concat(["@yuyi/env/types/global"])))
       }
 
       Object.keys(otherCompilerOptions).forEach(key => {

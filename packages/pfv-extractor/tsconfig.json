@@ -15,6 +15,7 @@
     "declarationDir": "./types",
     "tsBuildInfoFile": "../.tsBuildInfo/pfv-extractor.json",
     "incremental": true,
+    "types": ["@yuyi/env/types/global"],
     "allowUnusedLabels": true,
     "noUnusedLocals": false,
     "typeRoots": ["node_modules/@types", "../../node_modules/@types", "yuyi-core-env/src/global/index.ts"]

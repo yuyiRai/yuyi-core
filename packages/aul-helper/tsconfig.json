@@ -12,6 +12,7 @@
     "declarationDir": "./types",
     "tsBuildInfoFile": "../.tsBuildInfo/aul-helper.json",
     "incremental": true,
+    "types": ["@yuyi/env/types/global"],
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "noStrictGenericChecks": true,
