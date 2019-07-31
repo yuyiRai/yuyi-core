@@ -36,5 +36,6 @@
     "@as-pect/cli": "^2.3.1",
     "assemblyscript": "AssemblyScript/assemblyscript",
     "assemblyscript-json": "github:WebAssemblyOS/assemblyscript-json"
-  }
+  },
+  "gitHead": "c6a7d77c9ade9bb5e42ed7d217058905e7b67330"
 }
