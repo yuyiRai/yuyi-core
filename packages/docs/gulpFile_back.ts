@@ -3,7 +3,7 @@ import * as TypeDoc from "typedoc";
 import gulp from "gulp";
 import { exec } from "shelljs";
 import { reduce } from "lodash";
-import { relativePaths } from "yuyi-core-env/config/paths";
+import { relativePaths } from "@yuyi/env/config/paths";
 
 type TypeDocOptions = Partial<typedoc.Options & {
   /**
@@ -22,7 +22,7 @@ const options: TypeDocOptions = {
   "target": "es5",
   "out": "docs",
   "tsconfig": "tsconfig.json",
-  "name": "yuyi-core-utils",
+  "name": "@yuyi/utils",
   "includes": "src",
   "ignoreCompilerErrors": true,
   "hideGenerator": true,

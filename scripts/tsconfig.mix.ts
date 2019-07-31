@@ -44,6 +44,8 @@ function diffPlugins(plugins: CompilerOptions['plugins'] = []) {
   return r.length > 0 ? r.concat(plugins) : undefined
 }
 
+const whiteList = ['./tsconfig.json', '../../node_modules/assemblyscript/std/assembly.json']
+
 function taskFactroy(folder: string) {
   const srcs = ['./packages/' + folder + '/tsconfig.json']
   return function () {
@@ -51,21 +53,21 @@ function taskFactroy(folder: string) {
       console.error('loading', json.extends, json.extends === './tsconfig.json')
       const { references, extends: extendsC, include, exclude, compilerOptions, ...other } = json
 
-      if (json.extends !== './tsconfig.json') {
+      if (!whiteList.includes(json.extends)) {
         set(json, 'extends', '../../tsconfig.json')
       }
-      const { rootDir, baseUrl, paths } = definedRoot(compilerOptions, true)
+      const { rootDir, baseUrl, paths } = definedRoot(compilerOptions, folder !== 'core')
       const { outDir, declarationDir } = definedOutput()
       const { plugins, types, ...otherCompilerOptions } = compilerOptions;
       const forceOptions = {
         composite: true,
         rootDir, baseUrl, paths, outDir, declarationDir,
-        tsBuildInfoFile: '../.tsBuildInfo/' + folder.replace('yuyi-core-', '') + '.json',
+        tsBuildInfoFile: '../.tsBuildInfo/' + folder.replace('yuyi-', '') + '.json',
         incremental: true,
         plugins: diffPlugins(plugins),
         types
       }
-      if (folder !== 'env') {
+      if (folder !== 'env' && folder !== 'core') {
         forceOptions.types = Array.from(new Set((types || []).concat(["@yuyi/env/types/global"])))
       }
 
@@ -76,7 +78,7 @@ function taskFactroy(folder: string) {
         }
       })
       const r = {
-        extends: (extendsC !== './tsconfig.json' ? '../../tsconfig.json' : extendsC),
+        extends: (!whiteList.includes(extendsC) ? '../../tsconfig.json' : extendsC),
         references,
         compilerOptions: {
           ...forceOptions,

@@ -6,21 +6,28 @@ import json from 'rollup-plugin-json'
 // import ttypescript from 'ttypescript';
 import external from 'rollup-plugin-peer-deps-external'
 import minify from 'rollup-plugin-babel-minify'
-
+import wasm from '@yuyi/wasm-rollup'
+import path from 'path'
 
 const pkg = require('./package.json')
 export default {
   input: `lib/index.js`,
   output: [
-    { file: pkg.main, name: 'Utils', exports: 'named', format: 'cjs', sourcemap: true },
-    { file: pkg.module, format: 'es', exports: 'named', sourcemap: true },
+    // { dir: path.dirname(pkg.main), name: 'Utils', exports: 'named', format: 'es', sourcemap: true },
+    { dir: path.dirname(pkg.main), format: 'es', exports: 'named', sourcemap: true },
   ],
   // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
   external: ["lodash"],
   watch: {
-    include: 'src/**',
+    include: 'lib/**',
   },
   plugins: [
+    wasm({
+      sync: [
+        // 不在这里登陆过的只能使用() => import("..")的方式
+        'wasm/program.wasm'
+      ]
+    }),
     external(),
     // Allow json resolution
     json(),

@@ -5,6 +5,7 @@ import {
   assign, filter, isArray,
   isArrayLike, isBoolean, isDate,
   isEmpty, isFunction, isNil,
+  isNaN,
   isObject,
   isString, map, reduce, trim, values,
   isNumber,
@@ -22,6 +23,7 @@ import { IKeyValueMap, IsBaseType, IsArray, IsObject, IsAny } from '../TsUtils';
  * @param value
  */
 export function isEmptyValue(value: any): value is (null | undefined | '') {
+  // console.log('isEmptyValue', value, (isString(value) && trim(value) === ''), isNil(value), isNaN(value))
   return (isString(value) && trim(value) === '') || isNil(value) || isNaN(value);
 }
 

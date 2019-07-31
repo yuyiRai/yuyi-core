@@ -1,13 +1,13 @@
-# yuyi-core-night
+# @yuyi/night
 
 > 
 
-[![NPM](https://img.shields.io/npm/v/yuyi-core-night.svg)](https://www.npmjs.com/package/yuyi-core-night) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![NPM](https://img.shields.io/npm/v/@yuyi/night.svg)](https://www.npmjs.com/package/@yuyi/night) [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 
 ## Install
 
 ```bash
-npm install --save yuyi-core-night
+npm install --save @yuyi/night
 ```
 
 ## Usage
@@ -15,7 +15,7 @@ npm install --save yuyi-core-night
 ```tsx
 import * as React from 'react'
 
-import MyComponent from 'yuyi-core-night'
+import MyComponent from '@yuyi/night'
 
 class Example extends React.Component {
   render () {

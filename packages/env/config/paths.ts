@@ -62,11 +62,11 @@ export const distKeyName = {
 
 const pathsBase = {
   requirePath: resolveProject('./config/run-ts.js'),
-  typedocGulpFile: resolveProject('../yuyi-core-docs/gulpfile.ts'),
-  typedocConfig: resolveProject('../yuyi-core-docs/typedoc.json'),
-  typedocConfigAsync: resolveProject('../yuyi-core-docs/typedoc.ts'),
-  typedocStringTemplate: resolveProject('../yuyi-core-docs/config/stringTemplate.json'),
-  typedocTheme: resolveProject('../yuyi-core-docs/bin/default'),
+  typedocGulpFile: resolveProject('../docs/gulpfile.ts'),
+  typedocConfig: resolveProject('../docs/typedoc.json'),
+  typedocConfigAsync: resolveProject('../docs/typedoc.ts'),
+  typedocStringTemplate: resolveProject('../docs/config/stringTemplate.json'),
+  typedocTheme: resolveProject('../docs/bin/default'),
   dotenv: resolveApp('.env'),
   clintPath: resolveApp('.'),
   clintDist: resolveApp('dist'),
@@ -85,7 +85,7 @@ const pathsBase = {
 };
 export type BasePaths = typeof pathsBase
 export type BasePathKeys = keyof BasePaths
-export const paths: BasePaths = {...pathsBase}
+export const paths: BasePaths = { ...pathsBase }
 
 
 export const pathSearcher = <K extends BasePathKeys>(dir: BasePaths[K], suffix: string = "*") => {
@@ -100,7 +100,7 @@ export function preventPath(path: string) {
 
 export const relativePaths: BasePaths = Object.entries(pathsBase).reduce(
   (obj, [key, value]) => {
-    return value ? ({...obj, [key]: path.relative(process.cwd(), value) }) : obj
+    return value ? ({ ...obj, [key]: path.relative(process.cwd(), value) }) : obj
   }, {}
 ) as BasePaths;
 

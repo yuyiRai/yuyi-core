@@ -4,8 +4,8 @@
 import { assign, filter, isArray, keys, reduce } from '../LodashExtra';
 import { IKeyValueMap } from '../TsUtils';
 import { pipe } from "./pipe";
-import { typeUtils } from '@/TypeLib';
-import { jsxIf } from '@/commonUtils';
+import { typeUtils } from '../TypeLib';
+import { jsxIf } from '../commonUtils';
 import _ from 'lodash'
 
 

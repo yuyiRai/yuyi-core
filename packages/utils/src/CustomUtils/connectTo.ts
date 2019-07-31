@@ -1,7 +1,7 @@
 /**
  * @module CustomUtils
  */
-import { typeUtils } from '@/TypeLib';
+import { typeUtils } from '../TypeLib';
 export function connectTo(target: any, source: any, ...keyNames: string[]) {
   if (typeUtils.isNil(target) || typeUtils.isNil(source)) {
     return false;

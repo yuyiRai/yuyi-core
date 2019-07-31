@@ -1,0 +1,16 @@
+{
+  "extends": "../../../node_modules/assemblyscript/std/assembly.json",
+  "compilerOptions": {
+    "lib": [
+      "es6",
+      "dom",
+      "dom.iterable",
+      "scripthost",
+      "esnext"
+    ],
+    "noLib": false
+  },
+  "include": [
+    "./**/*.ts"
+  ]
+}

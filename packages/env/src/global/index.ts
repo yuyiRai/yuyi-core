@@ -1,5 +1,6 @@
 import './interface';
 import './utils';
+import './wasm';
 
 export declare namespace JSX {
   type TChildren =

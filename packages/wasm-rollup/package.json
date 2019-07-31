@@ -1,0 +1,33 @@
+{
+  "name": "@yuyi/wasm-rollup",
+  "description": "Import WebAssembly code with Rollup",
+  "main": "dist/rollup-plugin-wasm.js",
+  "version": "0.0.0-development",
+  "license": "MIT",
+  "private": true,
+  "files": [
+    "dist/rollup-plugin-wasm.js"
+  ],
+  "scripts": {
+    "prebuild": "rimraf dist",
+    "build": "rollup -c",
+    "pretest": "npm run build",
+    "test": "node dist/test",
+    "semantic-release": "semantic-release pre && npm publish && semantic-release post"
+  },
+  "devDependencies": {
+    "rimraf": "^2.6.2",
+    "rollup": "^0.49.3",
+    "semantic-release": "^8.2.0",
+    "tape": "^4.8.0"
+  },
+  "keywords": [
+    "rollup",
+    "webassembly",
+    "import",
+    "wasm",
+    "wast",
+    "wat",
+    "emscripten"
+  ]
+}

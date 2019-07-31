@@ -9,16 +9,17 @@
     "baseUrl": "./src",
     "paths": {
       "@/*": ["./*"],
+      "@wasm/*": ["../wasm/*"],
       "@": ["./"]
     },
     "outDir": "./lib",
     "declarationDir": "./types",
     "tsBuildInfoFile": "../.tsBuildInfo/utils.json",
     "incremental": true,
-    "types": ["@yuyi/env/types/global"],
+    "types": ["@yuyi/env/types/global", "@types/jest", "@types/node"],
     "module": "esnext",
     "typeRoots": ["node_modules/@types", "../../node_modules/@types"]
   },
   "include": ["src"],
-  "exclude": ["tools", "../../node_modules"]
+  "exclude": ["tools", "lib", "../../node_modules"]
 }

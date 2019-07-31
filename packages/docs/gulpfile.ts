@@ -3,7 +3,7 @@ import { TaskFunction } from 'gulp'
 import replace from 'gulp-replace'
 import shell from 'gulp-shell'
 import { reduce } from "lodash";
-import { paths, relativePaths } from "../yuyi-core-env/config/paths";
+import { paths, relativePaths } from "../env/config/paths";
 import colors from 'colors';
 import console = require('console');
 

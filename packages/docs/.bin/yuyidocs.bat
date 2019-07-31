@@ -25,6 +25,6 @@ if "%allparam:~0,1%"==" " set "allparam=%allparam:~1%"&goto intercept_left
 if "%allparam:~-1%"==" " set "allparam=%allparam:~0,-1%"&goto intercept_right
 
 :eof
-node --max_old_space_size=2096 -r %rootpath%/yuyi-core-env/config/run-ts.js %rootpath%/yuyi-core-docs/main.ts %allparam%
+node --max_old_space_size=2096 -r %rootpath%/@yuyi/env/config/run-ts.js %rootpath%/@yuyi/docs/main.ts %allparam%
 
 pause

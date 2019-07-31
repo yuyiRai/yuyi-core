@@ -17,17 +17,21 @@ export { SearchKey, keyMatcher, KeyMatcherFunc, Option, OptionSearcher, RemoteSe
  */
 export function createEqualsMatcher<K = any>(searchKey: SearchKey<K>): keyMatcher {
   if (isFunction(searchKey)) {
+    // console.error('isFunction', searchKey);
     return searchKey;
   } else if (isRegExp(searchKey)) {
+    // console.error('isRegExp', searchKey);
     return function (key: string) {
       return searchKey.test(key)
     };
   } else if (isArray(searchKey)) {
-    const searchMatcher = map(searchKey, key => this.createEqualsMatcher(key));
+    // console.error('isArray', searchKey);
+    const searchMatcher = map(searchKey, key => createEqualsMatcher(key));
     return function (key) {
       return some(searchMatcher, match => match(key));
     }
   } else {
+    // console.error('else', searchKey);
     return function (key) {
       return isEqual(searchKey, key)
     }
@@ -42,7 +46,7 @@ export function isLabelMatchedItem(labelSearcher: SearchKey<string>, item: Optio
   if (isNotEmptyValue(item)) {
     const { label, value } = item;
     const name = typeFilterUtils.isNotEmptyValueFilter(label, value, item);
-    return this.createEqualsMatcher(labelSearcher)(name, value, item)
+    return createEqualsMatcher(labelSearcher)(name, value, item)
   }
   return false
 }
@@ -55,7 +59,7 @@ export function isValueMatchedItem(valueSearcher: SearchKey<string>, item: Optio
   if (isNotEmptyValue(item)) {
     const { label } = item;
     const value = typeFilterUtils.isNotEmptyValueFilter(item.value, item);
-    return this.createEqualsMatcher(valueSearcher)(value, label, item)
+    return createEqualsMatcher(valueSearcher)(value, label, item)
   }
   return false
 }
@@ -80,9 +84,12 @@ export function isValueMatchedItemByMatcher(keyMatcher: keyMatcher, item: Option
  * @param item 
  */
 export function isLabelMatchedItemByMatcher(keyMatcher: keyMatcher, item: Option): boolean {
+  // console.error('isNotEmptyValueFilter', item);
   if (isNotEmptyValue(item)) {
     const { label, value } = item;
+
     const name = typeFilterUtils.isNotEmptyValueFilter(label, value, item);
+    // console.error('isNotEmptyValueFilter', label, value, item, name);
     return keyMatcher(name, value, item)
   }
   return false
@@ -119,7 +126,9 @@ export function getOptions<
   findOne?: FindOne
 ): TResult {
   if (isNotEmptyArray(optionList)) {
-    const keyMatcher = this.createEqualsMatcher(searchKey)
+    const keyMatcher = createEqualsMatcher(searchKey)
+    // console.log(findOne, keyMatcher, searchKey);
+
     return ((findOne ? find : filter)(
       optionList,
       item => keyMatcherFunc(keyMatcher, item))
@@ -135,7 +144,7 @@ export function getOptionsByLabel<T = Option, K = string>(optionList: T[], searc
 export function getOptionsByLabel<T = Option, K = string>(optionList: T[], searchName: SearchKey<K>, findOne: true): T | undefined;
 
 export function getOptionsByLabel<T = Option, K = string, O extends boolean = false>(optionList: T[], searchName: SearchKey<K>, findOne?: O) {
-  return this.getOptions(optionList, searchName, this.isLabelMatchedItemByMatcher, findOne)
+  return getOptions(optionList, searchName, isLabelMatchedItemByMatcher, findOne)
 }
 
 /** {@inheritDoc getOptions} */
@@ -145,7 +154,7 @@ export function getOptionsByValue<T = Option, K = string>(optionList: T[], searc
 export function getOptionsByValue<T = Option, K = string>(optionList: T[], searchValue: SearchKey<K>, findOne: true): T | undefined
 
 export function getOptionsByValue<T = Option, K = string>(optionList: T[], searchValue: SearchKey<K>, findOne?: boolean) {
-  return this.getOptions(optionList, searchValue, this.isValueMatchedItemByMatcher, findOne)
+  return getOptions(optionList, searchValue, isValueMatchedItemByMatcher, findOne)
 }
 
 /**
@@ -156,8 +165,8 @@ export function getOptionsByValue<T = Option, K = string>(optionList: T[], searc
  * @param findOne - 
  */
 export function getOptionsByKey<T = Option, K = string>(optionList: T[], searchKey: SearchKey<K>, findOne: boolean = false): T | T[] | undefined {
-  return this.getOptions(optionList, searchKey, function (keyMatcher, item) {
-    return this.isLabelMatchedItemByMatcher(keyMatcher, item) || this.isValueMatchedItemByMatcher(keyMatcher, item)
+  return getOptions(optionList, searchKey, function (keyMatcher, item) {
+    return isLabelMatchedItemByMatcher(keyMatcher, item) || isValueMatchedItemByMatcher(keyMatcher, item)
   }, findOne)
 }
 
@@ -169,8 +178,8 @@ export function getOptionsByKey<T = Option, K = string>(optionList: T[], searchK
  */
 export function isOptionsItemSelected<T, K>(option: T[], searchName: SearchKey<K>, selectedValue: SearchKey<K>): boolean {
   if (isNotEmptyArray(option)) {
-    const items = this.getOptionsByValue(option, selectedValue);
-    return !isNil(this.getOptionsByLabel(castArray(items), searchName, true))
+    const items = getOptionsByValue(option, selectedValue);
+    return !isNil(getOptionsByLabel(castArray(items), searchName, true))
   }
   return false;
 }
@@ -180,10 +189,10 @@ export function isOptionsItemSelected<T, K>(option: T[], searchName: SearchKey<K
  * @param searchName 
  */
 export function optionsSelectedMatch<T, K>(option: T[], searchName: SearchKey<K>): keyMatcher {
-  const itemList = this.getOptionsByLabel(option, searchName);
+  const itemList = getOptionsByLabel(option, searchName);
   if (isNotEmptyArrayStrict(itemList)) {
     return function (selectedValue) {
-      return !isNil(this.getOptionsByValue(castArray(itemList), selectedValue, true))
+      return !isNil(getOptionsByValue(castArray(itemList), selectedValue, true))
     };
   }
   return function () { return false; };
@@ -224,7 +233,7 @@ export function valuesToLabels(options: Option[], value: SearchKey<string>, join
 export function valuesToLabels(options: Option[], value: SearchKey<string>, joinKey?: string): string | string[] {
   const result: string[] = typeFilterUtils.isArrayFilter(typeFilterUtils.isArrayFilter(
     arrayMapToKeysDive(
-      this.getOptionsByValue(options, value) || [],
+      getOptionsByValue(options, value) || [],
       'label'
     ), []
   )) || []
@@ -242,7 +251,7 @@ export function labelsToValues(options: Option[], label: SearchKey<string>, join
 export function labelsToValues(options: Option[], label: SearchKey<string>, joinKey?: string): string | string[] {
   const result: string[] = castArray(typeFilterUtils.isArrayFilter(
     arrayMapToKeysDive(
-      this.getOptionsByLabel(options, label) || [],
+      getOptionsByLabel(options, label) || [],
       'value'
     ), []
   ))
@@ -267,7 +276,7 @@ export function getCodeListByKey(codeType: Option[] | OptionSearcher, optionFact
       if (isOnlySearch && !isNotEmptyString(keyWord)) {
         return codeType
       }
-      return castArray(this.getOptionsByKey(codeType, new RegExp(escapeRegExp(keyWord))))
+      return castArray(getOptionsByKey(codeType, new RegExp(escapeRegExp(keyWord))))
     }
   } else if (isFunction(codeType)) {
     return async function (keyWord: string, isOnlySearch?: boolean): Promise<Option[]> {

@@ -1,0 +1,40 @@
+{
+  "name": "@yuyi/core",
+  "version": "0.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yuyiRai/yuyi-core.git"
+  },
+  "author": "yuyiRai<yuyi919606952@foxmail.com>",
+  "bugs": {
+    "url": "https://github.com/yuyiRai/yuyi-core/issues"
+  },
+  "homepage": "https://github.com/yuyiRai/yuyi-core#readme",
+  "license": "ISC",
+  "files": [
+    "dist/core_bg.wasm",
+    "dist/core.js",
+    "dist/core.d.ts"
+  ],
+  "main": "dist/core.js",
+  "module": "dist/core.js",
+  "types": "dist/core.d.ts",
+  "sideEffects": "false",
+  "scripts": {
+    "rs": "cargo build",
+    "rs:wasm": "wasm-pack build --out-dir dist --scope yuyiRai",
+    "build": "npm run build:untouched && npm run build:optimized",
+    "build:untouched": "asc assembly/index.ts -t build/module.untouched.wat -b dist/module.untouched.wasm --validate --sourceMap --measure",
+    "build:optimized": "asc assembly/index.ts -t build/module.optimized.wat -b dist/module.optimized.wasm --validate --sourceMap --measure --optimize",
+    "asbuild:untouched": "asc assembly/index.ts -b build/untouched.wasm -t build/untouched.wat --sourceMap --validate --debug",
+    "asbuild:optimized": "asc assembly/index.ts -b build/optimized.wasm -t build/optimized.wat --sourceMap --validate --optimize",
+    "asbuild": "npm run asbuild:untouched && npm run asbuild:optimized",
+    "test": "asp"
+  },
+  "devDependencies": {
+    "@as-pect/cli": "^2.3.1",
+    "assemblyscript": "AssemblyScript/assemblyscript",
+    "assemblyscript-json": "github:WebAssemblyOS/assemblyscript-json"
+  }
+}

@@ -1,7 +1,7 @@
 {
   "extends": "../../tsconfig.json",
   "references": [{
-    "path": "../yuyi-core-env"
+    "path": "../env"
   }],
   "compilerOptions": {
     "composite": true,
@@ -18,7 +18,7 @@
     "types": ["@yuyi/env/types/global"],
     "allowUnusedLabels": true,
     "noUnusedLocals": false,
-    "typeRoots": ["node_modules/@types", "../../node_modules/@types", "yuyi-core-env/src/global/index.ts"]
+    "typeRoots": ["node_modules/@types", "../../node_modules/@types", "@yuyi/env/src/global/index.ts"]
   },
   "include": ["src"],
   "exclude": ["tools", "../../node_modules"]
