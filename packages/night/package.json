@@ -1,6 +1,6 @@
 {
   "name": "@yuyi/night",
-  "version": "1.0.82",
+  "version": "0.0.1",
   "description": "",
   "author": "yuyiRai",
   "license": "MIT",
@@ -57,8 +57,8 @@
     "@types/react-dom": "^16.8.5",
     "@types/react-loadable": "^5.5.1",
     "@types/styled-components": "^4.1.18",
-    "@yuyi/env": "^2.0.39",
-    "@yuyi/utils": "^0.1.57",
+    "@yuyi/env": "^0.0.1",
+    "@yuyi/utils": "^0.0.5",
     "amap-js": "^1.1.0",
     "core-decorators": "^0.20.0",
     "cross-env": "^5.1.4",
