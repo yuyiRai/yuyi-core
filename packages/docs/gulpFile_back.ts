@@ -1,11 +1,11 @@
-import typedoc from "gulp-typedoc";
+// import typedoc from "gulp-typedoc";
 import * as TypeDoc from "typedoc";
 import gulp from "gulp";
 import { exec } from "shelljs";
 import { reduce } from "lodash";
 import { relativePaths } from "@yuyi/env/config/paths";
 
-type TypeDocOptions = Partial<typedoc.Options & {
+type TypeDocOptions = Partial<{
   /**
    * 使用捕获组指定正则表达式。然后将其用于将相关项目收集到一个模块中。
    */
@@ -69,13 +69,13 @@ gulp.task("typedoc", async function () {
   //   app.generateDocs(project, outputDir);
   //   // Alternatively generate JSON output
   //   app.generateJson(project, outputDir + '/documentation.json');
-    
+
   // }
   console.log(execStr, arg)
   exec(execStr)
   return;
 })
 
-gulp.task("typedoc-watch", gulp.parallel('typedoc', function() {
+gulp.task("typedoc-watch", gulp.parallel('typedoc', function () {
   gulp.watch("src/**/*.ts")
 }))
