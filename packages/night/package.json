@@ -8,7 +8,7 @@
   "main": "dist/cjs/index.js",
   "module": "lib/index.js",
   "jsnext:main": "src/index.ts",
-  "typings": "lib",
+  "typings": "types/index.d.ts",
   "engines": {
     "node": ">=8",
     "npm": ">=5"
@@ -19,12 +19,13 @@
     "docs:watch": "yuyidocs ../.. -w",
     "predeploy-docs": "yarn run docs:full",
     "deploy-docs": "gh-pages -d docs",
-    "dev": "ttsc --project tsconfig.json --watch",
+    "dev": "ttsc --build --watch",
     "test": "jest -c jest.config.js",
     "test:init": "ts-jest config:init",
     "test:watch": "jest --watch",
     "build": "cross-env NODE_ENV=production rollup -c",
     "start": "cross-env NODE_ENV=development rollup -c -w",
+    "clean-lib": "rimraf lib/**/*.d.ts",
     "clean-src": "rimraf src/**/*.js && rimraf src/**/*.map && rimraf src/**/*.d.ts",
     "prepare": "yarn run build",
     "predeploy": "cd example && yarn install && yarn run build",

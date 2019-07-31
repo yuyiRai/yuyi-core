@@ -1,25 +1,46 @@
 {
   "extends": "../../tsconfig.json",
-  "references": [{
-    "path": "../env"
-  }],
+  "references": [
+    {
+      "path": "../env"
+    }
+  ],
   "compilerOptions": {
     "composite": true,
     "rootDir": "./src",
     "baseUrl": "./src",
     "paths": {
-      "@/*": ["./*"],
-      "@wasm/*": ["../wasm/*"],
-      "@": ["./"]
+      "@/*": [
+        "./*"
+      ],
+      "@wasm/*": [
+        "../wasm/*"
+      ],
+      "@": [
+        "./"
+      ]
     },
     "outDir": "./lib",
     "declarationDir": "./types",
     "tsBuildInfoFile": "../.tsBuildInfo/utils.json",
     "incremental": true,
-    "types": ["@yuyi/env/types/global", "@types/jest", "@types/node"],
+    "types": [
+      "@yuyi/env/types/global",
+      "@types/jest",
+      "@types/node"
+    ],
     "module": "esnext",
-    "typeRoots": ["node_modules/@types", "../../node_modules/@types"]
+    "typeRoots": [
+      "node_modules/@types",
+      "../../node_modules/@types"
+    ]
   },
-  "include": ["src"],
-  "exclude": ["tools", "lib", "../../node_modules"]
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "tools",
+    "lib",
+    "../../node_modules"
+  ]
 }

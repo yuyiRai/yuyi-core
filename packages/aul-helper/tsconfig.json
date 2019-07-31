@@ -1,25 +1,31 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "composite": true,
-    "rootDir": "./src",
-    "baseUrl": "./src",
-    "paths": {
-      "@": ["./"],
-      "@/*": ["./*"]
-    },
-    "outDir": "./lib",
-    "declarationDir": "./types",
-    "tsBuildInfoFile": "../.tsBuildInfo/aul-helper.json",
-    "incremental": true,
-    "types": ["@yuyi/env/types/global"],
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "rootDir": "../..",
+    "baseUrl": "src",
     "allowJs": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "noStrictGenericChecks": true,
-    "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
+    "forceConsistentCasingInFileNames": false,
     "noEmit": true,
-    "jsx": "preserve"
+    "jsx": "preserve",
+    "isolatedModules": true,
+    "target": "es5",
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": false,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true
   },
-  "include": ["src"]
+  "include": [
+    "src"
+  ]
 }

@@ -2,7 +2,7 @@ import { isNotEmptyArray, Utils } from '@/utils';
 import { autobind } from 'core-decorators';
 import produce from 'immer';
 import { unset } from 'lodash';
-import { action, computed, IKeyValueMap, IMapDidChange, Lambda, observable, ObservableMap, runInAction } from 'mobx';
+import { action, computed, IKeyValueMap, IMapDidChange, Lambda, observable, ObservableMap, runInAction, toJS } from 'mobx';
 import { FormModel } from '../ItemConfig';
 import { FormItemStoreCore, IFormItemStoreConstructor } from "./FormItemStoreBase";
 import { GFormStore } from './GFormStore';
@@ -74,7 +74,7 @@ export class FormStoreCore<FM extends FormModel, VM extends IFormItemStoreConstr
 
   @action setForm(formSource: FM): void {
     console.log('setForm', formSource);
-    const lastCahce = Utils.cloneDeep(Utils.toJS(this.formCache))
+    const lastCahce = Utils.cloneDeep(toJS(this.formCache))
     const nextCache = produce(lastCahce, cache => {
       this.mapToDiff(this.formMap, formSource, cache)
     })

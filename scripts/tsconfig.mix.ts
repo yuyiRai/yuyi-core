@@ -40,8 +40,9 @@ function definedOutput() {
 
 function diffPlugins(plugins: CompilerOptions['plugins'] = []) {
   const defaultPlugins = defaultCompilerOptions.plugins
+  plugins = Array.from(new Set(plugins.map(i=>JSON.stringify(i)))).map(i => JSON.parse(i))
   const r = plugins.filter(plugin => !defaultPlugins.find(df => isEqual(df, plugin)))
-  return r.length > 0 ? r.concat(plugins) : undefined
+  return r.length > 0 ? r.concat(defaultPlugins) : undefined
 }
 
 const whiteList = ['./tsconfig.json', '../../node_modules/assemblyscript/std/assembly.json']

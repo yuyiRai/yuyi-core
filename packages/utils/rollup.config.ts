@@ -9,13 +9,19 @@ import minify from 'rollup-plugin-babel-minify'
 import wasm from '@yuyi/wasm-rollup'
 import path from 'path'
 
+const isDevelopment = process.env.NODE_ENV === 'development'
+const isProduction = process.env.NODE_ENV === 'production'
 const pkg = require('./package.json')
+let cache = {};
 export default {
   input: `lib/index.js`,
   output: [
     // { dir: path.dirname(pkg.main), name: 'Utils', exports: 'named', format: 'es', sourcemap: true },
+    // { dir: path.dirname(pkg.main), format: 'es', exports: 'named', sourcemap: true },
     { dir: path.dirname(pkg.main), format: 'es', exports: 'named', sourcemap: true },
   ],
+  cache: isDevelopment ? cache : false,
+  treeshake: isProduction,
   // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
   external: ["lodash"],
   watch: {
@@ -50,14 +56,14 @@ export default {
     // which external modules to include in the bundle
     // https://github.com/rollup/rollup-plugin-node-resolve#usage
     resolve(),
-    minify({
+    ...(isDevelopment ? [] : [minify({
       // 清除注释
       comments: false,
       // 清除debugger
       removeDebugger: true,
       // 清除console
       removeConsole: true
-    }),
+    })]),
     // Resolve source maps to the original source
     sourceMaps(),
   ],

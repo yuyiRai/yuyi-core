@@ -1,7 +1,7 @@
 import { Utils } from '@/utils';
 import { autobind, readonly } from 'core-decorators';
 import { assign, reduce } from 'lodash';
-import { action, computed, IKeyValueMap, keys as getKeys, observable, ObservableMap, toJS, values } from 'mobx';
+import { action, get, computed, IKeyValueMap, keys as getKeys, observable, ObservableMap, toJS, values } from 'mobx';
 import { CommonStore } from '../CommonStore';
 
 export type IKeyData<Key extends string> = IKeyValueMap<any> & {
@@ -13,7 +13,7 @@ export class KeyDataMapStore<
   DataKey extends string,
   SourceData extends IKeyData<DataKey>,
   TargetData extends IKeyData<DataKey> = SourceData,
-> extends CommonStore {
+  > extends CommonStore {
 
   @observable
   public sourceMap: ObservableMap<string, SourceData> = observable.map(new Map(), { deep: false })
@@ -25,14 +25,14 @@ export class KeyDataMapStore<
   @computed
   public get sourceData(): IKeyValueMap<SourceData> {
     // console.log('sourceData', this);
-    
+
     // const c = toJS(this.sourceMap.toPOJO())
     // return forEach(c, (value, key) => {
     //   c[key] = toJS(value)
     // })
     // toJS(this.sourceMap.toPOJO())
     return reduce(this.keyList, (obj, key) => {
-      const value = Utils.obsGet(this.sourceMap, key)
+      const value = get(this.sourceMap, key)
       return assign(obj, {
         [key]: toJS(value)
       });
@@ -71,7 +71,7 @@ export class KeyDataMapStore<
     return reduce(this.sourceData, action(callback), init);
   }
 
-  @action 
+  @action
   public mapValueWithSource<VT = any>(valueKey: string, autoZip = false): IKeyValueMap<VT> {
     const obj = {}
     for (const key of this.keyList) {
@@ -83,7 +83,7 @@ export class KeyDataMapStore<
     return obj;
   }
 
-  @action 
+  @action
   public mapValueWithTarget<VT = any>(valueKey: string, autoZip = false): IKeyValueMap<VT> {
     return reduce(this.keyList, (obj, key) => {
       const value = this.getTargetData(key)[valueKey]
@@ -133,7 +133,7 @@ export class KeyDataMapStore<
     super()
     this.registerDisposer(() => {
       // console.error('registerDisposer', this);
-      for(const key of this.keyList) {
+      for (const key of this.keyList) {
         this.sourceMap.delete(key)
       }
       this.sourceMap.clear()
@@ -141,7 +141,7 @@ export class KeyDataMapStore<
       this.transformer = null
       this.sourceDataSnapshot = {}
     })
-    
+
     this.intercept(this.sourceMap, listener => {
       // console.log(listener, 1)
       if (listener.type === 'add') {

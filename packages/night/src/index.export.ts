@@ -4,7 +4,6 @@ import Vue from 'vue';
 // import 'tsx-control-statements/index.d'
 import './global';
 import install from './install';
-export * from '@yuyi/utils';
 export * from './components';
 export * from './global';
 export * from './hooks'

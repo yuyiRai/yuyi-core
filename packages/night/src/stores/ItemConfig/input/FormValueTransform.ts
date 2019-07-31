@@ -1,17 +1,18 @@
 /* eslint-disable */
 import { set } from 'lodash';
 import Utils, { computed, observable, action } from '@/utils';
-import { DateFormatter, EDateFormatter, parseTime } from '@/utils';
+import { toJS } from 'mobx'
+import { EDateFormatter, parseTime } from '@/utils';
 import { FormModel } from '../interface';
 
 export type FilterTypeKey<K = string> = 'group' | 'path' | 'dateTime' | 'date' | 'dateToDate' | K
 export type FilterType<FM, FV = any, CV = any> = FilterTypeKey | IFormValueTransform<FM, FV, CV>
 export enum TransformerType {
-  NONE, 
+  NONE,
   /**
    * form值转换为组件值(component-value, form-field-value)
    */
-  F2V, 
+  F2V,
   /**
    * 组件值(component-value, form-field-value)转换为form值
    */
@@ -50,9 +51,9 @@ export class FormValueTransform<FM extends FormModel, FV = any, CV = any> implem
         return this.getGroupF2V()
       case 'path':
         return this.getGroupF2V(false)
-      case 'dateTime': 
+      case 'dateTime':
         return this.dateFormatter(EDateFormatter.dateTime);
-      case 'date': 
+      case 'date':
         return this.dateFormatter(EDateFormatter.date);
       case 'dateToDate':
         return (v: any) => Utils.isArrayFilter(v, []).filter((i) => Utils.isNotEmptyValue(i))
@@ -69,17 +70,17 @@ export class FormValueTransform<FM extends FormModel, FV = any, CV = any> implem
         return this.getGroupV2F()
       case 'path':
         return this.getGroupV2F(false)
-      case 'dateTime': 
+      case 'dateTime':
         return this.dateFormatter(EDateFormatter.dateTime)
-      case 'date': 
+      case 'date':
         return this.dateFormatter(EDateFormatter.date);
       case 'dateToDate':
         return (v: any) => {
-          const [s,e] = Utils.isArrayFilter<string>(v, []).filter((i) => Utils.isNotEmptyValue(i))
-          if(Utils.isNotEmptyValue(s) && Utils.isNotEmptyValue(e)){
-            return [`${s}${s.length<11?' 00:00:00':''}`, `${s.length<11?parseTime(new Date(new Date(e).setTime(new Date(e+' 00:00:00').getTime()-1))):''}`]
+          const [s, e] = Utils.isArrayFilter<string>(v, []).filter((i) => Utils.isNotEmptyValue(i))
+          if (Utils.isNotEmptyValue(s) && Utils.isNotEmptyValue(e)) {
+            return [`${s}${s.length < 11 ? ' 00:00:00' : ''}`, `${s.length < 11 ? parseTime(new Date(new Date(e).setTime(new Date(e + ' 00:00:00').getTime() - 1))) : ''}`]
           }
-          return [s,e]
+          return [s, e]
         }
     }
     return this.normalCommon
@@ -104,7 +105,7 @@ export class FormValueTransform<FM extends FormModel, FV = any, CV = any> implem
     return Utils.isNotEmptyValueFilter(value)
   }
 
-  private dateFormatter(formatter?: DateFormatter) {
+  private dateFormatter(formatter?: EDateFormatter) {
     return (value: any) => Utils.toDateString(value, formatter)
   }
 
@@ -114,7 +115,7 @@ export class FormValueTransform<FM extends FormModel, FV = any, CV = any> implem
   private getGroupV2F(isRemoveRepeat = true) {
     return (array: any[]) => this.groupV2F(array, isRemoveRepeat)
   }
-  
+
   private groupF2V(value: any, isRemoveRepeat = true) {
     let next: string[];
     if (Utils.isNotEmptyString(value)) {
@@ -125,7 +126,7 @@ export class FormValueTransform<FM extends FormModel, FV = any, CV = any> implem
     return Utils.zipEmptyData(next, isRemoveRepeat)
   }
   private groupV2F(array: any[], isRemoveRepeat = true) {
-    return Utils.toString(Utils.zipEmptyData(Utils.isArrayFilter(Utils.toJS(array), []), isRemoveRepeat))
+    return Utils.toString(Utils.zipEmptyData(Utils.isArrayFilter(toJS(array), []), isRemoveRepeat))
   }
 }
 

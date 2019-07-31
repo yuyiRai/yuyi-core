@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-export default function wasm (options = {}) {
+export default function wasm(options = {}) {
   options = Object.assign({}, options)
 
   const syncFiles = (options.sync || []).map(x => path.resolve(x))
@@ -23,7 +23,7 @@ export default function wasm (options = {}) {
       return null;
     },
 
-    banner:  `
+    banner: `
       function _loadWasmModule (sync, src, imports) {
         var buf = null
         var isNode = typeof process !== 'undefined' && process.versions != null && process.versions.node != null
@@ -49,8 +49,9 @@ export default function wasm (options = {}) {
       }
     `.trim(),
 
-    transform (code, id) {
+    transform(code, id) {
       if (code && /\.wasm$/.test(id)) {
+        // console.log(id.replace('.wasm', '.d.ts'))
         const src = Buffer.from(code, 'binary').toString('base64')
         const sync = syncFiles.indexOf(id) !== -1
         return `export default function(imports){return _loadWasmModule(${+sync}, '${src}', imports)}`

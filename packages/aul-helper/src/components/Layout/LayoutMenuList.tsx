@@ -14,12 +14,12 @@ import RcQueueAnim from 'rc-queue-anim';
 interface IQueueAnimAntMenuProps extends MenuProps {
 }
 
-export const QueueAnimAntMenu: React.FunctionComponent<IQueueAnimAntMenuProps> = 
+export const QueueAnimAntMenu: React.FunctionComponent<IQueueAnimAntMenuProps> =
   React.forwardRef<RcQueueAnim<IQueueAnimAntMenuProps>>(
-  (props, ref) => {
-    return <QueueAnim ref={ref} duration={1000} component={Menu} componentProps={props}>{props.children}</QueueAnim>;
-  }
-) as any;
+    (props, ref) => {
+      return <QueueAnim ref={ref} duration={1000} component={Menu} componentProps={props}>{props.children}</QueueAnim>;
+    }
+  ) as any;
 
 
 export const LayoutMenuList: React.FunctionComponent<MenuProps> = (props) => {

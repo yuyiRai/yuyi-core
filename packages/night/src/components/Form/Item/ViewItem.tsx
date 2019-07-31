@@ -31,7 +31,7 @@
 //         console.log(search, this.itemConfig, form)
 //         search && remoteMethod(search).then(r=>{
 //           console.log(code, search, r)
-          
+
 //         })
 //       break;
 //     }
@@ -70,6 +70,7 @@
 // }))
 
 import * as React from 'react';
+import { Utils } from '@yuyi/utils';
 import { OFormItemCommon } from '../Interface';
 
 interface IViewItemProps extends OFormItemCommon {
@@ -79,27 +80,27 @@ interface IViewItemProps extends OFormItemCommon {
 const ViewItem: React.FunctionComponent<IViewItemProps> = (props: IViewItemProps) => {
   const { value, itemConfig } = props;
   const { useSlot, slot, type } = itemConfig
-  if(type === 'radioOne'){
-    return <span>{value?"是":"否"}</span>
-  } else if(type==='date' || type==='dateTime'){
+  if (type === 'radioOne') {
+    return <span>{value ? "是" : "否"}</span>
+  } else if (type === 'date' || type === 'dateTime') {
     return (
-      <span>{ 
-        Utils.isNotEmptyValue(value) 
-        ? value
-        : `` // `----/--/--${type === 'dateTime' ? " --:--:--" : ""}`
+      <span>{
+        Utils.isNotEmptyValue(value)
+          ? value
+          : `` // `----/--/--${type === 'dateTime' ? " --:--:--" : ""}`
       }</span>
     )
-  } else if((type==='select' || type==='radio')) {
+  } else if ((type === 'select' || type === 'radio')) {
     // console.log(itemConfig.label, value, itemConfig.options, this.value)
     return Utils.valuesToLabels(itemConfig.options as any, value)
-  } else if(type === 'address' as any) {
+  } else if (type === 'address' as any) {
     // console.log(itemConfig, itemConfig.label, itemConfig.form[itemConfig.code+'Name'])
-    return <span><span> { Utils.zipEmptyData(Utils.isStringFilter(itemConfig.form[itemConfig.code+'Name'], '').split('|')).join('-') } </span><span>{itemConfig.suffix}</span></span>
-  } else if(useSlot !== null && Utils.isFunction(this.$scopedSlots[slot])) {
+    return <span><span> {Utils.zipEmptyData(Utils.isStringFilter(itemConfig.form[itemConfig.code + 'Name'], '').split('|')).join('-')} </span><span>{itemConfig.suffix}</span></span>
+  } else if (useSlot !== null && Utils.isFunction(this.$scopedSlots[slot])) {
     // console.log('view item', itemConfig, itemConfig.code,this.$scopedSlots , useSlot)
-    return useSlot && this.$scopedSlots[slot]({data: value, props: itemConfig.form})
+    return useSlot && this.$scopedSlots[slot]({ data: value, props: itemConfig.form })
   } else {
-    return <span><span> { value } </span><span>{itemConfig.suffix}</span></span>
+    return <span><span> {value} </span><span>{itemConfig.suffix}</span></span>
   }
 };
 

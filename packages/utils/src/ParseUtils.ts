@@ -58,28 +58,33 @@ export function parseTime(time: any, cFormat?: string) {
 // export type DateFormatter = EDateFormatter | string
 
 export class DateUtils {
-  public static format(value: any, formatter: DateUtils.EFormatter = DateUtils.EFormatter.dateTime): string {
+  public static format(value: any, formatter: EDateFormatter = EDateFormatter.dateTime): string {
     return toDateString(value, formatter)
   }
-}
-export namespace DateUtils {
-  /**
-   * 常用formatter模板
-   */
-  export enum EFormatter {
-    /**
-     * 日期
-     */
-    date = 'YYYY-MM-DD',
-    /**
-     * 日期时分秒
-     */
-    dateTime = 'YYYY-MM-DD HH:mm:ss'
+  public static getDateRange(days: number) {
+    const end = new Date();
+    const start = new Date();
+    start.setTime(start.getTime() - 3600 * 1000 * 24 * days);
+    return [start, end]
   }
-  export type Formatter = EFormatter | string
 }
 
-export function toDateString(value: any, formatter: DateUtils.EFormatter = DateUtils.EFormatter.dateTime): string {
+/**
+ * 常用formatter模板
+ */
+export enum EDateFormatter {
+  /**
+   * 日期
+   */
+  date = 'YYYY-MM-DD',
+  /**
+   * 日期时分秒
+   */
+  dateTime = 'YYYY-MM-DD HH:mm:ss'
+}
+export type DateFormatter = EDateFormatter | string
+
+export function toDateString(value: any, formatter: EDateFormatter = EDateFormatter.dateTime): string {
   if (isDate(value)) {
     return moment(value).format(formatter)
   } else if (typeUtils.isNotEmptyString(value)) {

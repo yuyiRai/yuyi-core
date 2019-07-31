@@ -1182,8 +1182,8 @@
         "signature": "3640656a1602c8fbdbf001608f5568f821bb6cee57d39373311b1e810284c0d3"
       },
       "d:/workspace/@yuyi/packages/utils/src/parseutils.ts": {
-        "version": "359b362f09e3c400eb60456bffb9767a222d34c2dc628a0ed06e57d4955bcfa1",
-        "signature": "a8cb9f512b490c6d10a9a50d7358b9df6eb71a1a36345170f77a6564100de7cf"
+        "version": "1f4bcec18f339a922951646d83e4bd57b4a05134d5a8bef32e9e2b321d6e8c1c",
+        "signature": "0ca9573b4c5438fe9dccbf4e56c0def89ac7b16865ed5ce3fb33aaa521305982"
       },
       "d:/workspace/@yuyi/packages/utils/src/optionsutils/interface.ts": {
         "version": "d3f3c69692e97374e4390f7cc2b76eca79a848ca16bfc4160e24769ae4c5c12a",
@@ -1234,12 +1234,8 @@
         "signature": "6411e6908b59f3c2e8df46f11ff16b6befaf8e6836e86c788ba66d3cdfc98751"
       },
       "d:/workspace/@yuyi/packages/utils/src/utils.ts": {
-        "version": "405b5e153397a4f12a0b71bca9037415b14d60b555c0b77d650aa893c3118008",
-        "signature": "2aec6ebe38c73c9a9e9e620553adf1f5234b31d76792e17e5e7b86c1bb5ce181"
-      },
-      "d:/workspace/@yuyi/packages/utils/src/wasmloader.ts": {
-        "version": "f1f048b399e32cc640707e5ba346bcd9c4ad99ba042d51fe4fb875be403b0ef5",
-        "signature": "78ec729e8c481aebf74ad603d2885777c4e8a568c2222802f293f2e028675c90"
+        "version": "d02e42abfa0d0602b079ba375063100cf3755644e9a18020eb058b05d97c805b",
+        "signature": "14403969478468eee5163142f4e9c1911121aded71df39cfdbb19be3ff999cc0"
       },
       "d:/workspace/@yuyi/node_modules/ts-optchain/index.d.ts": {
         "version": "e9207dae9dbce9914c4548ef0bb4be18bfed7c1584e43bde999ef52a52a368b3",
@@ -1401,8 +1397,12 @@
         "version": "afbca65d0889b117e2295b44199cc1f01e7ce7372cf4f8d416996cb4b54358a0",
         "signature": "afbca65d0889b117e2295b44199cc1f01e7ce7372cf4f8d416996cb4b54358a0"
       },
+      "d:/workspace/@yuyi/packages/utils/src/wasmloader/index.ts": {
+        "version": "d690f097032aef135d7fdb27f15b6f3f229a2d60e50769601b2ee4f1799a868d",
+        "signature": "5e6ebc6eb0f4ad9475f14deb03bf20d170a70c6371e0403ba8eaf883c968d204"
+      },
       "d:/workspace/@yuyi/packages/utils/src/index.ts": {
-        "version": "2bb2b3e8feb7d46937aec05c18bb5fc34e32979dfefdf463cbfd9e26341a4add",
+        "version": "6d0ad0f09d7e1393d0e3b93bc05d3eb590d6d775d12231ece3fe8f38fd238c9b",
         "signature": "edf4021ada0e652b689b086c6b6f9a9c9c19a1c22f667507a0b318af0e516110"
       },
       "d:/workspace/@yuyi/packages/utils/src/index.export.ts": {
@@ -1453,8 +1453,8 @@
         "signature": "d9b3ee4c3c6627c3476a04ac279787a68301adb980885ad7747dfae9dbf93212"
       },
       "d:/workspace/@yuyi/packages/env/types/global/index.d.ts": {
-        "version": "e96834bbad07100b28936d4f14d15fe4c26b52003a6e1ee25f601781ba400b73",
-        "signature": "e96834bbad07100b28936d4f14d15fe4c26b52003a6e1ee25f601781ba400b73"
+        "version": "6c7b9b81456ca95eb69b923fd03835bd3ae2046b4c3f9d86be106e8b75e4261c",
+        "signature": "6c7b9b81456ca95eb69b923fd03835bd3ae2046b4c3f9d86be106e8b75e4261c"
       },
       "d:/workspace/@yuyi/node_modules/@types/jest-diff/index.d.ts": {
         "version": "6ecb326999da47034eff85653423767152858fbb7acf0433f7603c9abf1e3f06",
@@ -3870,11 +3870,6 @@
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/util.d.ts",
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "d:/workspace/@yuyi/packages/utils/src/wasmloader.ts": [
-        "d:/workspace/@yuyi/packages/env/types/global/wasm.d.ts",
-        "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/util.d.ts",
-        "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/ts3.2/util.d.ts"
-      ],
       "d:/workspace/@yuyi/node_modules/ts-optchain/index.d.ts": [
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/util.d.ts",
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/ts3.2/util.d.ts"
@@ -4199,6 +4194,11 @@
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/util.d.ts",
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "d:/workspace/@yuyi/packages/utils/src/wasmloader/index.ts": [
+        "d:/workspace/@yuyi/packages/env/types/global/wasm.d.ts",
+        "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/util.d.ts",
+        "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "d:/workspace/@yuyi/packages/utils/src/index.ts": [
         "d:/workspace/@yuyi/node_modules/ts-optchain/index.d.ts",
         "d:/workspace/@yuyi/node_modules/typescriptcollectionsframework/definitions/index.d.ts",
@@ -4211,7 +4211,7 @@
         "d:/workspace/@yuyi/packages/utils/src/parseutils.ts",
         "d:/workspace/@yuyi/packages/utils/src/mobxutils.ts",
         "d:/workspace/@yuyi/packages/utils/src/eventemitter/index.ts",
-        "d:/workspace/@yuyi/packages/utils/src/wasmloader.ts",
+        "d:/workspace/@yuyi/packages/utils/src/wasmloader/index.ts",
         "d:/workspace/@yuyi/packages/utils/src/utils.ts",
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/util.d.ts",
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/ts3.2/util.d.ts"
@@ -6406,15 +6406,16 @@
       ],
       "d:/workspace/@yuyi/packages/utils/src/utils.ts": [
         "d:/workspace/@yuyi/packages/utils/src/customutils/index.ts",
+        "d:/workspace/@yuyi/packages/utils/src/optionsutils/index.ts",
         "d:/workspace/@yuyi/packages/utils/src/eventemitter/index.ts",
         "d:/workspace/@yuyi/packages/utils/src/commonutils.ts",
         "d:/workspace/@yuyi/packages/utils/src/timebuffer.ts",
         "d:/workspace/@yuyi/packages/utils/src/propertyutils/index.ts",
         "d:/workspace/@yuyi/packages/utils/src/testutil/index.ts",
         "d:/workspace/@yuyi/packages/utils/src/lodashextra/index.ts",
-        "d:/workspace/@yuyi/packages/utils/src/typelib/index.ts",
         "d:/workspace/@yuyi/packages/utils/src/parseutils.ts",
-        "d:/workspace/@yuyi/packages/utils/src/mobxutils.ts"
+        "d:/workspace/@yuyi/packages/utils/src/mobxutils.ts",
+        "d:/workspace/@yuyi/packages/utils/src/typelib/index.ts"
       ],
       "d:/workspace/@yuyi/node_modules/ts-optchain/index.d.ts": [
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/util.d.ts",
@@ -6751,7 +6752,7 @@
         "d:/workspace/@yuyi/packages/utils/src/parseutils.ts",
         "d:/workspace/@yuyi/packages/utils/src/mobxutils.ts",
         "d:/workspace/@yuyi/packages/utils/src/eventemitter/index.ts",
-        "d:/workspace/@yuyi/packages/utils/src/wasmloader.ts",
+        "d:/workspace/@yuyi/packages/utils/src/wasmloader/index.ts",
         "d:/workspace/@yuyi/packages/utils/src/utils.ts",
         "d:/workspace/@yuyi/node_modules/typescriptcollectionsframework/definitions/index.d.ts"
       ],
@@ -7434,6 +7435,9 @@
       "d:/workspace/@yuyi/node_modules/typescriptcollectionsframework/definitions/src/treemap.d.ts",
       "d:/workspace/@yuyi/node_modules/typescriptcollectionsframework/definitions/src/treeset.d.ts",
       "d:/workspace/@yuyi/node_modules/typescriptcollectionsframework/definitions/index.d.ts",
+      "d:/workspace/@yuyi/packages/utils/src/wasmloader/index.ts",
+      "d:/workspace/@yuyi/packages/utils/src/index.ts",
+      "d:/workspace/@yuyi/packages/utils/src/index.export.ts",
       "d:/workspace/@yuyi/packages/utils/src/propertyutils/get.ts",
       "d:/workspace/@yuyi/packages/utils/src/propertyutils/set.ts",
       "d:/workspace/@yuyi/node_modules/@types/react/global.d.ts",
@@ -7492,10 +7496,7 @@
       "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/base.d.ts",
       "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/ts3.2/util.d.ts",
       "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/ts3.2/globals.d.ts",
-      "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/ts3.2/index.d.ts",
-      "d:/workspace/@yuyi/packages/utils/src/wasmloader.ts",
-      "d:/workspace/@yuyi/packages/utils/src/index.ts",
-      "d:/workspace/@yuyi/packages/utils/src/index.export.ts"
+      "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/ts3.2/index.d.ts"
     ]
   },
   "version": "3.5.3"

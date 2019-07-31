@@ -1,0 +1,1 @@
+{"version":3,"file":"ViewItem.d.ts","sourceRoot":"","sources":["../../../../src/components/Form/Item/ViewItem.tsx"],"names":[],"mappings":"AAuEA,OAAO,KAAK,KAAK,MAAM,OAAO,CAAC;AAE/B,OAAO,EAAE,eAAe,EAAE,MAAM,cAAc,CAAC;AAE/C,UAAU,cAAe,SAAQ,eAAe;IAC9C,KAAK,CAAC,EAAE,GAAG,CAAC;CACb;AAED,QAAA,MAAM,QAAQ,EAAE,KAAK,CAAC,iBAAiB,CAAC,cAAc,CAyBrD,CAAC;AAEF,eAAe,QAAQ,CAAC"}

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Loadable from 'react-loadable';
-import Utils from '@yuyi/utils';
+import { Utils } from '@yuyi/utils';
 import { FormItemType, IItemTypeComponent, OFormItemCommon } from '../Interface/FormItem';
 import { useCascaderItem } from './CascaderItem';
 // import { IInputItemProps, ITextAreaItemProps } from './InputItem';
@@ -46,9 +46,7 @@ export const itemType: IItemTypeComponent = {
   'selectTree': useSelectTreeItem,
   'group': useGroupItem,
   'custom': useCustomItem
-}
-
-window.Utils = Utils
+};
 
 export function ItemSwitchType<T extends FormItemType>(type: T): IItemTypeComponent[T]
 export function ItemSwitchType<T extends FormItemType>(type?: never | ""): IItemTypeComponent['text']
@@ -65,7 +63,7 @@ export function checkItemSwitch(type: FormItemType) {
   return Component
 }
 
-export const isUseHooks = Utils.reduceMap(itemType, (value, key) => ({ [key]: checkItemSwitch(key) }) )
+export const isUseHooks = Utils.reduceMap(itemType, (value, key) => ({ [key]: checkItemSwitch(key) }))
 
 export function useItemSwitch(type: FormItemType, props: OFormItemCommon, ref: React.Ref<any>) {
   const Component = React.useMemo(() => isUseHooks[type] || checkItemSwitch(type), [type]);

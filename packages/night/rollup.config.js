@@ -18,15 +18,15 @@ console.log('welcome: ', process.env.NODE_ENV)
 import pkg from './package.json'
 let cache = {};
 export default {
-  external: ['react-is', 'react','react-dom', 'mobx', 'mobx-react', 'antd', '@ant-design', 'element-ui', 'element-react', 'element-theme-default'],
+  external: ['react-is', 'react', 'react-dom', 'mobx', 'mobx-react', 'antd', '@ant-design', 'element-ui', 'element-react', 'element-theme-default', 'stream'],
   input: {
-    index: 'src/index.tsx'
+    index: 'lib/index.js'
   },
   treeshake: isProduction,
   cache: isDevelopment ? cache : false,
   inlineDynamicImports: false,
   manualChunks(path) {
-    if(['node_modules'].some(m => path.includes(m))){
+    if (['node_modules'].some(m => path.includes(m))) {
       return 'vendor'
     }
   },
@@ -36,7 +36,7 @@ export default {
       format: 'es',
       chunkFileNames: '[name].js',
       entryFileNames: '[name].js',
-	    sourcemap: true,
+      sourcemap: true,
       exports: 'named'
     },
     // {
@@ -73,11 +73,11 @@ export default {
       modules: false,
       inject: true,
       extract: true,
-      onImport: id => console.log('post css: ' +id)
+      onImport: id => console.log('post css: ' + id)
     }),
     url({
       limit: 0,
-      include:  ["**/*.svg", "**/*.png", "**/*.jpg", "**/*.gif", "**/*.ttf", "**/*.wof", "**/fonts/**"]
+      include: ["**/*.svg", "**/*.png", "**/*.jpg", "**/*.gif", "**/*.ttf", "**/*.wof", "**/fonts/**"]
     }),
     svgr(),
     resolve({
@@ -85,17 +85,17 @@ export default {
       preferBuiltins: false,
       dedupe: ['react', 'react-dom']
     }),
-    typescript({
-      rollupCommonJSResolveHack: true,
-      clean: true,
-      tsconfig: 'tsconfig.json',
-      tsconfigOverride: {
-        target: 'es5'
-      },
-      check: false,
-      exclude: ['**/*.test.*', '**/*.spec.*'],
-      typescript: ttypescript
-    }),
+    // typescript({
+    //   rollupCommonJSResolveHack: true,
+    //   clean: true,
+    //   tsconfig: 'tsconfig.json',
+    //   tsconfigOverride: {
+    //     target: 'es5'
+    //   },
+    //   check: false,
+    //   exclude: ['**/*.test.*', '**/*.spec.*'],
+    //   typescript: ttypescript
+    // }),
     commonjs({
       namedExports: {
         'node_modules\\react-is\\index.js': ['ReactIs', 'isElement', 'isValidElementType', 'ForwardRef'],

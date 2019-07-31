@@ -1,7 +1,7 @@
 /* eslint-disable */
 import Utils, { Option, OptionBase } from '@/utils';
 import { cloneDeep, findIndex, map, pullAll } from 'lodash';
-import { action, computed, observable, runInAction } from 'mobx';
+import { action, computed, observable, runInAction, toJS } from 'mobx';
 import { expr, ITransformer } from 'mobx-utils';
 import { IItemConfig } from './interface';
 import { ItemConfigModule } from './itemConfigModule';
@@ -53,7 +53,7 @@ export class OptionsTransformerStore<V, T> extends ItemConfigModule<any, V> {
       }`;
   }
 
-  @computed 
+  @computed
   private get __optionArr(): Option[] {
     return OptionsStore.getOptionArr(this.itemConfig.options);
   }
@@ -280,13 +280,13 @@ export class OptionsStore<V = any, T = any> extends OptionsTransformerStore<V, T
   }
 
   @computed get nativeDisplayOptionList(): Option[] {
-    return map(this.displayOptions, option => Utils.toJS(option))
+    return map(this.displayOptions, option => toJS(option))
   }
   @computed get transformOption(): (V | Option)[] {
     return this.transformer ? this.transformer(this) : this.nativeDisplayOptionList
   }
   @computed get nativeTransformOption(): Option[] {
-    return map(this.transformOption, option => Utils.toJS(option))
+    return map(this.transformOption, option => toJS(option))
   }
 
   valuesToLabels(value: any) {

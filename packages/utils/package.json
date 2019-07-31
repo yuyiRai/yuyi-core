@@ -8,10 +8,11 @@
     "typescript"
   ],
   "main": "dist/index.js",
-  "types": "dist/index.d.ts",
-  "typings": "types",
+  "types": "types/index.d.ts",
+  "typings": "types/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "types"
   ],
   "author": "yuyiRai",
   "license": "MIT",
@@ -19,6 +20,8 @@
     "node": ">=6.0.0"
   },
   "scripts": {
+    "td": "gulp -f config/devoutput.js",
+    "td2": "gulp -f config/devoutput.js watch",
     "build:api": "ttsc --build && yarn api && yarn markdown && yarn yaml && rimraf ./tmp && rimraf ./temp",
     "api:main": "api-extractor run --local --verbose",
     "api:rx": "api-extractor run -c config/api-extractor-rxjs.json --local --verbose",
@@ -44,10 +47,9 @@
     "deploy-docs": "gh-pages -d docs",
     "lint": "tslint --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf types && rimraf dist/**/*.js && rimraf dist/**/*.map && rimraf dist/**/*.d.ts",
-    "build:dts": "rollup -c rollup-dts.config.ts",
-    "build": "ttsc --build && rollup -c rollup.config.ts",
-    "start": "rollup -c rollup.config.ts -w",
-    "start:all": "rollup -c rollup.config.ts -w && yarn run docs:watch",
+    "build": "ttsc --build && cross-env NODE_ENV=production rollup -c rollup.config.ts",
+    "start": "cross-env NODE_ENV=development rollup -c rollup.config.ts -w",
+    "start:all": "yarn start && yarn run docs:watch",
     "test": "jest",
     "test:cover": "jest --coverage",
     "test:watch": "jest --coverage --watch",

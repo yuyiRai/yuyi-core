@@ -15,22 +15,24 @@ import * as PropertyUtils from './PropertyUtils';
 import TimeBufferUtils from './TimeBuffer';
 import { typeFilterUtils, typeUtils } from "./TypeLib";
 
-type UtilsStatic = typeof CustomUtils
-  // & typeof OptionsUtils
+type IUtilsGroup = typeof CustomUtils
+  & typeof OptionsUtils
   & typeof EventEmitterUtils
   & typeof commonUtils
   & typeof TimeBufferUtils
   & typeof PropertyUtils
   & typeof TestUtils
   & typeof LodashExtra
-  & typeof typeUtils
-  & typeof typeFilterUtils
   & typeof ParseUtils
   & typeof MobxUtils
+  & typeof typeUtils
+  & typeof typeFilterUtils
 
-export interface IUtils extends UtilsStatic { }
+export interface IUtils extends IUtilsGroup {
 
-export let Utils: IUtils = Object.freeze(LodashExtra.assign(
+}
+
+export const Utils: IUtils = Object.freeze(LodashExtra.assign(
   {},
   LodashExtra,
   commonUtils,
@@ -46,3 +48,6 @@ export let Utils: IUtils = Object.freeze(LodashExtra.assign(
   MobxUtils
 )) as IUtils;
 
+export function UtilsTest() {
+  return Utils.isFunction(1)
+}

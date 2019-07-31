@@ -6,6 +6,7 @@ import * as React from 'react';
 import 'babel-polyfill'
 import styled from 'styled-components';
 import Install from './index.export';
+
 console.log = function (...args: any[]) {
 
 }

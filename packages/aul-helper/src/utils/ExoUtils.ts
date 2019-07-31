@@ -2,7 +2,7 @@ import * as INI from 'js-ini';
 import { chunk, forEach, fromPairs, groupBy, keys, map, pick, reduce, toPairs, values } from 'lodash';
 import { getSnapshot, Store } from 'mmlpx';
 import { action, computed, observable, ObservableMap, ObservableSet, toJS } from 'mobx';
-import { Utils } from '@yuyi/utils/src/Utils';
+import { Utils } from '@yuyi/utils';
 
 
 export class GroupStore {

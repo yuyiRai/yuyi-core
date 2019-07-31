@@ -2,13 +2,13 @@ import { Message } from 'element-ui';
 import 'element-ui/lib/theme-chalk/message.css';
 // import 'element-theme-default/lib/message.css'
 import { assign, concat, join, reduce } from 'lodash';
-import Utils from "@yuyi/utils";
+import { Utils } from "@yuyi/utils";
 
 export interface IMessageConfig<T = any> {
   msg?: T;
   [k: string]: any;
 }
-export interface IMessageConfigGroup<T = any>{
+export interface IMessageConfigGroup<T = any> {
   msg: T[];
   [k: string]: any;
 }
@@ -26,7 +26,7 @@ export function $message<T = any>(config: IMessageConfig<T>, instance: any = {},
   }, time || 100);
 }
 
-$message.error = function(msg: any, instance: any = {}, time?: number) {
+$message.error = function (msg: any, instance: any = {}, time?: number) {
   console.log(msg)
   return $message({ msg, type: 'error' }, instance);
 };

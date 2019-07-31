@@ -1,5 +1,6 @@
 import { useMountHooks, usePropsRecive } from '@/hooks';
 import { get, set } from '@/utils';
+import { Utils } from '@yuyi/utils';
 import { Row } from 'antd';
 import Form from 'antd/lib/form';
 import { GetFieldDecoratorOptions, WrappedFormUtils } from 'antd/lib/form/Form';
@@ -14,6 +15,7 @@ import { FormStoreContext } from './hooks';
 import { IFormItemConstructor, IItemConfig } from './Interface';
 import { useDeepMemo } from './useDeepMemo';
 import { form } from './util';
+import { toJS } from 'mobx';
 // import { Utils } from '../../build';
 
 const defaultFormItemLayout = { labelCol: { span: 1, offset: 0 }, wrapperCol: { span: 1, offset: 0 } }
@@ -129,7 +131,7 @@ export const ConfigrationalForm: React.FunctionComponent<IFormProps> = ({ config
     // console.error(store.uuid);
 
     for (const config of store.configStore.configList) {
-      const v = Utils.toJS(get(model, config.code))
+      const v = toJS(get(model, config.code))
       const value = store.getF2VValue(config.code, filterToValue(v, config.value))
       // console.log('formValueTransform', config.code, value, v, store)
       const field = { name: config.code, value }
