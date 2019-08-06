@@ -1,2 +1,2 @@
 import './global'
-export * from './global'
+// export * from './global'

@@ -24,13 +24,9 @@
     "declarationDir": "./types",
     "tsBuildInfoFile": "../.tsBuildInfo/utils.json",
     "incremental": true,
-    "types": [
-      "@yuyi/env/types/global",
-      "@types/jest",
-      "@types/node"
-    ],
     "module": "esnext",
     "typeRoots": [
+      "../env/types",
       "node_modules/@types",
       "../../node_modules/@types"
     ]
@@ -41,6 +37,7 @@
   "exclude": [
     "tools",
     "lib",
-    "../../node_modules"
+    "../../node_modules",
+    "node_modules"
   ]
 }

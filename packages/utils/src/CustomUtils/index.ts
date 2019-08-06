@@ -26,3 +26,4 @@ export {
   jsGetAge,
   likeArray
 }
+export * from './getTimeProfile'

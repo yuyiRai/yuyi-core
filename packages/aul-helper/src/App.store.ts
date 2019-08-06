@@ -79,7 +79,7 @@ export class AppStore {
       if (!Utils.isEqual(snap, this.snapshotTrack[this.snapshotTrack.length])) {
         runInAction(() => this.snapshotTrack.push(snap))
       }
-      console.log('onSnap', this, snap)
+      console.error('onSnap', this, snap)
     })
     return staticReactional
   }
@@ -87,7 +87,7 @@ export class AppStore {
   @action
   public async applySnapshot() {
     const snap = await settingLf.getItem('yuyiAppStore')
-    console.log('yuyiAppStore', snap)
+    console.error('yuyiAppStore', snap)
     this.setSnapListener()
     applySnapshot(snap || {})
   }

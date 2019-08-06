@@ -1,140 +1,9 @@
 import * as INI from 'js-ini';
 import { chunk, forEach, fromPairs, groupBy, keys, map, pick, reduce, toPairs, values } from 'lodash';
 import { getSnapshot, Store } from 'mmlpx';
-import { action, computed, observable, ObservableMap, ObservableSet, toJS } from 'mobx';
+import { action, computed, observable, toJS } from 'mobx';
 import { Utils } from '@yuyi/utils';
-
-
-export class GroupStore {
-  @observable.shallow
-  public static map: ObservableMap<number, ObservableSet<AulObject>> = observable.map({}, { deep: false })
-
-  @computed
-  public static get view() {
-    return toJS(this.map, { exportMapsAsObjects: true, detectCycles: true })
-  }
-
-  @action
-  public static moveGroup(source: number, target: number) {
-    const sourceGroup = this.map.get(source)
-    if (sourceGroup) {
-      sourceGroup.forEach(value => {
-        Utils.isNumber(target) ? value.base.set('group', target) : value.base.unset('group')
-      })
-      this.map.delete(source)
-      // this.map.set(target, sourceGroup)
-    }
-  }
-
-  @action
-  public static removeGroupOne(obj: AulObject, source?: number) {
-    if (Utils.isNumber(source)) {
-      const last = this.map.get(source)
-      if (last) {
-        last.delete(obj)
-        if (last.size === 0) {
-          this.map.delete(source)
-        }
-      }
-    }
-    return this.map
-  }
-  @action
-
-  public static setGroupOne(obj: AulObject, target: number) {
-    this.map.set(target, (this.map.get(target) || observable.set([])).add(obj))
-    return this.map
-  }
-
-  @action
-  public static updateGroupOne(obj: AulObject, target: number, source?: number) {
-    this.removeGroupOne(obj, source)
-    this.setGroupOne(obj, target)
-    return this.map
-  }
-}
-// GroupStore.map.observe(changes => {
-//   if (changes.type === 'add') {
-//     changes.newValue.intercept(handler => {
-//       // handler.object
-//       return handler;
-//     })
-//   }
-// })
-
-export type BaseConfigKey = 'group' | 'layer' | 'start' | 'end'
-export class AulObjectBase {
-  [key: string]: any;
-  @observable.ref group?: number;
-  @observable.ref layer: number = undefined as any;
-  @observable.ref start: number = undefined as any;
-  @observable.ref end: number = undefined as any;
-  constructor(private _obj: any, private _ref: AulObject) {
-    // this.listenGroup(_obj['group'])
-    forEach(['group', 'layer', 'start', 'end'], (type: BaseConfigKey) => {
-      if (Utils.isNumber(_obj[type])) {
-        this.set(type, _obj[type])
-      }
-    })
-    AulUtils.fixed(_obj)
-  }
-
-  // @action
-  // public listenGroup(lastGroup?: number) {
-  //   if (Utils.isNumber(lastGroup))
-  //     GroupStore.map.observe(listener => {
-  //       if (listener.type === 'add') {
-  //         this.group = listener.name
-  //       } else if (listener.type === 'delete' && listener.name === lastGroup) {
-  //         this.group = undefined
-  //       }
-  //     })
-  // }
-
-  @action
-  public set(type: BaseConfigKey, value: number) {
-    if (type === 'group') {
-      GroupStore.updateGroupOne(this._ref, value, this[type])
-    }
-    this[type] = value as any
-  }
-
-  @action
-  public unset(type: BaseConfigKey) {
-    if (type === 'group') {
-      GroupStore.removeGroupOne(this._ref, this[type])
-    }
-    this[type] = undefined as any
-  }
-
-  public export(obj?: any) {
-    const { group } = this;
-    return { ...this._obj, ...obj, group }
-  }
-}
-
-export interface IObject {
-  idNum: string;
-  base: AulObjectBase;
-  children: IObject[];
-}
-
-export class AulObject implements IObject {
-  @observable base: AulObjectBase = null as any;
-  children: IObject[] = [] as any;
-  constructor(public idNum: string) {
-  }
-  setBase(obj: any = {}) {
-    this.base = new AulObjectBase(obj, this)
-  }
-  export() {
-    return { base: this.exportBase(), children: this.children }
-  }
-  exportBase() {
-    return this.base ? this.base.export({}) : {}
-  }
-}
-
+import { AulObject, IObject, GroupStore } from './AulObject';
 
 export class AulUtils {
   static objectToList(obj: any): AulObject[] {
@@ -146,7 +15,7 @@ export class AulUtils {
       const base = new AulObject(Utils.isStringFilter(arr[0][0], '').split('.')[0] as any)
       return reduce<any[], AulObject>(arr, (res: AulObject, [key, obj]: [number, any]) => {
         if (/^(([0-9]+)|vo)\.([0-9]+)$/.test(key + '')) {
-          res.children.push(obj)
+          res.appenConfig(obj)
         } else {
           res.setBase(obj)
         }
@@ -165,7 +34,7 @@ export class AulUtils {
 
   static listToMap(list: AulObject[], targetMap = new Map<string, IObject>()) {
     return reduce(list, ((map, obj) => reduce(
-      obj.children,
+      obj._children,
       (childMap, child, index) => childMap.set(`${obj.idNum}.${index}`, child),
       map.set(obj.idNum, obj.exportBase())
     )), targetMap)
@@ -177,7 +46,9 @@ export class AulUtils {
   static listToString(list: AulObject[], strict: boolean = true) {
     return strict ? reduce(
       toPairs(this.listToMap(list)),
-      (str, [key, obj]) => str + INI.stringify({ [key]: pick(obj, ...(keys(obj).sort((a, b) => -1))) } as any, {}),
+      (str, [key, obj]) => str + INI.stringify({
+        [key]: pick(obj, ...(Object.keys(obj).filter(key => obj[key] !== null).sort((a, b) => -1)))
+      } as any, {}),
       ''
     ) : INI.stringify(this.listToObj(list))
   }
@@ -193,8 +64,16 @@ export class AulUtils {
       return "";
     var hexCharCode = [];
     for (var i = 0; i < str.length; i++) {
-      const hex = str.charCodeAt(i).toString(16)
-      hexCharCode.push(map(chunk(hex, 2).sort(() => -1), i => i.join('')).join(''));
+      let hex = str.charCodeAt(i).toString(16)
+      // console.error(i, str.charAt(i), hex)
+      const ch = chunk(hex, 2).sort(() => -1)
+      if (ch.length === 1) {
+        if (ch[0].length === 1) {
+          ch[0].unshift("0")
+        }
+        ch.push(["00"])
+      }
+      hexCharCode.push(map(ch, i => i.join('')).join(''));
     }
     var string = hexCharCode.join("");
     while (string.length < 4096) {
@@ -210,9 +89,14 @@ export class AulUtils {
    * @returns string
    */
   public static decode(str: string): string {
+    let times = 0
     return map(chunk(str, 4), (([a, b, c, d]) => {
-      const hex = parseInt(`0x${c || 0}${d || 0}${a || 0}${b || 0}`)
-      return hex === 0x0000 || !Utils.isNumber(hex) ? '' : String.fromCharCode(hex)
+      const hex = parseInt(`0x${c || 0}${d || 0}${a || 0}${b || 0}`);
+      (hex === 0x0000) && (times++);
+      if (times > 1) { return "" }
+      const r = hex === 0x0000 || !Utils.isNumber(hex) ? '' : String.fromCharCode(hex)
+      console.error(hex, r)
+      return r
     })).join('')
   }
 }
@@ -230,16 +114,31 @@ export class ExoUtils {
   }
   exedit: any;
 
-  readFile(sourceStr: string) {
+  /**
+   * 读取文本内容并序列化以初始化Exo实体类
+   * @param sourceStr - (*.exo)文件文本
+   */
+  @action.bound
+  public readFile(sourceStr: string) {
     this.sourceStr = sourceStr
-    this.parse(sourceStr)
+    this.init(this.parse(sourceStr))
   }
 
-  parse(source: string) {
-    this.init(INI.parse(source))
+  /**
+   * 序列化文本内容
+   * @param sourceStr - (*.exo)文件文本
+   */
+  @action.bound
+  public parse(sourceStr: string) {
+    return INI.parse(sourceStr, { autoTyping: false })
   }
 
-  init(obj: any) {
+  /**
+   * 初始化Obj
+   * @param obj 
+   */
+  @action.bound
+  protected init(obj: any) {
     const { exedit, ...source } = obj;
     this.source = forEach(source, (value) => AulUtils.fixed(value))
     if (exedit) {
@@ -248,18 +147,23 @@ export class ExoUtils {
     } else {
       this.exedit = null
     }
-    console.log(this.output(), GroupStore, GroupStore.view)
+    console.error(this.output(), GroupStore, GroupStore.view)
   }
 
-  output(target = this.target): string {
+  /**
+   * 根据AulObject输出exo文本内容
+   * @param target 
+   */
+  @action.bound
+  public output(target = this.target): string {
     const { exedit, source } = this;
     const valid = AulUtils.listToObj(target)
     const exeditStr = exedit ? INI.stringify({ exedit }, { blankLine: false, spaceBefore: false, spaceAfter: false }) : ''
-    console.log(this, source, valid, Utils.isEqual(source, valid))
+    console.error(this, source, valid, Utils.isEqual(source, valid))
     return exeditStr + AulUtils.listToString(target);
   }
 
-  @action
+  @action.bound
   public snap() {
     return getSnapshot()
   }

@@ -15,11 +15,11 @@ export class DbManager {
   }
   constructor() {
     setTimeout(() => {
-      console.log('loading', this)
+      console.error('loading', this)
       const ExaData = this.collection('ExaData')
       // const TrackData = db.collection('TrackData')
 
-      console.log('loaded', ExaData)
+      console.error('loaded', ExaData)
       window.temp1 = ExaData
     }, 0);
   }
@@ -34,11 +34,11 @@ export class DbManager {
     return DBUtils.selectAll(this.collection(name)).finally(this.loaded)
   }
 
-  @action loading(){
+  @action loading() {
     this.isLoading = true;
     return this;
   }
-  @action loaded(){
+  @action loaded() {
     this.isLoading = false;
     return this;
   }

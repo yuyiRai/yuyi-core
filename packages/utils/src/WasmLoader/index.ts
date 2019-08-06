@@ -1,5 +1,4 @@
 // import { IKeyValueMap } from "./TsUtils";
-import wasm from "@wasm/program.wasm"
 // import { greet } from '@yuyi/core'
 export type Loader<T> = () => Promise<T | { default: T }>
 
@@ -11,6 +10,7 @@ export type Loader<T> = () => Promise<T | { default: T }>
 export function requireWebAssembly(
   install: WasmImporter
 ): WebAssembly.Instance {
+  console.log(typeof install)
   const imports = (requireWebAssembly as any).imports
   imports.env = imports.env || {};
   // 开辟内存空间
@@ -41,7 +41,7 @@ export async function loadWebAssembly(loader: Loader<any>): Promise<WebAssembly.
 
 
 export async function webAssemblyTest(log: any) {
-  log(requireWebAssembly(wasm).exports.main())
+  // log(requireWebAssembly(wasm).exports.main())
   // // 调用
   const { instance } = await loadWebAssembly(() => import("../../wasm/async.wasm"));
   const main = instance.exports.main; // 取出c里面的方法

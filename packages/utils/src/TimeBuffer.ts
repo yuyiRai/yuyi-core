@@ -6,7 +6,7 @@ import { from, merge, MonoTypeOperatorFunction, of, timer } from 'rxjs';
 import { bufferTime, bufferWhen, distinctUntilChanged, first, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { EventEmitter, getEventEmitter } from './EventEmitter';
 import { typeFilterUtils } from './TypeLib';
-import { waitingPromise } from './TestUtil';
+import { sleep } from './TestUtils';
 // import rx from 'rxjs'
 // import * as rx2 from 'rxjs/operators';
 // window.rx = rx;
@@ -118,7 +118,7 @@ export function simpleTimeBufferInput<K extends object, V = any>(
       return rValue;
     });
   }
-  return waitingPromise(0)
+  return sleep(0)
 }
 /**
  * 

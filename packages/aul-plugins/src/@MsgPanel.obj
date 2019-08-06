@@ -1,0 +1,12 @@
+@Live2D表情(コード)
+--
+--
+--track0:配置ID,0,10,0,1
+--dialog:motioncall,mc="DEFAULT";
+--check0:SDK3,0
+require( "Live2DAsk_2" )
+local add = ""
+if obj.check0 then
+	add = ".exp3.json"
+end
+Live2DAsk_2.setExpression(obj.track0,mc..add,obj.getvalue("alpha"))

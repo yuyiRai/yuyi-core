@@ -19,7 +19,7 @@ ReactDOM.render((
   </StyledThemeProvider>
 ), document.getElementById('root'));
 
-import('./wasm').catch(console.error)
+// import('./wasm').catch(console.error)
 
 
 // If you want your app to work offline and load faster, you can change

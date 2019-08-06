@@ -1,0 +1,20 @@
+{
+  "name": "aul-plugins",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "bin": {
+    "clua": ".bin/clua.bat",
+    "ciuplua": ".bin/build.bat",
+    "cupx": ".bin/upx.bat"
+  },
+  "scripts": {
+    "start": "lua src/main.lua",
+    "build": "luac -o build/YuyiCore.lua src/YuyiCore.lua",
+    "dist": "clua src/main.lua build/test.exe",
+    "upx": "cupx build/main.exe --overlay=copy",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

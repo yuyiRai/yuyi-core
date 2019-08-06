@@ -8,7 +8,7 @@ import * as EventEmitterUtils from './EventEmitter';
 import * as MobxUtils from './MobxUtils';
 import * as OptionsUtils from './OptionsUtils';
 import * as LodashExtra from './LodashExtra'
-import * as TestUtils from './TestUtil'
+import * as TestUtils from './TestUtils'
 import * as ParseUtils from "./ParseUtils";
 import * as PropertyUtils from './PropertyUtils';
 // tslint:disable-next-line: no-duplicate-imports

@@ -1,7 +1,6 @@
-import { isNotEmptyValue } from '../src'
-
+import { isNotEmptyValue, isFunction } from '../src'
 /**
- * Dummy test
+ * 类型判断工具测试
  */
 describe("TypeUtils test", () => {
   const expectMap = new Map()
@@ -19,4 +18,15 @@ describe("TypeUtils test", () => {
     })
   })
 
+
+  // tslint:disable-next-line: no-empty
+  function TestFunction() { }
+  it("native instanceof", () => {
+    const r = TestFunction instanceof Function
+    const r2 = isFunction(TestFunction)
+
+    expect(r).toBeTruthy()
+    expect(r2).toBeTruthy()
+
+  })
 })

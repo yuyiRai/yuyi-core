@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
     "lib": [
+      "es6",
       "dom",
       "dom.iterable",
+      "scripthost",
       "esnext"
     ],
     "rootDir": "../..",

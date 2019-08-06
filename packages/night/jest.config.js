@@ -23,7 +23,7 @@ module.exports = {
     "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
     "<rootDir>/src/**/*.{spec,test}.{js,jsx,ts,tsx}"
   ],
-  "testPathIgnorePatterns": [     
+  "testPathIgnorePatterns": [
     "[/\\\\]node_modules/",
     "<rootDir>/node_modules/"
   ],
@@ -40,7 +40,7 @@ module.exports = {
   ],
   "moduleNameMapper": {
     // ...pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }),
-    "@/stores/FormStore":"<rootDir>/src/stores/FormStore",
+    "@/stores/FormStore": "<rootDir>/src/stores/FormStore",
     '^@/(.*)$': "<rootDir>/src/$1",
     '^src/(.*)$': "<rootDir>/src/$1",
     "^react-native$": "react-native-web",

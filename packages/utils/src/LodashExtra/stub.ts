@@ -10,8 +10,8 @@ import { stubArray, stubFalse, stubTrue, stubString, stubObject } from 'lodash'
  * @returns 什么都不会返回
  */
 // tslint:disable-next-line: no-empty
-export function stubFunction(...args: any[]): void {
-
+export function stubFunction(...args: any[]): undefined {
+  return undefined
 }
 
 /**

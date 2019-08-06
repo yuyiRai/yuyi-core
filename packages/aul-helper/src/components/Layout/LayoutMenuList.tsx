@@ -56,19 +56,15 @@ export const useAntMenuNavLink = (isSubmenu: boolean): [(param: ClickParam) => v
   return [click as any, innerRef]
 }
 
-const MenuChild: React.FunctionComponent<IMenuChildProps> = observer(
-  ({ item, index, parentKey = 'root', ...props }) => {
+const MenuChild = React.forwardRef<typeof AntMenuNavLink, IMenuChildProps>(
+  ({ item, index, parentKey = 'root', ...props }, ref) => {
     const { key = item.path, icon, path, mode, title, component, children, ...other } = item;
     const hasChildren = Utils.isArrayLike(item.children)
-
     const isSubmenu = hasChildren
-
     const [linkClick, innerRef] = useAntMenuNavLink(isSubmenu)
-
     const itemKey = parentKey ? `${parentKey}-item-${key}` : `item-${key}`
-
     const isActive = React.useMemo<NavLinkProps['isActive']>(() => ((match, location) => {
-      // console.log(match, location, item);
+      // console.error(match, location, item);
       return match !== null && (
         (!hasChildren && match.url === location.pathname) || hasChildren
       );
@@ -107,6 +103,7 @@ const MenuChild: React.FunctionComponent<IMenuChildProps> = observer(
             ...props
           }}>
           <MenuChild
+            ref={ref as any}
             key={`${itemKey}-context`}
             item={{ ...item, children: null }}
             parentKey={itemKey}
@@ -128,4 +125,5 @@ const MenuChild: React.FunctionComponent<IMenuChildProps> = observer(
           {context}
         </Menu.Item>
     );
-  });
+  }
+);

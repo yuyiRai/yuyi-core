@@ -69,7 +69,7 @@ const config = [
   },
   {
     label: '提交时间', code: 'info.submitTime', type: "dateToDate", rule: 'dateToDate30', disabled: (form, itemConfig) => {
-      // console.log(form, itemConfig);
+      // console.error(form, itemConfig);
       return form.showVoiceroid !== '1'
     }
   },
@@ -84,7 +84,7 @@ const config = [
     },
     async remoteMethod(key) {
       if (key) {
-        console.log(key)
+        console.error(key)
         try {
           const locationData = await amap.getAutoComplete({ city: '全国', search: key })
           return locationData.filter(item => item.location).map(locationData => {
@@ -108,7 +108,7 @@ const config = [
       trree3: {
         col: 1,
         label: '产品c2', code: 'trree3', transformer: 'path', type: "cascader", loadData: (key, currentOptions) => {
-          // console.log('loadData', key, currentOptions)
+          // console.error('loadData', key, currentOptions)
           return Utils.waitingPromise(100, key ? options.map(opt => ({ ...opt, value: [key.value, opt.value].join('.') })) : options)
         }
       },
@@ -141,13 +141,13 @@ const config = [
   // { label: '产品介绍', code: 'info.introduce', type: "textarea", options: voiceroid, hidden: form => form.showVoiceroid !== '1' },
   {
     label: '产品c', code: 'info.trree', transformer: 'path', type: "cascader", loadData: (key, currentOptions) => {
-      // console.log('loadData', key, currentOptions)
+      // console.error('loadData', key, currentOptions)
       return Utils.waitingPromise(100, key ? options.map(opt => ({ ...opt, value: [key.value, opt.value].join('.') })) : options)
     }
   },
   {
     label: '产品c2', code: 'info2.trree', type: "selectTree", loadData: (key, currentOptions) => {
-      // console.log('loadData', key, options)
+      // console.error('loadData', key, options)
       return Utils.waitingPromise(100, key ? treeOptions.map(opt => ({ ...opt, value: [key.value, opt.value].join('.') })) : treeOptions)
     }
   }
@@ -269,7 +269,7 @@ export const App = () => {
           <ConfigrationalForm key={0} config={config} disabled={true}>
             <Button type="primary" icon="search">Search</Button>
             <Button onClick={() => {
-              console.log(model, config)
+              console.error(model, config)
               // debugger
               config[9].options = [...config[9].options, 'qqq']
               config[10].options = [...config[10].options, 'qqq']
@@ -277,16 +277,16 @@ export const App = () => {
               setConfig([...config])
             }}>增加选项</Button>
             <Button onClick={() => {
-              console.log(store)
+              console.error(store)
               config[0].rule = undefined
               config[2].rule = undefined
               setConfig([...config])
               // setstate(state+1)
             }}>移除生日校验</Button>
             <Button onClick={() => {
-              console.log(store, props)
+              console.error(store, props)
               store.validate()
-              console.log(store.formSource, model)
+              console.error(store.formSource, model)
             }}>校验</Button>
             <Button onClick={() => {
               setModel({})

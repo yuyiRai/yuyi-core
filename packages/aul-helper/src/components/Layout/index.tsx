@@ -44,7 +44,7 @@ export const useMainLayout = makeStyles((theme: any) => ({
 
 const PreLayout = ({ collapsed, ...props }: any) => <Layout {...props} />
 export const MainLayout = styled(PreLayout).attrs((attrs) => {
-  console.log(attrs)
+  console.error(attrs)
   return attrs
 })`
   & > .layout-main {
@@ -74,7 +74,7 @@ export const MainLayout = styled(PreLayout).attrs((attrs) => {
 
 export const LayoutBreadcrumbs: React.SFC<BreadcrumbProps> = (props) => {
   const { location, ...other } = useRouter()
-  console.log(location, other)
+  console.error(location, other)
   return (
     <Breadcrumb style={{ margin: '16px 0' }}>
       <Breadcrumb.Item>User</Breadcrumb.Item>
@@ -91,19 +91,19 @@ export const LayoutContainer: React.SFC<ILayoutProps> = observer((props) => {
   // trace()
   const content = React.useMemo(() => (
     <TweenOneGroup enter={{
-        translateX: '-100vw', opacity: 0, type: 'from', duration: 500, delay: isInit ? 300 : 0, top: 0,
-        onComplete: (e) => {
-          e.target.setAttribute('style', '');
-          if (!isInit)
-            init(true)
-        },
-      }} leave={{
-        opacity: 0, translateX: '100vw', top: 0, duration: 500
-      }} appear={true}
+      translateX: '-100vw', opacity: 0, type: 'from', duration: 500, delay: isInit ? 300 : 0, top: 0,
+      onComplete: (e) => {
+        e.target.setAttribute('style', '');
+        if (!isInit)
+          init(true)
+      },
+    }} leave={{
+      opacity: 0, translateX: '100vw', top: 0, duration: 500
+    }} appear={true}
     >
       <Box key={store.pathname} >
         <Paper className='layout-content' >
-          { props.children }
+          {props.children}
         </Paper>
       </Box>
     </TweenOneGroup>

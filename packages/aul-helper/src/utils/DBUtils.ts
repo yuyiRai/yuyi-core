@@ -103,16 +103,16 @@ export class SelectPipe<T = any> {
   }
 }
 
-// console.log(Object.entries(EDbExpressionOperator));
+// console.error(Object.entries(EDbExpressionOperator));
 export async function insert(data: any, into: zango.Collection): Promise<boolean> {
   try {
-    if (!Utils.isObject(data)){
+    if (!Utils.isObject(data)) {
       throw new Error('data is not Object/Array!')
     }
-    if(Utils.isEmptyArray(data)) {
+    if (Utils.isEmptyArray(data)) {
       throw new Error('dataset is not Empty!')
     }
-    await into.insert(Utils.castArray(data), console.log);
+    await into.insert(Utils.castArray(data), console.error);
     return true
   } catch (error) {
     console.error(error)
@@ -151,7 +151,7 @@ export async function getResult<T = any>(query: zango.Cursor): Promise<T[]> {
   } catch (e) {
     console.error('catch: ', e)
   } finally {
-    console.log('result: ', result)
+    console.error('result: ', result)
   }
 }
 

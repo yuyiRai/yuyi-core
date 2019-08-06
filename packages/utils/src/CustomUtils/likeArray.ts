@@ -11,11 +11,11 @@ import { typeUtils } from '@/TypeLib';
  */
 export function likeArray(array: any[], other: any[]) {
   // if the other array is a falsy value, return
-  if (!typeUtils.isArray(other) || !typeUtils.isArray(array)) {
-    return false;
-  }
-  // compare lengths - can save a lot of time 
-  if (array.length !== other.length) {
+  if (
+    !typeUtils.isArray(other) || !typeUtils.isArray(array) ||
+    // compare lengths - can save a lot of time 
+    array.length !== other.length
+  ) {
     return false;
   }
   for (const v of array) {

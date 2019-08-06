@@ -47,7 +47,7 @@ const propsBase = {
   // onChange(info: any) {
   //   const status = info.file.status;
   //   if (status !== 'uploading') {
-  //     console.log(info.file, info.fileList);
+  //     console.error(info.file, info.fileList);
   //   }
   //   if (status === 'done') {
   //     message.success(`${info.file.name} file uploaded successfully.`);
@@ -96,7 +96,7 @@ export class FileLoader {
       fileReader.readAsText(file, 'Shift-JIS');
       //文件载入成功
       return await new Promise((resolve, reject) => {
-        fileReader.onload = () => {
+        fileReader.onload = action('fileReader#onload', () => {
           //取到文件结果，就可以它了
           const fileResult: string = fileReader.result as any;
           const response: IFileLoaded = {
@@ -107,7 +107,7 @@ export class FileLoader {
           }
           this.fileLoadedMap.set(file as any, response)
           resolve(response)
-        }
+        })
         fileReader.onerror = (e) => {
           reject(e)
         }
@@ -131,7 +131,7 @@ function useUpload(props: IUploadProps) {
         props.onFileLoaded && props.onFileLoaded(res.content)
       })
       store.loadEnd()
-      console.log(store);
+      console.error(store);
     }, store, 200))
     option.onSuccess()
   }, [props, store])
