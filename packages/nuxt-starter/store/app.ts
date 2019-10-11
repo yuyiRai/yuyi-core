@@ -11,9 +11,15 @@ import {
   DEFAULT_CONTENT_WIDTH_TYPE,
   DEFAULT_MULTI_TAB,
   USE_DEBUG_INFO
-} from '@/store/mutation-types'
+} from '@/config/mutation-types'
 import { isIe10 } from '@/utils/util'
 import themes from '@/config/theme.config'
+
+declare global {
+  export interface VueConstructor {
+    ls: any;
+  }
+}
 
 const app = {
   state: {
@@ -136,4 +142,6 @@ const app = {
   }
 }
 
-export default app
+export const state = () => app.state
+export const mutations = app.mutations
+export const actions = app.actions

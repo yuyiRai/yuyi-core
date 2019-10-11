@@ -1,5 +1,8 @@
 import config from '../config/theme.config'
-const getters = {
+export const state = () => ({
+
+})
+export const getters = {
   device: state => state.app.device,
   theme: state => state.app.theme,
   themeConfig: state => config[state.app.theme] || config.cool,
@@ -32,5 +35,3 @@ const getters = {
   unreadNum: state => state.notice.unreadNum,
   hasMdlChecked: state => state.permission.currentRoute.meta.mdlCode
 }
-
-export default getters

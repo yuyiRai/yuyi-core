@@ -1,31 +1,22 @@
 /* eslint-disable */
-import { CardFormItem, CheckableSelect, InputType, OrgSelectTree, ProcessTextArea, QuillEditor, SafeComponentType, SummaryQt, useReadonly } from '@/components';
+import { CardFormItem, CheckableSelect, InputType, ProcessTextArea, QuillEditor, SafeComponentType, SummaryQt, useReadonly } from '@/components';
+import { IAutoOperationBarProps } from '@/components/CommonButton/AutoOperationBar/interface';
 import { ActionFormItem } from '@/components/CommonDataView/components/Containers/ActionFormItem';
 import { AppendConfigPipe, AppendConfigPipeFunction, createPipe, IFormItemConfig } from '@/components/CommonFormBase/interface';
-import { emptyFilter, IUtils } from '@/components/CommonFormBase/StaticUtils';
+import { IUtils } from '@/components/CommonFormBase/StaticUtils';
 import { Utils } from '@/components/CommonFormBase/Utils';
 import { FormItemInputInject } from '@/components/CommonFormBase/utils/ComponentInject';
 import DateRangePicker from '@/components/CommonItemComponent/DateRangePicker';
-import store from '@/store';
-import { isNotEmptyValue, isNumber, zipEmptyData, isEmptyArrayStrict } from '@yuyi/utils';
+import { isEmptyArrayStrict, isNotEmptyValue, isNumber, zipEmptyData } from '@yuyi/utils';
 import { Checkbox, Input, InputNumber, Radio, Select } from 'ant-design-vue';
 import DatePicker from 'ant-design-vue/es/date-picker';
 import { FormItem } from 'ant-design-vue/types/form/form-item';
-import { castArray, get, isArray, isNil, map, merge, set, toLength, isString } from 'lodash';
+import { castArray, get, isArray, isNil, map, merge, set, toLength } from 'lodash';
 import moment from 'moment';
 import Vue from 'vue';
-import { IAutoOperationBarProps } from '@/components/CommonButton/AutoOperationBar/interface';
 
 function appendRule({ rules = [] }: IFormItemConfig<any>, ...appendRules: any) {
   return [...(rules || []), ...appendRules]
-}
-
-/**
- * 码表查询
- * @param codeType
- */
-export function getOptions(codeType: string, cacheTime = 10000) {
-  return store.dispatch('GetOptions', [`codeList:${codeType}`, () => [codeType], cacheTime])
 }
 
 function mergeConfigNext(pipe: AppendConfigPipe<any>, next?: AppendConfigPipe<any>) {

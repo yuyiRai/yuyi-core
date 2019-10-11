@@ -1,6 +1,6 @@
-import NuxtConfiguration from '@nuxt/config';
+// import { NuxtConfiguration } from '@nuxt/config';
 
-const config: NuxtConfiguration = {
+const config: any = {
   mode: 'universal',
   /*
   ** Headers of the page
@@ -30,7 +30,8 @@ const config: NuxtConfiguration = {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '@/plugins/antd-ui'
+    '@/plugins/antd-ui',
+    '@/plugins/ls'
   ],
   /*
   ** Nuxt.js dev-modules

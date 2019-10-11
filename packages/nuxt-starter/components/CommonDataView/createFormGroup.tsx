@@ -1,5 +1,5 @@
 import { typeFilterUtils } from '@yuyi/utils';
-import { computed, createComponent, provide, value, Wrapper } from 'vue-function-api';
+import { computed, createComponent, provide, reactive } from 'vue-function-api';
 
 export function createFormGroup(config: IFormGroupConfig) {
   const a = createComponent({
@@ -18,16 +18,18 @@ export function createFormGroup(config: IFormGroupConfig) {
       }
     },
     setup(props, context) {
-      const initReadonly = value(config.readonly);
-      const initHasFeedback = value(config.hasFeedback);
-      const colon = value(config.colon);
-      const initEnv = value(config.env);
-      const store: Wrapper<IFormGroupConfig> = computed(() => {
+      const state = reactive({
+        initReadonly: config.readonly,
+        initHasFeedback: config.hasFeedback,
+        colon: config.colon,
+        initEnv: config.env,
+      })
+      const store = computed(() => {
         return ({
-          colon: typeFilterUtils.isBooleanFilter(props.colon, colon.value),
-          readonly: typeFilterUtils.isBooleanFilter(props.readonly, initReadonly.value),
-          hasFeedback: typeFilterUtils.isBooleanFilter(props.hasFeedback, initHasFeedback.value),
-          ...(typeFilterUtils.isObjectFilter(props.env, initEnv.value) || {})
+          colon: typeFilterUtils.isBooleanFilter(props.colon, state.colon),
+          readonly: typeFilterUtils.isBooleanFilter(props.readonly, state.initReadonly),
+          hasFeedback: typeFilterUtils.isBooleanFilter(props.hasFeedback, state.initHasFeedback),
+          ...(typeFilterUtils.isObjectFilter(props.env, state.initEnv) || {})
         })
       });
       provide('CFromGroup', store);

@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "module": "esnext",
+    "module": "commonjs",
     "strict": false,
     "jsx": "preserve",
     "noEmit": true,
@@ -9,10 +9,6 @@
     "importHelpers": true,
     "moduleResolution": "node",
     "noUnusedLocals": false,
-    "types": [
-      "jest",
-      "vue-tsx-support"
-    ],
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "esModuleInterop": true,
@@ -25,9 +21,6 @@
     "paths": {
       "@/*": [
         "*"
-      ],
-      "@yuyi/utils": [
-        "assets/@yuyi/utils/dist/index"
       ]
     },
     "lib": [
@@ -42,11 +35,12 @@
     "**/*.js",
     "**/*.jsx",
     "**/*.tsx",
-    "**/*.vue",
-    "./node_modules/vue-tsx-support/enable-check.d.ts"
+    "**/*.vue"
   ],
   "exclude": [
-    "./node_modules/@types/react",
-    "./node_modules"
+    "node_modules/@types/react",
+    "node_modules",
+    ".nuxt",
+    "dist"
   ]
 }
