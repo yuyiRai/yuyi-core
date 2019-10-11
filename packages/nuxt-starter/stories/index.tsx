@@ -1,17 +1,17 @@
-import { Meta, Story, Preview, Props as PropsDefault } from '@storybook/addon-docs/blocks';
+// import { Meta, Story, Preview, Props as PropsDefault } from '@storybook/addon-docs/blocks';
 import { VueInReact } from 'vuera'
 import { AntTable, ITableColumn } from '@/components/Table/AntTable';
 import { values, groupBy, startCase } from 'lodash';
 import { convertMap2UnieqArray } from '@/utils/CommonUtils';
 
-Story.defaultProps = {
-  ...(Story.defaultProps || {}),
-  height: 'auto'
-}
-Preview.defaultProps = {
-  ...(Preview.defaultProps || {}),
-  withToolbar: true
-}
+// Story.defaultProps = {
+//   ...(Story.defaultProps || {}),
+//   height: 'auto'
+// }
+// Preview.defaultProps = {
+//   ...(Preview.defaultProps || {}),
+//   withToolbar: true
+// }
 
 export const type = ['props', 'events', 'slots', 'methods']
 export type PipeMeta = {
@@ -243,4 +243,4 @@ Props.defaultProps = {
 }
 
 export const mockOptions = Array(10).fill(true).map((_, i) => ({ value: i + '', label: '选项' + i }))
-export { Meta, Story, Preview }
+// export { Meta, Story, Preview }
