@@ -1,0 +1,83 @@
+@import '../index.less';
+
+@prefix: "aml";
+@anm-name: ~"@{prefix}-ant-btn-hidden";
+.keyframes(all, @anm-name, {
+  to { 
+    padding: 0;
+    opacity: 0;
+    margin: 0;
+    overflow: hidden;
+    border: 0;
+    width: 0;
+  }
+});
+
+.operation-bar {
+  &.flex {
+    display: flex;
+    .ant-btn:not([role="hidden"]) {
+      display: inline-flex;
+      flex: auto;
+      justify-content: center;
+      align-items: center;
+      & > * {
+        display: inline-flex;
+      }
+    }
+  }
+  position: relative;
+  .ant-btn.hidden {
+    animation: @anm-name 0.1s forwards;
+  }
+  .ant-btn:not([role="hidden"]) {
+    margin-right: 4px;
+  }
+  & .ant-btn:nth-last-child(1) {
+    &:not([role="hidden"]) {
+      margin-right: 0 !important;
+    }
+  }
+}
+
+
+.link(@padding) {
+  position: relative !important;
+  &::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: calc(100% - @padding * 2);
+    height: 1px;
+    background-color: @primary-color;
+    transform-origin: center;
+    transform: translate(-50%, 0) scaleX(0);
+    transition: transform 0.1s ease-in-out;
+  }
+  &:hover::after {
+    transform: translate(-50%, 0) scaleX(1);
+  }
+}
+
+.ant-btn-link {
+  border-color: transparent !important;
+  &.color-inherit {
+    color: inherit;
+    &::after {
+      background-color: inherit;
+    }
+  }
+  
+  .link(@padding-md - 6px);
+  &.ant-btn-sm {
+    padding: 0;
+    &::after {
+      width: 100%;
+    }
+  }
+  &.ant-btn-two-chinese-chars > *:not(.anticon) {
+    letter-spacing: unset;
+    margin-right: unset;
+  }
+}

@@ -1,0 +1,70 @@
+@import "~ant-design-vue/lib/style/index";
+
+// The prefix to use on all css classes from ant-pro.
+@ant-pro-prefix             : ant-pro;
+
+// 主色修正，见@config/theme.config.js primaryColorList
+@second-color: #2AC2BD;
+
+@primary-0: lighten(@primary-color, 44);
+@primary-1: color(~`colorPalette('@{primary-color}', 1) `); // replace tint(@primary-color, 90%)
+@primary-2: color(~`colorPalette('@{primary-color}', 2) `); // replace tint(@primary-color, 80%)
+@primary-3: color(~`colorPalette('@{primary-color}', 3) `); // unused
+@primary-4: color(~`colorPalette('@{primary-color}', 4) `); // unused
+@primary-5: color(
+  ~`colorPalette('@{primary-color}', 5) `
+); // color used to control the text color in many active and hover states, replace tint(@primary-color, 20%)
+@primary-6: @primary-color; // color used to control the text color of active buttons, don't use, use @primary-color
+@primary-7: color(~`colorPalette('@{primary-color}', 7) `); // replace shade(@primary-color, 5%)
+@primary-8: color(~`colorPalette('@{primary-color}', 8) `); // unused
+@primary-9: color(~`colorPalette('@{primary-color}', 9) `); // unused
+@primary-10: color(~`colorPalette('@{primary-color}', 10) `); // unused
+
+@second-0: lighten(@second-color, 44);
+@second-1: color(~`colorPalette('@{second-color}', 1) `); // replace tint(@primary-color, 90%)
+@second-2: color(~`colorPalette('@{second-color}', 2) `); // replace tint(@primary-color, 80%)
+@second-3: color(~`colorPalette('@{second-color}', 3) `); // unused
+@second-4: color(~`colorPalette('@{second-color}', 4) `); // unused
+@second-5: color(
+  ~`colorPalette('@{second-color}', 5) `
+); // color used to control the text color in many active and hover states, replace tint(@primary-color, 20%)
+@second-6: @second-color; // color used to control the text color of active buttons, don't use, use @primary-color
+@second-7: color(~`colorPalette('@{second-color}', 7) `); // replace shade(@primary-color, 5%)
+@second-8: color(~`colorPalette('@{second-color}', 8) `); // unused
+@second-9: color(~`colorPalette('@{second-color}', 9) `); // unused
+@second-10: color(~`colorPalette('@{second-color}', 10) `); // unused
+
+@aml-theme-0: #0668CC;
+@aml-theme-1: #1490CB;
+@aml-theme-2: #2AC2BD;
+@aml-theme-3: #7DCAF3;
+@aml-theme-4: #B2D3B9;
+@aml-theme-5: #7B78D6;
+
+
+.keyframes (@prefix,@name,@content) when (@prefix=def) {
+  @keyframes @name {
+    @content();
+  }
+}
+.keyframes (@prefix,@name,@content) when (@prefix=moz) {
+  @-moz-keyframes @name {
+    @content();
+  }
+}
+.keyframes (@prefix,@name,@content) when (@prefix=o) {
+  @-o-keyframes @name {
+    @content();
+  }
+}
+.keyframes (@prefix,@name,@content) when (@prefix=webkit) {
+  @-webkit-keyframes  @name{
+    @content();
+  }
+}
+.keyframes (@prefix,@name,@content) when (@prefix=all) {
+  .keyframes(moz,@name,@content);
+  .keyframes(o,@name,@content);
+  .keyframes(webkit,@name,@content);
+  .keyframes(def,@name,@content);
+}

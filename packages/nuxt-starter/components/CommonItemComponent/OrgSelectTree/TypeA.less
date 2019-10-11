@@ -1,0 +1,19 @@
+.antd-tree-list-only {
+  display: none;
+}
+.ant-select-tree-child-tree-open {
+  & .antd-tree-list-only {
+    display: inline;
+  }
+  & .antd-select-only {
+    display: none;
+  }
+}
+span[title].ant-select-tree-node-content-wrapper {
+  overflow-x: hidden;
+  text-overflow: ellipsis;
+  white-space: unset;
+  word-break: break-word;
+  /* margin-top: -1px; */
+  vertical-align: middle;
+}

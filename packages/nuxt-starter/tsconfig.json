@@ -1,0 +1,52 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "strict": false,
+    "jsx": "preserve",
+    "noEmit": true,
+    "outDir": "lib",
+    "importHelpers": true,
+    "moduleResolution": "node",
+    "noUnusedLocals": false,
+    "types": [
+      "jest",
+      "vue-tsx-support"
+    ],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "baseUrl": ".",
+    "downlevelIteration": true,
+    "paths": {
+      "@/*": [
+        "*"
+      ],
+      "@yuyi/utils": [
+        "assets/@yuyi/utils/dist/index"
+      ]
+    },
+    "lib": [
+      "esnext",
+      "dom",
+      "dom.iterable",
+      "scripthost"
+    ]
+  },
+  "include": [
+    "**/*.ts",
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.tsx",
+    "**/*.vue",
+    "./node_modules/vue-tsx-support/enable-check.d.ts"
+  ],
+  "exclude": [
+    "./node_modules/@types/react",
+    "./node_modules"
+  ]
+}
