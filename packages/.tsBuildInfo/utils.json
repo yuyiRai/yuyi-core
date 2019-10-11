@@ -202,8 +202,8 @@
         "signature": "e3602c7ef8cfedd027c02a023075b2c7ba2705d26ec521a8e95f2084f4a138ba"
       },
       "d:/workspace/@yuyi/packages/utils/src/lodashextra/isnumber.ts": {
-        "version": "df2a84f3aeec41d272c5c5f18471c9573b31a9aaf1cb34e17588f1cff2f01c8a",
-        "signature": "02678163ab0906a7d58ed424ad7f6c394a63c3d351e471e63426c241f9f448ac"
+        "version": "615b3a0996f4de7102f0a6afa5bef11e0d078204db478a22a3ac739243e6bb3e",
+        "signature": "5a8bc6931581213d9a1058211cf6d91a539f45d78428a9fd0aa20d108294c9a6"
       },
       "d:/workspace/@yuyi/packages/utils/src/lodashextra/isfunction.ts": {
         "version": "4828f37e26b8512ab1ad7a088001c44b88067f05ef3680e5dc03df44785b5362",
@@ -699,7 +699,7 @@
       },
       "d:/workspace/@yuyi/packages/utils/src/typelib/index.ts": {
         "version": "0c3ea63231ea30f13263559e5bc2ccf845c62e12a1136a793494ef103f2d7605",
-        "signature": "1cbe523ec6d932cd8ebae8b02679c61ac54e0de22e6cc657df4a631ac5e72b8e"
+        "signature": "bd402fc3ae2277770e542cc19744fbf2a449636ffdda3772ff33ec20d71633ca"
       },
       "d:/workspace/@yuyi/packages/utils/src/lodashextra/isequal.ts": {
         "version": "8991733352b6c759fa88e9659cee1258b4879cb084194d0d3658b4410a7b72d4",
@@ -718,8 +718,12 @@
         "signature": "1cc6e1b7c92f42aca978a957ea84b0abfc48f4e0ea2cb7cd882273b2e25b7529"
       },
       "d:/workspace/@yuyi/packages/utils/src/lodashextra/index.ts": {
-        "version": "91f4985a2fc8eab7f6b65d68591b8bc2c9518606eec9b4b5bd4379d850a31167",
-        "signature": "8ca33d4263fb9a86bedfb6740bfc17759557066e6604405cc3ce3a702919b81f"
+        "version": "8fe074822803fafb87428428f99fb39ea738966cc635c53a6adccc789f575e04",
+        "signature": "ddaeec47da4fa7ac013705f5036476bcc3f6cb180e456cba1aa4118bc6a5f99e"
+      },
+      "d:/workspace/@yuyi/packages/utils/src/formgirdutils.ts": {
+        "version": "e32a2d754164adca2ff4738cf6a2b0513afc077eacfd7eef10c78d97cc63067d",
+        "signature": "5b1d6dc2b18c61fca860bf18a62588b3985966a48b1e84feaf2ec64ef9256086"
       },
       "d:/workspace/@yuyi/node_modules/@types/lodash/ts3.1/isarray.d.ts": {
         "version": "9d756c8308079040b5a130f7ecddea55f16060950da49ec05c16cbfa62cdb2e0",
@@ -766,20 +770,24 @@
         "signature": "b2d609b49b0cb98130f77575dfd0309bf5fe15937ca1def5e207b35b78b2f057"
       },
       "d:/workspace/@yuyi/packages/utils/src/customutils/likearray.ts": {
-        "version": "366b2c341006ae2687828a44ba54832c114942654df2fc5737489303e9ba7b3e",
+        "version": "29d3174b1f32948127b30e877bac4ebd045a82f257045a06e0bdf6b54390759d",
         "signature": "985b3c958b2ab3fa2f0ac1dbe5f558345c26cda36da38037189fe3a56c2cfba0"
       },
       "d:/workspace/@yuyi/packages/utils/src/customutils/getreallength.ts": {
         "version": "651eefa30392cc95e6e0fdff1982ad7824de884dbf444c94d334890e24728565",
         "signature": "0402a1ddecc09eab5f234bade4ee317b891eb83a593fcc51ae654af22381fa0b"
       },
+      "d:/workspace/@yuyi/packages/utils/src/customutils/multiplesplit.ts": {
+        "version": "7d2c6afe01affb5e2414df774a473b14aab2bf6bdbf4d7816dfb3776789ddfb7",
+        "signature": "4ab10f51a02b5f263161ad4e5136da96898defbf2d814140b10c50cc89b1dd6c"
+      },
       "d:/workspace/@yuyi/packages/utils/src/customutils/gettimeprofile.ts": {
         "version": "2d7ac37c948ce3b28e7567b6c078f3e61d32833322da1197db43b45adcf53ee6",
         "signature": "3035855730a33d262553cb2a54b8d6e75abdf11c3b7c7288eb3fea471712ed24"
       },
       "d:/workspace/@yuyi/packages/utils/src/customutils/index.ts": {
-        "version": "a4e7d4c879d2ca64b815fcaa398ccb7289469d137df6f62435c2c885ae19052e",
-        "signature": "b2184c02600409cb7fd85647b7cb96e9b4c65894a9204d15429061b495feb656"
+        "version": "5412efdccd1f076128933daf1fd12f6899f8a89b545c2428b61b5be772d6403c",
+        "signature": "39db2e92ea9358f71a63b2ab45419a9b8c65a22a0cf743b694107259b68d1063"
       },
       "d:/workspace/@yuyi/node_modules/rxjs/internal/symbol/observable.d.ts": {
         "version": "ed164267a8b206892d69768f51e6e7157ad0a6e89745fbd39f3e81c4700e9a9e",
@@ -1422,8 +1430,8 @@
         "signature": "257a1488f9e08b14811552f6226953a399ac7883651200061277932187ff5df7"
       },
       "d:/workspace/@yuyi/packages/utils/src/index.ts": {
-        "version": "1c72a78a4c67b1323cdcb7946918bc8877041e2ddbb6570a3eb11b435c7b7842",
-        "signature": "a453c477fb5090b54220483ffe675715b3d8d20e6f59829d78d128abac05bd02"
+        "version": "fff158beb70bf8f1ec12daa4ad72b037b379df98d2642768f3d3066e3e459fae",
+        "signature": "efae14773744b045c958c813f65ec4b89540f2a338375825bc9ffe57e156b17c"
       },
       "d:/workspace/@yuyi/packages/utils/src/index.export.ts": {
         "version": "5dff41b0b1e85ba8a35e088d2cfdb5741e6f05cb4f46f8a77e268a112d1954e9",
@@ -1438,20 +1446,20 @@
         "signature": "0c89d9bf3dcaa71b0741e76d2ff54c0beccd4763536c6e74882fa6993809745d"
       },
       "d:/workspace/@yuyi/node_modules/@types/react/global.d.ts": {
-        "version": "68188f9f0950ca019af3f061cb494751a2798648586207cbf2089dccd68b663c",
-        "signature": "68188f9f0950ca019af3f061cb494751a2798648586207cbf2089dccd68b663c"
+        "version": "2bbdfc5ed049f38787376bb01b7bcfe5299eac853c76c16a3e21ab0279078314",
+        "signature": "2bbdfc5ed049f38787376bb01b7bcfe5299eac853c76c16a3e21ab0279078314"
       },
       "d:/workspace/@yuyi/node_modules/csstype/index.d.ts": {
-        "version": "1c858c49eb3b946726e6a9a03e081b418349552ef96dcc0aedf304b3b73b667f",
-        "signature": "1c858c49eb3b946726e6a9a03e081b418349552ef96dcc0aedf304b3b73b667f"
+        "version": "599c67cf56a35a8a7bee5bcd877dece4cb71553efb763ebf1050c6987acfaefc",
+        "signature": "599c67cf56a35a8a7bee5bcd877dece4cb71553efb763ebf1050c6987acfaefc"
       },
       "d:/workspace/@yuyi/node_modules/@types/prop-types/index.d.ts": {
         "version": "5e632216dfe01f2ff76f1c312c28632fde75364c24d659b732f2ee59e9ccf1b2",
         "signature": "5e632216dfe01f2ff76f1c312c28632fde75364c24d659b732f2ee59e9ccf1b2"
       },
       "d:/workspace/@yuyi/node_modules/@types/react/index.d.ts": {
-        "version": "ede34cba2a37912ff2d7aa01d803cade6990c8f8835e010c054dac5a0922e34c",
-        "signature": "ede34cba2a37912ff2d7aa01d803cade6990c8f8835e010c054dac5a0922e34c"
+        "version": "3b62b2451f021c4512691c57658e78cc72cf47bee60fddb41b17b5a492284bc5",
+        "signature": "3b62b2451f021c4512691c57658e78cc72cf47bee60fddb41b17b5a492284bc5"
       },
       "d:/workspace/@yuyi/node_modules/mobx-react/index.d.ts": {
         "version": "e7a9898d500baa2f8b0ab63a994b4990ff695f2c67e7f1c7d5754327769da473",
@@ -2108,7 +2116,7 @@
       "strictNullChecks": false,
       "suppressImplicitAnyIndexErrors": true,
       "module": 6,
-      "target": 1,
+      "target": 8,
       "lib": [
         "lib.es2015.d.ts",
         "lib.dom.d.ts",
@@ -2131,12 +2139,12 @@
       "composite": true,
       "tsBuildInfoFile": "d:/WorkSpace/@yuyi/packages/.tsBuildInfo/utils.json",
       "incremental": true,
+      "noEmitHelpers": false,
       "typeRoots": [
         "d:/WorkSpace/@yuyi/packages/env/types",
         "d:/WorkSpace/@yuyi/packages/utils/node_modules/@types",
         "d:/WorkSpace/@yuyi/node_modules/@types"
       ],
-      "watch": true,
       "configFilePath": "d:/WorkSpace/@yuyi/packages/utils/tsconfig.json"
     },
     "referencedMap": {
@@ -3363,6 +3371,13 @@
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/util.d.ts",
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "d:/workspace/@yuyi/packages/utils/src/formgirdutils.ts": [
+        "d:/workspace/@yuyi/node_modules/@types/lodash/ts3.1/index.d.ts",
+        "d:/workspace/@yuyi/packages/utils/src/lodashextra/index.ts",
+        "d:/workspace/@yuyi/packages/utils/src/typelib/index.ts",
+        "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/util.d.ts",
+        "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "d:/workspace/@yuyi/node_modules/@types/lodash/ts3.1/isarray.d.ts": [
         "d:/workspace/@yuyi/node_modules/@types/lodash/ts3.1/index.d.ts",
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/util.d.ts",
@@ -3434,6 +3449,10 @@
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/util.d.ts",
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "d:/workspace/@yuyi/packages/utils/src/customutils/multiplesplit.ts": [
+        "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/util.d.ts",
+        "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "d:/workspace/@yuyi/packages/utils/src/customutils/gettimeprofile.ts": [
         "d:/workspace/@yuyi/node_modules/@types/lodash/ts3.1/index.d.ts",
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/util.d.ts",
@@ -3450,6 +3469,7 @@
         "d:/workspace/@yuyi/packages/utils/src/customutils/jsgetage.ts",
         "d:/workspace/@yuyi/packages/utils/src/customutils/likearray.ts",
         "d:/workspace/@yuyi/packages/utils/src/customutils/getreallength.ts",
+        "d:/workspace/@yuyi/packages/utils/src/customutils/multiplesplit.ts",
         "d:/workspace/@yuyi/packages/utils/src/customutils/gettimeprofile.ts",
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/util.d.ts",
         "d:/workspace/@yuyi/packages/utils/node_modules/@types/node/ts3.2/util.d.ts"
@@ -4553,6 +4573,7 @@
         "d:/workspace/@yuyi/packages/utils/src/optionsutils/index.ts",
         "d:/workspace/@yuyi/packages/utils/src/timebuffer.ts",
         "d:/workspace/@yuyi/packages/utils/src/lodashextra/index.ts",
+        "d:/workspace/@yuyi/packages/utils/src/formgirdutils.ts",
         "d:/workspace/@yuyi/packages/utils/src/typelib/index.ts",
         "d:/workspace/@yuyi/packages/utils/src/propertyutils/index.ts",
         "d:/workspace/@yuyi/packages/utils/src/testutils/index.ts",
@@ -6491,6 +6512,7 @@
         "d:/workspace/@yuyi/packages/utils/src/customutils/jsgetage.ts",
         "d:/workspace/@yuyi/packages/utils/src/customutils/likearray.ts",
         "d:/workspace/@yuyi/packages/utils/src/customutils/getreallength.ts",
+        "d:/workspace/@yuyi/packages/utils/src/customutils/multiplesplit.ts",
         "d:/workspace/@yuyi/packages/utils/src/customutils/gettimeprofile.ts"
       ],
       "d:/workspace/@yuyi/node_modules/rxjs/internal/symbol/observable.d.ts": [
@@ -7508,6 +7530,7 @@
         "d:/workspace/@yuyi/packages/utils/src/optionsutils/index.ts",
         "d:/workspace/@yuyi/packages/utils/src/timebuffer.ts",
         "d:/workspace/@yuyi/packages/utils/src/lodashextra/index.ts",
+        "d:/workspace/@yuyi/packages/utils/src/formgirdutils.ts",
         "d:/workspace/@yuyi/packages/utils/src/typelib/index.ts",
         "d:/workspace/@yuyi/packages/utils/src/propertyutils/index.ts",
         "d:/workspace/@yuyi/packages/utils/src/testutils/index.ts",
@@ -8304,6 +8327,7 @@
       "d:/workspace/@yuyi/node_modules/@types/lodash/ts3.1/isnumber.d.ts",
       "d:/workspace/@yuyi/packages/utils/src/lodashextra/isnumber.ts",
       "d:/workspace/@yuyi/packages/utils/src/lodashextra/isfunction.ts",
+      "d:/workspace/@yuyi/packages/utils/src/lodashextra/trackmerge.ts",
       "d:/workspace/@yuyi/node_modules/rxjs/internal/subscriber.d.ts",
       "d:/workspace/@yuyi/node_modules/rxjs/internal/operator.d.ts",
       "d:/workspace/@yuyi/node_modules/rxjs/internal/observable/iif.d.ts",
@@ -8444,6 +8468,7 @@
       "d:/workspace/@yuyi/packages/utils/src/customutils/jsgetage.ts",
       "d:/workspace/@yuyi/packages/utils/src/customutils/likearray.ts",
       "d:/workspace/@yuyi/packages/utils/src/customutils/getreallength.ts",
+      "d:/workspace/@yuyi/packages/utils/src/customutils/multiplesplit.ts",
       "d:/workspace/@yuyi/packages/utils/src/customutils/gettimeprofile.ts",
       "d:/workspace/@yuyi/packages/utils/src/customutils/index.ts",
       "d:/workspace/@yuyi/node_modules/rxjs/internal/symbol/observable.d.ts",
@@ -8742,7 +8767,7 @@
       "d:/workspace/@yuyi/node_modules/@types/vfile/index.d.ts",
       "d:/workspace/@yuyi/node_modules/@types/vfile-message/index.d.ts",
       "d:/workspace/@yuyi/node_modules/@types/yargs/index.d.ts",
-      "d:/workspace/@yuyi/packages/utils/src/lodashextra/trackmerge.ts"
+      "d:/workspace/@yuyi/packages/utils/src/formgirdutils.ts"
     ]
   },
   "version": "3.5.3"

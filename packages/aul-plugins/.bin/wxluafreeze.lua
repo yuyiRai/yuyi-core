@@ -77,16 +77,27 @@ function main()
         return
     end
 
+    local srcList = { in_wxluascript }
+    local targetList = {}
+    local in_wxluascript_length = 0
+    for i=1, #srcList do
+      local in_wxluascript_handle = io.open(in_wxluascript, "rb")
+      targetList[i] = in_wxluascript_handle:read("*a")
+      in_wxluascript_length = in_wxluascript_length + in_wxluascript_handle:seek("end")
+      io.close(in_wxluascript_handle)
+    end
     -- read the whole wxLua script into memory
-    local in_wxluascript_handle = io.open(in_wxluascript, "rb")
-    local in_wxluascript_data   = in_wxluascript_handle:read("*a")
-    local in_wxluascript_length = in_wxluascript_handle:seek("end")
-    io.close(in_wxluascript_handle)
+    -- local in_wxluascript_handle = io.open(in_wxluascript, "rb")
+    -- local in_wxluascript_data   = in_wxluascript_handle:read("*a")
+    -- local in_wxluascript_length = in_wxluascript_handle:seek("end")
+    -- io.close(in_wxluascript_handle)
 
     -- write the output file and our tag at the end
     local out_wxluafreeze_handle = io.open(out_wxluafreeze, "wb+")
     out_wxluafreeze_handle:write(in_wxluafreeze_data)
-    out_wxluafreeze_handle:write(in_wxluascript_data)
+    for i=1, #targetList do
+      out_wxluafreeze_handle:write(targetList[i])
+    end
     -- 2^32 = 4294967296, should be enough? Our data is 24 bytes from end.
     out_wxluafreeze_handle:write(string.format("<wxLuaFreeze:%010d>", in_wxluascript_length))
     io.close(out_wxluafreeze_handle)

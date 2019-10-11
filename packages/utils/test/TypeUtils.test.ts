@@ -1,4 +1,6 @@
 import { isNotEmptyValue, isFunction } from '../src'
+
+
 /**
  * 类型判断工具测试
  */
@@ -9,6 +11,7 @@ describe("TypeUtils test", () => {
   expectMap.set(true, true)
   expectMap.set(0, true)
   expectMap.set("", false)
+  expectMap.set("N", true)
   expectMap.set(null, false)
   expectMap.set(undefined, false)
   expectMap.set(NaN, false)

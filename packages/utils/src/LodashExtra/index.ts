@@ -3,20 +3,20 @@
  * @packageDocumentation
  */
 import {
-  toArray, toString, escapeRegExp, isNaN,
+  toArray, toString, escapeRegExp,
   isArray, isArrayLike, isRegExp, isBoolean, isDate, isEmpty, isNil, isObject, isString,
   includes, forEach, last, assign, filter, map, reduce,
-  cloneDeep, trim, keys, values, concat, find, join, some,
+  cloneDeep, trim, keys, values, concat, find, join, some, merge,
   differenceWith, property, takeRight, set, get,
   camelCase,
   ArrayIterator
 } from 'lodash';
 
 export {
-  toArray, toString, escapeRegExp, isNaN,
+  toArray, toString, escapeRegExp,
   isArray, isArrayLike, isRegExp, isBoolean, isDate, isEmpty, isNil, isObject, isString,
   includes, forEach, last, assign, filter, map, reduce,
-  cloneDeep, trim, keys, values, concat, find, join, some,
+  cloneDeep, trim, keys, values, concat, find, join, merge, some,
   differenceWith, property, takeRight, set, get,
   camelCase,
   ArrayIterator

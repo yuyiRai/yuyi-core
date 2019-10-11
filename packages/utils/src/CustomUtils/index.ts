@@ -12,6 +12,7 @@ import { connectTo } from './connectTo';
 import { jsGetAge } from './jsGetAge';
 import { likeArray } from './likeArray';
 import { getRealLength } from './getRealLength'
+import { MultipleSplit } from './MultipleSplit'
 
 export {
   pipe,
@@ -24,6 +25,7 @@ export {
   getRealLength,
   connectTo,
   jsGetAge,
-  likeArray
+  likeArray,
+  MultipleSplit
 }
 export * from './getTimeProfile'

@@ -1,4 +1,6 @@
-require("YuyiCore")
+require("lib/YuyiCore")
+package.path = 'src\\?.lua;.\\?.lua;lib\\?.lua;clib\\?.dll;.\\?51.dll;utils\\?.lua;lib\\?.lua;src\\utils\\?.lua;'    --搜索lua模块
+
 -- 配置对象
 TextPanel = {}
 Utils = {}
@@ -21,7 +23,7 @@ function TextPanel.increment(preMsg, nextTime, preTime)
   -- local pm = preLength.."("..preTime..":"..nextTime..""..":"..incrementLength..")".."\r\n"
   -- obj.mes(pm)
   -- obj.mes(string.rep("1", incrementLength - getStringLength(pm)))
-  return string.rep(" ", incrementLength - 1)
+  return "<w"..(incrementLength / 20)..">" --string.rep(" ", incrementLength - 1)
 end
 
 function TextPanel.getMessageMap(obj, msg, szSeparator, special)
@@ -32,7 +34,7 @@ function TextPanel.getMessageMap(obj, msg, szSeparator, special)
     for i=1, #special do
       msg = string.gsub(msg, special[i].."\\", special[i])
     end
-    TextPanel.msgMap = YuyiCore.splitStr(msg, szSeparator)
+    TextPanel.msgMap = YuyiCore.splitStrMul(msg, szSeparator, 1)
   end
   return TextPanel.msgMap
 end
@@ -171,6 +173,21 @@ function Utils.set(key, value)
 end
 
 
+local r = YuyiCore.splitStrMul([[- a -
+
+b。
+c。
+d。
+f
+eeeeeeee。
+fffffffffff。
+
+gggggggggggg。]], { "。", "\n" }, 1)
+
+for u=0, #r do
+  print(r[u])
+end
+print(#r)
 
 -- 将局部变量赋值给模块名
 _G["TextPanel"] = TextPanel

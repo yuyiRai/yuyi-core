@@ -1,10 +1,10 @@
-/**
- * @module LodashExtraUtils
- */
-/** @external */
-// import { isNaN } from 'lodash';
 import isNumberLodash from 'lodash/isNumber';
 
+const native = global.isNaN
+export function isNaN(value: any) {
+  return typeof value === 'number' && native(value)
+}
+(global as any).isNaN = isNaN
 
 const _ = { isNumber: isNumberLodash }
 /**
