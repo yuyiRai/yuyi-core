@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/env",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
   "license": "MIT",
@@ -15,7 +15,15 @@
     "yuyienv": ".bin/yuyienv.bat",
     "tsccc": ".bin/tsccc.bat"
   },
-  "files": [".bin", "types", "lib", "config", "scripts", "tsconfig.json", "tsconfig.env.json"],
+  "files": [
+    ".bin",
+    "types",
+    "lib",
+    "config",
+    "scripts",
+    "tsconfig.json",
+    "tsconfig.env.json"
+  ],
   "devDependencies": {
     "@avensia-oss/ts-transform-hoist-objects-in-props": "0.0.5",
     "@types/argparse": "^1.0.36",
