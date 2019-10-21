@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/env",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
   "license": "MIT",
@@ -43,5 +43,6 @@
     "typescript": "3.5.3",
     "typescript-plugin-styled-components": "^1.4.2",
     "typescript-transform-paths": "^1.1.8"
-  }
+  },
+  "gitHead": "a269c0305ca409e7c4d1b120c1c287ddda36ca62"
 }

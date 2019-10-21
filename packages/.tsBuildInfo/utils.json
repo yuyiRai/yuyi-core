@@ -706,7 +706,7 @@
         "signature": "fd47ee1fa9fcb99845ced683de962cdebfea51eae67ac6367a511e53e3668eee"
       },
       "d:/workspace/@yuyi/packages/utils/src/lodashextra/castutils.ts": {
-        "version": "3ec12f6417ba06829e7ac6f901859ee60847f6241401d3e200f3d11678d8a880",
+        "version": "c2d80c51020820d61fce342a4060cebe9f02ea4b65f4a2c490fe043d4101f164",
         "signature": "eed594a21a8a2c3c80e6245af4c19f6d7932ad484d3be6b21829ea6877f029e8"
       },
       "d:/workspace/@yuyi/packages/utils/src/lodashextra/reducemap.ts": {
@@ -1430,7 +1430,7 @@
         "signature": "0667fdb84ec9999d16cee206cd0d28a519241c47d2c55fadb2f8b109a51ec683"
       },
       "d:/workspace/@yuyi/packages/utils/src/index.ts": {
-        "version": "397a6867ec8639546e23f94128db7e2049e409c7891d8a7c6d9e7b62f1489506",
+        "version": "b0c0e36a81ddd50e2fe16355786bb1abcce4ef1c3446ab0d0ad75195da5fc22c",
         "signature": "25f6a7b2eb7a6edfdcfe100bbe87aea3f052e84ac24fd3b8b456816f855a6862"
       },
       "d:/workspace/@yuyi/packages/utils/src/index.export.ts": {
@@ -8472,7 +8472,6 @@
       "d:/workspace/@yuyi/packages/utils/src/tsutils/index.ts",
       "d:/workspace/@yuyi/packages/utils/src/typelib/index.ts",
       "d:/workspace/@yuyi/packages/utils/src/lodashextra/isequal.ts",
-      "d:/workspace/@yuyi/packages/utils/src/lodashextra/castutils.ts",
       "d:/workspace/@yuyi/packages/utils/src/lodashextra/reducemap.ts",
       "d:/workspace/@yuyi/packages/utils/src/lodashextra/creategroupwith.ts",
       "d:/workspace/@yuyi/packages/utils/src/lodashextra/index.ts",
@@ -8653,7 +8652,6 @@
       "d:/workspace/@yuyi/node_modules/typescriptcollectionsframework/definitions/src/treeset.d.ts",
       "d:/workspace/@yuyi/node_modules/typescriptcollectionsframework/definitions/index.d.ts",
       "d:/workspace/@yuyi/packages/utils/src/wasmloader/index.ts",
-      "d:/workspace/@yuyi/packages/utils/src/index.ts",
       "d:/workspace/@yuyi/packages/utils/src/index.export.ts",
       "d:/workspace/@yuyi/node_modules/@types/argparse/index.d.ts",
       "d:/workspace/@yuyi/packages/utils/src/nodeutils/args.ts",
@@ -8790,7 +8788,9 @@
       "d:/workspace/@yuyi/node_modules/vfile-message/types/index.d.ts",
       "d:/workspace/@yuyi/node_modules/@types/vfile/index.d.ts",
       "d:/workspace/@yuyi/node_modules/@types/vfile-message/index.d.ts",
-      "d:/workspace/@yuyi/node_modules/@types/yargs/index.d.ts"
+      "d:/workspace/@yuyi/node_modules/@types/yargs/index.d.ts",
+      "d:/workspace/@yuyi/packages/utils/src/lodashextra/castutils.ts",
+      "d:/workspace/@yuyi/packages/utils/src/index.ts"
     ]
   },
   "version": "3.5.3"
