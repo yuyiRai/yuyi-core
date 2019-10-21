@@ -1,5 +1,5 @@
 import { exec } from "shelljs";
-import Args from './args';
+import { Args } from '@yuyi919/utils/dist/NodeUtils';
 import colors from 'colors';
 const type = ['patch', 'minor', 'major']
 const args = new Args().addArgument(['-t', '-type'], {

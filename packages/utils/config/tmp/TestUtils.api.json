@@ -42,7 +42,7 @@
    *
    * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
    */
-  "mainEntryPointFilePath": "<projectFolder>/lib/LodashExtra/index.d.ts",
+  "mainEntryPointFilePath": "<projectFolder>/lib/TestUtils/index.d.ts",
   /**
    * Determines how the TypeScript compiler engine will be invoked by API Extractor.
    */
@@ -99,7 +99,7 @@
      * SUPPORTED TOKENS: <packageName>, <unscopedPackageName>
      * DEFAULT VALUE: "<unscopedPackageName>.api.md"
      */
-    "reportFileName": "LodashExtra.api.md",
+    "reportFileName": "TestUtils.api.md",
     /**
      * Specifies the folder where the API report file is written.  The file name portion is determined by
      * the "reportFileName" setting.
@@ -146,7 +146,7 @@
      * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
      * DEFAULT VALUE: "<projectFolder>/temp/<unscopedPackageName>.api.json"
      */
-    "apiJsonFilePath": "<projectFolder>/etc/LodashExtra.api.json"
+    "apiJsonFilePath": "<projectFolder>/etc/TestUtils.api.json"
   },
   /**
    * Configures how the .d.ts rollup file will be generated.
@@ -168,7 +168,7 @@
      * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
      * DEFAULT VALUE: "<projectFolder>/dist/<unscopedPackageName>.d.ts"
      */
-    "untrimmedFilePath": "<projectFolder>/dist/LodashExtra.d.ts",
+    "untrimmedFilePath": "<projectFolder>/dist/TestUtils.d.ts",
     /**
      * Specifies the output path for a .d.ts rollup file to be generated with trimming for a "beta" release.
      * This file will include only declarations that are marked as "@public" or "@beta".
