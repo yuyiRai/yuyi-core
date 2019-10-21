@@ -1,4 +1,4 @@
-import { ArgumentParser, ArgumentOptions, ActionConstructorOptions, Action } from 'argparse'
+import { ArgumentParser, ArgumentOptions, ActionConstructorOptions, Action, Namespace } from 'argparse'
 
 declare interface ArgumentOptionsFixed extends ArgumentOptions {
   action?: 'store' //只存储参数的值。这是默认操作。
@@ -28,7 +28,7 @@ export default class Args implements ArgumentParserFixed {
     this.parser.addArgument(a, b)
     return this;
   }
-  public init() {
-    return this.parser.parseArgs()
+  public init(args?: string[], ns?: object | Namespace) {
+    return this.parser.parseArgs(args, ns)
   }
 };

@@ -2,9 +2,9 @@ import { arrayMapToKeysDive } from '@/commonUtils';
 import { IsTrue, IKeyValueMap } from '../TsUtils';
 import { ArrayIterator, castArray, escapeRegExp, filter, find, isArray, isEqual, isFunction, isNil, isRegExp, join, map, some } from '../LodashExtra';
 import { isNotEmptyArray, isNotEmptyArrayStrict, isNotEmptyString, isNotEmptyValue, typeFilterUtils } from '../TypeLib';
-import { SearchKey, keyMatcher, KeyMatcherFunc, Option, OptionSearcher, RemoteSearcher } from './interface'
+import { SearchKey, KeywordMatcher, KeyMatcherFunc, Option, OptionSearcher, RemoteSearcher } from './interface'
 
-export { SearchKey, keyMatcher, KeyMatcherFunc, Option, OptionSearcher, RemoteSearcher }
+export { SearchKey, KeywordMatcher as keyMatcher, KeyMatcherFunc, Option, OptionSearcher, RemoteSearcher }
 
 // /**
 //  * 操作Options的工具集合
@@ -15,7 +15,7 @@ export { SearchKey, keyMatcher, KeyMatcherFunc, Option, OptionSearcher, RemoteSe
  * 提供匹配方法/正则/匹配项数组/其它，返回通用匹配方法
  * @param searchKey 
  */
-export function createEqualsMatcher<K = any>(searchKey: SearchKey<K>): keyMatcher {
+export function createEqualsMatcher<K = any>(searchKey: SearchKey<K>): KeywordMatcher {
   if (isFunction(searchKey)) {
     // console.error('isFunction', searchKey);
     return searchKey;
@@ -42,7 +42,7 @@ export function createEqualsMatcher<K = any>(searchKey: SearchKey<K>): keyMatche
  * @param labelSearcher 
  * @param item 
  */
-export function isLabelMatchedItem(labelSearcher: SearchKey<string>, item: Option): boolean {
+export function isLabelMatchedItem<V extends string, D extends string>(labelSearcher: SearchKey<string>, item: Option<V, D>): boolean {
   if (isNotEmptyValue(item)) {
     const { label, value } = item;
     const name = typeFilterUtils.isNotEmptyValueFilter(label, value, item);
@@ -50,6 +50,7 @@ export function isLabelMatchedItem(labelSearcher: SearchKey<string>, item: Optio
   }
   return false
 }
+
 /**
  * 
  * @param valueSearcher 
@@ -69,7 +70,7 @@ export function isValueMatchedItem(valueSearcher: SearchKey<string>, item: Optio
  * @param keyMatcher 
  * @param item 
  */
-export function isValueMatchedItemByMatcher(keyMatcher: keyMatcher, item: Option): boolean {
+export function isValueMatchedItemByMatcher(keyMatcher: KeywordMatcher, item: Option): boolean {
   if (isNotEmptyValue(item)) {
     const { label } = item;
     const value = typeFilterUtils.isNotEmptyValueFilter(item.value, item);
@@ -83,7 +84,7 @@ export function isValueMatchedItemByMatcher(keyMatcher: keyMatcher, item: Option
  * @param keyMatcher 
  * @param item 
  */
-export function isLabelMatchedItemByMatcher(keyMatcher: keyMatcher, item: Option): boolean {
+export function isLabelMatchedItemByMatcher(keyMatcher: KeywordMatcher, item: Option): boolean {
   // console.error('isNotEmptyValueFilter', item);
   if (isNotEmptyValue(item)) {
     const { label, value } = item;
@@ -116,7 +117,7 @@ export function isLabelMatchedItemByMatcher(keyMatcher: keyMatcher, item: Option
  * {@link getOptions | getOptions()}
  */
 export function getOptions<
-  TOption = Option,
+  TOption extends Option = Option,
   FindOne extends boolean = false,
   TResult = IsTrue<FindOne, TOption | undefined, TOption[]>
 >(
@@ -143,7 +144,7 @@ export function getOptionsByLabel<T = Option, K = string>(optionList: T[], searc
 /** {@inheritDoc getOptions} */
 export function getOptionsByLabel<T = Option, K = string>(optionList: T[], searchName: SearchKey<K>, findOne: true): T | undefined;
 
-export function getOptionsByLabel<T = Option, K = string, O extends boolean = false>(optionList: T[], searchName: SearchKey<K>, findOne?: O) {
+export function getOptionsByLabel<T extends Option, K = string, O extends boolean = false>(optionList: T[], searchName: SearchKey<K>, findOne?: O) {
   return getOptions(optionList, searchName, isLabelMatchedItemByMatcher, findOne)
 }
 
@@ -153,7 +154,7 @@ export function getOptionsByValue<T = Option, K = string>(optionList: T[], searc
 /** {@inheritDoc getOptions} */
 export function getOptionsByValue<T = Option, K = string>(optionList: T[], searchValue: SearchKey<K>, findOne: true): T | undefined
 
-export function getOptionsByValue<T = Option, K = string>(optionList: T[], searchValue: SearchKey<K>, findOne?: boolean) {
+export function getOptionsByValue<T extends Option, K = string>(optionList: T[], searchValue: SearchKey<K>, findOne?: boolean) {
   return getOptions(optionList, searchValue, isValueMatchedItemByMatcher, findOne)
 }
 
@@ -164,7 +165,7 @@ export function getOptionsByValue<T = Option, K = string>(optionList: T[], searc
  * @param searchValue - 
  * @param findOne - 
  */
-export function getOptionsByKey<T = Option, K = string>(optionList: T[], searchKey: SearchKey<K>, findOne: boolean = false): T | T[] | undefined {
+export function getOptionsByKey<T extends Option, K = string>(optionList: T[], searchKey: SearchKey<K>, findOne: boolean = false): T | T[] | undefined {
   return getOptions(optionList, searchKey, function (keyMatcher, item) {
     return isLabelMatchedItemByMatcher(keyMatcher, item) || isValueMatchedItemByMatcher(keyMatcher, item)
   }, findOne)
@@ -183,12 +184,13 @@ export function isOptionsItemSelected<T, K>(option: T[], searchName: SearchKey<K
   }
   return false;
 }
+
 /**
  * 
  * @param option 
  * @param searchName 
  */
-export function optionsSelectedMatch<T, K>(option: T[], searchName: SearchKey<K>): keyMatcher {
+export function getOptionsSelectedMatch<T, K>(option: T[], searchName: SearchKey<K>): KeywordMatcher {
   const itemList = getOptionsByLabel(option, searchName);
   if (isNotEmptyArrayStrict(itemList)) {
     return function (selectedValue) {
@@ -202,9 +204,9 @@ export function optionsSelectedMatch<T, K>(option: T[], searchName: SearchKey<K>
 
 
 /**
- * 
- * @param optionList 
- * @param label 
+ * 转换value为label
+ * @param optionList 数据项
+ * @param label 允许为查询器
  */
 export function labelToValue(optionList: Option[], label: SearchKey<string>): string | undefined {
   const i: Option | undefined = getOptionsByLabel<Option, string>(optionList, label, true)
@@ -212,9 +214,9 @@ export function labelToValue(optionList: Option[], label: SearchKey<string>): st
 }
 
 /**
- * 
- * @param optionList 
- * @param value 
+ * 转换value为label
+ * @param optionList 数据项
+ * @param value 允许为查询器
  */
 export function valueToLabel(optionList: Option[], value: SearchKey<string>): string | undefined {
   const i: Option | undefined = getOptionsByValue<Option, string>(optionList, value, true)
@@ -242,6 +244,7 @@ export function valuesToLabels(options: Option[], value: SearchKey<string>, join
 
 export function labelsToValues(options: Option[], label: SearchKey<string>): string[];
 export function labelsToValues(options: Option[], label: SearchKey<string>, joinKey: string): string
+
 /**
  * 批量转换label到value
  * @param options 
@@ -263,7 +266,7 @@ export function labelsToValues(options: Option[], label: SearchKey<string>, join
 export function getCodeListByKey(codeType: Option[]): RemoteSearcher
 export function getCodeListByKey(codeType: OptionSearcher, optionFactory?: ArrayIterator<IKeyValueMap, Option>): RemoteSearcher
 /**
- * 
+ * 根据关键字查询OptionsList
  * @param codeType 
  * @param valueLabel 
  * @param valueKey 
@@ -286,8 +289,12 @@ export function getCodeListByKey(codeType: Option[] | OptionSearcher, optionFact
   }
   return async function () { return [] }
 }
-
-export function convertValueOption(valueList: string[], isFull: boolean = false): Option[] {
-  return map(valueList, value => Object.assign({ value }, isFull ? { label: value } : {}))
+/**
+ * 将一个数据数组转换为OptoinsList
+ * @param valueList 
+ * @param useLabel 是否提供label，是则label同value
+ */
+export function convertValueOption(valueList: string[], useLabel: boolean = false): Option[] {
+  return map(valueList, value => Object.assign({ value }, useLabel ? { label: value } : {}))
 }
 // }

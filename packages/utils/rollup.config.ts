@@ -23,7 +23,7 @@ export default {
   cache: isDevelopment ? cache : false,
   treeshake: isProduction,
   // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
-  external: ["lodash"],
+  external: ["lodash", "argparse", "fs"],
   watch: {
     include: 'lib/**',
   },
