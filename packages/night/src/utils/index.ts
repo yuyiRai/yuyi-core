@@ -1,8 +1,8 @@
-export * from '@yuyi/utils'
+export * from '@yuyi919/utils'
 export * from './SlotUtils'
 export * from './MessageUtils'
 import * as MessageUtils from './MessageUtils'
-import { Utils as U, IUtils as IU } from '@yuyi/utils'
+import { Utils as U, IUtils as IU } from '@yuyi919/utils'
 export type IUtils = IU & typeof MessageUtils
 const Utils: IUtils = {
   ...MessageUtils,

@@ -70,7 +70,7 @@
 // }))
 
 import * as React from 'react';
-import { Utils } from '@yuyi/utils';
+import { Utils } from '@yuyi919/utils';
 import { OFormItemCommon } from '../Interface';
 
 interface IViewItemProps extends OFormItemCommon {

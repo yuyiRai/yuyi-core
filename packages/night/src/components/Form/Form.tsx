@@ -1,6 +1,6 @@
 import { useMountHooks, usePropsRecive } from '@/hooks';
 import { get, set } from '@/utils';
-import { Utils } from '@yuyi/utils';
+import { Utils } from '@yuyi919/utils';
 import { Row } from 'antd';
 import Form from 'antd/lib/form';
 import { GetFieldDecoratorOptions, WrappedFormUtils } from 'antd/lib/form/Form';

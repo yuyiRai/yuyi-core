@@ -3,7 +3,7 @@ import { Observer, useObserver } from 'mobx-react-lite';
 import { IDisposer } from 'mobx-utils';
 import * as React from 'react';
 import { concat } from 'lodash'
-import { Utils } from '@yuyi/utils';
+import { Utils } from '@yuyi919/utils';
 import { HashItemList } from './HashItemList';
 
 // const aaa = <T>(state: T, action: T) => {

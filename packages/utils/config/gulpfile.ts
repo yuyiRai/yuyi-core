@@ -8,7 +8,7 @@ const apiAll = createApiTask()
 const apiFix = ApiExtractorFix.createApiTask()
 const docFix = ApiExtractorFix.createApiFixedTask({
   items: [
-    { name: '@yuyi/utils' }
+    { name: '@yuyi919/utils' }
   ]
 })
 

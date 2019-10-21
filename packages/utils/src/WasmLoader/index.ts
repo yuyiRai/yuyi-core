@@ -40,15 +40,15 @@ export async function loadWebAssembly(loader: Loader<any>): Promise<WebAssembly.
 
 
 
-export async function webAssemblyTest(log: any) {
-  // log(requireWebAssembly(wasm).exports.main())
-  // // 调用
-  const { instance } = await loadWebAssembly(() => import("../../wasm/async.wasm"));
-  const main = instance.exports.main; // 取出c里面的方法
-  log(main());
-  // return import('@yuyi/core').then((wasm) => {
-  //   log('test5553', wasm.greet)
-  //   console.error(wasm.greet)
-  //   wasm.greet('testt')
-  // })
-}
+// export async function webAssemblyTest(log: any) {
+//   // log(requireWebAssembly(wasm).exports.main())
+//   // // 调用
+//   const { instance } = await loadWebAssembly(() => import("../../wasm/async.wasm"));
+//   const main = instance.exports.main; // 取出c里面的方法
+//   log(main());
+//   // return import('@yuyi/core').then((wasm) => {
+//   //   log('test5553', wasm.greet)
+//   //   console.error(wasm.greet)
+//   //   wasm.greet('testt')
+//   // })
+// }

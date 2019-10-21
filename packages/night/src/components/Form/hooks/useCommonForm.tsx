@@ -1,6 +1,6 @@
 import { usePropsRecive, useSafeStoreProvider, UseSafeStoreProviderReturns } from "@/hooks";
 import { CommonStore } from "@/stores/CommonStore";
-import { Utils } from '@yuyi/utils';
+import { Utils } from '@yuyi919/utils';
 import { FormStore } from "@/stores/FormStore";
 import { FormItemStoreCore, IFormItemStoreConstructor, IFormItemStoreCore } from "@/stores/FormStore/FormItemStoreBase";
 import { WrappedFormUtils } from "antd/lib/form/Form";
@@ -8,7 +8,7 @@ import { map } from "lodash";
 import { action, computed, IReactionDisposer, observable } from "mobx";
 import * as React from 'react';
 import { useContext } from "react";
-import { set } from "@yuyi/utils";
+import { set } from "@yuyi919/utils";
 import { ICommonFormProps } from "../CommonForm";
 import { ItemSwitch } from "../Item";
 

@@ -21,7 +21,7 @@
       ]
     },
     "outDir": "./lib",
-    "declarationDir": "./types",
+    "declarationDir": "./lib",
     "tsBuildInfoFile": "../.tsBuildInfo/utils.json",
     "incremental": true,
     "target": "esnext",

@@ -4,7 +4,7 @@ import { DbManager } from "./DAT";
 import { settingLf } from "./utils/Setting";
 import { IReactionDisposer, observable, action, runInAction } from "mobx";
 import { Snapshot } from "mmlpx/esm/core/dependency-inject/Injector";
-import { Utils } from "@yuyi/utils";
+import { Utils } from "@yuyi919/utils";
 import { FileLoader } from "./components/DragUpload";
 
 let staticReactional: IReactionDisposer | null = null;

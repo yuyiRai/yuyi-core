@@ -1,6 +1,6 @@
 import { observer } from 'mobx-react';
 import * as React from 'react';
-import { Utils } from '@yuyi/utils';
+import { Utils } from '@yuyi919/utils';
 
 function injectRenderer<P extends React.PropsWithChildren<any>>(isElement: boolean, Component: React.ComponentType<P> | React.ReactElement<P>) {
   if (isElement) {

@@ -2,6 +2,7 @@
   "name": "@yuyi/pfv-extractor",
   "version": "0.0.3",
   "description": "",
+  "private": true,
   "main": "dist/index.js",
   "scripts": {
     "tscc": "tsccc ./src/index.ts",
@@ -16,5 +17,5 @@
     "encoding-japanese": "^1.0.29",
     "psd": "^3.2.0"
   },
-  "gitHead": "1cc9ea27f68174e4ff58c4bace35e9cb4d2aea7b"
+  "gitHead": "b6a439f1d79269da2843d054887dd42e7a7555c7"
 }

@@ -1,7 +1,7 @@
 
 import * as wasm from '@yuyi/core'
 import { repeat } from 'lodash'
-import { uuid } from '@yuyi/utils';
+import { uuid } from '@yuyi919/utils';
 
 const { get_uuid } = wasm;
 

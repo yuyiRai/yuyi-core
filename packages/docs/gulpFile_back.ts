@@ -22,7 +22,7 @@ const options: TypeDocOptions = {
   "target": "es5",
   "out": "docs",
   "tsconfig": "tsconfig.json",
-  "name": "@yuyi/utils",
+  "name": "@yuyi919/utils",
   "includes": "src",
   "ignoreCompilerErrors": true,
   "hideGenerator": true,

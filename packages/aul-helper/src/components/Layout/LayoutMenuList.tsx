@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Icon, Menu } from 'antd';
-import { Utils } from '@yuyi/utils'
+import { Utils } from '@yuyi919/utils'
 import { MenuProps, ClickParam } from 'antd/lib/menu';
 import { Observer, useObserver, observer } from '@yuyi/night';
 import { NavLink, NavLinkProps } from 'react-router-dom';

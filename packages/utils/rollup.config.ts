@@ -18,7 +18,7 @@ export default {
   output: [
     // { dir: path.dirname(pkg.main), name: 'Utils', exports: 'named', format: 'es', sourcemap: true },
     // { dir: path.dirname(pkg.main), format: 'es', exports: 'named', sourcemap: true },
-    { dir: path.dirname(pkg.main), format: 'es', exports: 'named', sourcemap: true },
+    { dir: path.dirname(pkg.main), format: 'cjs', exports: 'named', sourcemap: true },
   ],
   cache: isDevelopment ? cache : false,
   treeshake: isProduction,

@@ -1,4 +1,4 @@
-import { Utils } from "@yuyi/utils";
+import { Utils } from "@yuyi919/utils";
 import { autorun, observable, reaction } from "mobx";
 import { createTransformer } from "mobx-utils";
 import { IKeyData, IMapTransformer, KeyDataMapStore } from "./MapAndListStore";

@@ -58,7 +58,7 @@
     "@types/react-loadable": "^5.5.1",
     "@types/styled-components": "^4.1.18",
     "@yuyi/env": "^0.0.2",
-    "@yuyi/utils": "^0.0.7",
+    "@yuyi919/utils": "^0.0.7",
     "amap-js": "^1.1.0",
     "core-decorators": "^0.20.0",
     "cross-env": "^5.1.4",
@@ -102,5 +102,5 @@
   "files": [
     "dist"
   ],
-  "gitHead": "1cc9ea27f68174e4ff58c4bace35e9cb4d2aea7b"
+  "gitHead": "b6a439f1d79269da2843d054887dd42e7a7555c7"
 }

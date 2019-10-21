@@ -1,5 +1,5 @@
 import { action, computed, observable } from 'mobx';
-import { Utils, uuid } from '@yuyi/utils';
+import { Utils, uuid } from '@yuyi919/utils';
 import { CommonStore } from '../CommonStore';
 import { FormStore } from './FormStore';
 

@@ -1,5 +1,5 @@
 import * as zango from 'zangodb'
-import { Utils } from '@yuyi/utils'
+import { Utils } from '@yuyi919/utils'
 import { chunk } from 'lodash'
 
 export enum EDbFilterOperator {

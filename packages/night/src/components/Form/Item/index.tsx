@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Loadable from 'react-loadable';
-import { Utils } from '@yuyi/utils';
+import { Utils } from '@yuyi919/utils';
 import { FormItemType, IItemTypeComponent, OFormItemCommon } from '../Interface/FormItem';
 import { useCascaderItem } from './CascaderItem';
 // import { IInputItemProps, ITextAreaItemProps } from './InputItem';

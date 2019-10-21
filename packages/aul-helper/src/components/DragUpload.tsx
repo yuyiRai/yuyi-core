@@ -4,7 +4,7 @@ import { action, computed, observable, ObservableMap, toJS } from 'mobx';
 import { useAsObservableSource, useObserver } from '@yuyi/night';
 import * as React from 'react';
 import styled from 'styled-components';
-import { createSimpleTimeBufferInput } from '@yuyi/utils';
+import { createSimpleTimeBufferInput } from '@yuyi919/utils';
 import { Button, Tooltip } from '@material-ui/core';
 import AutoIcon from './AutoIcon';
 import { Store } from 'mmlpx';

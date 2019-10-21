@@ -4,7 +4,7 @@ import { OptionsStore } from '@/stores/ItemConfig/OptionsStore';
 import { IKeyValueMap, runInAction, set } from 'mobx';
 import { ITransformer } from 'mobx-utils';
 import * as React from 'react';
-import { Utils } from '@yuyi/utils';
+import { Utils } from '@yuyi919/utils';
 import { FormStoreContext } from './useCommonForm';
 
 export type ItemConfigContext = { code: string, pipe?: (itemConfig: ItemConfig) => any }

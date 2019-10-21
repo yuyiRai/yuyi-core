@@ -1,6 +1,6 @@
 import { forEach } from 'lodash';
 import { action, computed, observable, ObservableMap, ObservableSet, toJS } from 'mobx';
-import { Utils } from '@yuyi/utils';
+import { Utils } from '@yuyi919/utils';
 import { AulUtils, ExoUtils } from './ExoUtils';
 
 export class TextObjectAdapter {

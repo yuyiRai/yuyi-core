@@ -1,5 +1,5 @@
 import { action, runInAction } from 'mobx'
-import { Utils } from '@yuyi/utils'
+import { Utils } from '@yuyi919/utils'
 import { useLocalStore as ul, useAsObservableSource as ua, Observer, observer, useObserver } from 'mobx-react-lite'
 
 const tmp = action('useLocalStore', ul)

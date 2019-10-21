@@ -26,15 +26,15 @@
     "pub": "yarn commit && lerna publish && yarn run allcommit",
     "env": "lerna publish patch @yuyi/env",
     "start": "lerna run --no-private dev",
-    "start:utils": "yarn workspace @yuyi/utils run start",
+    "start:utils": "yarn workspace @yuyi919/utils run start",
     "start:night": "yarn workspace @yuyi/night run start",
     "dev": "lerna run --no-private dev",
-    "dev:utils": "yarn workspace @yuyi/utils run dev",
+    "dev:utils": "yarn workspace @yuyi919/utils run dev",
     "dev:night": "yarn workspace @yuyi/night run dev",
     "build": "yarn run build-utils && yarn run build-night",
     "build-night": "yarn workspace @yuyi/night run build",
     "start-night": "yarn workspace @yuyi/night run start",
-    "build-utils": "yarn workspace @yuyi/utils run build"
+    "build-utils": "yarn workspace @yuyi919/utils run build"
   },
   "devDependencies": {
     "lerna": "^3.16.4"

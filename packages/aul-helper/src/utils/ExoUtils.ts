@@ -2,7 +2,7 @@ import * as INI from 'js-ini';
 import { chunk, forEach, fromPairs, groupBy, keys, map, pick, reduce, toPairs, values } from 'lodash';
 import { getSnapshot, Store } from 'mmlpx';
 import { action, computed, observable, toJS } from 'mobx';
-import { Utils } from '@yuyi/utils';
+import { Utils } from '@yuyi919/utils';
 import { AulObject, IObject, GroupStore } from './AulObject';
 
 export class AulUtils {

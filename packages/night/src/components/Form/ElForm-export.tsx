@@ -2,7 +2,7 @@ import { autobind } from 'core-decorators';
 import * as React from 'react';
 import { createGlobalStyle } from 'styled-components';
 import Vue from 'vue';
-import { Utils } from '@yuyi/utils';
+import { Utils } from '@yuyi919/utils';
 import { FormStore } from '../../stores/FormStore';
 import { react2Vue, slotInjectContainer } from '../../utils/SlotUtils';
 import { CommonForm } from './CommonForm';

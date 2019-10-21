@@ -1,6 +1,6 @@
 import { WrappedFormUtils } from 'antd/lib/form/Form';
 import { IKeyValueMap, ObservableMap } from 'mobx';
-import { EventEmitter } from '@yuyi/utils';
+import { EventEmitter } from '@yuyi919/utils';
 import { FormModel, IFormItemConstructor, ItemConfig } from '../ItemConfig';
 import { IFormItemStoreConstructor } from "./FormItemStoreBase";
 import { FormStoreCore } from './FormStoreCore';
