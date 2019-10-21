@@ -2,6 +2,7 @@
   "name": "@yuyi/night",
   "version": "0.0.4",
   "description": "",
+  "private": true,
   "author": "yuyiRai",
   "license": "MIT",
   "sideEffects": false,
@@ -102,5 +103,5 @@
   "files": [
     "dist"
   ],
-  "gitHead": "b6a439f1d79269da2843d054887dd42e7a7555c7"
+  "gitHead": "d9e779a608439044f594737686d3ea091f2d3227"
 }

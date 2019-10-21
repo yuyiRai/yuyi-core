@@ -14,7 +14,10 @@ const isProduction = process.env.NODE_ENV === 'production'
 const pkg = require('./package.json')
 let cache = {};
 export default {
-  input: `lib/index.js`,
+  input: {
+    "index": 'lib/index.js',
+    "NodeUtils": 'lib/NodeUtils'
+  },
   output: [
     // { dir: path.dirname(pkg.main), name: 'Utils', exports: 'named', format: 'es', sourcemap: true },
     // { dir: path.dirname(pkg.main), format: 'es', exports: 'named', sourcemap: true },

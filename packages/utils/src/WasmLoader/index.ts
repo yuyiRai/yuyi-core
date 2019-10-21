@@ -1,5 +1,5 @@
 // import { IKeyValueMap } from "./TsUtils";
-// import { greet } from '@yuyi/core'
+// import { greet } from '@yuyi919/core'
 export type Loader<T> = () => Promise<T | { default: T }>
 
 /**
@@ -46,7 +46,7 @@ export async function loadWebAssembly(loader: Loader<any>): Promise<WebAssembly.
 //   const { instance } = await loadWebAssembly(() => import("../../wasm/async.wasm"));
 //   const main = instance.exports.main; // 取出c里面的方法
 //   log(main());
-//   // return import('@yuyi/core').then((wasm) => {
+//   // return import('@yuyi919/core').then((wasm) => {
 //   //   log('test5553', wasm.greet)
 //   //   console.error(wasm.greet)
 //   //   wasm.greet('testt')

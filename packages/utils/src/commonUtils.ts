@@ -1,6 +1,3 @@
-/**
- * @module CommonUtils
- */
 import {
   isFunction, isRegExp,
   keys, property,

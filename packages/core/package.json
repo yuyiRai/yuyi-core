@@ -1,7 +1,8 @@
 {
-  "name": "@yuyi/core",
+  "name": "@yuyi919/core",
   "version": "0.0.3",
   "description": "",
+  "private": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yuyiRai/yuyi-core.git"
@@ -37,5 +38,5 @@
     "assemblyscript": "AssemblyScript/assemblyscript",
     "assemblyscript-json": "github:WebAssemblyOS/assemblyscript-json"
   },
-  "gitHead": "b6a439f1d79269da2843d054887dd42e7a7555c7"
+  "gitHead": "d9e779a608439044f594737686d3ea091f2d3227"
 }

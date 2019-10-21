@@ -1,5 +1,5 @@
 
-import * as wasm from '@yuyi/core'
+import * as wasm from '@yuyi919/core'
 import { repeat } from 'lodash'
 import { uuid } from '@yuyi919/utils';
 
