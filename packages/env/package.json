@@ -4,7 +4,7 @@
   "main": "lib/index.js",
   "types": "types/index.d.ts",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "scripts": {
     "tsc": "ttsc --build && yarn tsc:env",
     "tsc:env": "ttsc -p tsconfig.env.json",
