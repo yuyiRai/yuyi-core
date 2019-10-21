@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/utils",
-  "version": "0.0.17",
+  "version": "0.0.18",
   "description": "",
   "keywords": [
     "mobx",
@@ -57,7 +57,6 @@
     "test:watch": "jest --coverage --watch",
     "test:prod": "npm run lint && npm run test -- --no-cache",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
-    "prepublish": "yarn build",
     "pub": "npm publish --access=public",
     "commit": "git-cz",
     "semantic-release": "semantic-release",
@@ -175,5 +174,5 @@
     "typescript": "3.5.3",
     "typescriptcollectionsframework": "^4.4.10"
   },
-  "gitHead": "a269c0305ca409e7c4d1b120c1c287ddda36ca62"
+  "gitHead": "1c61cc573067f9c157bf8e1c9988000968a0ab5e"
 }
