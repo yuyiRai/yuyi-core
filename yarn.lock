@@ -4118,6 +4118,11 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
+"@yuyi919/env@^0.0.0":
+  version "0.0.0"
+  resolved "https://registry.yarnpkg.com/@yuyi919/env/-/env-0.0.0.tgz#4b39dfcc1f0415e4fbb2ff87e3015a308ecee82a"
+  integrity sha512-ZOWn+owHMhrC8efF60rkKNijb9y9a/6psiOz4DsyQt6prZ741p0p17exsegb0CrHOxhV588yGLU/Svv5MtFxQA==
+
 "@yuyi919/utils@^0.0.7":
   version "0.0.7"
   resolved "https://registry.yarnpkg.com/@yuyi919/utils/-/utils-0.0.7.tgz#483a76d4a386c5c5ccd43436de9776a64dde7373"
