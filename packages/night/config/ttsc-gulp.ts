@@ -1,7 +1,7 @@
 'use strict';
 import shell from 'gulp-shell'
 import gulp from 'gulp'
-import { paths } from '@yuyi/env/config/paths'
+import { paths } from '@yuyi919/env/config/paths'
 import { Task } from 'undertaker';
 
 gulp.task('watch-ttsc', function () {

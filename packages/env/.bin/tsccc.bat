@@ -1,3 +1,3 @@
 @echo off
 
-node -r @yuyi/env/config/run-ts.js -r %1
+node -r @yuyi919/env/config/run-ts.js -r %1

@@ -1,7 +1,7 @@
-import { paths } from '@yuyi/env/config/paths'
+import { paths } from '@yuyi919/env/config/paths'
 import { exec } from "shelljs";
 import { concat, filter } from 'lodash'
-import Args from '@yuyi/env/scripts/args'
+import Args from '@yuyi919/env/scripts/args'
 import classnames from 'classnames';
 const args = new Args()
   .addArgument(['--watch', '-w'], {

@@ -4830,7 +4830,7 @@
           "after": false
         },
         {
-          "transform": "@yuyi/env/config/ts-plugin-mmlpx",
+          "transform": "@yuyi919/env/config/ts-plugin-mmlpx",
           "type": "config"
         },
         {
@@ -4971,7 +4971,7 @@
       "tsBuildInfoFile": "d:/WorkSpace/@yuyi/packages/.tsBuildInfo/night.json",
       "incremental": true,
       "typeRoots": [
-        "d:/WorkSpace/@yuyi/packages/night/@yuyi/env",
+        "d:/WorkSpace/@yuyi/packages/night/@yuyi919/env",
         "d:/WorkSpace/@yuyi/packages/night/node_modules/@types",
         "d:/WorkSpace/@yuyi/node_modules/@types"
       ],

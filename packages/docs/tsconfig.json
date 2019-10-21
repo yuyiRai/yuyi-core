@@ -22,7 +22,7 @@
       "type": "config",
       "after": false
     }, {
-      "transform": "@yuyi/env/config/ts-plugin-mmlpx",
+      "transform": "@yuyi919/env/config/ts-plugin-mmlpx",
       "type": "config"
     }, {
       "transform": "typescript-transform-paths",
@@ -111,7 +111,7 @@
       "camel2DashComponentName": true,
       "style": false
     }],
-    "types": ["@yuyi/env/types/global"],
+    "types": ["@yuyi919/env/types/global"],
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": false,
     "suppressImplicitAnyIndexErrors": false,

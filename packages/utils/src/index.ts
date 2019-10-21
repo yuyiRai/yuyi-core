@@ -9,7 +9,7 @@ import { ArrayList } from 'typescriptcollectionsframework'
 // import "core-js/fn/array.find"
 // ...
 // import { LodashExtraUtils } from './LodashExtra'
-// import '@yuyi/env'
+// import '@yuyi919/env'
 
 // const A = Type
 

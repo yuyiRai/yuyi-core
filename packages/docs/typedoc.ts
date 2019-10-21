@@ -1,5 +1,5 @@
 
-import { paths, relativePaths } from "@yuyi/env/config/paths";
+import { paths, relativePaths } from "@yuyi919/env/config/paths";
 import { reduce } from 'lodash'
 
 const excludePlugins = []

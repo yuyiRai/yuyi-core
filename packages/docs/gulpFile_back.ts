@@ -3,7 +3,7 @@ import * as TypeDoc from "typedoc";
 import gulp from "gulp";
 import { exec } from "shelljs";
 import { reduce } from "lodash";
-import { relativePaths } from "@yuyi/env/config/paths";
+import { relativePaths } from "@yuyi919/env/config/paths";
 
 type TypeDocOptions = Partial<{
   /**

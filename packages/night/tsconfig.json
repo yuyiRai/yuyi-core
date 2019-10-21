@@ -81,7 +81,7 @@
         "after": false
       },
       {
-        "transform": "@yuyi/env/config/ts-plugin-mmlpx",
+        "transform": "@yuyi919/env/config/ts-plugin-mmlpx",
         "type": "config"
       },
       {
@@ -188,7 +188,7 @@
         "style": false
       }
     ],
-    "typeRoots": ["@yuyi/env", "node_modules/@types", "../../node_modules/@types"],
+    "typeRoots": ["@yuyi919/env", "node_modules/@types", "../../node_modules/@types"],
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": false,
     "suppressImplicitAnyIndexErrors": false,

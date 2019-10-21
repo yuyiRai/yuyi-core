@@ -9,8 +9,8 @@ import path from 'path';
  */
 export const envDirectory: string = path.join(fs.realpathSync(__dirname), '..');
 export const clintDirectory: string = fs.realpathSync(process.cwd());
-export const resolveProject = (relativePath: string) => path.resolve(envDirectory, relativePath);
-export const resolveApp = (relativePath: string) => path.resolve(clintDirectory, relativePath);
+export const resolveModules = (relativePath: string) => path.resolve(envDirectory, relativePath);
+export const resolveClient = (relativePath: string) => path.resolve(clintDirectory, relativePath);
 
 export const envPublicUrl = process.env.PUBLIC_URL;
 
@@ -39,7 +39,7 @@ export const moduleFileExtensions = [
  * @param resolveFn 
  * @param filePath 
  */
-export const resolveModule = (resolveFn: typeof resolveProject, filePath: string) => {
+export const resolveModule = (resolveFn: typeof resolveModules, filePath: string) => {
   const extension = moduleFileExtensions.find(extension =>
     fs.existsSync(resolveFn(`${filePath}.${extension}`))
   );
@@ -61,27 +61,27 @@ export const distKeyName = {
 }
 
 const pathsBase = {
-  requirePath: resolveProject('./config/run-ts.js'),
-  typedocGulpFile: resolveProject('../docs/gulpfile.ts'),
-  typedocConfig: resolveProject('../docs/typedoc.json'),
-  typedocConfigAsync: resolveProject('../docs/typedoc.ts'),
-  typedocStringTemplate: resolveProject('../docs/config/stringTemplate.json'),
-  typedocTheme: resolveProject('../docs/bin/default'),
-  dotenv: resolveApp('.env'),
-  clintPath: resolveApp('.'),
-  clintDist: resolveApp('dist'),
-  clintBuild: resolveApp('build'),
-  clintDepregistry: resolveApp('dist/registry.json'),
-  clintPublic: resolveApp('public'),
-  clintLib: resolveApp('lib'),
-  clintHtml: resolveApp('public/index.html'),
-  clintIndexJs: resolveModule(resolveApp, 'src/index'),
-  clintPackageJson: resolveApp('package.json'),
-  clintSrc: resolveApp('src'),
-  clintTsConfig: resolveProject('tsconfig.json'),
-  clintTsConfigDev: resolveProject('tsconfig.dev.json'),
-  clintNodeModules: resolveApp('node_modules'),
-  publicUrl: getPublicUrl(resolveApp('package.json')),
+  requirePath: resolveModules('./config/run-ts.js'),
+  typedocGulpFile: resolveModules('../docs/gulpfile.ts'),
+  typedocConfig: resolveModules('../docs/typedoc.json'),
+  typedocConfigAsync: resolveModules('../docs/typedoc.ts'),
+  typedocStringTemplate: resolveModules('../docs/config/stringTemplate.json'),
+  typedocTheme: resolveModules('../docs/bin/default'),
+  dotenv: resolveClient('.env'),
+  clintPath: resolveClient('.'),
+  clintDist: resolveClient('dist'),
+  clintBuild: resolveClient('build'),
+  clintDepregistry: resolveClient('dist/registry.json'),
+  clintPublic: resolveClient('public'),
+  clintLib: resolveClient('lib'),
+  clintHtml: resolveClient('public/index.html'),
+  clintIndexJs: resolveModule(resolveClient, 'src/index'),
+  clintPackageJson: resolveClient('package.json'),
+  clintSrc: resolveClient('src'),
+  clintTsConfig: resolveModules('tsconfig.json'),
+  clintTsConfigDev: resolveModules('tsconfig.dev.json'),
+  clintNodeModules: resolveClient('node_modules'),
+  publicUrl: getPublicUrl(resolveClient('package.json')),
 };
 export type BasePaths = typeof pathsBase
 export type BasePathKeys = keyof BasePaths

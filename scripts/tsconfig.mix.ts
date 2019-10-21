@@ -69,7 +69,7 @@ function taskFactroy(folder: string) {
         types
       }
       if (folder !== 'env' && folder !== 'core') {
-        forceOptions.types = Array.from(new Set((types || []).concat(["@yuyi/env/types/global"])))
+        forceOptions.types = Array.from(new Set((types || []).concat(["@yuyi919/env/types/global"])))
       }
 
       Object.keys(otherCompilerOptions).forEach(key => {
