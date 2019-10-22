@@ -19,4 +19,5 @@ ts.register({
   pretty: false
 });
 
-console.log(process.argv, process.execArgv)
+// console.log(process.cwd(), process.argv, process.argv[2])
+require(path.join(process.cwd(), './scripts/cli'))

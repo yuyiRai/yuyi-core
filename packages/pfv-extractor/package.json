@@ -5,7 +5,7 @@
   "private": true,
   "main": "dist/index.js",
   "scripts": {
-    "tscc": "tsccc ./src/index.ts",
+    "tscc": "yuyi exec ./src/index.ts",
     "tsc": "ttsc --build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,5 +17,8 @@
     "encoding-japanese": "^1.0.29",
     "psd": "^3.2.0"
   },
-  "gitHead": "b6a439f1d79269da2843d054887dd42e7a7555c7"
+  "gitHead": "b6a439f1d79269da2843d054887dd42e7a7555c7",
+  "dependencies": {
+    "@yuyi919/cli": "^0.0.4"
+  }
 }
