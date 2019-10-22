@@ -13,7 +13,7 @@
     "clean": "rimraf src/**/*.js && rimraf src/**/*.map && rimraf src/**/*.d.ts"
   },
   "bin": {
-    "yuyi": "bin/yuyi.bat"
+    "yuyi": "scripts/exec.js"
   },
   "files": [
     ".bin",
