@@ -17,7 +17,7 @@
     "packages/*"
   ],
   "scripts": {
-    "allcommit": "lerna exec --no-private -- yuyienv ../.. -p && yarn",
+    "allcommit": "lerna exec --no-private -- yuyi commit -p && yarn",
     "commit": "yuyi commit",
     "yuyi": "yuyi",
     "serve": "yarn workspace @yuyi/react-demo run start",
