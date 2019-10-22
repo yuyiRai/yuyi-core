@@ -1,0 +1,36 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Current TS File",
+      "type": "node",
+      "request": "launch",
+      "args": [
+        "${relativeFile}"
+      ],
+      "runtimeArgs": [
+        "--nolazy",
+        "-r",
+        "${workspaceRoot}\\config\\run-ts.js",
+        "--max_old_space_size=2096"
+      ],
+      "internalConsoleOptions": "neverOpen",
+      "cwd": "${workspaceRoot}",
+      "protocol": "inspector",
+      "sourceMaps": true
+    },
+    {
+      "name": "TS To JS File",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "tsc",
+      "runtimeArgs": [
+        "--target esnext",
+        "${relativeFile}"
+      ],
+      "cwd": "${workspaceRoot}",
+      "protocol": "inspector",
+      "sourceMaps": true
+    }
+  ]
+}

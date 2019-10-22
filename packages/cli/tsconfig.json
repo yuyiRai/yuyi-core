@@ -1,0 +1,36 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@": [
+        "./"
+      ]
+    },
+    "outDir": "./lib",
+    "declarationDir": "./types",
+    "tsBuildInfoFile": "../.tsBuildInfo/env.json",
+    "incremental": true,
+    "target": "esnext",
+    "typeRoots": [
+      "./node_modules/@types",
+      "../../node_modules/@types",
+      "./src/global"
+    ]
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "tools",
+    "types",
+    "lib",
+    "../../node_modules",
+    "**/*.d.ts"
+  ]
+}
