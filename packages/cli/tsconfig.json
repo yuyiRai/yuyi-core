@@ -1,9 +1,37 @@
 {
-  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "composite": true,
-    "rootDir": "./src",
-    "baseUrl": "./src",
+    "downlevelIteration": true,
+    "forceConsistentCasingInFileNames": false,
+    "noImplicitReturns": true,
+    "noImplicitThis": false,
+    "noImplicitAny": false,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "strictNullChecks": false,
+    "suppressImplicitAnyIndexErrors": true,
+    "module": "commonjs",
+    "lib": [
+      "es6",
+      "dom",
+      "dom.iterable",
+      "scripthost",
+      "esnext"
+    ],
+    "sourceMap": true,
+    "strict": false,
+    "allowJs": false,
+    "jsx": "react",
+    "moduleResolution": "node",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "noUnusedLocals": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "allowUnreachableCode": true,
+    "esModuleInterop": true,
+    "noUnusedParameters": false,
+    "rootDir": ".",
+    "baseUrl": ".",
     "paths": {
       "@/*": [
         "./*"
@@ -12,13 +40,9 @@
         "./"
       ]
     },
-    "outDir": "./lib",
-    "declarationDir": "./types",
-    "tsBuildInfoFile": "../.tsBuildInfo/env.json",
-    "incremental": true,
     "target": "esnext",
     "typeRoots": [
-      "./node_modules/@types",
+      "../../node_modules/@types",
       "../../node_modules/@types",
       "./src/global"
     ]
