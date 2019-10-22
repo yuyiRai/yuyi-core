@@ -1,6 +1,6 @@
 {
   "name": "@yuyi/night",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "description": "",
   "private": true,
   "author": "yuyiRai",
@@ -58,7 +58,7 @@
     "@types/react-dom": "^16.8.5",
     "@types/react-loadable": "^5.5.1",
     "@types/styled-components": "^4.1.18",
-    "@yuyi919/cli": "^0.0.2",
+    "@yuyi919/cli": "^0.0.3",
     "@yuyi919/env": "^0.0.2",
     "@yuyi919/utils": "^0.0.19",
     "amap-js": "^1.1.0",
