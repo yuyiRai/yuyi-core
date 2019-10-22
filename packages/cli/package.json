@@ -1,6 +1,7 @@
 {
   "name": "@yuyi919/cli",
-  "version": "0.0.19",
+  "version": "0.0.20",
+  "description": "yuyi919's test",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
   "license": "MIT",
