@@ -20,4 +20,4 @@ ts.register({
 });
 
 // console.log(process.cwd(), process.argv, process.argv[2])
-require(path.join(process.cwd(), './scripts/cli'))
+require(path.join(__dirname, './cli.ts'))
