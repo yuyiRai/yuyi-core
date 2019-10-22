@@ -38,7 +38,8 @@
     "build-utils": "yarn workspace @yuyi919/utils run build"
   },
   "devDependencies": {
-    "lerna": "^3.16.4"
+    "lerna": "^3.16.4",
+    "@yuyi919/cli": "^0.0.20"
   },
   "postcss": {
     "plugins": {
