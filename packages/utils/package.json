@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/utils",
-  "version": "0.0.19",
+  "version": "0.0.20",
   "description": "",
   "keywords": [
     "mobx",
@@ -124,12 +124,12 @@
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
     "@commitlint/config-conventional": "^8.0.0",
+    "@types/argparse": "^1.0.36",
     "@types/benchmark": "^1.0.31",
     "@types/gulp": "^4.0.6",
     "@types/jest": "^24.0.16",
     "@types/lodash": "^4.14.136",
     "@types/node": "^12.6.9",
-    "@types/argparse": "^1.0.36",
     "argparse": "^1.0.10",
     "benchmark": "^2.1.4",
     "colors": "^1.3.2",
