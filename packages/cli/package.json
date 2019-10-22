@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/cli",
-  "version": "0.0.7",
+  "version": "0.0.9",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
   "license": "MIT",
@@ -12,7 +12,8 @@
     "yuyi:exec": "yuyi exec ./test/index.ts",
     "tsc": "ttsc --build && yarn tsc:env",
     "tsc:env": "ttsc -p tsconfig.env.json",
-    "clean": "rimraf src/**/*.js && rimraf src/**/*.map && rimraf src/**/*.d.ts"
+    "clean": "rimraf src/**/*.js && rimraf src/**/*.map && rimraf src/**/*.d.ts",
+    "postpublish": "yarn global add @yuyi919/cli"
   },
   "bin": {
     "yuyi": "scripts/exec.js"
