@@ -11,8 +11,7 @@
     "clean": "rimraf src/**/*.js && rimraf src/**/*.map && rimraf src/**/*.d.ts"
   },
   "bin": {
-    "yuyienv": ".bin/yuyienv.bat",
-    "tsccc": ".bin/tsccc.bat"
+    "yuyi": ".bin/yuyi.bat"
   },
   "files": [
     ".bin",
