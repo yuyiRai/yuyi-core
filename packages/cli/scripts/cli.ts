@@ -1,4 +1,4 @@
-import { Args } from '@yuyi919/utils/src/NodeUtils';
+import { Args } from '@yuyi919/utils/dist/NodeUtils';
 import colors from 'colors';
 import fs from 'fs-extra'
 import path from 'path'
