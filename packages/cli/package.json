@@ -1,16 +1,15 @@
 {
   "name": "@yuyi919/cli",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "description": "yuyi919's test",
-  "main": "lib/index.js",
+  "main": "src/index.ts",
   "types": "types/index.d.ts",
   "license": "MIT",
   "private": false,
   "scripts": {
     "pub": "node ./scripts/exec.js pub -g",
     "dev": "node -r ./scripts/exec.js",
-    "tsc": "ttsc --build && yarn tsc:env",
-    "tsc:env": "ttsc -p tsconfig.env.json",
+    "tsc": "ttsc --build",
     "clean": "rimraf src/**/*.js && rimraf src/**/*.map && rimraf src/**/*.d.ts"
   },
   "bin": {
@@ -18,7 +17,7 @@
   },
   "files": [
     "types",
-    "lib",
+    "src",
     "config",
     "scripts/",
     "tsconfig.json",
