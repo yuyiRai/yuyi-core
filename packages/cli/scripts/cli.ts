@@ -33,7 +33,7 @@ const commitParser = sub.addParser("commit", {
 commitParser.addArgument(["-p", "--push"], {
   action: 'storeTrue',
   dest: "push",
-  defaultValue: true
+  defaultValue: false
 })
 
 const pubParser = sub.addParser("pub", {
