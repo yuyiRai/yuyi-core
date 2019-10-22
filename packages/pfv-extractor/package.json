@@ -1,6 +1,6 @@
 {
   "name": "@yuyi/pfv-extractor",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "",
   "private": true,
   "main": "dist/index.js",
@@ -19,6 +19,6 @@
   },
   "gitHead": "b6a439f1d79269da2843d054887dd42e7a7555c7",
   "dependencies": {
-    "@yuyi919/cli": "^0.0.4"
+    "@yuyi919/cli": "^0.0.5"
   }
 }
