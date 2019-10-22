@@ -16,11 +16,10 @@
     "yuyi": "scripts/exec.js"
   },
   "files": [
-    ".bin",
     "types",
     "lib",
     "config",
-    "scripts",
+    "scripts/",
     "tsconfig.json",
     "tsconfig.env.json"
   ],

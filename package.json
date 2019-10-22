@@ -19,6 +19,7 @@
   "scripts": {
     "allcommit": "lerna exec --no-private -- yuyienv ../.. -p && yarn",
     "commit": "yuyienv .",
+    "yuyi": "yuyi ./scripts/commit.ts -h",
     "serve": "yarn workspace @yuyi/react-demo run start",
     "serve:vue": "yarn workspace @yuyi/vue-demo run serve",
     "ts": "tsccc ./scripts/publish.ts",
