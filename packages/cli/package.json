@@ -7,12 +7,13 @@
   "private": false,
   "scripts": {
     "pub": "yarn publish --access=public",
+    "yuyi": "yuyi ./scripts/commit.ts -h",
     "tsc": "ttsc --build && yarn tsc:env",
     "tsc:env": "ttsc -p tsconfig.env.json",
     "clean": "rimraf src/**/*.js && rimraf src/**/*.map && rimraf src/**/*.d.ts"
   },
   "bin": {
-    "yuyi": ".bin/yuyi.bat"
+    "yuyi": "bin/yuyi.bat"
   },
   "files": [
     ".bin",
