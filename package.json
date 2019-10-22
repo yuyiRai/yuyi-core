@@ -18,11 +18,11 @@
   ],
   "scripts": {
     "allcommit": "lerna exec --no-private -- yuyienv ../.. -p && yarn",
-    "commit": "yuyienv .",
+    "commit": "yuyi commit",
     "yuyi": "yuyi ./scripts/commit.ts -h",
     "serve": "yarn workspace @yuyi/react-demo run start",
     "serve:vue": "yarn workspace @yuyi/vue-demo run serve",
-    "ts": "tsccc ./scripts/publish.ts",
+    "ts": "yuyi exec ./scripts/publish.ts",
     "project:init": "gulp --require @yuyi919/env/config/run-ts.js --cwd . -f ./scripts/tsconfig.mix.ts -t default",
     "pub": "yarn commit && lerna publish && yarn run allcommit",
     "env": "lerna publish patch @yuyi919/env",
