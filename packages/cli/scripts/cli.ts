@@ -65,7 +65,7 @@ execParser.addArgument('execFile', {
 
 try {
   const [r, other] = args.parser.parseKnownArgs()
-  console.log(r, other)
+  // console.log(r, other)
 
   if (r.execFile) {
     requireCwdFile(r.execFile)
