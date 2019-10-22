@@ -14,7 +14,7 @@
     },
     "outDir": "./lib",
     "declarationDir": "./types",
-    "tsBuildInfoFile": "../.tsBuildInfo/env.json",
+    "tsBuildInfoFile": "../.tsBuildInfo/cli.json",
     "incremental": true,
     "target": "esnext",
     "typeRoots": [

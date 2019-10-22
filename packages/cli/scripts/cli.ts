@@ -5,7 +5,8 @@ import path from 'path'
 import { Package } from 'normalize-package-data';
 import publish from '../src/modules/publish'
 
-const { version, description = '' } = require(path.join(__dirname, '../package.json'))
+const pkgPath = path.join(__dirname, '../package.json')
+const { version, description = '' } = require(pkgPath)
 console.log(version, description)
 
 

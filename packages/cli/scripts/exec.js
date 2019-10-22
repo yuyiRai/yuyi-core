@@ -16,6 +16,9 @@ ts.register({
   compilerOptions: {
     module: 'commonjs'
   },
+  ignore: [
+    'node_modules/(?!@yuyi919/cli)'
+  ],
   pretty: false
 });
 
