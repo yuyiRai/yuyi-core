@@ -39,7 +39,7 @@
   },
   "devDependencies": {
     "lerna": "^3.16.4",
-    "@yuyi919/cli": "^0.0.20"
+    "@yuyi919/cli": "^0.0.24"
   },
   "postcss": {
     "plugins": {
