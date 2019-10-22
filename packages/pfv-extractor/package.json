@@ -6,6 +6,7 @@
   "main": "dist/index.js",
   "scripts": {
     "tscc": "yuyi exec ./src/index.ts",
+    "yuyi": "yuyi",
     "tsc": "ttsc --build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
