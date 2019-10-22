@@ -1,4 +1,3 @@
-import { exec } from "shelljs";
 import { Args } from '@yuyi919/utils/src/NodeUtils';
 import colors from 'colors';
 try {
