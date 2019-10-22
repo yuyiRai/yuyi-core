@@ -7,7 +7,7 @@ import publish from '../src/modules/publish'
 
 const pkgPath = path.join(__dirname, '../package.json')
 const { version, description = '' } = require(pkgPath)
-console.log(version, description)
+// console.log(version, description)
 
 
 export function requireCwdFile(pathStr: string) {
@@ -72,7 +72,7 @@ try {
   } else if (r.usePublish) {
     const pkg: Package = requireCwdFile(r.usePublish)
     if (pkg) {
-      console.log(pkg)
+      // console.log(pkg)
       publish({
         pub: true,
         access: 'public',
@@ -87,4 +87,5 @@ try {
   }
 } catch (error) {
   console.error(error)
+  process.exit(0)
 }
