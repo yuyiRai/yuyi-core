@@ -4,7 +4,7 @@ import SearchInput from './components/SearchInput'
 import { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import VTree from './components/VTree';
-import 'regenerator-runtime'
+
 export { Button, VTree, SearchInput, VirtualizedList }
 // Delete me
 export const Thing = () => {
