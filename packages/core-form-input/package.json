@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/core-form-input",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "license": "MIT",
   "author": "yuyiRai",
   "main": "dist/index.js",
@@ -37,8 +37,7 @@
     "@types/react-virtualized-auto-sizer": "^1.0.0",
     "react-virtualized-auto-sizer": "^1.0.2",
     "react-vtree": "^1.0.0-beta.0",
-    "react-window": "^1.8.5",
-    "regenerator-runtime": "^0.13.3"
+    "react-window": "^1.8.5"
   },
   "devDependencies": {
     "@types/jest": "^24.0.21",
@@ -48,6 +47,7 @@
     "husky": "^3.0.9",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
+    "regenerator-runtime": "^0.13.3",
     "tsdx": "^0.11.0",
     "tslib": "^1.10.0",
     "typescript": "^3.6.4"
