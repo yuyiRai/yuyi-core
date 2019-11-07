@@ -1,6 +1,6 @@
 {
   "name": "@yuyi/night",
-  "version": "0.0.18",
+  "version": "0.0.19",
   "description": "",
   "private": true,
   "author": "yuyiRai",
@@ -42,7 +42,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.3.0",
-    "@yuyi919/utils": "^0.0.22",
+    "@yuyi919/utils": "^0.0.23",
     "antd": "^3.20.7",
     "element-ui": "^2.11.1",
     "mobx": "4.9.4",
@@ -59,7 +59,7 @@
     "@types/react-dom": "^16.8.5",
     "@types/react-loadable": "^5.5.1",
     "@types/styled-components": "^4.1.18",
-    "@yuyi919/env": "^0.0.5",
+    "@yuyi919/env": "^0.0.6",
     "@yuyi919/utils": "^0.0.21",
     "amap-js": "^1.1.0",
     "core-decorators": "^0.20.0",

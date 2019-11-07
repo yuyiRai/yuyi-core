@@ -1,6 +1,6 @@
 {
   "name": "@yuyi/aul-helper",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.3.0",
@@ -8,7 +8,7 @@
     "@types/node": "12.6.9",
     "@types/react": "16.8.24",
     "@types/react-dom": "16.8.5",
-    "@yuyi919/utils": "^0.0.22",
+    "@yuyi919/utils": "^0.0.23",
     "antd": "^3.20.7",
     "js-ini": "^1.1.2",
     "localforage": "^1.7.3",
