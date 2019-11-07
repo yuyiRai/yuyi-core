@@ -37,7 +37,7 @@
     "typescript-plugin-styled-components": "^1.4.2",
     "typescript-transform-paths": "^1.1.8"
   },
-  "gitHead": "1c61cc573067f9c157bf8e1c9988000968a0ab5e",
+  "gitHead": "597143961bd701bb3522727988cb256d97025955",
   "dependencies": {
     "@yuyi919/utils": "^0.0.22",
     "typescript": "3.6.4"

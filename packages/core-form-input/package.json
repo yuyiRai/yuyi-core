@@ -57,5 +57,6 @@
     "hooks": {
       "pre-commit": "yuyi -v"
     }
-  }
+  },
+  "gitHead": "597143961bd701bb3522727988cb256d97025955"
 }
