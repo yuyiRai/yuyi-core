@@ -45,6 +45,7 @@ function useShadowValueFactory<V = any>({ value }: { value: V }) {
   }
 }
 
+
 export interface ILazyInputProps {
   useLazyHandler?: boolean;
   onChange?: (value: string | number) => void;
@@ -112,6 +113,7 @@ export function useLazyValueListener<P extends ILazyInputProps, V = any>(
         if (nextValue !== propsValue) {
           onChange && onChange(nextValue as any)
           warning(false, 'handle Change')
+          warning(false, nameof(nextValue))
           if (store.currentValue !== nextValue) // 记录最后变更的值
             store.setValue(nextValue)
           // Input类焦点移除时不需要额外事件
@@ -164,4 +166,9 @@ export default function SearchInput(props: ISearchInputProps) {
 SearchInput.defaultProps = {
   placeholder: '请输入',
   inputProps: {}
+}
+SearchInput.propsKeys = tsKeys<ISearchInputProps>()
+if (__DEV__) {
+  const r = oc({ a: { b: { c: false } } }).a.b.c(true)
+  invariant(r === false, 'oc faild')
 }

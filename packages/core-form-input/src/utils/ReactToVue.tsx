@@ -1,4 +1,4 @@
-import defaults from 'lodash/defaults';
+import { defaults } from 'lodash';
 // import React from 'react'
 // import MaBox from '@material-ui/core/Box/Box'
 import Vue, { CreateElement, VNode } from 'vue';

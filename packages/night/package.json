@@ -59,7 +59,7 @@
     "@types/react-dom": "^16.8.5",
     "@types/react-loadable": "^5.5.1",
     "@types/styled-components": "^4.1.18",
-    "@yuyi919/env": "^0.0.6",
+    "@yuyi919/env": "^0.0.8",
     "@yuyi919/utils": "^0.0.21",
     "amap-js": "^1.1.0",
     "core-decorators": "^0.20.0",

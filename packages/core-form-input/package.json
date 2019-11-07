@@ -14,12 +14,15 @@
     "preview": "cd example && yarn start",
     "build": "tsdx build --noClean",
     "test": "tsdx test --env=jsdom",
+    "test:w": "tsdx test --watch --env=jsdom .\\dist\\*.development.js",
+    "jest:h": "jest -h",
     "lint": "tsdx lint",
     "pub": "yuyi pub"
   },
   "peerDependencies": {
     "react": ">=16",
-    "react-dom": ">=16"
+    "react-dom": ">=16",
+    "prop-types": "*"
   },
   "prettier": {
     "printWidth": 80,
@@ -27,10 +30,15 @@
     "singleQuote": true,
     "trailingComma": "es5"
   },
+  "jest": {
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1",
+      "^src/(.*)$": "<rootDir>/src/$1"
+    }
+  },
   "dependencies": {
     "@material-ui/core": "^4.5.2",
     "@material-ui/icons": "^4.5.1",
-    "@types/react-virtualized-auto-sizer": "^1.0.0",
     "@yuyi919/utils": "^0.0.23",
     "react-virtualized-auto-sizer": "^1.0.2",
     "react-vtree": "^1.0.0-beta.0",
@@ -42,15 +50,19 @@
     "@types/jest": "^24.0.21",
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.9.3",
+    "@types/react-virtualized-auto-sizer": "^1.0.0",
     "@types/react-window": "^1.8.1",
+    "@wessberg/rollup-plugin-ts": "^1.1.73",
     "husky": "^3.0.9",
     "lodash-es": "^4.17.15",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "regenerator-runtime": "^0.13.3",
     "tiny-invariant": "^1.0.6",
+    "ts-import-plugin": "^1.6.1",
     "tsdx": "^0.11.0",
     "tslib": "^1.10.0",
+    "tsx-control-statements": "^2.16.5",
     "typescript": "^3.6.4"
   },
   "husky": {

@@ -1,6 +1,7 @@
 {
   "include": ["src", "types", "test"],
   "compilerOptions": {
+    "incremental": true,
     "target": "es5",
     "module": "esnext",
     "lib": [
@@ -24,12 +25,18 @@
     "noUnusedLocals": false,
     "noUnusedParameters": false,
     "noImplicitReturns": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "noStrictGenericChecks": true,
     "noFallthroughCasesInSwitch": true,
     "allowUmdGlobalAccess": true,
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
-      "*": ["src/*", "node_modules/*"]
+      "@": ["./src"],
+      "@/*": [
+        "./src/*"
+      ]
     },
     "jsx": "react",
     "esModuleInterop": true

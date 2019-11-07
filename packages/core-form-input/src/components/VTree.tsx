@@ -1,27 +1,17 @@
-
-import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import { Checkbox, Collapse, IconButton, List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 // import Collapse from '@material-ui/core/Collapse';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 // import DraftsIcon from '@material-ui/icons/Drafts';
 // import SendIcon from '@material-ui/icons/Send';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
+import { ExpandLess, ExpandMore, MoveToInbox } from '@material-ui/icons';
 // import debounce from 'lodash/debounce'
 import * as React from 'react';
-import AutoSizer, { AutoSizerProps } from 'react-virtualized-auto-sizer';
-import Tree, { VariableSizeNodeComponentProps, VariableSizeNodeData } from 'react-vtree/dist/es/VariableSizeTree';
-import { ListChildComponentProps } from 'react-window';
 import { Reducer } from 'react';
+import AutoSizer, { AutoSizerProps } from 'react-virtualized-auto-sizer';
+import Tree, { VariableSizeNodeComponentProps, VariableSizeNodeData } from 'react-vtree/dist/cjs/VariableSizeTree';
+import { ListChildComponentProps } from 'react-window';
 
 // import StarBorder from '@material-ui/icons/StarBorder';
-
-const Collapse = React.lazy(() => import('@material-ui/core/Collapse'))
 
 type DataNode = {
   children: DataNode[];
@@ -155,7 +145,7 @@ const Node: React.FunctionComponent<ITreeNodeProps> = (props) => {
     >
       {toggleItem}
       <ListItemIcon>
-        <InboxIcon />
+        <MoveToInbox />
       </ListItemIcon>
       <ListItemText primary={name} />
       {selectStatus}
@@ -368,7 +358,7 @@ export function NestedList() {
         <List component="div" disablePadding>
           <ListItem button className={classes.nested}>
             <ListItemIcon>
-              <InboxIcon />
+              <MoveToInbox />
             </ListItemIcon>
             <ListItemText primary="Starred" />
           </ListItem>
