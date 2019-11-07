@@ -1,5 +1,5 @@
-import typescript from 'rollup-plugin-typescript2'
-import ttypescript from 'ttypescript'
+// import typescript from 'rollup-plugin-typescript2'
+// import ttypescript from 'ttypescript'
 import commonjs from 'rollup-plugin-commonjs'
 import json from 'rollup-plugin-json';
 import external from 'rollup-plugin-peer-deps-external'
@@ -18,7 +18,7 @@ console.log('welcome: ', process.env.NODE_ENV)
 import pkg from './package.json'
 let cache = {};
 export default {
-  external: ['react-is', 'react', 'react-dom', 'mobx', 'mobx-react', 'antd', '@ant-design', 'element-ui', 'element-react', 'element-theme-default', 'stream'],
+  external: ['react-is', 'react', 'react-dom', 'mobx', 'mobx-react', 'antd', '@material-ui', '@ant-design', 'element-ui', 'element-react', 'element-theme-default', 'stream'],
   input: {
     index: 'lib/index.js'
   },

@@ -13,12 +13,14 @@
   "alias": {
     "react": "../node_modules/react",
     "react-dom": "../node_modules/react-dom/profiling",
-    "scheduler/tracing": "../node_modules/scheduler/tracing-profiling"
+    "scheduler/tracing": "../node_modules/scheduler/tracing-profiling",
+    "regenerator-runtime": "../node_modules/regenerator-runtime"
   },
   "devDependencies": {
     "@types/react": "^16.9.11",
     "@types/react-dom": "^16.8.4",
     "parcel": "^1.12.3",
+    "regenerator-runtime": "^0.13.3",
     "typescript": "^3.4.5"
   }
 }

@@ -31,5 +31,9 @@
     "typedoc-plugin-localization": "^1.4.1",
     "typedoc-plugin-no-inherit": "^1.1.9",
     "typedoc-plugin-toc-group": "^0.0.5"
+  },
+  "dependencies": {
+    "@yuyi919/utils": "^0.0.21",
+    "typescript": "3.6.4"
   }
 }

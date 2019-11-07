@@ -24,7 +24,7 @@
     "test": "jest -c jest.config.js",
     "test:init": "ts-jest config:init",
     "test:watch": "jest --watch",
-    "build": "cross-env NODE_ENV=production rollup -c",
+    "build": "yarn clean-lib && ttsc --build && cross-env NODE_ENV=production rollup -c",
     "start": "cross-env NODE_ENV=development rollup -c -w",
     "clean-lib": "rimraf lib/**/*.d.ts",
     "clean-src": "rimraf src/**/*.js && rimraf src/**/*.map && rimraf src/**/*.d.ts",
@@ -42,6 +42,7 @@
   },
   "dependencies": {
     "@material-ui/core": "^4.3.0",
+    "@yuyi919/utils": "^0.0.21",
     "antd": "^3.20.7",
     "element-ui": "^2.11.1",
     "mobx": "4.9.4",
@@ -95,7 +96,7 @@
     "ts-transformer-keys": "^0.3.5",
     "tsx-control-statements": "^2.14.0",
     "ttypescript": "^1.5.7",
-    "typescript": "3.5.3",
+    "typescript": "3.6.4",
     "typescript-plugin-styled-components": "^1.4.2",
     "typescript-transform-paths": "^1.1.8",
     "vue": "^2.6.10"

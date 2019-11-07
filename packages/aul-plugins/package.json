@@ -20,5 +20,11 @@
   },
   "author": "",
   "license": "ISC",
-  "gitHead": "b6a439f1d79269da2843d054887dd42e7a7555c7"
+  "gitHead": "b6a439f1d79269da2843d054887dd42e7a7555c7",
+  "devDependencies": {
+    "typescript": "3.6.4"
+  },
+  "dependencies": {
+    "@yuyi919/utils": "^0.0.21"
+  }
 }

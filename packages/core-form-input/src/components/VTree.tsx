@@ -1,23 +1,27 @@
 
 import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
-// import List from '@material-ui/core/List';
+import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+// import Collapse from '@material-ui/core/Collapse';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 // import DraftsIcon from '@material-ui/icons/Drafts';
-import SendIcon from '@material-ui/icons/Send';
+// import SendIcon from '@material-ui/icons/Send';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
+// import debounce from 'lodash/debounce'
 import * as React from 'react';
 import AutoSizer, { AutoSizerProps } from 'react-virtualized-auto-sizer';
-import Tree, { VariableSizeNodeComponentProps, VariableSizeNodeData } from 'react-vtree/dist/lib/VariableSizeTree';
+import Tree, { VariableSizeNodeComponentProps, VariableSizeNodeData } from 'react-vtree/dist/es/VariableSizeTree';
 import { ListChildComponentProps } from 'react-window';
+import { Reducer } from 'react';
 
 // import StarBorder from '@material-ui/icons/StarBorder';
 
+const Collapse = React.lazy(() => import('@material-ui/core/Collapse'))
 
 type DataNode = {
   children: DataNode[];
@@ -55,12 +59,12 @@ const createNode = (depth: number = 0) => {
 
   nodeId += 1;
 
-  if (depth === 3) {
+  if (depth === 2) {
     return node;
   }
 
   // tslint:disable-next-line:increment-decrement
-  for (let i = 0; i < 3; i++) {
+  for (let i = 0; i < 2; i++) {
     const childNode = createNode(depth + 1)
     node.children.push(childNode);
     node.childrenIds.push(childNode.id);
@@ -78,21 +82,32 @@ interface ITreeNodeProps extends Omit<VariableSizeNodeComponentProps<ExtendedDat
 }
 const useTreeNodeStyle = makeStyles((theme: Theme) =>
   createStyles({
-    root: ({ style: { height, ...style }, data }: ITreeNodeProps) => {
-      const paddingLeft = data.nestingLevel * 10 + (data.isLeaf ? 48 : 0)
+    root: ({ style = {}, data, isScrolling }: ITreeNodeProps) => {
+      const paddingLeft = (data.nestingLevel) * 10 + (data.isLeaf ? 48 : 0)
       return ({
         ...style,
-        display: 'flex',
-        alignItems: 'center',
-        marginBottom: theme.spacing(0),
-        transition: 'height 0.3s linear, top 0.3s linear',
+        padding: 0,
         paddingLeft,
-        // width: `calc(100% - ${marginLeft}px);`
+        height: isScrolling ? undefined : style.height,
+        width: `calc(100% - ${paddingLeft}px);`
       })
     },
-    rightIcon: {}
+    base: {
+      display: 'flex',
+      alignItems: 'center',
+      marginBottom: theme.spacing(0),
+      transition: 'height 0.3s linear, top 0.3s linear, opacity 0.3s linear',
+    }
   }),
 );
+
+const lazyCollapse: Reducer<'collapsing' | 'collapsed' | 'collapse', 'toggleStart' | 'toggleEnd'> = (prevState, action) => {
+  switch(action) {
+    case 'toggleStart': return 'collapsing'
+    case 'toggleEnd': return 'collapsed'
+  }
+  return 'collapse'
+}
 
 const Node: React.FunctionComponent<ITreeNodeProps> = (props) => {
   const {
@@ -100,51 +115,98 @@ const Node: React.FunctionComponent<ITreeNodeProps> = (props) => {
     data: { isLeaf, name, id },
     isOpen,
     resize,
-    style,
     toggle,
-    treeData: { itemSize = undefined, selectedId = undefined, onSelect = undefined } = {},
+    treeData: { itemSize = undefined, selectedId = undefined, onSelect = undefined } = {}
   } = props
-  const canOpen = height <= itemSize;
-  const halfSize = itemSize / 2;
-  const classes = useTreeNodeStyle(props)
   const toggleNodeSize = React.useCallback(
-    () => resize(canOpen ? height + halfSize : height - halfSize, true),
+    () => {
+      const canOpen = height <= itemSize;
+      const halfSize = itemSize / 2;
+      resize(canOpen ? height + halfSize : height - halfSize, true)
+    },
     [height, resize],
   );
-  const [current, setC] = React.useState(0)
-  const [currentT, setT] = React.useState(0)
-  React.useEffect(() => {
-    setC(height)
-    setT(parseInt(style.top as any))
-  }, [])
-
-  return (
-    <ListItem 
-      className={classes.root}
-      key={id}
-      style={{ height: current + 'px', top: currentT + 'px' }}
+  const classes = useTreeNodeStyle(props)
+  // const [collapsed] = useDelayEffect(false, true, 100)
+  // const [collapseStatus, action] = React.useReducer(lazyCollapse, 'collapse')
+  const toggleCollapse = React.useCallback(function() {
+    // action('toggleStart')
+    setTimeout(() => {
+      toggle()
+    }, 500);
+  }, [toggle])
+  const toggleItem = React.useMemo(() => {
+    return !isLeaf && <IconButton onClick={toggleCollapse}>{!isOpen ? <ExpandLess /> : <ExpandMore />}</IconButton>
+  }, [isLeaf, toggle, isOpen])
+  const selectStatus = React.useMemo(() => {
+    return <Checkbox
+      key="checkbox"
+      edge="end"
+      onChange={() => onSelect && onSelect(id)}
+      checked={selectedId === id}
+      inputProps={{ 'aria-labelledby': id }}
+    />
+  }, [onSelect, selectedId, id])
+  const item = (
+    <ListItem
+      // style={{ height: current + 'px' }}
+      onDoubleClick={toggleNodeSize}
       selected={selectedId === id}
-      button={false}
     >
-      {!isLeaf && <IconButton onClick={toggle}>{!isOpen ? <ExpandLess /> : <ExpandMore />}</IconButton>}
+      {toggleItem}
       <ListItemIcon>
         <InboxIcon />
       </ListItemIcon>
       <ListItemText primary={name} />
-      <Checkbox
-        key="checkbox"
-        className={classes.rightIcon}
-        edge="end"
-        onChange={() => onSelect && onSelect(id)}
-        checked={selectedId === id}
-        inputProps={{ 'aria-labelledby': id }}
-      />
-      <IconButton onClick={() => toggleNodeSize()}>
-        <SendIcon />
-      </IconButton>
+      {selectStatus}
+      {/* <IconButton onClick={() => toggleNodeSize()}>
+          <SendIcon />
+        </IconButton> */}
     </ListItem>
   )
+  return (
+    <List key={id} className={[classes.root, classes.base].join(' ')}>
+      {item}
+      <AutoCollapsedBox mode={isOpen ? 'out' : 'in'} afterToggle={() => {
+        console.log('auto collapose')
+      }}>
+        123456
+      </AutoCollapsedBox>
+    </List>
+  )
 };
+
+const AutoCollapsedBox = (props: {
+  children: any;
+  mode: 'in' | 'out',
+  afterToggle: any
+}) => {
+  const { mode, afterToggle, children } = props
+  const [display, setDisplay] = React.useState(false)
+  const [show] = useDelayEffect(mode !== 'in', mode === 'in', 10);
+  React.useEffect(() => {
+    setDisplay(true)
+  }, [mode])
+  const after = React.useCallback(() => {
+    afterToggle()
+    setTimeout(() => {
+      setDisplay(v => !v)
+    }, 0);
+  }, [afterToggle])
+  return (
+    <Collapse in={show}
+      mountOnEnter={false}
+      timeout={300}
+      unmountOnExit={false}
+      onExited={after}
+      onEntered={after}
+    >
+      <div style={{ height: '500px' }}>
+        {children}
+      </div>
+    </Collapse>
+  )
+}
 
 interface TreePresenterProps {
   itemSize: number;
@@ -157,15 +219,46 @@ const HackRowFunction = ({
   isScrolling,
 }: ListChildComponentProps) => {
   // console.log(records[order[index]], treeData)
+  const { data, ...o } = records[order[index]] || {}
   return (
     <Node
-      {...records[order[index]]}
+      data={data}
+      {...o}
       style={style}
       isScrolling={isScrolling}
       treeData={treeData}
     />
   )
 }
+
+export function useDelayEffect<I, N = I>(initial: I, next: N, delayTime = 0) {
+  const [current, setC] = React.useState<I | N>(initial)
+  // const [currentT, setT] = React.useState(parseInt(props.style.top as any))
+  React.useEffect(() => {
+    const r = setTimeout(() => {
+      setC(next)
+      // setT(parseInt(props.style.top as any))
+    }, delayTime);
+    return () => clearTimeout(r)
+  }, [])
+  return [current, setC] as [I | N, typeof setC]
+}
+
+export const InnerType = React.memo((props: any) => {
+  const [show] = useDelayEffect(false, true, 1000)
+  // console.log(props.children)
+  return (
+    <div style={props.style}>
+      <Collapse in={show} style={{
+        position: 'relative'
+      }} mountOnEnter={false} timeout={300} unmountOnExit={false}>
+        <div style={{height: '500px'}}>
+          {props.children}
+        </div>
+      </Collapse>
+    </div>
+  )
+})
 
 const TreePresenter: React.FunctionComponent<TreePresenterProps> = ({
   itemSize,
@@ -230,9 +323,12 @@ const TreePresenter: React.FunctionComponent<TreePresenterProps> = ({
         treeWalker={treeWalker}
         height={height}
         width={500}
-        initialScrollOffset={200}
+        initialScrollOffset={0}
         estimatedItemSize={5}
+        useIsScrolling={false}
+        overscanCount={5}
         rowComponent={HackRowFunction}
+        innerElementType={InnerType}
       >
         {Node}
       </Tree>
@@ -240,12 +336,53 @@ const TreePresenter: React.FunctionComponent<TreePresenterProps> = ({
   }, [itemSize, onSelect, selectedId])
 
   return (
-    <AutoSizer disableWidth>{TreeRender}</AutoSizer>
+    <AutoSizer defaultWidth={500} disableWidth>{TreeRender}</AutoSizer>
   );
 };
 
-export default function E() {
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      width: '100%',
+      maxWidth: 360,
+      backgroundColor: theme.palette.background.paper,
+    },
+    nested: {
+      paddingLeft: theme.spacing(4),
+    },
+  }),
+);
+
+export function NestedList() {
+  const classes = useStyles();
+  const [open, setOpen] = React.useState(true);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
   return (
-    <TreePresenter itemSize={50} />
+    <div>
+      <IconButton onClick={handleClick}>{open ? <ExpandLess /> : <ExpandMore />}</IconButton>
+      <Collapse in={open} timeout="auto" unmountOnExit>
+        <List component="div" disablePadding>
+          <ListItem button className={classes.nested}>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Starred" />
+          </ListItem>
+        </List>
+      </Collapse>
+    </div>
+    )
+}
+export default function E() {
+  
+  return (
+    <>
+      {/* <NestedList /> */}
+      <TreePresenter itemSize={50} />
+    </>
   );
 }

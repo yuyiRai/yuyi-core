@@ -7,6 +7,7 @@
     "@types/node": "12.6.9",
     "@types/react": "16.8.24",
     "@types/react-dom": "16.8.5",
+    "@yuyi919/utils": "^0.0.21",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1"
@@ -35,6 +36,7 @@
   "devDependencies": {
     "@types/classnames": "^2.2.9",
     "classnames": "^2.2.6",
-    "element-ui": "^2.11.1"
+    "element-ui": "^2.11.1",
+    "typescript": "3.6.4"
   }
 }

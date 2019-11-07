@@ -90,7 +90,7 @@ export function useLazyValueListener<P extends ILazyInputProps, V = any>(
         store.setShadowValue(nextValue)
         if (e.target.value !== propsValue) {
           onChange && onChange(nextValue)
-          console.log('handle Change')
+          warning(false, 'handle Change');
         }
         if (store.currentValue !== nextValue) {// 记录最后变更的值
           store.setValue(nextValue)
@@ -111,7 +111,7 @@ export function useLazyValueListener<P extends ILazyInputProps, V = any>(
         const nextValue: V = e && e.target && e.target.value || ''
         if (nextValue !== propsValue) {
           onChange && onChange(nextValue as any)
-          console.log('handle Change', nextValue, propsValue)
+          warning(false, 'handle Change')
           if (store.currentValue !== nextValue) // 记录最后变更的值
             store.setValue(nextValue)
           // Input类焦点移除时不需要额外事件

@@ -34,9 +34,12 @@
     "ts-transformer-keys": "^0.3.5",
     "tsx-control-statements": "^2.14.0",
     "ttypescript": "^1.5.7",
-    "typescript": "3.5.3",
     "typescript-plugin-styled-components": "^1.4.2",
     "typescript-transform-paths": "^1.1.8"
   },
-  "gitHead": "1c61cc573067f9c157bf8e1c9988000968a0ab5e"
+  "gitHead": "1c61cc573067f9c157bf8e1c9988000968a0ab5e",
+  "dependencies": {
+    "@yuyi919/utils": "^0.0.21",
+    "typescript": "3.6.4"
+  }
 }

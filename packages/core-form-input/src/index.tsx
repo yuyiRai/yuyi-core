@@ -1,15 +1,18 @@
-import * as React from 'react';
-import VirtualizedList from './components/List';
-import SearchInput from './components/SearchInput'
-import { useState } from 'react';
 import Button from '@material-ui/core/Button';
+import * as React from 'react';
+import { useState } from 'react';
+import VirtualizedList from './components/List';
+import SearchInput from './components/SearchInput';
 import VTree from './components/VTree';
+import './types';
 
-export { Button, VTree, SearchInput, VirtualizedList }
+export * from './utils';
+export { Button, VTree, SearchInput, VirtualizedList };
 // Delete me
 export const Thing = () => {
   const [t, st] = useState()
   const [useLazy, reset] = useState(true)
+  console.log(Button)
   return (
     <div>
       the snozzberries taste like snozzberrie
@@ -20,3 +23,4 @@ export const Thing = () => {
     </div>
   );
 };
+
