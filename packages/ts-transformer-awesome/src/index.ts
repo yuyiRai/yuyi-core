@@ -6,6 +6,7 @@ import tsxControlStatments from 'tsx-control-statements/transformer'
 import transformerKeys from 'ts-transformer-keys/transformer'
 import ocTransformer from 'ts-optchain/transform'
 import nameofTransformer from 'ts-nameof'
+import color from 'colors'
 import hoistObjectsInProps from '@avensia-oss/ts-transform-hoist-objects-in-props'
 // import { PluginCreator } from './PluginCreater'
 
@@ -14,7 +15,8 @@ const presetOptions = {
   'ts-transformer-keys': transformerKeys,
   'ts-optchain': ocTransformer,
   'ts-nameof': nameofTransformer as TransformerFactory<SourceFile>,
-  '@avensia-oss/ts-transform-hoist-objects-in-props': hoistObjectsInProps
+  '@avensia-oss/ts-transform-hoist-objects-in-props': hoistObjectsInProps,
+  'ts-import-plugins': tsImportPluginFactory
 }
 export type PresetKeys = keyof typeof presetOptions;
 
@@ -25,15 +27,33 @@ export interface AwesomeTsTransformerOptions {
   useNameof?: boolean;
   useKeysOf?: boolean;
   useTsxControlStatments?: boolean;
-  useOc?: boolean;
+  useOptchain?: boolean;
   useHoistObjectInProps?: boolean
 }
-
+function resolveMsg(msg: string, append: string, ...msg2: any[]) {
+  console.log(color.cyan(msg), color.green(append), ...msg2.map(i => color.yellow(i)))
+  return true
+}
+function findKey(factory: any) {
+  for (const [key, f] of Object.entries(presetOptions)) {
+    if (f === factory){
+      return key
+    }
+  }
+  return factory && factory.name
+}
+function use<T>(factory: T, ...msg: any) {
+  resolveMsg('use transformer:', findKey(factory), ...msg)
+  return factory
+}
 export function getCustomTransformers({
   program,
   importLibs = [],
-  preset = [],
-  ...opt
+  useHoistObjectInProps = true,
+  useKeysOf = true,
+  useNameof = true,
+  useOptchain = true,
+  useTsxControlStatments = true
 }: AwesomeTsTransformerOptions = {} as any) {
   const importConfig: ImportOptions[] = importLibs.map(i => {
     if (typeof i === 'string') {
@@ -55,14 +75,14 @@ export function getCustomTransformers({
     return null
   }).filter(option => option) as ImportOptions[]
   const allowList = [
-    opt.useTsxControlStatments && tsxControlStatments(program),
-    opt.useKeysOf && transformerKeys(program),
-    opt.useOc && ocTransformer(program),
-    opt.useHoistObjectInProps && hoistObjectsInProps(program, {
+    useTsxControlStatments && use(tsxControlStatments)(program),
+    useKeysOf && use(transformerKeys)(program),
+    useOptchain && use(ocTransformer)(program),
+    useHoistObjectInProps && use(hoistObjectsInProps)(program, {
       propRegex: /.*/,
     }),
-    opt.useNameof && nameofTransformer as TransformerFactory<SourceFile>,
-    importConfig.length > 0 && tsImportPluginFactory(importConfig)
+    useNameof && use(nameofTransformer) as TransformerFactory<SourceFile>,
+    importConfig.length > 0 && use(tsImportPluginFactory, `[${importConfig.map(c => c.libraryName).join(']/[')}]`)(importConfig)
   ];
   // const presetOptionsKeys = Object.keys(presetOptions)
   // for (const c of preset) {

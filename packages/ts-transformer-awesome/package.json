@@ -11,7 +11,8 @@
   ],
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsdx build",
+    "build": "tsdx build --noClean",
+    "postbuild": "tsdx test",
     "test": "tsdx test",
     "lint": "tsdx lint"
   },
