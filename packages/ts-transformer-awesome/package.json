@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/ts-transformer-awesome",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "license": "MIT",
   "author": "yuyiRai",
   "main": "dist/index.js",
