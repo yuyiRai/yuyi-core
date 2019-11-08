@@ -1,4 +1,8 @@
-# CustomTransformer
+# @yuyi919/ts-transformer-awesome
+[![npm](https://img.shields.io/npm/v/@yuyi919/ts-transformer-awesome.svg)](https://www.npmjs.com/package/@yuyi919/ts-transformer-awesome)
+[![npm](https://img.shields.io/npm/dw/@yuyi919/ts-transformer-awesome.svg?colorB=ff0033)](https://www.npmjs.com/package/@yuyi919/ts-transformer-awesome)
+
+## What is CustomTransformer ?
 
 ```ts
 interface CustomTransformers {
@@ -11,9 +15,8 @@ interface CustomTransformers {
 }
 
 ```
-# Api
+## Api
 
-## getCustomTransformers
 ```ts
 const { getCustomTransformers } = require('@yuyi919/ts-transformer-awesome')
 
