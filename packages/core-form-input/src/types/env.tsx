@@ -1,8 +1,8 @@
 if (__DEV__) {
-  window.invariant = require('tiny-invariant').default
-  window.warning = require('tiny-warning').default
+  window.invariant = require('tiny-invariant').default;
+  window.warning = require('tiny-warning').default;
 
-  window.tsKeys = () => []
+  window.tsKeys = () => [];
   window.oc = require('ts-optchain').oc;
   (window as any).test1 = function() {
     return (

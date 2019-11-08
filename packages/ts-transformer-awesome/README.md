@@ -1,3 +1,52 @@
+# Basic
+
+## getCustomTransformers
+```ts
+const { getCustomTransformers } = require('@yuyi919/ts-transformer-awesome')
+
+// ts.createProgram(...)
+getCustomTransformers({
+  program, // ts.Program
+  importLibs: [
+    'lodash',
+    ['@material-ui/core', {
+      libraryDirectory: '',
+      camel2DashComponentName: false
+    }]
+  ] // use ts-import-plugin
+  // ...
+})
+
+``` 
+
+## global env
+```ts
+import '@yuyi919/ts-transformer-awesome/env'
+
+```
+### ts-transformer-keys
+```ts
+interface A {
+  a: number;
+  b: number;
+}
+
+tsKey<A>() // => ["a", "b"]
+```
+
+### tsx-control-statments
+```tsx
+const TsxControlStatments = () => {
+  return (
+    <For of={[1, 2, 3]} each="item" index="itemIndex">
+      <a style={{ background: 'red' }}>{itemIndex}{item}</a>
+    </For>
+  );
+}
+
+```
+
+
 # TSDX Bootstrap
 
 This project was bootstrapped with [TSDX](https://github.com/jaredpalmer/tsdx).
