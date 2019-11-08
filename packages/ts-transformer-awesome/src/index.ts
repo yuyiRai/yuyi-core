@@ -7,20 +7,32 @@ import transformerKeys from 'ts-transformer-keys/transformer'
 import ocTransformer from 'ts-optchain/transform'
 import nameofTransformer from 'ts-nameof'
 import hoistObjectsInProps from '@avensia-oss/ts-transform-hoist-objects-in-props'
+// import { PluginCreator } from './PluginCreater'
 
+const presetOptions = {
+  'tsx-control-statements': tsxControlStatments,
+  'ts-transformer-keys': transformerKeys,
+  'ts-optchain': ocTransformer,
+  'ts-nameof': nameofTransformer as TransformerFactory<SourceFile>,
+  '@avensia-oss/ts-transform-hoist-objects-in-props': hoistObjectsInProps
+}
+export type PresetKeys = keyof typeof presetOptions;
 
 export interface AwesomeTsTransformerOptions {
   program: Program;
   importLibs?: (string | ImportOptions | [string, Partial<ImportOptions>])[];
+  preset?: (string | [string, any?])[]
   useNameof?: boolean;
   useKeysOf?: boolean;
   useTsxControlStatments?: boolean;
   useOc?: boolean;
   useHoistObjectInProps?: boolean
 }
+
 export function getCustomTransformers({
   program,
   importLibs = [],
+  preset = [],
   ...opt
 }: AwesomeTsTransformerOptions = {} as any) {
   const importConfig: ImportOptions[] = importLibs.map(i => {
@@ -42,7 +54,7 @@ export function getCustomTransformers({
     }
     return null
   }).filter(option => option) as ImportOptions[]
-  const list = [
+  const allowList = [
     opt.useTsxControlStatments && tsxControlStatments(program),
     opt.useKeysOf && transformerKeys(program),
     opt.useOc && ocTransformer(program),
@@ -52,8 +64,17 @@ export function getCustomTransformers({
     opt.useNameof && nameofTransformer as TransformerFactory<SourceFile>,
     importConfig.length > 0 && tsImportPluginFactory(importConfig)
   ];
+  // const presetOptionsKeys = Object.keys(presetOptions)
+  // for (const c of preset) {
+  //   const [key, options = {}] = typeof c === 'string' ? [c] : c
+  //   if (presetOptionsKeys.some(k => key.indexOf(k) > -1)) {
+      
+  //   }
+  // }
   return ({
-    before: list.filter(i => i)
+    before: allowList.concat([
+      importConfig.length > 0 && tsImportPluginFactory(importConfig)
+    ]).filter(i => i)
   });
 }
 export default getCustomTransformers
