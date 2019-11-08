@@ -1,13 +1,14 @@
 {
   "name": "@yuyi919/ts-transformer-awesome",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "license": "MIT",
   "author": "yuyiRai",
   "main": "dist/index.js",
   "module": "dist/ts-transformer-awesome.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "README.md"
   ],
   "scripts": {
     "start": "tsdx watch",
