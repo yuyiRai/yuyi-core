@@ -42,7 +42,7 @@ interface A {
   a: number;
   b: number;
 }
-tsKey<A>() // => ["a", "b"]
+tsKeys<A>() // => ["a", "b"]
 ```
 
 点击[此处](https://github.com/kimamula/ts-transformer-keys)查看更多
