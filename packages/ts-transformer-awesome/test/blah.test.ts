@@ -1,34 +1,38 @@
-import { getCustomTransformers } from '..';
-import * as ts from 'typescript';
+import { compile } from '..';
+import * as assert from 'assert';
+import * as prettier from 'prettier';
+import path from 'path'
 
 describe('blah', () => {
-  const compilerOptions: ts.CompilerOptions = {
-    strictNullChecks: true,
-    target: ts.ScriptTarget.ES2017,
-    strict: false,
-    skipDefaultLibCheck: true,
-    noUnusedLocals: false,
-    noUnusedParameters: false,
-    skipLibCheck: true,
-  };
   it('works', () => {
-    expect(
-      getCustomTransformers({
-        program: ts.createProgram(['./index.ts'], compilerOptions),
-        importLibs: ['lodash', '@matrial-ui/core'],
-      })
-    ).toMatchInlineSnapshot(`
-      Object {
-        "before": Array [
-          [Function],
-          [Function],
-          [Function],
-          [Function],
-          [Function],
-          [Function],
-          [Function],
-        ],
-      }
-    `);
+    run('')
+// runTest(`keys();`, `[];`, {
+//   commonPrefix: `
+//     import { keys } from 'ts-transformer-keys';
+//   `
+// });
   });
 });
+
+// function runTest(
+//   text: string,
+//   expected: string,
+//   options: { commonPrefix?: string } = {}
+// ) {
+//   if (options.commonPrefix != null) text = options.commonPrefix + text;
+
+//   const result = run(text);
+//   if (!expected.endsWith('\n')) expected += '\n';
+//   const formatter = prettier.format(result, { parser: 'typescript' })
+//   console.log(formatter)
+//   assert.equal(formatter, expected);
+// }
+
+export function run(text: string) {
+  compile([path.join(__dirname, './file.ts')], (fileName, fileText) => {
+    console.log(fileName, fileText)
+  }, {
+    importLibs: ['lodash']
+  })
+  return text
+}

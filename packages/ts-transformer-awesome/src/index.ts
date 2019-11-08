@@ -1,11 +1,12 @@
 // const tsImportPluginFactory = require('ts-import-plugin');
 import tsImportPluginFactory from 'ts-import-plugin'
 import { Options as ImportOptions } from 'ts-import-plugin/lib/index'
-import { Program, TransformerFactory, SourceFile } from 'typescript'
+import { CustomTransformers, Program, TransformerFactory, SourceFile, createProgram, ScriptTarget, WriteFileCallback } from 'typescript'
 import tsxControlStatments from 'tsx-control-statements/transformer'
 import transformerKeys from 'ts-transformer-keys/transformer'
 import ocTransformer from 'ts-optchain/transform'
 import nameofTransformer from 'ts-nameof'
+import memoize from 'lodash/memoize'
 import color from 'colors'
 import hoistObjectsInProps from '@avensia-oss/ts-transform-hoist-objects-in-props'
 // import { PluginCreator } from './PluginCreater'
@@ -28,10 +29,11 @@ export interface AwesomeTsTransformerOptions {
   useKeysOf?: boolean;
   useTsxControlStatments?: boolean;
   useOptchain?: boolean;
-  useHoistObjectInProps?: boolean
+  useHoistObjectInProps?: boolean;
+  logger?: boolean;
 }
 function resolveMsg(msg: string, append: string, ...msg2: any[]) {
-  console.log(color.cyan(msg), color.green(append), ...msg2.map(i => color.yellow(i)))
+  console.log(color.cyan(msg), color.green(append), ...(msg2 || []).map(i => color.yellow(i)))
   return true
 }
 function findKey(factory: any) {
@@ -42,10 +44,19 @@ function findKey(factory: any) {
   }
   return factory && factory.name
 }
-function use<T>(factory: T, ...msg: any) {
-  resolveMsg('use transformer:', findKey(factory), ...msg)
-  return factory
+let options = {
+  logger: false
 }
+memoize.Cache = WeakMap
+function useTransformFactory<T extends Function>(factory: T, ...msg: any): any {
+  options.logger && resolveMsg('use transformer:', findKey(factory), ...msg)
+  return factory 
+  // ((...args: any) => {
+  //   return factory(...args)
+  // }) as any
+}
+const use = memoize(useTransformFactory, factory => factory) as typeof useTransformFactory
+
 export function getCustomTransformers({
   program,
   importLibs = [],
@@ -53,9 +64,11 @@ export function getCustomTransformers({
   useKeysOf = true,
   useNameof = true,
   useOptchain = true,
-  useTsxControlStatments = true
+  useTsxControlStatments = true,
+  logger = false
 }: AwesomeTsTransformerOptions = {} as any) {
-  const importConfig: ImportOptions[] = importLibs.map(i => {
+  options.logger = logger
+  const importConfig: ImportOptions[] = (importLibs || []).map(i => {
     if (typeof i === 'string') {
       return {
         "style": false,
@@ -82,7 +95,9 @@ export function getCustomTransformers({
       propRegex: /.*/,
     }),
     useNameof && use(nameofTransformer) as TransformerFactory<SourceFile>,
-    importConfig.length > 0 && use(tsImportPluginFactory, `[${importConfig.map(c => c.libraryName).join(']/[')}]`)(importConfig)
+    importConfig && importConfig.length > 0 && use(tsImportPluginFactory, `[${
+      importConfig.map(c => c.libraryName).join(']/[')
+    }]`)(importConfig)
   ];
   // const presetOptionsKeys = Object.keys(presetOptions)
   // for (const c of preset) {
@@ -92,9 +107,31 @@ export function getCustomTransformers({
   //   }
   // }
   return ({
-    before: allowList.concat([
-      importConfig.length > 0 && tsImportPluginFactory(importConfig)
-    ]).filter(i => i)
-  });
+    before: allowList.filter(i => i) || []
+  }) as CustomTransformers;
 }
 export default getCustomTransformers
+
+
+
+export function compile(filePaths: string[], writeFileCallback?: WriteFileCallback, options?: Partial<AwesomeTsTransformerOptions> & {throwError?: boolean}) {
+  const program = createProgram(filePaths, {
+    strict: true,
+    noEmitOnError: false,
+    suppressImplicitAnyIndexErrors: true,
+    target: ScriptTarget.ES5,
+    esModuleInterop: true
+  });
+  const transformers: CustomTransformers = getCustomTransformers({
+    ...options,
+    program,
+    logger: (options && 'logger' in options )? options.logger :true
+  })
+  const r = program.emit(undefined, writeFileCallback, undefined, false, transformers);
+
+  if ((!options || options.throwError) && r.emitSkipped) {
+    const { diagnostics } = r
+    throw new Error(diagnostics.map(diagnostic => diagnostic.messageText).join('\n'));
+  }
+  return r
+}
