@@ -20,9 +20,9 @@
     "pub": "yuyi pub"
   },
   "peerDependencies": {
+    "prop-types": "*",
     "react": ">=16",
-    "react-dom": ">=16",
-    "prop-types": "*"
+    "react-dom": ">=16"
   },
   "prettier": {
     "printWidth": 80,
@@ -58,6 +58,7 @@
     "react": "^16.11.0",
     "react-dom": "^16.11.0",
     "regenerator-runtime": "^0.13.3",
+    "rollup-plugin-terser": "^5.1.2",
     "tiny-invariant": "^1.0.6",
     "ts-import-plugin": "^1.6.1",
     "tsdx": "^0.11.0",

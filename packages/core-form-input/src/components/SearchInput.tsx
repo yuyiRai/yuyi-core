@@ -167,7 +167,7 @@ SearchInput.defaultProps = {
   placeholder: '请输入',
   inputProps: {}
 }
-SearchInput.propsKeys = tsKeys<ISearchInputProps>()
+// SearchInput.propsKeys = tsKeys<ISearchInputProps>()
 if (__DEV__) {
   const r = oc({ a: { b: { c: false } } }).a.b.c(true)
   invariant(r === false, 'oc faild')

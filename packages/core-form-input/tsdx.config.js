@@ -1,8 +1,17 @@
-const rollup_plugin_typescript = require("rollup-plugin-typescript2");
+const rollup_plugin_typescript = require("tsdx/node_modules/rollup-plugin-typescript2");
 const external = require('rollup-plugin-peer-deps-external')
+const rollup_plugin_terser = require("rollup-plugin-terser");
 const { transformers } = require('./transformers')
 const utils_1 = require("tsdx/dist/utils");
-// const ts = require("@wessberg/rollup-plugin-ts");
+const ts = require("@wessberg/rollup-plugin-ts");
+const path = require('path')
+const fs = require('fs-extra')
+
+
+const resolve = (path) => {
+  return path.join(__dirname, path)
+}
+// const nameCache = fs.readJsonSync(resolve('./name_cache.json'))
 
 const filter = [
   'babel-plugin-transform-async-to-promises/helpers',
@@ -15,7 +24,29 @@ module.exports = {
     const { plugins } = config;
     // swap out rollup-plugin-typescript2
     config.plugins = plugins.map(p => {
-      if (p && p.name === "rpt2") {
+      if (p && p.name === 'terser') {
+        return rollup_plugin_terser.terser({
+          sourcemap: true,
+          output: { comments: false }, 
+          // nameCache,
+          compress: {
+            keep_infinity: true,
+            pure_getters: true,
+            passes: 10,
+          },
+          mangle: {
+            properties: {
+              builtins: true,
+              keep_quoted: true,
+              regex: /((^_)|(_$))/
+            },
+            toplevel: true
+          },
+          ecma: 5,
+          toplevel: options.format === 'cjs',
+          warnings: true,
+        })
+      } else if (p && p.name === "rpt2") {
         // return ts({
         //   tsconfig: tsconfig => {
         //     return {
@@ -27,13 +58,15 @@ module.exports = {
         //   },
         //   transpileOnly: true,
         //   transformers,
-        //   transpiler: "babel"
+        //   transpiler: "typescript"
         // });
         return rollup_plugin_typescript({
           typescript: require('typescript'),
           cacheRoot: `./node_modules/.cache/.rts2_cache_${options.format}`,
           tsconfig: options.tsconfig,
-          transformers,
+          transformers: [
+            (service) => transformers({ program: service.getProgram() })
+          ],
           rollupCommonJSResolveHack: false,
           tsconfigDefaults: {
             compilerOptions: {
