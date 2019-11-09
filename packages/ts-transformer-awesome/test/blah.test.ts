@@ -1,17 +1,19 @@
+import { writeFileSync } from 'fs';
+import path from 'path';
+import contextRequire from "require-context";
 import { compile } from '../src';
-import * as assert from 'assert';
-import * as prettier from 'prettier';
-import path from 'path'
-
+// import '@types/webpack'
 describe('blah', () => {
-  it('works', () => {
-    run('')
-// runTest(`keys();`, `[];`, {
-//   commonPrefix: `
-//     import { keys } from 'ts-transformer-keys';
-//   `
-// });
-  });
+  for (const p of contextRequire(path.join(__dirname, './src'), true, /\.(ts|tsx)$/).keys()) {
+    it('work: ' + p, () => {
+      run(path.join(__dirname, './src', p))
+    });
+  }
+  // runTest(`keys();`, `[];`, {
+  //   commonPrefix: `
+  //     import { keys } from 'ts-transformer-keys';
+  //   `
+  // });
 });
 
 // function runTest(
@@ -28,12 +30,18 @@ describe('blah', () => {
 //   assert.equal(formatter, expected);
 // }
 
-export function run(text: string) {
-  compile([path.join(__dirname, './file.tsx')], (fileName, fileText) => {
+export function run(path: string) {
+  let r;
+  compile([path], (fileName, fileText) => {
     console.log(fileName, fileText)
+    writeFileSync(fileName, fileText)
+    r = fileText
   }, {
     importLibs: ['lodash'],
-    logger: true
+    logger: true,
+    useEnumerate: false,
+    useTsxControlStatments: false,
+    useMacros: false
   })
-  return text
+  return r
 }

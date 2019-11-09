@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as ts from 'typescript';
-import * as kind from 'ts-is-kind'
+import * as kind from 'ts-is-kind';
+import ts from 'typescript';
 import { AstUtils } from './AstUtils';
 
 const FUNCTION_SYMBOL = 'FilterFunction';
@@ -26,11 +26,11 @@ export default function transformer(program: ts.Program): ts.TransformerFactory<
     config.isNeedRepeat = false
     config.needClear = []
     let { node } = visitNodeAndChildren(file, program, context)
-    if (config.isNeedRepeat) {
-      config.repeatTimes++
-      console.log('isNeedRepeat', node.fileName);
-      node = visitNodeAndChildren(node, program, context).node
-    }
+    // if (config.isNeedRepeat) {
+    //   config.repeatTimes++
+    //   console.log('isNeedRepeat', node.fileName);
+      // node = visitNodeAndChildren(node, program, context).node
+    // }
     return node;
   };
 }
@@ -112,13 +112,19 @@ function visitNode(node: ts.Node, program: ts.Program, context: ts.Transformatio
     // Check if function call expression is an oc chain, e.g.,
     // 检查函数表达式是否是Oc链
     //   oc(x).y.z()
+
+    // 判断是否为合法的Filter调用节点
     if (_isValidType(typeChecker.typeToTypeNode(typeChecker.getTypeAtLocation(node.expression)))) {
-      console.log('escapedText', node.getText());
-      const returnNode = expandExpression(node.arguments)
+      const [typed] = ts.isCallExpression(node) && node.typeArguments || []
+      console.log('escapedText', node.getText(), typed && typed.getFullText(), typed && ts.isFunctionOrConstructorTypeNode(typed));
+      
+      const returnNode = expandExpression(node.arguments, typed && typed.getFullText() as keyof typeof typedUtils || undefined)
+      // 添加单行注释
       ts.addSyntheticTrailingComment(returnNode, ts.SyntaxKind.SingleLineCommentTrivia, " " + node.getText()+"\n")
       return { next: returnNode, isNeedRepeat: true };
     } else if (node.arguments.length) {
       // Check for a naked oc(x) call
+      
       const callTypeNode = typeChecker.typeToTypeNode(typeChecker.getTypeAtLocation(node));
       if (_isValidType(callTypeNode)) {
         // Unwrap oc(x) -> x
@@ -144,7 +150,7 @@ function visitNode(node: ts.Node, program: ts.Program, context: ts.Transformatio
   return { next: node, isNeedRepeat: false };
 }
 
-function _isValidType(node: ts.TypeNode | undefined): boolean {
+function _isValidType(node: any): node is ts.CallExpression {
   if (!node) {
     return false;
   }
@@ -153,7 +159,7 @@ function _isValidType(node: ts.TypeNode | undefined): boolean {
   if (ts.isIntersectionTypeNode(node) || ts.isUnionTypeNode(node)) {
     return node.types.some((n) => _isValidType(n));
   }
-
+  
   if (ts.isTypeReferenceNode(node) && ts.isIdentifier(node.typeName)) {
     if (node.typeName.escapedText === FUNCTION_SYMBOL) {
       console.log('escapedText', node.typeName.escapedText)
@@ -164,11 +170,26 @@ function _isValidType(node: ts.TypeNode | undefined): boolean {
   return false;
 }
 
+const typedUtils = {
+  nil: undefined,
+  number(node: ts.Expression) {
+    return AstUtils.createTypeof(node, ts.createStringLiteral('number'))
+  },
+  string(node: ts.Expression) {
+    return AstUtils.createTypeof(node, ts.createStringLiteral('string'))
+  },
+  function(node: ts.Expression) {
+    return AstUtils.createTypeof(node, ts.createStringLiteral('function'))
+  }
+}
 /**
  * 展开函数参数为闭包立即调用
  * @param argList 参数节点数组
  */
-function expandExpression(argList: ts.NodeArray<ts.Expression>): ts.Expression {
+function expandExpression(
+  argList: ts.NodeArray<ts.Expression>,
+  type: keyof typeof typedUtils = 'nil'
+): ts.Expression {
   if (argList.length === 0) {
     return ts.createIdentifier('undefined')
   }
@@ -210,5 +231,6 @@ function expandExpression(argList: ts.NodeArray<ts.Expression>): ts.Expression {
   //     ] as any)
   //   ) : r
   // }
-  return AstUtils.createWhenToDoForEach(argList)
+  console.log('when', type, typedUtils[type])
+  return AstUtils.createWhenToDoForEach(argList, typedUtils[type])
 }
