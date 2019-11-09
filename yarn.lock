@@ -4042,6 +4042,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/nested-error-stacks@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@types/nested-error-stacks/-/nested-error-stacks-2.1.0.tgz#0e4caf703b874c3c4e6ba74dbc0c6acf88b8ce05"
+  integrity sha512-7+la7jn6iA603lBgyASoaW5Nk/R5G3+hkJ4Y0gtc9VYHlcixvm/YBV2KV92dTBpeCQJYjpN2owb5jVuKCqxOaA==
+
 "@types/node@*":
   version "12.0.3"
   resolved "https://registry.yarnpkg.com/@types/node/-/node-12.0.3.tgz#5d8d24e0033fc6393efadc85cb59c1f638095c9a"
@@ -5172,7 +5177,7 @@ aggregate-error@^3.0.0:
     clean-stack "^2.0.0"
     indent-string "^3.2.0"
 
-ajv-errors@^1.0.0:
+ajv-errors@^1.0.0, ajv-errors@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/ajv-errors/-/ajv-errors-1.0.1.tgz#f35986aceb91afadec4102fbd85014950cefa64d"
   integrity sha512-DCRfO/4nQ+89p/RK43i8Ezd41EqdGIU4ld7nGF8OQ14oc/we5rEntLCUa7+jrn3nn83BosfwZA0wb4pon2o8iQ==
@@ -5186,6 +5191,11 @@ ajv-keywords@^3.1.0:
   version "3.4.0"
   resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-3.4.0.tgz#4b831e7b531415a7cc518cd404e73f6193c6349d"
   integrity sha512-aUjdRFISbuFOl0EIZc+9e4FfZp0bDZgAdOOf30bJmw8VM9v84SHyVyxDfbWxpGYbdZD/9XoKxfHVNmxPkhwyGw==
+
+ajv-keywords@^3.4.1:
+  version "3.4.1"
+  resolved "https://registry.yarnpkg.com/ajv-keywords/-/ajv-keywords-3.4.1.tgz#ef916e271c64ac12171fd8384eaae6b2345854da"
+  integrity sha512-RO1ibKvd27e6FEShVFfPALuHI3WjSVNeK5FIsmme/LYRNxjKuNj+Dt7bucLa6NdSv3JcVTyMlm9kGR84z1XpaQ==
 
 ajv@^5.2.3, ajv@^5.3.0:
   version "5.5.2"
@@ -5207,7 +5217,7 @@ ajv@^6.1.0, ajv@^6.5.5, ajv@^6.9.1:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-ajv@^6.10.0:
+ajv@^6.10.0, ajv@^6.10.2:
   version "6.10.2"
   resolved "https://registry.yarnpkg.com/ajv/-/ajv-6.10.2.tgz#d3cea04d6b017b2894ad69040fec8b623eb4bd52"
   integrity sha512-TXtUUEYHuaTEbLZWIKUr5pmBuhDLy+8KYtPYdcV8qC+pOZL+NKqYwvWSRrVXHn+ZmRRAu8vJTAznH7Oag6RVRw==
@@ -14584,6 +14594,11 @@ json-schema@0.2.3:
   resolved "https://registry.yarnpkg.com/json-schema/-/json-schema-0.2.3.tgz#b480c892e59a2f05954ce727bd3f2a4e882f9e13"
   integrity sha1-tIDIkuWaLwWVTOcnvT8qTogvnhM=
 
+json-schema@^0.2.5:
+  version "0.2.5"
+  resolved "https://registry.yarnpkg.com/json-schema/-/json-schema-0.2.5.tgz#97997f50972dd0500214e208c407efa4b5d7063b"
+  integrity sha512-gWJOWYFrhQ8j7pVm0EM8Slr+EPVq1Phf6lvzvD/WCeqkrx/f2xBI0xOsRRS9xCn3I4vKtP519dvs3TP09r24wQ==
+
 json-stable-stringify-without-jsonify@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/json-stable-stringify-without-jsonify/-/json-stable-stringify-without-jsonify-1.0.1.tgz#9db7b59496ad3f3cfef30a75142d2d930ad72651"
@@ -16697,6 +16712,11 @@ nerf-dart@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/nerf-dart/-/nerf-dart-1.0.0.tgz#e6dab7febf5ad816ea81cf5c629c5a0ebde72c1a"
   integrity sha1-5tq3/r9a2Bbqgc9cYpxaDr3nLBo=
+
+nested-error-stacks@^2, nested-error-stacks@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/nested-error-stacks/-/nested-error-stacks-2.1.0.tgz#0fbdcf3e13fe4994781280524f8b96b0cdff9c61"
+  integrity sha512-AO81vsIO1k1sM4Zrd6Hu7regmJN1NSiAja10gc4bX3F0wd+9rQmcuHQaHVQCYIEC8iFXnE+mavh23GOt7wBgug==
 
 netrc@^0.1.4:
   version "0.1.4"
@@ -20560,7 +20580,7 @@ redeyed@~2.1.0:
   dependencies:
     esprima "~4.0.0"
 
-reflect-metadata@^0.1.12:
+reflect-metadata@>=0.1.12, reflect-metadata@^0.1.12, reflect-metadata@^0.1.13:
   version "0.1.13"
   resolved "https://registry.yarnpkg.com/reflect-metadata/-/reflect-metadata-0.1.13.tgz#67ae3ca57c972a2aa1642b10fe363fe32d49dc08"
   integrity sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==
@@ -23303,6 +23323,17 @@ ts-jest@^24.0.2:
     semver "^5.5"
     yargs-parser "10.x"
 
+ts-json-schema-generator@~0.52.14:
+  version "0.52.14"
+  resolved "https://registry.yarnpkg.com/ts-json-schema-generator/-/ts-json-schema-generator-0.52.14.tgz#04b0005e23e1b13a8dc9a58d5a1f85e229eef056"
+  integrity sha512-OkhNEvTu7q2Mw7vMgMuXPDkWY3mIfH5EUIeyIIBkajZVWSpaRD+Mb9j5DBacD/sZn/pf2Q/o2tEf4um6S6L6WA==
+  dependencies:
+    "@types/json-schema" "^7.0.3"
+    commander "~2.20.0"
+    glob "~7.1.4"
+    json-stable-stringify "^1.0.1"
+    typescript "~3.5.3"
+
 ts-nameof@^3.2.0:
   version "3.2.0"
   resolved "https://registry.yarnpkg.com/ts-nameof/-/ts-nameof-3.2.0.tgz#87e3069492c99a12115ef0b4eb3157acb051a791"
@@ -23338,10 +23369,27 @@ ts-pnp@1.1.2, ts-pnp@^1.0.0:
   resolved "https://registry.yarnpkg.com/ts-pnp/-/ts-pnp-1.1.2.tgz#be8e4bfce5d00f0f58e0666a82260c34a57af552"
   integrity sha512-f5Knjh7XCyRIzoC/z1Su1yLLRrPrFCgtUAh/9fCSP6NKbATwpOL1+idQVXQokK9GRFURn/jYPGPfegIctwunoA==
 
+ts-transform-react-constant-elements@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/ts-transform-react-constant-elements/-/ts-transform-react-constant-elements-1.0.0.tgz#2309332c19bbe0c70c4cde76ef294b559be34996"
+  integrity sha512-XYVamrBBeW20loLugHjPftFVinK4t1DbFH80sz1/K2AK9EzMt1nG2g4ZIFAU/tvpkmkkkBsfNnel7209T5z9SA==
+  dependencies:
+    typescript "3"
+
+ts-transformer-enumerate@^0.4.0:
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/ts-transformer-enumerate/-/ts-transformer-enumerate-0.4.0.tgz#7b51799c11187f19afad294feec0d6326c4b0542"
+  integrity sha512-VxaD5B9z0sXycNhlmGPCh4bq4uYuiqHGXXPCv3J702u8HYaqttIaysyIheATQZw08ey+T0w/T0j3BU00VBCifA==
+
 ts-transformer-keys@^0.3.5:
   version "0.3.5"
   resolved "https://registry.yarnpkg.com/ts-transformer-keys/-/ts-transformer-keys-0.3.5.tgz#e9683fdb43e7a0b7b13bce910a546380fd7ac7ee"
   integrity sha512-5NYR//bSkMjeO6P72Nn754MW8ELHx7fIueQ7W8F52ErPb7iCDMU/tBiXHpNsUCDOLFKNca3DSgyq4CX+BxANug==
+
+ts-transformer-minify-privates@^0.3.0:
+  version "0.3.0"
+  resolved "https://registry.yarnpkg.com/ts-transformer-minify-privates/-/ts-transformer-minify-privates-0.3.0.tgz#4acff5c8c91129f3a72a44aa55595effb9df382b"
+  integrity sha512-huQXOSuTWsGHG3hX9nNmxhkjU6QWJFZXCfb2J7VMiCB1kPtJWOyYAT/QeIP9UXiYdSB8+PGGxZyOaVtNiYnung==
 
 tsconfig@^7.0.0:
   version "7.0.0"
@@ -23666,10 +23714,25 @@ typedoc@^0.15.0:
     typedoc-default-themes "^0.6.0"
     typescript "3.5.x"
 
+typescript-is@^0.13.0:
+  version "0.13.0"
+  resolved "https://registry.yarnpkg.com/typescript-is/-/typescript-is-0.13.0.tgz#501f3358352e19e8593d375ed8528fe04098bc3d"
+  integrity sha512-gn/2PgcpV7mnqjJOFEkTZwGyAtYWceFpC47oUbc69gpKFh3pOe6NazjZdc17KBcIpHxClZjRka/eiowOJV8s9w==
+  dependencies:
+    nested-error-stacks "^2"
+    tsutils "^3.17.1"
+  optionalDependencies:
+    reflect-metadata ">=0.1.12"
+
 typescript-plugin-styled-components@^1.4.2:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/typescript-plugin-styled-components/-/typescript-plugin-styled-components-1.4.3.tgz#7f87ce0194e7841aa121174089dddff9f40bb0fb"
   integrity sha512-/n6+nwtYRJwj/uJdiMNrjsfy2V34uGDeBuY3WaL3a1lc+aaYyfxHLvRdV3W44O+ewijJrFcEHKYAJdYq4wxXlQ==
+
+typescript-transform-macros@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/typescript-transform-macros/-/typescript-transform-macros-1.1.1.tgz#d014548cf1d23ce81521c8db89d74a6175c4730a"
+  integrity sha512-ljKucGAxTOxxH37qfnMZh7yxSN0OPQe6V5eENahNPpfyq24TVD+pEJtdzxTw1dSobwHWcYOXh4wE4/ko4Or+iw==
 
 typescript-transform-paths@^1.1.8:
   version "1.1.8"
@@ -23683,7 +23746,12 @@ typescript@2.7.2:
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-2.7.2.tgz#2d615a1ef4aee4f574425cdff7026edf81919836"
   integrity sha512-p5TCYZDAO0m4G344hD+wx/LATebLWZNkkh2asWUFqSsD2OrDNhbAHuSjobrmsUmdzjJjEeZVU9g1h3O6vpstnw==
 
-typescript@3.5.x:
+typescript@3:
+  version "3.7.2"
+  resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.7.2.tgz#27e489b95fa5909445e9fef5ee48d81697ad18fb"
+  integrity sha512-ml7V7JfiN2Xwvcer+XAf2csGO1bPBdRbFCkYBczNZggrBZ9c7G3riSUeJmqEU5uOtXNPMhE3n+R4FA/3YOAWOQ==
+
+typescript@3.5.x, typescript@~3.5.3:
   version "3.5.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-3.5.3.tgz#c830f657f93f1ea846819e929092f5fe5983e977"
   integrity sha512-ACzBtm/PhXBDId6a6sDJfroT2pOWt/oOnk4/dElG5G33ZL776N3Y6/6bKZJBFpd+b05F3Ct9qDjMeJmRWtE2/g==
@@ -23697,6 +23765,19 @@ typescriptcollectionsframework@^4.4.10:
   version "4.4.10"
   resolved "https://registry.yarnpkg.com/typescriptcollectionsframework/-/typescriptcollectionsframework-4.4.10.tgz#e07a7c874b9429296117144d7aceefcf178cc043"
   integrity sha512-VimtYNwQF/qckEKiQxGqhXMG/EmVRFvk1H5Wgq646RPJ8rWSIs1ozmPh7WoffLc+md5PksZLvzD3/+vq0+vjuA==
+
+typesmith@^0.9.8:
+  version "0.9.8"
+  resolved "https://registry.yarnpkg.com/typesmith/-/typesmith-0.9.8.tgz#73654d00ea6eba72ff1bedbfcbb744179a50a6cf"
+  integrity sha512-hKCW79/CMBjFmY/7xBJ4bh5b2QgADAvOBjOW8ykb6ygWf1g4R7JWQdgSEg3UxeuF4PEUKTyV6hl0p0AnppW8xA==
+  dependencies:
+    "@types/nested-error-stacks" "^2.1.0"
+    ajv "^6.10.2"
+    ajv-errors "^1.0.1"
+    ajv-keywords "^3.4.1"
+    json-schema "^0.2.5"
+    nested-error-stacks "^2.1.0"
+    ts-json-schema-generator "~0.52.14"
 
 ua-parser-js@^0.7.18, ua-parser-js@^0.7.20:
   version "0.7.20"

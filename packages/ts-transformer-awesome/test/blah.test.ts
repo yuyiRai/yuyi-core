@@ -1,4 +1,4 @@
-import { compile } from '..';
+import { compile } from '../src';
 import * as assert from 'assert';
 import * as prettier from 'prettier';
 import path from 'path'
@@ -29,10 +29,11 @@ describe('blah', () => {
 // }
 
 export function run(text: string) {
-  compile([path.join(__dirname, './file.ts')], (fileName, fileText) => {
+  compile([path.join(__dirname, './file.tsx')], (fileName, fileText) => {
     console.log(fileName, fileText)
   }, {
-    importLibs: ['lodash']
+    importLibs: ['lodash'],
+    logger: true
   })
   return text
 }

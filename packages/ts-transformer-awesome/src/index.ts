@@ -1,14 +1,22 @@
 // const tsImportPluginFactory = require('ts-import-plugin');
 import tsImportPluginFactory from 'ts-import-plugin'
 import { Options as ImportOptions } from 'ts-import-plugin/lib/index'
-import { CustomTransformers, Program, TransformerFactory, SourceFile, createProgram, ScriptTarget, WriteFileCallback } from 'typescript'
+import { CustomTransformers, Program, TransformerFactory, SourceFile, createProgram, ScriptTarget, WriteFileCallback, JsxEmit } from 'typescript'
 import tsxControlStatments from 'tsx-control-statements/transformer'
 import transformerKeys from 'ts-transformer-keys/transformer'
 import ocTransformer from 'ts-optchain/transform'
 import nameofTransformer from 'ts-nameof'
+import tsIsTransformer from 'typescript-is/lib/transform-inline/transformer'
+import typesmithTransformer from 'typesmith/transformer'
 import memoize from 'lodash/memoize'
 import color from 'colors'
 import hoistObjectsInProps from '@avensia-oss/ts-transform-hoist-objects-in-props'
+import tsmacros from 'typescript-transform-macros'
+import tsMinifyPrivates from 'ts-transformer-minify-privates'
+import tsEnumerate from 'ts-transformer-enumerate/transformer'
+import mmlpxTransformer from 'ts-plugin-mmlpx'
+import { transform as reactConstantElements } from 'ts-transform-react-constant-elements/dist/transform'
+import { TypeFilterTransformer } from './transformer'
 // import { PluginCreator } from './PluginCreater'
 
 const presetOptions = {
@@ -17,7 +25,15 @@ const presetOptions = {
   'ts-optchain': ocTransformer,
   'ts-nameof': nameofTransformer as TransformerFactory<SourceFile>,
   '@avensia-oss/ts-transform-hoist-objects-in-props': hoistObjectsInProps,
-  'ts-import-plugins': tsImportPluginFactory
+  'ts-import-plugins': tsImportPluginFactory,
+  'ts-transform-react-constant-elements': reactConstantElements,
+  'ts-plugin-mmlpx': mmlpxTransformer,
+  'ts-transformer-enumerate': tsEnumerate,
+  'typescript-transform-macros': tsmacros,
+  'ts-transformer-minify-privates': tsMinifyPrivates,
+  'typescript-is': tsIsTransformer,
+  'typesmith': typesmithTransformer,
+  '@yuyi919/TypeFilterTransformer': TypeFilterTransformer
 }
 export type PresetKeys = keyof typeof presetOptions;
 
@@ -30,6 +46,13 @@ export interface AwesomeTsTransformerOptions {
   useTsxControlStatments?: boolean;
   useOptchain?: boolean;
   useHoistObjectInProps?: boolean;
+  useReactConstantElements?: boolean;
+  useMiniftyPrivate?: boolean;
+  useMacros?: boolean;
+  useEnumerate?: boolean;
+  useMobxMMLPX?: boolean;
+  useTypescriptIs?: boolean;
+  useTypesmith?: boolean;
   logger?: boolean;
 }
 function resolveMsg(msg: string, append: string, ...msg2: any[]) {
@@ -48,23 +71,30 @@ let options = {
   logger: false
 }
 memoize.Cache = WeakMap
-function useTransformFactory<T extends Function>(factory: T, ...msg: any): any {
+function use<T extends Function>(factory: T, ...msg: any): any {
   options.logger && resolveMsg('use transformer:', findKey(factory), ...msg)
   return factory 
   // ((...args: any) => {
   //   return factory(...args)
   // }) as any
 }
-const use = memoize(useTransformFactory, factory => factory) as typeof useTransformFactory
+// const use = memoize(useTransformFactory, factory => factory) as typeof useTransformFactory
 
 export function getCustomTransformers({
   program,
   importLibs = [],
   useHoistObjectInProps = true,
+  useReactConstantElements = true,
   useKeysOf = true,
   useNameof = true,
   useOptchain = true,
   useTsxControlStatments = true,
+  useMiniftyPrivate = true,
+  useMacros = true,
+  useEnumerate = true,
+  useMobxMMLPX = false,
+  useTypescriptIs = false,
+  useTypesmith = false,
   logger = false
 }: AwesomeTsTransformerOptions = {} as any) {
   options.logger = logger
@@ -88,13 +118,21 @@ export function getCustomTransformers({
     return null
   }).filter(option => option) as ImportOptions[]
   const allowList = [
+    useTypescriptIs && use(tsIsTransformer)(program, {}),
+    useTypesmith && use(typesmithTransformer)(program),
     useTsxControlStatments && use(tsxControlStatments)(program),
+    useReactConstantElements && use(reactConstantElements)(),
+    useMacros && use(tsmacros)(program),
+    useMobxMMLPX && use(mmlpxTransformer)(),
     useKeysOf && use(transformerKeys)(program),
+    useEnumerate && use(tsEnumerate)(program),
     useOptchain && use(ocTransformer)(program),
     useHoistObjectInProps && use(hoistObjectsInProps)(program, {
       propRegex: /.*/,
     }),
+    use(TypeFilterTransformer)(program),
     useNameof && use(nameofTransformer) as TransformerFactory<SourceFile>,
+    useMiniftyPrivate && use(tsMinifyPrivates)(program, { prefix: '_$$' }),
     importConfig && importConfig.length > 0 && use(tsImportPluginFactory, `[${
       importConfig.map(c => c.libraryName).join(']/[')
     }]`)(importConfig)
@@ -118,6 +156,7 @@ export function compile(filePaths: string[], writeFileCallback?: WriteFileCallba
   const program = createProgram(filePaths, {
     strict: true,
     noEmitOnError: false,
+    jsx: JsxEmit.React,
     suppressImplicitAnyIndexErrors: true,
     target: ScriptTarget.ES5,
     esModuleInterop: true
@@ -125,7 +164,7 @@ export function compile(filePaths: string[], writeFileCallback?: WriteFileCallba
   const transformers: CustomTransformers = getCustomTransformers({
     ...options,
     program,
-    logger: (options && 'logger' in options )? options.logger :true
+    logger: (options && 'logger' in options) ? options.logger : true
   })
   const r = program.emit(undefined, writeFileCallback, undefined, false, transformers);
 
