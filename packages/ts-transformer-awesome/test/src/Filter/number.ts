@@ -1,12 +1,29 @@
 import '../../../env'
 
+const Utils = {
+  a: filters,
+  b: 1,
+  c() {
+    return Utils.a
+  },
+  get dc() {
+    return filters
+  }
+}
+Utils.a = filters
+
 const a = 1
+const key = tsKeys<typeof Utils>()
 console.log(
-  filters<() => void>(null)
-)
-console.log(
-  filters<number>(a, '3', 2)
+  Utils.a<() => void>(null)
 )
 console.log(
   filters(a, '3', 2, a && 1 || 0 + 2, a && 1 || 0 + 3, 5, 6)
 )
+export function test(a: any) {
+  function test() {
+    const d = Utils.dc<number>(a, '3', 2)
+    return d;
+  }
+  return filters(a, '3', 2, a && 1 || 0 + 2, a && 1 || 0 + 3, 5, 6) && test()
+}

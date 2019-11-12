@@ -2,19 +2,15 @@ import { writeFileSync } from 'fs';
 import path from 'path';
 import contextRequire from "require-context";
 import { compile } from '../src';
+
 // import '@types/webpack'
-describe('blah', () => {
-  for (const p of contextRequire(path.join(__dirname, './src'), true, /\.(ts|tsx)$/).keys()) {
-    it('work: ' + p, () => {
+for (const p of contextRequire(path.join(__dirname, './src'), true, /\.(ts|tsx)$/).keys()) {
+  // test('work: ' + p, () => {
+    // expect(
       run(path.join(__dirname, './src', p))
-    });
-  }
-  // runTest(`keys();`, `[];`, {
-  //   commonPrefix: `
-  //     import { keys } from 'ts-transformer-keys';
-  //   `
+      // ).toMatchSnapshot(p)
   // });
-});
+}
 
 // function runTest(
 //   text: string,
@@ -37,7 +33,12 @@ export function run(path: string) {
     writeFileSync(fileName, fileText)
     r = fileText
   }, {
-    importLibs: ['lodash'],
+      importLibs: [
+        '@material-ui/core',
+        "@material-ui/icons",
+        "lodash"
+      ],
+    // importLibs: ['lodash'],
     logger: true,
     useEnumerate: false,
     useTsxControlStatments: false,

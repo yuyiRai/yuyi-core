@@ -1,6 +1,7 @@
 import * as ts from 'typescript'
 import trim from 'lodash/trim'
 import { tmpdir } from 'os';
+import { isTypeLiteralNode } from 'ts-is-kind';
 
 export namespace AstUtils {
   /**
@@ -8,7 +9,7 @@ export namespace AstUtils {
    * @param name 名称
    * @param value 表达式
    */
-  export function createVariableStatement(name: string, value?: ts.Expression) {
+  export function createVariableStatement(name: string | ts.Identifier | ts.ObjectBindingPattern | ts.ArrayBindingPattern, value?: ts.Expression) {
     return ts.createVariableStatement([
       ts.createToken(ts.SyntaxKind.ConstKeyword)
     ], [
@@ -100,7 +101,7 @@ export namespace AstUtils {
 
 
   export function isSimpleDeclareOrLiteral(target: ts.Node) {
-    return ts.isLiteralExpression(target) || ts.isIdentifier(target)
+    return ts.isLiteralExpression(target) || ts.isIdentifier(target) || ts.isToken(target)
   }
   /**
    * 创建连续的三元判断运算
@@ -115,11 +116,11 @@ export namespace AstUtils {
   ) {
     let sub = undefinedValue || source.pop() as ts.Expression
     while (source.length > 0) {
-      const a = source.pop() as ts.Identifier || ts.createIdentifier('undefined');
+      const a = source.pop() as ts.Identifier;
 
       // console.log(ts.isLiteralExpression(a) || ts.isIdentifier(a), a.getFullText());
 
-      const prev: ts.Identifier = isSimpleDeclareOrLiteral(a) && a || ts.createParen(a) as any
+      const prev: ts.Identifier = a && isSimpleDeclareOrLiteral(a) ? a : ts.createParen(a) as any
 
       sub = createConditional(when(prev), whenTrue(prev), ts.createParen(sub))
       // console.log(sub.getFullText());
@@ -139,6 +140,82 @@ export namespace AstUtils {
   }
 
   // const simpleRegexExpression = /^((?!([+-/\\()]^%))\S)+$/
+
+  export function getUpperBlock(node: ts.Node) {
+    let p = node.parent;
+    while (p) {
+      if (ts.isBlock(p) || ts.isModuleBlock(p)) {
+        break
+      }
+      p = p.parent
+    }
+    return p as ts.Block
+  }
+  export function getUpperObjectDeclare(node: ts.Node) {
+    let p = node.parent;
+    while (p) {
+      if (ts.isObjectLiteralExpression(p)) {
+        break
+      }
+      p = p.parent
+    }
+    return p as ts.ObjectLiteralExpression
+  }
+
+  let flag = 0
+  const expectMap = new Map<ts.Node, any>()
+
+
+  export function updateObjectPropertyAssignment(
+    node: ts.VariableStatement,
+    expect: (node: ts.PropertyAssignment) => ts.Expression | false
+  ) {
+    return ts.updateVariableStatement(
+      node, undefined, ts.updateVariableDeclarationList(
+        node.declarationList,
+        node.declarationList.declarations.map(de => {
+          return ts.updateVariableDeclaration(de, de.name, de.type,
+            de.initializer && ts.isObjectLiteralExpression(de.initializer)
+              ? ts.updateObjectLiteral(de.initializer, de.initializer.properties.map(property => {
+                if (ts.isPropertyAssignment(property)) {
+                  const replacer = expect(property)
+                  return replacer
+                    ? ts.updatePropertyAssignment(property, property!.name!, replacer)
+                    : property
+                }
+                return property
+              }))
+              : de.initializer
+          )
+        })
+      )
+    )
+  }
+
+  /**
+   * 记录源文件的行节点，返回一个捕获是否为已记录的行节点的函数
+   * @param source 搜寻的起始源节点
+   * @param value 
+   * @param expect 判断是否为需要的节点，不满足条件则向上搜寻
+   */
+  export function expectParentStatement(source: ts.Node, value: any = ++flag, expect: (node: ts.Node) => node is ts.Statement = ts.isExpressionStatement) {
+    let node = source.parent;
+    while (node) {
+      if (expect(node)) {
+        // const text = node.flags
+        // if (text) {
+          // console.log('expect', text, value)
+          expectMap.set(node, value)
+        // }
+        break
+      }
+      node = node.parent
+    }
+    return (node: ts.Node) => {
+      return expectMap.has(node) && expectMap.get(node) === value
+    }
+  }
+
   /**
    * 
    * @param expressList 
@@ -204,8 +281,8 @@ export namespace AstUtils {
     //   }
     // }
     let isSimple = true
-    const tmpValName = '_$tmp'
-    const tmpDeclare = ts.createIdentifier(tmpValName);
+    const name = '_$tmp_' + flag++
+    const tmpDeclare = ts.createIdentifier(name);
     const last = ts.createIdentifier('undefined')
     const batchList = expressList.map(expr => {
       if (isSimpleDeclareOrLiteral(expr)) {
@@ -228,24 +305,28 @@ export namespace AstUtils {
       )
     })
     if (isSimple) {
-      return createConditionalChainsFromExpression(batchList, when, last)
+      return [createConditionalChainsFromExpression(batchList, when, last)] as UpdateNodeResults
     } else {
       const block: ts.Statement[] = [];
-      block.push(
-        createVariableStatement(tmpValName),
-        whenTrue(
-          createConditionalChainsFromExpression(
-            batchList,
-            when,
-            last,
-            expr => isSimpleDeclareOrLiteral(expr) ? expr : tmpDeclare
-          )
-        )
-        // ts.createExpressionStatement(
-        //   createAstExpressionFromString(`&&`)
-        // )
+      const r = createConditionalChainsFromExpression(
+        batchList,
+        when,
+        last,
+        expr => isSimpleDeclareOrLiteral(expr) ? expr : tmpDeclare as ts.Identifier
       )
-      return createArrowCall(block)
+      if (tmpDeclare) {
+        block.push(
+          createVariableStatement(tmpDeclare)
+          // ts.createExpressionStatement(
+          //   createAstExpressionFromString(`&&`)
+          // )
+        )
+      }
+      return [r, block] as UpdateNodeResults
     }
   }
+
+
+  export type UpdateNodeResults = [ts.Expression, ts.Statement[]?, ts.Statement[]?]
+  export type UpdateHook = (sourceNode: ts.Node, replaceNode: ts.Node) => ts.Node[] | false
 }

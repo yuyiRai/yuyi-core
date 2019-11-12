@@ -9,6 +9,9 @@ import VTree from './components/VTree';
 export * from './utils';
 export { Button, VTree, SearchInput, VirtualizedList };
 // Delete me
+export function test(a: any, b: any) {
+  return filters<number>(b, a, a || b)
+}
 export const a = tsKeys<ISearchInputProps>()
 export const Thing = () => {
   const [t, st] = useState()

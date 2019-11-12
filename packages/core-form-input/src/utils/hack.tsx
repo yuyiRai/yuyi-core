@@ -5,7 +5,7 @@ import Vue, { CreateElement, VNode, RenderContext } from 'vue'
 const explainGet = (o: any, k: any, d: any) => o[k] || d
 const explainSet = (o: any, k: any, v: any) => o[k] = v
 
-export function hackRender<
+export function _hackRender<
   Instance extends Vue,
   Functional extends boolean = false
 >(
@@ -17,7 +17,7 @@ export function hackRender<
   ) => VNode | VNode[],
   isFunctional?: Functional
 ): typeof component {
-  hackFromVueComponent(component, 'render', render => {
+  _hackFromVueComponent(component, 'render', render => {
     if (render instanceof Function) {
       if (isFunctional) {
         return function hackedFunctionalRender(h: CreateElement, ctx: any) {
@@ -35,7 +35,7 @@ export function hackRender<
   return component
 }
 
-export function hackFromVueComponent(
+export function _hackFromVueComponent(
   component: any,
   key: string,
   hack?: (v: any) => any,
@@ -43,7 +43,7 @@ export function hackFromVueComponent(
   setter?: any
 ): any {
   if (!getter && !setter && key.indexOf('.') > -1) {
-    return hackFromVueComponent(component, key, hack, get, set)
+    return _hackFromVueComponent(component, key, hack, get, set)
   }
   getter = getter || explainGet
   setter = setter || explainSet
@@ -56,13 +56,13 @@ export function hackFromVueComponent(
       }
     } else if (component.mixins instanceof Array) {
       for (const mixin of component.mixins) {
-        if (mixin && !!(r = hackFromVueComponent(mixin, key, hack, getter, setter)))
+        if (mixin && !!(r = _hackFromVueComponent(mixin, key, hack, getter, setter)))
           return r;
       }
     }
     if (!r) {
       for (const skey of ['options']) {
-        if (!!(r = hackFromVueComponent(component[skey], key, hack, getter, setter))) {
+        if (!!(r = _hackFromVueComponent(component[skey], key, hack, getter, setter))) {
           return r
         }
       }
@@ -72,6 +72,6 @@ export function hackFromVueComponent(
   invariant(false, '这看上去不像一个vue组件or组件options')
   return null;
 }
-export function getFromVueComponent(component: any, key: string) {
-  return hackFromVueComponent(component, key)
+export function _getFromVueComponent(component: any, key: string) {
+  return _hackFromVueComponent(component, key)
 }

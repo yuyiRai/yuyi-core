@@ -38,7 +38,7 @@ module.exports = {
             properties: {
               builtins: true,
               keep_quoted: true,
-              regex: /((^_)|(_$))/
+              regex: /^_/
             },
             toplevel: true
           },

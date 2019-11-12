@@ -5,59 +5,119 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as kind from 'ts-is-kind';
+// import * as kind from 'ts-is-kind';
+import '../../env'
 import ts from 'typescript';
 import { AstUtils } from './AstUtils';
 
 const FUNCTION_SYMBOL = 'FilterFunction';
 
 const config = {
-  isNeedRepeat: false,
+  needImport: false,
   needClear: [] as any[],
+  needImports: new Set(),
   repeatTimes: 0
+}
+
+function getImportName(node: ts.Node) {
+  if (ts.isIdentifier(node)) {
+    config.needImports.add(node.escapedText)
+  } else if (ts.isCallExpression(node)) {
+    ts.isIdentifier(node.expression) && config.needImports.add(node.expression.escapedText)
+  }
+  return node
 }
 
 function isNeedClear(node: ts.Node) {
   return node.getSourceFile() && config.needClear.includes(node.getText())
 }
 
-export default function transformer(program: ts.Program): ts.TransformerFactory<ts.SourceFile> {
+export default function transformer(program: ts.Program): ts.TransformerFactory<ts.Node> {
   return (context) => (file) => {
-    config.isNeedRepeat = false
+    config.needImport = false
     config.needClear = []
+
     let { node } = visitNodeAndChildren(file, program, context)
-    // if (config.isNeedRepeat) {
-    //   config.repeatTimes++
-    //   console.log('isNeedRepeat', node.fileName);
-      // node = visitNodeAndChildren(node, program, context).node
-    // }
+    if (config.needImports.size > 0) {
+      if (__DEV__)
+        console.log(config.needImports)
+      AstUtils.createVariableStatement('')
+    }
     return node;
   };
 }
 
-
-export const createAstFromString = (input: string, node: ts.Node, name = `~temp~${new Date().getTime()}.ts`) =>
-  (ts.createSourceFile(name, input, node.getSourceFile().languageVersion, true)
-    .statements[0] as ts.ExpressionStatement).expression;
-
-export const createAstStatmentFromString = (input: string, node: ts.Node, name = `~temp~${new Date().getTime()}.ts`) =>
-  ts.createSourceFile(name, input, node.getSourceFile().languageVersion, true)
-
-
 function visitNodeAndChildren(node: ts.Node, program: ts.Program, context: ts.TransformationContext): {
-  node: ts.SourceFile
+  node: ts.Node,
+  preLine: ts.Statement[],
+  afterLine: ts.Statement[],
+  parentHooks: AstUtils.UpdateHook[]
 } {
-  const { next, isNeedRepeat } = visitNode(node, program, context)
-  if (isNeedRepeat && !config.isNeedRepeat) {
-    config.isNeedRepeat = true
+  const { next, needImport, preLine = [], afterLine = [], parentHooks = [] } = visitNode(node, program, context)
+  if (needImport && !config.needImport) {
+    config.needImport = true
   }
+  let childrenPreLines: typeof preLine = []
+  let childrenAfterLines: typeof preLine = []
+  let childrenParentHooks: typeof parentHooks = []
+  let nextNodeAndChildren: ts.Node = ts.visitEachChild(
+    next,
+    (childNode) => {
+      const { node, preLine: childrenPreLine, afterLine: childrenAfterLine, parentHooks: childrenParentHook } = visitNodeAndChildren(childNode, program, context)
+      if (childrenPreLine) {
+        childrenPreLines.push(...childrenPreLine)
+      }
+      if (childrenAfterLine) {
+        childrenAfterLines.push(...childrenAfterLine)
+      }
+      if (childrenParentHook) {
+        childrenParentHooks.push(...childrenParentHook)
+      }
+      return node
+    },
+    context,
+  ) as ts.SourceFile
+  const updated = updateBlock(node, (statements, replacedStatements) => {
+    return ([
+      ...childrenPreLines,
+      ...statements.reduce((r, statement, index) => {
+        let result: ts.Node[] | null = [replacedStatements[index]]
+        childrenParentHooks = childrenParentHooks.filter(hook => {
+          if (hook instanceof Function) {
+            const replaced = hook(statement, replacedStatements[index] as any)
+            if (replaced) {
+              result = replaced
+              return false
+            }
+            return true
+          }
+          return false
+        })
+        return result ? r.concat(result) : r
+      }, [] as ts.Node[]),
+      ...childrenAfterLines
+    ]) as ts.Statement[]
+  }, nextNodeAndChildren)
+  if (!updated) {
+    preLine.push(...childrenPreLines)
+    afterLine.push(...childrenAfterLines)
+  }
+  parentHooks.push(...childrenParentHooks);
   return {
-    node: ts.visitEachChild(
-      next,
-      (childNode) => visitNodeAndChildren(childNode, program, context).node,
-      context,
-    ) as ts.SourceFile
+    node: updated || nextNodeAndChildren,
+    preLine,
+    afterLine,
+    parentHooks
   };
+}
+
+export function updateBlock(node: ts.Node, statements: (statements: ts.Statement[], statements2: ts.Statement[]) => ts.Statement[], replaced = node) {
+  if (ts.isBlock(node) && ts.isBlock(replaced)) {
+    return ts.updateBlock(node, statements([...node.statements], [...replaced.statements]))
+  } else if (ts.isSourceFile(node) && ts.isSourceFile(replaced)) {
+    return ts.updateSourceFileNode(node, statements([...node.statements], [...replaced.statements]))
+  }
+  return false
 }
 
 export function mapChildren(children: ts.NodeArray<any> | ts.Node[], times = 1) {
@@ -74,80 +134,92 @@ export function mapChildren(children: ts.NodeArray<any> | ts.Node[], times = 1) 
   return r
 }
 
-export function visitImportNode(node: ts.Node, program: ts.Program, context: ts.TransformationContext): ts.NamedImports | ts.Node {
-  return ts.visitEachChild(node, (node) => {
-    if (kind.isImportClause(node)) {
-      // console.log('isImportClause', node.getText());
-      return visitImportNode(node, program, context)
-    } else if (kind.isNamedImports(node)) {
-      // console.log('isNamedImports', node.getText());
-      return ts.updateNamedImports(node, node.elements.filter(i => !isNeedClear(i)))
-    }
-    return node
-  }, context)
-}
+// export function visitImportNode(node: ts.Node, program: ts.Program, context: ts.TransformationContext): ts.NamedImports | ts.Node {
+//   return ts.visitEachChild(node, (node) => {
+//     if (kind.isImportClause(node)) {
+//       // console.log('isImportClause', node.getText());
+//       return visitImportNode(node, program, context)
+//     } else if (kind.isNamedImports(node)) {
+//       // console.log('isNamedImports', node.getText());
+//       return ts.updateNamedImports(node, node.elements.filter(i => !isNeedClear(i)))
+//     }
+//     return node
+//   }, context)
+// }
 
 function visitNode(node: ts.Node, program: ts.Program, context: ts.TransformationContext): {
   next: ts.Node,
-  isNeedRepeat: boolean
+  needImport?: boolean,
+  preLine?: ts.Statement[],
+  afterLine?: ts.Statement[],
+  parentHooks?: AstUtils.UpdateHook[]
 } {
 
-  if (config.repeatTimes > 0) {
-    if (kind.isImportDeclaration(node)) {
-      // console.log('isImportDeclaration', node.getText());
-      node = visitImportNode(node, program, context)
-    } else if (ts.isVariableStatement(node) && isNeedClear(node)) {
-      return { next: ts.createNode(ts.SyntaxKind.UndefinedKeyword), isNeedRepeat: false }
-    }
-    return { next: node, isNeedRepeat: false }
-  }
-
   const typeChecker = program.getTypeChecker();
-  // const mnode = node
-  // if (ts.isVariableStatement(node)) {
-  //   console.log(node.getText());
-  //   node = node.declarationList.declarations[0]
-  // }
   if (ts.isCallExpression(node)) {
-    // Check if function call expression is an oc chain, e.g.,
-    // 检查函数表达式是否是Oc链
-    //   oc(x).y.z()
-
+    // Check if function call expression is an filter, e.g.,
     // 判断是否为合法的Filter调用节点
     if (_isValidType(typeChecker.typeToTypeNode(typeChecker.getTypeAtLocation(node.expression)))) {
       const [typed] = ts.isCallExpression(node) && node.typeArguments || []
-      console.log('escapedText', node.getText(), typed && typed.getFullText(), typed && ts.isFunctionOrConstructorTypeNode(typed));
-      
-      const returnNode = expandExpression(node.arguments, typed && typed.getFullText() as keyof typeof typedUtils || undefined)
+      const escapedText = node.getText()
+      // getImportName(node)
+      if (__DEV__)
+        console.log('escapedText', escapedText, typed && typed.getFullText(), typed && ts.isFunctionOrConstructorTypeNode(typed));
+
+      const isExpected = AstUtils.expectParentStatement(node, undefined, function (node): node is ts.Statement {
+        return ts.isExpressionStatement(node) || ts.isReturnStatement(node) || ts.isVariableStatement(node)
+      });
+      const [returnNode, preLine = [], afterLine = []] = expandExpression(node.arguments, typed && typed.getFullText() as keyof typeof typedUtils || undefined)
       // 添加单行注释
-      ts.addSyntheticTrailingComment(returnNode, ts.SyntaxKind.SingleLineCommentTrivia, " " + node.getText()+"\n")
-      return { next: returnNode, isNeedRepeat: true };
+      return { next: returnNode, needImport: true, parentHooks: [
+        (sourceNode: ts.Node, replaceNode = node) => {
+          if (isExpected(sourceNode)) { // 相同的源
+            if (__DEV__)
+              console.log('checked', node.getText())
+            return [
+              ...preLine, 
+              ts.addSyntheticTrailingComment(// 添加注释
+                replaceNode, 
+                ts.SyntaxKind.SingleLineCommentTrivia, " " + node.getText() + "\n"
+              ),
+              ...afterLine
+            ]
+          }
+          return false
+        }
+      ] };
     } else if (node.arguments.length) {
       // Check for a naked oc(x) call
-      
       const callTypeNode = typeChecker.typeToTypeNode(typeChecker.getTypeAtLocation(node));
       if (_isValidType(callTypeNode)) {
         // Unwrap oc(x) -> x
-        return { next: node.arguments[0], isNeedRepeat: false };
+        return { next: node.arguments[0] };
       }
-    }
-  } else if (ts.isPropertyAccessExpression(node)) {
-    const expressionTypeNode = typeChecker.typeToTypeNode(typeChecker.getTypeAtLocation(node));
-    if (_isValidType(expressionTypeNode)) {
-      // We found an OCType property access expression w/o closing de-reference, e.g.,
-      //   oc(x).y.z        
-      console.log('isPropertyAccessExpression', node.getText())
-      if (node.parent && node.parent.parent && node.parent.parent.parent) {
-        const parent = node.parent.parent.parent
-        console.log('parent', parent.getSourceFile().fileName, parent.getText(), ts.isVariableStatement(parent));
-        config.needClear.push(parent.getText(), ...node.getText().split('.'))
-      }
-
-      return { next: node, isNeedRepeat: true }
     }
   }
-
-  return { next: node, isNeedRepeat: false };
+  // else if (
+  //     ts.isIdentifier(node) && node.parent
+  //       && (
+  //         ts.isBinaryExpression(node.parent) && node.parent.right === node
+  //         || ts.isReturnStatement(node.parent) && node.parent.expression === node
+  //       )
+  //   ) {
+  //   const expressionTypeNode = typeChecker.typeToTypeNode(typeChecker.getTypeAtLocation(node));
+  //   if (_isValidType(expressionTypeNode)) {
+  //     getImportName(node)
+  //   }
+  // }
+  // else if (ts.isPropertyAssignment(node)) {
+  //   const expressionTypeNode = typeChecker.typeToTypeNode(typeChecker.getTypeAtLocation(node));
+  //   if (_isValidType(expressionTypeNode)) {
+  //     console.log('isPropertyAssignment', node.getText())
+  //     return {
+  //       next: ts.updatePropertyAssignment(node, node.name, AstUtils.createArrowCall([], false)),
+  //       needImport: false
+  //     }
+  //   }
+  // } 
+  return { next: node };
 }
 
 function _isValidType(node: any): node is ts.CallExpression {
@@ -162,7 +234,8 @@ function _isValidType(node: any): node is ts.CallExpression {
   
   if (ts.isTypeReferenceNode(node) && ts.isIdentifier(node.typeName)) {
     if (node.typeName.escapedText === FUNCTION_SYMBOL) {
-      console.log('escapedText', node.typeName.escapedText)
+      if (__DEV__)
+        console.log('escapedText', node.typeName.escapedText)
       return true;
     }
   }
@@ -189,48 +262,9 @@ const typedUtils = {
 function expandExpression(
   argList: ts.NodeArray<ts.Expression>,
   type: keyof typeof typedUtils = 'nil'
-): ts.Expression {
+): AstUtils.UpdateNodeResults {
   if (argList.length === 0) {
-    return ts.createIdentifier('undefined')
+    return [ts.createIdentifier('undefined')]
   }
-  // function createIf333(subList: ts.NodeArray<ts.Expression>, i: number = 0, sub: ts.Expression = subList[i]) {
-  //   let tmp: ts.Statement
-  //   const tmpI = ts.createIdentifier('tmp')
-
-  //   if (ts.isIdentifier(sub) || ts.isToken(sub)) {
-  //     console.log('根是标识符或标记（例如，this）', sub.getText(), subList.length, i);
-  //   } else {
-  //     if (ts.isCallExpression(sub)) {
-  //       console.log('根是函数调用', sub.getText());
-  //     }
-  //     if (ts.isLiteralTypeNode(sub)) {
-  //       console.log('isArrayLiteralExpression', sub.getText());
-  //     }
-  //     if (ts.isLiteralExpression(sub)) {
-  //       console.log('isLiteralExpression', sub.getText());
-  //     }
-  //     tmp = createVariableStatement('tmp', sub)
-  //   }
-
-  //   const key = tmp ? tmpI : sub
-  //   const condition = ts.createBinary(
-  //     key,
-  //     ts.SyntaxKind.ExclamationEqualsToken,
-  //     ts.createNull()
-  //   );
-  //   const r = ts.createParen(ts.createConditional(
-  //     condition,
-  //     key,
-  //     i === subList.length - 1
-  //       ? ts.createIdentifier('undefined')
-  //       : createIf333(subList, i + 1)))
-
-  //   return tmp ? createTmpCall(
-  //     ([tmp]).concat([
-  //       ts.createReturn(r)
-  //     ] as any)
-  //   ) : r
-  // }
-  console.log('when', type, typedUtils[type])
   return AstUtils.createWhenToDoForEach(argList, typedUtils[type])
 }

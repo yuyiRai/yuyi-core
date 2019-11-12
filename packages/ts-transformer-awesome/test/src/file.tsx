@@ -80,10 +80,10 @@ const Hr = MACRO((children: any) => {
 });
 
 export const TsxControlStatments = () => {
-  const a = null
-  console.log(filters<() => void>(null))
-  console.log(filters<number>(a, '3', 2))
-  console.log(filters(a, '3', 2, a && 1 || 0 + 2, a && 1 || 0 + 3, 5, 6))
+  // const a = null
+  // console.log(filters<() => void>(null))
+  // console.log(filters<number>(a, '3', 2))
+  // console.log(filters(a, '3', 2, a && 1 || 0 + 2, a && 1 || 0 + 3, 5, 6))
   // console.log(filters<number>(a, '3', 2, a + 2, a + 3, 5, a + 5))
   return (
     <For of={[1, 2, 3]} each="item" index="itemIndex">

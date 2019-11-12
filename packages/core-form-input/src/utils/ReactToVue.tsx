@@ -2,15 +2,15 @@ import { defaults } from 'lodash';
 // import React from 'react'
 // import MaBox from '@material-ui/core/Box/Box'
 import Vue, { CreateElement, VNode } from 'vue';
-import { hackRender } from './hack';
+import { _hackRender } from './hack';
 // import useMediaQuery from '@material-ui/core/useMediaQuery';
 // useMediaQuery
 
-function Mixins(...Ctors: any[]) {
+function _Mixins(...Ctors: any[]) {
   return Vue.extend({ mixins: Ctors });
 }
 
-export function getAllContext(instance: Vue): Record<string, any> {
+export function _getAllContext(instance: Vue): Record<string, any> {
   const contextObject = {}
   let temp = instance.$parent;
   while (temp) {
@@ -27,7 +27,7 @@ export function getAllContext(instance: Vue): Record<string, any> {
   return contextObject
 }
 
-export const ContextProvider = Vue.extend({
+export const _ContextProvider = Vue.extend({
   props: {
     context: { type: Object, default() { return {} }}
   },
@@ -44,17 +44,17 @@ export const ContextProvider = Vue.extend({
   }
 })
 
-export const ContextCollectionWarp = Vue.extend({
+export const _ContextCollectionWarp = Vue.extend({
   computed: {
     $allContext() {
-      return getAllContext(this)
+      return _getAllContext(this)
     }
   }
 })
 
-export function hackedRenderWithContextProviders(
+export function _hackedRenderWithContextProviders(
   vnodes: VNode | VNode[],
-  context?: InstanceType<typeof ContextCollectionWarp>,
+  context?: InstanceType<typeof _ContextCollectionWarp>,
   h?: CreateElement
 ) {
   for (const vnode of (vnodes instanceof Array ? vnodes : [vnodes])) {
@@ -62,7 +62,7 @@ export function hackedRenderWithContextProviders(
       const { children = [] } = vnode.componentOptions || {}
       for (const i in children) {
         // 因为vue无法一个组件渲染多个节点，只能遍历children一个个包裹起来
-        vnode!.componentOptions!.children![i] = h!(ContextProvider, { props: { context: context!.$allContext } }, [children[i]])
+        vnode!.componentOptions!.children![i] = h!(_ContextProvider, { props: { context: context!.$allContext } }, [children[i]])
       }
     }
   }
@@ -71,14 +71,14 @@ export function hackedRenderWithContextProviders(
 
 export function react2Vue(reactComponent: any) {
   // const { ReactInVue } = require('vuera')
-  return hackRender<InstanceType<typeof ContextCollectionWarp>>(
-    Mixins(
+  return _hackRender<InstanceType<typeof _ContextCollectionWarp>>(
+    _Mixins(
       // ReactInVue(
       //   reactComponent instanceof Object && reactComponent.default || reactComponent
       // ),
-      ContextCollectionWarp
+      _ContextCollectionWarp
     ),
-    hackedRenderWithContextProviders,
+    _hackedRenderWithContextProviders,
     false
   )
 }

@@ -1,3 +1,4 @@
+import '@yuyi919/ts-transformer-awesome/env'
 if (__DEV__) {
   window.invariant = require('tiny-invariant').default;
   window.warning = require('tiny-warning').default;
