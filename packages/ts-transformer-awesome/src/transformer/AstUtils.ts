@@ -1,7 +1,4 @@
-import * as ts from 'typescript'
-import trim from 'lodash/trim'
-import { tmpdir } from 'os';
-import { isTypeLiteralNode } from 'ts-is-kind';
+import * as ts from 'typescript';
 
 export namespace AstUtils {
   /**
@@ -9,9 +6,9 @@ export namespace AstUtils {
    * @param name 名称
    * @param value 表达式
    */
-  export function createVariableStatement(name: string | ts.Identifier | ts.ObjectBindingPattern | ts.ArrayBindingPattern, value?: ts.Expression) {
+  export function createVariableStatement(name: string | ts.Identifier | ts.ObjectBindingPattern | ts.ArrayBindingPattern, value?: ts.Expression, isLet = false) {
     return ts.createVariableStatement([
-      ts.createToken(ts.SyntaxKind.ConstKeyword)
+      ts.createToken((!isLet ? ts.SyntaxKind.ConstKeyword : ts.SyntaxKind.LetKeyword) as any)
     ], [
       ts.createVariableDeclaration(name, undefined, value)
     ]);
@@ -103,6 +100,7 @@ export namespace AstUtils {
   export function isSimpleDeclareOrLiteral(target: ts.Node) {
     return ts.isLiteralExpression(target) || ts.isIdentifier(target) || ts.isToken(target)
   }
+
   /**
    * 创建连续的三元判断运算
    * @param source 元素表达式集合
@@ -111,21 +109,98 @@ export namespace AstUtils {
   export function createConditionalChainsFromExpression(
     source: ts.Expression[],
     when: ((tmpDeclare: ts.Identifier) => ts.Expression) = createIsNotNil,
-    undefinedValue?: ts.Expression,
-    whenTrue: (expr: ts.Expression) => ts.Expression = expr => expr
+    latestValue?: ts.Expression,
+    resultTransformer: (expr: ts.Expression) => ts.Expression = expr => expr,
+    conditionalFunction = createConditional
   ) {
-    let sub = undefinedValue || source.pop() as ts.Expression
+    let sub = latestValue || source.pop() as ts.Expression
     while (source.length > 0) {
       const a = source.pop() as ts.Identifier;
-
       // console.log(ts.isLiteralExpression(a) || ts.isIdentifier(a), a.getFullText());
-
       const prev: ts.Identifier = a && isSimpleDeclareOrLiteral(a) ? a : ts.createParen(a) as any
-
-      sub = createConditional(when(prev), whenTrue(prev), ts.createParen(sub))
+      sub = conditionalFunction(when(prev), resultTransformer(prev), ts.createParen(sub))
       // console.log(sub.getFullText());
     }
     return sub
+  }
+  /**
+   * 创建while判断运算
+   * @param source 元素表达式集合
+   * @param when 条件表达式
+   */
+  export function createWhileFromExpressions(
+    source: ts.Expression[],
+    when: ((tmpDeclare: ts.Identifier | ts.Expression) => ts.Expression) = createIsNotNil,
+    latestValue: ts.Expression = source.pop() as ts.Expression,
+    resultTransformer: (
+      expr: ts.Expression
+    ) => ts.Statement = ts.createExpressionStatement,
+    createIdentifier = ts.createIdentifier,
+    hasSpread = source.some(i => ts.isSpreadElement(i))
+  ) {
+    const tmpArrDeclare = createIdentifier('tempArr')
+    const tmpResultDeclare = createIdentifier('tempResult')
+    const tmpLengthDeclare = createIdentifier('tempLength')
+    const tmpIndexDeclare = createIdentifier('tempIndex')
+    const tmpResult = createVariableStatement(tmpResultDeclare)
+    const tmpArr = createVariableStatement(tmpArrDeclare, ts.createArrayLiteral(source))
+    const tmpLength = createVariableStatement(tmpLengthDeclare,
+      hasSpread 
+      ? ts.createPropertyAccess(tmpArrDeclare, 'length')
+      : ts.createNumericLiteral(
+        source.length + ''
+      )
+    )
+    const tmpIndex = createVariableStatement(tmpIndexDeclare, ts.createNumericLiteral('0'))
+    const todo: ts.Statement[] = [
+      ts.createIf(
+        when(ts.createParen(ts.createBinary(
+          tmpResultDeclare,
+          ts.SyntaxKind.EqualsToken,
+          ts.createElementAccess(tmpArrDeclare, ts.createPostfixIncrement(tmpIndexDeclare))
+        ))),
+        ts.createBreak()
+      )
+    ]
+    return [
+      tmpArr,
+      tmpLength,
+      tmpIndex,
+      tmpResult,
+      ts.createWhile(
+        ts.createBinary(tmpIndexDeclare, ts.SyntaxKind.LessThanToken, tmpLengthDeclare),
+        ts.createBlock(todo)
+      ),
+      resultTransformer(createConditional(when(tmpResultDeclare), tmpResultDeclare, latestValue))
+    ]
+  }
+  /**
+   * 创建连续的if else判断运算
+   * @param source 元素表达式集合
+   * @param when 条件表达式
+   */
+  export function createIfElseChainsFromExpression(
+    source: ts.Expression[],
+    when: ((tmpDeclare: ts.Identifier) => ts.Expression) = createIsNotNil,
+    latestValue: ts.Expression = source.pop() as ts.Expression,
+    resultTransformer: (expr: ts.Expression) => ts.Statement = ts.createExpressionStatement,
+    ifelseFunction = ts.createIf
+  ) {
+    let sub: ts.Statement = ts.createExpressionStatement(latestValue)
+    const result: ts.Statement[] = []
+    while (source.length > 0) {
+      const a = source.pop() as ts.Identifier;
+      // console.log(ts.isLiteralExpression(a) || ts.isIdentifier(a), a.getFullText());
+      const prev: ts.Identifier = a && isSimpleDeclareOrLiteral(a) ? a : ts.createParen(a) as any
+      sub = ifelseFunction(
+        when(prev),
+        resultTransformer(prev),
+        sub
+      )
+      // console.log(sub.getFullText());
+    }
+    result.unshift(sub)
+    return result
   }
 
   export function createIfReturn(
@@ -151,6 +226,7 @@ export namespace AstUtils {
     }
     return p as ts.Block
   }
+
   export function getUpperObjectDeclare(node: ts.Node) {
     let p = node.parent;
     while (p) {
@@ -204,8 +280,8 @@ export namespace AstUtils {
       if (expect(node)) {
         // const text = node.flags
         // if (text) {
-          // console.log('expect', text, value)
-          expectMap.set(node, value)
+        // console.log('expect', text, value)
+        expectMap.set(node, value)
         // }
         break
       }
@@ -217,6 +293,14 @@ export namespace AstUtils {
   }
 
   /**
+   * 创建变量赋值行
+   * @param identifier 
+   * @param expression 
+   */
+  export function createSetVariableStatement(identifier: ts.Identifier, expression?: ts.Expression | ts.Identifier) {
+    return ts.createExpressionStatement(ts.createBinary(identifier, ts.SyntaxKind.EqualsToken, expression || ts.createIdentifier('undefined')))
+  }
+  /**
    * 
    * @param expressList 
    * @param when 
@@ -227,62 +311,108 @@ export namespace AstUtils {
     expressList: ts.NodeArray<ts.Expression>,
     when: ((tmpDeclare: ts.Expression) => ts.Expression) = createIsNotNil,
     whenTrue: ((e: ts.Expression) => ts.Statement) = ((e) => ts.createReturn(e))
-  ) {
-    // const block: ts.Statement[] = [];
-    // const tmpValName = '_$tmp'
-    // const tmpDeclare = ts.createIdentifier(tmpValName);
-    // let constExpression: ts.Expression[] = []
-    // for (let index = 0; index < expressList.length; index++) {
-    //   let sub = expressList[index]
-    //   const list = expressList;
-    //   // const text = trim(sub.getFullText())
-    //   /** 已经进入了函数化模式 */
-    //   let isBlockDeclare = block.length > 0
-    //   const isLast = index === list.length - 1
-    //   // console.log(text);
-    //   // 如果是简单字面量or变量
-    //   const isSimpleDeclare = isSimpleDeclareOrLiteral(sub)
-    //   if (isSimpleDeclare) {
-    //     constExpression.push(sub)
-    //     if (constExpression.length > 1 && constExpression.length === list.length) // 全都是简单定义的话直接返回一个三元链
-    //       return createConditionalChainsFromExpression(constExpression, when)
-    //     else if (!isLast) { // 直到第一次进入块模式前跳过下面的步骤
-    //       continue
-    //     }
-    //   } else if (constExpression.length > 0) {
-    //     sub = createConditionalChainsFromExpression(constExpression, when, sub)
-    //     if (isLast) {
-    //       constExpression.push(tmpDeclare)
-    //     }
-    //   }
-    //   if (!isBlockDeclare) {
-    //     // 初始化临时变量
-    //     block.push(createVariableStatement(tmpValName, sub));
-    //   } else if (!isSimpleDeclare) {
-    //     // 再度赋值
-    //     block.push(
-    //       ts.createExpressionStatement(ts.createBinary(tmpDeclare, ts.SyntaxKind.EqualsToken, sub))
-    //     );
-    //   }
+  ): UpdateNodeResults {
+    const block: ts.Statement[] = [];
+    const tmpDeclare = ts.getGeneratedNameForNode(expressList[0] && expressList[0].parent || expressList[0]);
+    
+    const simpleExpression: ts.Expression[] = []
+    const multipleExpressions: ts.Expression[] = []
+    const tmpFlag = ++flag
+    return [
+      tmpDeclare,
+      [
+        createVariableStatement(tmpDeclare, ts.createIdentifier('undefined')),
+        ...createWhileFromExpressions(
+          [...expressList],
+          when,
+          ts.createIdentifier('undefined'),
+          (expr) => createSetVariableStatement(tmpDeclare, expr),
+          name => ts.createIdentifier(`_${name}_${tmpFlag}`)
+        )
+      ]
+    ]
+    
+    for (let index = 0; index < expressList.length; index++) {
+      let sub = expressList[index]
+      const list = expressList;
+      // const text = trim(sub.getFullText())
+      /** 已经进入了函数化模式 */
+      let isBlockDeclare = block.length > 0
+      const isLast = index === list.length - 1
+      // console.log(text);
+      // 如果是简单字面量or变量
+      const isSimpleDeclare = isSimpleDeclareOrLiteral(sub)
+      if (isSimpleDeclare) {
+        simpleExpression.push(sub)
+        if (simpleExpression.length > 0 && simpleExpression.length === list.length) // 全都是简单定义的话直接返回一个三元链
+          return [
+            createConditionalChainsFromExpression(simpleExpression, when, ts.createIdentifier('undefined'))
+          ]
+        else if (!isLast) { // 直到第一次进入块模式前跳过下面的步骤
+          continue
+        }
+      }
+       else if (simpleExpression.length > 0) {
+        sub = createConditionalChainsFromExpression(simpleExpression, when, sub)
+        if (isLast) {
+          simpleExpression.push(tmpDeclare)
+        }
+      } 
+      else {
+        multipleExpressions.push(sub)
+        if (multipleExpressions.length > 0 && multipleExpressions.length === list.length) // 全都是简单定义的话直接返回一个三元链
+          return [
+            tmpDeclare,
+            createIfElseChainsFromExpression(multipleExpressions, when, ts.createIdentifier('undefined'))
+          ]
+        else if (!isLast) { // 直到第一次进入块模式前跳过下面的步骤
+          continue
+        }
+      }
 
-    //   if (isLast) {
-    //     // 最后一项时直接用三元判断
-    //     block.push(
-    //       ts.createReturn(
-    //         createConditionalChainsFromExpression(
-    //           constExpression, when, ts.createIdentifier('undefined')
-    //         )
-    //       )
-    //     );
-    //   } else {
-    //     block.push(
-    //       createIfReturn(tmpDeclare, when, whenTrue)
-    //     );
-    //   }
-    // }
+      if (!isBlockDeclare) {
+        // 初始化临时变量
+        block.push(createVariableStatement(tmpDeclare, sub));
+      } else if (!isSimpleDeclare) {
+        // 再度赋值
+        block.push(
+          createSetVariableStatement(tmpDeclare, sub)
+        );
+      }
+
+      if (isLast) {
+        // 最后一项时直接用三元判断
+        block.push(
+          createSetVariableStatement(
+            tmpDeclare,
+            createConditionalChainsFromExpression(
+              simpleExpression, when, ts.createIdentifier('undefined')
+            )
+          )
+        );
+      } else {
+        block.push(
+          createIfReturn(tmpDeclare, when, whenTrue)
+        );
+      }
+    }
+    return [tmpDeclare, block]
+  }
+
+  /**
+   * 
+   * @param expressList 
+   * @param when 
+   * @param whenTrue 加入解析式为true
+   * @param leftReturn 
+   */
+  export function createWhenToReturnConditional(
+    expressList: ts.NodeArray<ts.Expression>,
+    when: ((tmpDeclare: ts.Expression) => ts.Expression) = createIsNotNil
+  ) {
     let isSimple = true
-    const name = '_$tmp_' + flag++
-    const tmpDeclare = ts.createIdentifier(name);
+    // const name = '_$tmp_' + flag++
+    const tmpDeclare = ts.getGeneratedNameForNode(expressList[0] && expressList[0].parent || expressList[0]);
     const last = ts.createIdentifier('undefined')
     const batchList = expressList.map(expr => {
       if (isSimpleDeclareOrLiteral(expr)) {
@@ -293,16 +423,21 @@ export namespace AstUtils {
        * ((_$tmp = (a && 1 || 0 + 2)) || 1) && _$tmp) != null
        * 类似这样的语法结构可以在行内进行缓存计算值&判断是否符合要求&返回计算值
        */
-      return ts.createBinary(
-        ts.createBinary(
-          // $a = x
-          ts.createBinary(tmpDeclare, ts.SyntaxKind.EqualsToken, ts.createParen(expr)),
-          ts.SyntaxKind.BarBarToken,
-          ts.createLiteral(1)
-        ), // ($a = x || 1) 防止x为false
-        ts.SyntaxKind.AmpersandAmpersandToken, // &&标识符
-        tmpDeclare
-      )
+      return ts.createParen(ts.createBinary(tmpDeclare, ts.SyntaxKind.EqualsToken, ts.createParen(expr)))
+      // /**
+      //  * ((_$tmp = (a && 1 || 0 + 2)) || 1) && _$tmp) != null
+      //  * 类似这样的语法结构可以在行内进行缓存计算值&判断是否符合要求&返回计算值
+      //  */
+      // return ts.createBinary(
+      //   ts.createBinary(
+      //     // $a = x
+      //     ts.createBinary(tmpDeclare, ts.SyntaxKind.EqualsToken, ts.createParen(expr)),
+      //     ts.SyntaxKind.BarBarToken,
+      //     ts.createLiteral(1)
+      //   ), // ($a = x || 1) 防止x为false
+      //   ts.SyntaxKind.AmpersandAmpersandToken, // &&标识符
+      //   tmpDeclare
+      // )
     })
     if (isSimple) {
       return [createConditionalChainsFromExpression(batchList, when, last)] as UpdateNodeResults
@@ -325,7 +460,6 @@ export namespace AstUtils {
       return [r, block] as UpdateNodeResults
     }
   }
-
 
   export type UpdateNodeResults = [ts.Expression, ts.Statement[]?, ts.Statement[]?]
   export type UpdateHook = (sourceNode: ts.Node, replaceNode: ts.Node) => ts.Node[] | false

@@ -38,7 +38,7 @@ module.exports = {
             properties: {
               builtins: true,
               keep_quoted: true,
-              regex: /^_/
+              regex: /^_|\$\$$|(^([A-Z0-9$_])+$)/
             },
             toplevel: true
           },

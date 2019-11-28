@@ -1,4 +1,11 @@
 "use strict";
+var __spreadArrays = (this && this.__spreadArrays) || function () {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 require("../../../env");
 var Utils = {
@@ -14,15 +21,53 @@ var Utils = {
 Utils.a = filters;
 var a = 1;
 var key = ["a", "b", "c", "dc"];
-console.log(null != null ? null : (undefined)); // Utils.a<() => void>(null)
-var _$tmp_3;
-console.log(a != null ? a : ('3' != null ? '3' : (2 != null ? 2 : ((((_$tmp_3 = (a && 1 || 0 + 2)) || 1) && _$tmp_3) != null ? _$tmp_3 : ((((_$tmp_3 = (a && 1 || 0 + 3)) || 1) && _$tmp_3) != null ? _$tmp_3 : (5 != null ? 5 : (6 != null ? 6 : (undefined)))))))); // filters(a, '3', 2, a && 1 || 0 + 2, a && 1 || 0 + 3, 5, 6)
-function test(a) {
+var _a = undefined;
+var _tempArr_2 = [null];
+var _tempLength_2 = 1;
+var _tempIndex_2 = 0;
+var _tempResult_2;
+while (_tempIndex_2 < _tempLength_2) {
+    if ((_tempResult_2 = _tempArr_2[_tempIndex_2++]) != null)
+        break;
+}
+_a = _tempResult_2 != null ? _tempResult_2 : undefined;
+console.log(_a); // Utils.a<() => void>(null)
+var _b = undefined;
+var _tempArr_4 = [a, '3', 2, a && 1 || 0 + 2, a && 1 || 0 + 3, 5, 6];
+var _tempLength_4 = 7;
+var _tempIndex_4 = 0;
+var _tempResult_4;
+while (_tempIndex_4 < _tempLength_4) {
+    if ((_tempResult_4 = _tempArr_4[_tempIndex_4++]) != null)
+        break;
+}
+_b = _tempResult_4 != null ? _tempResult_4 : undefined;
+console.log(_b); // filters(a, '3', 2, a && 1 || 0 + 2, a && 1 || 0 + 3, 5, 6)
+function test(a, b) {
     function test() {
-        var d = typeof a === "number" ? a : (typeof '3' === "number" ? '3' : (typeof 2 === "number" ? 2 : (undefined))); // Utils.dc<number>(a, '3', 2)
+        var _a = undefined;
+        var _tempArr_6 = __spreadArrays([a], b, ['3', 2]);
+        var _tempLength_6 = _tempArr_6.length;
+        var _tempIndex_6 = 0;
+        var _tempResult_6;
+        while (_tempIndex_6 < _tempLength_6) {
+            if (typeof (_tempResult_6 = _tempArr_6[_tempIndex_6++]) === "number")
+                break;
+        }
+        _a = typeof _tempResult_6 === "number" ? _tempResult_6 : undefined;
+        var d = _a; // Utils.dc<number>(a, ...b, '3', 2)
         return d;
     }
-    var _$tmp_7;
-    return (a != null ? a : ('3' != null ? '3' : (2 != null ? 2 : ((((_$tmp_7 = (a && 1 || 0 + 2)) || 1) && _$tmp_7) != null ? _$tmp_7 : ((((_$tmp_7 = (a && 1 || 0 + 3)) || 1) && _$tmp_7) != null ? _$tmp_7 : (5 != null ? 5 : (6 != null ? 6 : (undefined)))))))) && test(); // filters(a, '3', 2, a && 1 || 0 + 2, a && 1 || 0 + 3, 5, 6)
+    var _a = undefined;
+    var _tempArr_8 = [a, '3', 2, a && 1 || 0 + 2, a && 1 || 0 + 3, 5, 6];
+    var _tempLength_8 = 7;
+    var _tempIndex_8 = 0;
+    var _tempResult_8;
+    while (_tempIndex_8 < _tempLength_8) {
+        if ((_tempResult_8 = _tempArr_8[_tempIndex_8++]) != null)
+            break;
+    }
+    _a = _tempResult_8 != null ? _tempResult_8 : undefined;
+    return _a && test(); // filters(a, '3', 2, a && 1 || 0 + 2, a && 1 || 0 + 3, 5, 6)
 }
 exports.test = test;

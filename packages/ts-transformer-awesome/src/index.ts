@@ -11,12 +11,12 @@ import typesmithTransformer from 'typesmith/transformer'
 import memoize from 'lodash/memoize'
 import color from 'colors'
 import hoistObjectsInProps from '@avensia-oss/ts-transform-hoist-objects-in-props'
-import tsmacros from 'typescript-transform-macros'
+// import tsmacros from 'typescript-transform-macros'
 import tsMinifyPrivates from 'ts-transformer-minify-privates'
 import tsEnumerate from 'ts-transformer-enumerate/transformer'
 import mmlpxTransformer from 'ts-plugin-mmlpx'
 import { transform as reactConstantElements } from 'ts-transform-react-constant-elements/dist/transform'
-import { TypeFilterTransformer } from './transformer'
+import { TypeFilterTransformer, Macros } from './transformer'
 // import { PluginCreator } from './PluginCreater'
 
 const presetOptions = {
@@ -29,7 +29,7 @@ const presetOptions = {
   'ts-transform-react-constant-elements': reactConstantElements,
   'ts-plugin-mmlpx': mmlpxTransformer,
   'ts-transformer-enumerate': tsEnumerate,
-  'typescript-transform-macros': tsmacros,
+  'typescript-transform-macros': Macros,
   'ts-transformer-minify-privates': tsMinifyPrivates,
   'typescript-is': tsIsTransformer,
   'typesmith': typesmithTransformer,
@@ -122,7 +122,7 @@ export function getCustomTransformers({
     useTypesmith && use(typesmithTransformer)(program),
     useTsxControlStatments && use(tsxControlStatments)(program),
     useReactConstantElements && use(reactConstantElements)(),
-    useMacros && use(tsmacros)(program),
+    useMacros && use(Macros)(program),
     useMobxMMLPX && use(mmlpxTransformer)(),
     useKeysOf && use(transformerKeys)(program),
     useEnumerate && use(tsEnumerate)(program),

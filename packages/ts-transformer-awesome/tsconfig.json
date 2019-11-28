@@ -13,6 +13,7 @@
     "strictNullChecks": true,
     "strictPropertyInitialization": true,
     "noImplicitThis": true,
+    "downlevelIteration": true,
     "alwaysStrict": true,
     "noUnusedLocals": false,
     "noUnusedParameters": false,
