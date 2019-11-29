@@ -64,10 +64,10 @@ export default {
       rollup_plugin_terser.terser({
         sourcemap: true,
         output: {
-          beautify: true,
+          // beautify: true,
           comments: false
         },
-        // nameCache,
+        nameCache: {},
         compress: {
           keep_infinity: true,
           pure_getters: true,
@@ -76,8 +76,9 @@ export default {
         mangle: {
           properties: {
             keep_quoted: true,
-            regex: /^_|\$\$$|(^([A-Z0-9$_])+$)/,
-            debug: true
+            regex: /^_|^\$\$|\$\$$|(^([A-Z0-9$_])+$)/,
+            // debug: true,
+            reserved: ['__esModule', '__mobxDecorators']
           },
           toplevel: true
         },

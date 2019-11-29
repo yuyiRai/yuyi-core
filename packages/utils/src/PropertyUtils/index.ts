@@ -3,7 +3,7 @@
  * @packageDocumentation
  */
 import { get, set } from '../LodashExtra';
-export * from './AsyncProperty';
+// export * from './AsyncProperty';
 export * from './getPropByPath';
 export * from './getPropertyFieldByCreate';
 export * from './CommonDto'
