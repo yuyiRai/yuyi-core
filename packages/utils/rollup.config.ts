@@ -6,6 +6,7 @@ import json from 'rollup-plugin-json'
 // import ttypescript from 'ttypescript';
 import external from 'rollup-plugin-peer-deps-external'
 import minify from 'rollup-plugin-babel-minify'
+import rollup_plugin_terser from "rollup-plugin-terser";
 import wasm from '@yuyi/wasm-rollup'
 import path from 'path'
 
@@ -59,14 +60,34 @@ export default {
     // which external modules to include in the bundle
     // https://github.com/rollup/rollup-plugin-node-resolve#usage
     resolve(),
-    ...(isDevelopment ? [] : [minify({
-      // 清除注释
-      comments: false,
-      // 清除debugger
-      removeDebugger: true,
-      // 清除console
-      removeConsole: true
-    })]),
+    ...(isDevelopment ? [] : [
+      rollup_plugin_terser.terser({
+        sourcemap: true,
+        output: {
+          beautify: true,
+          comments: false
+        },
+        // nameCache,
+        compress: {
+          keep_infinity: true,
+          hoist_funs: true,
+          hoist_props: true,
+          pure_getters: true,
+          passes: 10,
+        },
+        mangle: {
+          properties: {
+            keep_quoted: true,
+            regex: /^_|\$\$$|(^([A-Z0-9$_])+$)/,
+            debug: true
+          },
+          toplevel: true
+        },
+        ecma: 5,
+        toplevel: true,
+        warnings: true,
+      })
+    ]),
     // Resolve source maps to the original source
     sourceMaps(),
   ],
