@@ -92,7 +92,7 @@ namespace Constant$ {
 	export var PROMISE = Promise;
 	export var CREATE_NEW = Reflect.construct
 	export function CREATE_PROMISE<T>(executor: (resolve: (value?: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void): Promise<T> {
-		return CREATE_NEW(executor, [executor])
+		return CREATE_NEW(PROMISE, [executor])
 	}
 	export var PARSE_FLOAT = parseFloat
 	export var PARSE_INT = parseInt

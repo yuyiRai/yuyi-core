@@ -17,15 +17,12 @@ let cache = {};
 const nameCache = {}
 const staticVarName = "K$"
 export default {
-  input: {
-    "index": 'lib/index.js',
-    "NodeUtils": 'lib/NodeUtils'
-  },
+  input: 'dist/index.js',
   output: [
     // { dir: path.dirname(pkg.main), name: 'Utils', exports: 'named', format: 'es', sourcemap: true },
     // { dir: path.dirname(pkg.main), format: 'es', exports: 'named', sourcemap: true },
-    { dir: path.dirname(pkg.main), format: 'cjs', exports: 'named', sourcemap: true },
-    // { dir: 'dist/umd', format: 'umd', exports: 'named', libraryName: 'Utils', sourcemap: true },
+    // { dir: path.dirname(pkg.main), format: 'cjs', exports: 'named', sourcemap: true },
+    { dir: 'dist/umd', format: 'umd', exports: 'named', name: 'yuyiUtils', sourcemap: true },
   ],
   cache: isDevelopment ? cache : false,
   treeshake: isProduction,
@@ -41,7 +38,7 @@ export default {
         'wasm/program.wasm'
       ]
     }),
-    external(),
+    // external(),
     // Allow json resolution
     json(),
     // Compile TypeScript files
