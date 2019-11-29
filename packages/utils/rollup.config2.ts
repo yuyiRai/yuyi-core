@@ -1,18 +1,12 @@
-import resolve from 'rollup-plugin-node-resolve'
-import commonjs from 'rollup-plugin-commonjs'
-import sourceMaps from 'rollup-plugin-sourcemaps'
-import json from 'rollup-plugin-json'
-// import typescript from 'rollup-plugin-typescript2';
-// import ttypescript from 'ttypescript';
-import external from 'rollup-plugin-peer-deps-external'
-import minify from 'rollup-plugin-babel-minify'
-import rollup_plugin_terser from "rollup-plugin-terser";
 import wasm from '@yuyi/wasm-rollup'
-import path from 'path'
+import commonjs from 'rollup-plugin-commonjs'
+import json from 'rollup-plugin-json'
+import resolve from 'rollup-plugin-node-resolve'
+import sourceMaps from 'rollup-plugin-sourcemaps'
+import rollup_plugin_terser from "rollup-plugin-terser"
 
 const isDevelopment = process.env.NODE_ENV === 'development'
 const isProduction = process.env.NODE_ENV === 'production'
-const pkg = require('./package.json')
 let cache = {};
 const nameCache = {}
 const staticVarName = "K$"

@@ -1,5 +1,5 @@
 // tslint:disable: variable-name
-
+var K$;
 type ConstructorType<T, Args extends any[] = [any?, any?, ...any[]]> = {
 	new(...args: Args): InstanceType<new (...args: any) => T>
 }
@@ -103,7 +103,8 @@ namespace Constant$ {
 	}
 }
 
-declare var K$: typeof Constant$;
-
-// @ts-ignore
-K$ = Constant$
+// declare var K$: typeof Constant$;
+{
+	// @ts-ignore
+	K$ = Constant$
+}

@@ -12,7 +12,7 @@ test('tttt', () => {
 })
 
 function getExpectMap(allowNaN = false) {
-  return new Map([
+  return new Map<any, any>([
     [{}, false],
     [[], false],
     [true, false],

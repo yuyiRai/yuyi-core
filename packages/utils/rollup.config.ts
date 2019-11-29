@@ -67,7 +67,7 @@ export default {
       rollup_plugin_terser.terser({
         sourcemap: true,
         output: {
-          preamble: "var " + staticVarName + ';',
+          // preamble: "var " + staticVarName + ';',
           // beautify: true,
           comments: false,
         },
@@ -75,10 +75,12 @@ export default {
         compress: {
           keep_infinity: true,
           pure_getters: true,
-          passes: 20,
+          passes: 22,
           global_defs: {
             "process.env.NODE_ENV": process.env.NODE_ENV || "production",
             // "global.Constant$": "global.K",
+            "@Object": staticVarName + ".OBJECT",
+            "@Object.defineProperty": staticVarName + ".OBJ_defineProperty$",
             "@K$": staticVarName,
             "@Constant$": staticVarName,
           }
@@ -89,7 +91,7 @@ export default {
         mangle: {
           properties: {
             keep_quoted: true,
-            regex: /^_|^\$\$|\$\$$|(^([A-Z0-9$_])+$)|Constant\$/,
+            regex: /^_|^\$\$|\$\$$|(^([A-Z0-9$_])+$)|Constant\$|\_(.*?)\$$/,
             // debug: true,
             // @ts-ignore
             // undeclared: true,
