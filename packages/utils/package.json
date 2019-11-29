@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/utils",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "description": "",
   "keywords": [
     "mobx",
@@ -118,7 +118,8 @@
     ]
   },
   "peerDependencies": {
-    "argparse": "^1.0.10"
+    "argparse": "^1.0.10",
+    "lodash": ">= ^4.17.15"
   },
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
