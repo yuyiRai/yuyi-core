@@ -7,9 +7,6 @@ type TKey = string | number | symbol
 type IKeyValueMap<V = any, K extends TKey = TKey> = Record<K, V>
 
 namespace Constant$ {
-	export const REDUCE = Array.prototype.reduce.call.bind(Array.prototype.reduce) as {
-		<T, R = T>(arr: T[], callbackfn: (previousValue: R, currentValue: T, currentIndex: number, array: T[]) => R, initialValue?: R): T
-	}
 
 	export const ENTRIES = Object.entries
   /**
@@ -93,11 +90,17 @@ namespace Constant$ {
 
 	export var OBJ_getOwnPropertyNames$ = OBJECT.getOwnPropertyNames;
 	export var PROMISE = Promise;
+	export var CREATE_NEW = Reflect.construct
 	export function CREATE_PROMISE<T>(executor: (resolve: (value?: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void): Promise<T> {
-		return new PROMISE<T>(executor)
+		return CREATE_NEW(executor, [executor])
 	}
 	export var PARSE_FLOAT = parseFloat
 	export var PARSE_INT = parseInt
+
+
+	export const REDUCE = Array.prototype.reduce.call.bind(Array.prototype.reduce) as {
+		<T, R = T>(arr: T[], callbackfn: (previousValue: R, currentValue: T, currentIndex: number, array: T[]) => R, initialValue?: R): T
+	}
 }
 
 declare var K$: typeof Constant$;
