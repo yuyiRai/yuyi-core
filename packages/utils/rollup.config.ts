@@ -14,6 +14,8 @@ const isDevelopment = process.env.NODE_ENV === 'development'
 const isProduction = process.env.NODE_ENV === 'production'
 const pkg = require('./package.json')
 let cache = {};
+const nameCache = {}
+const staticVarName = "K$"
 export default {
   input: {
     "index": 'lib/index.js',
@@ -64,20 +66,20 @@ export default {
       rollup_plugin_terser.terser({
         sourcemap: true,
         output: {
-          // preamble: "var $K={};",
+          preamble: "var " + staticVarName + ';',
           beautify: true,
-          comments: false
+          comments: false,
         },
-        nameCache: {
-          "Constant$": "K"
-        },
+        nameCache: nameCache,
         compress: {
           keep_infinity: true,
           pure_getters: true,
-          passes: 10,
+          passes: 20,
           global_defs: {
             "process.env.NODE_ENV": "production",
-            "@Constant$": "K"
+            // "global.Constant$": "global.K",
+            "@K$": staticVarName,
+            "@Constant$": staticVarName,
           }
         },
         parse: {
@@ -88,7 +90,9 @@ export default {
             keep_quoted: true,
             regex: /^_|^\$\$|\$\$$|(^([A-Z0-9$_])+$)|Constant\$/,
             // debug: true,
-            reserved: ['__esModule', '__mobxDecorators']
+            // @ts-ignore
+            undeclared: true,
+            reserved: ['__esModule', '__mobxDecorators'],
           },
           toplevel: true
         },
@@ -101,3 +105,7 @@ export default {
     sourceMaps(),
   ],
 }
+
+setTimeout(() => {
+  console.log(nameCache)
+}, 10000);

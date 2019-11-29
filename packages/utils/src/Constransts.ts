@@ -5,6 +5,7 @@ type ConstructorType<T, Args extends any[] = [any?, any?, ...any[]]> = {
 }
 type TKey = string | number | symbol
 type IKeyValueMap<V = any, K extends TKey = TKey> = Record<K, V>
+
 namespace Constant$ {
 	export const REDUCE = Array.prototype.reduce.call.bind(Array.prototype.reduce) as {
 		<T, R = T>(arr: T[], callbackfn: (previousValue: R, currentValue: T, currentIndex: number, array: T[]) => R, initialValue?: R): T
@@ -92,8 +93,14 @@ namespace Constant$ {
 
 	export var OBJ_getOwnPropertyNames$ = OBJECT.getOwnPropertyNames;
 	export var PROMISE = Promise;
+	export function CREATE_PROMISE<T>(executor: (resolve: (value?: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void): Promise<T> {
+		return new PROMISE<T>(executor)
+	}
 	export var PARSE_FLOAT = parseFloat
 	export var PARSE_INT = parseInt
 }
+
+declare var K$: typeof Constant$;
+
 // @ts-ignore
-global.Constant$ = { ...Constant$ }
+K$ = Constant$
