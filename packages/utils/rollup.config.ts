@@ -64,19 +64,29 @@ export default {
       rollup_plugin_terser.terser({
         sourcemap: true,
         output: {
-          // beautify: true,
+          // preamble: "var $K={};",
+          beautify: true,
           comments: false
         },
-        nameCache: {},
+        nameCache: {
+          "Constant$": "K"
+        },
         compress: {
           keep_infinity: true,
           pure_getters: true,
           passes: 10,
+          global_defs: {
+            "process.env.NODE_ENV": "\"production\"",
+            "@Constant$": "K"
+          }
+        },
+        parse: {
+
         },
         mangle: {
           properties: {
             keep_quoted: true,
-            regex: /^_|^\$\$|\$\$$|(^([A-Z0-9$_])+$)/,
+            regex: /^_|^\$\$|\$\$$|(^([A-Z0-9$_])+$)|Constant\$/,
             // debug: true,
             reserved: ['__esModule', '__mobxDecorators']
           },

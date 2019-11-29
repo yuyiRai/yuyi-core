@@ -2,9 +2,9 @@
  * @author yuyi
  * @packageDocumentation
  */
-
-import { oc } from 'ts-optchain';
-import { ArrayList } from 'typescriptcollectionsframework'
+import './Constransts'
+// import { oc } from 'ts-optchain';
+// import { ArrayList } from 'typescriptcollectionsframework'
 // Import here Polyfills if needed. Recommended core-js (npm i -D core-js)
 // import "core-js/fn/array.find"
 // ...
@@ -12,11 +12,11 @@ import { ArrayList } from 'typescriptcollectionsframework'
 // import '@yuyi919/env'
 
 // const A = Type
+// export const Constant$$ = { ...Constant$ }
+// export const AAA = { a: { b: { c: 3 } } }
+// export const AAAA = oc(AAA).a.b.c
 
-export const AAA = { a: { b: { c: 3 } } }
-export const AAAA = oc(AAA).a.b.c
-
-export const A = new ArrayList(undefined);
+// export const A = new ArrayList(undefined);
 
 
 export * from './CustomUtils'

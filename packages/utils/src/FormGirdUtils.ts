@@ -83,6 +83,19 @@ export interface IItemConfig {
 function getItemContainerAppend(arr: string[]): string[] {
   return reduce(['item', 'default'], (t, key) => t.concat(arr.map(code => key + "." + code)), [] as string[])
 }
+const { _content, _container, _label, _main, _Main } = {
+  _container: "container",
+  _content: "content",
+  _label: "label",
+  _main: "col",
+  _Main: "Col"
+}
+export const GirdKeywords$$ = {
+  _content, _label, _main, _Main,
+  _wrapperCol: "wrapperCol",
+  _labelCol: _label + _Main
+}
+const { _wrapperCol, _labelCol } = GirdKeywords$$
 
 export function getItemContainer(
   item: Partial<IItemConfig>,
@@ -93,14 +106,22 @@ export function getItemContainer(
 } {
   const target = { item, default: defaultContainer }
   return appendKeys.reduce((obj, key) => {
-    return { ...obj, [key]: searchFormatter(null, target, getItemContainerAppend([key, 'container.' + key])) }
+    return { ...obj, [key]: searchFormatter(null, target, getItemContainerAppend([key, _container +'.' + key])) }
   }, {
-      col: searchFormatter(formatterCol, target, getItemContainerAppend(["col", "container.col"])),
-      wrapperCol: searchFormatter(formatterCol, target, getItemContainerAppend([
-        "wrapperCol", "container.content", "container.wrapperCol"
+      [_main]: searchFormatter(formatterCol, target, getItemContainerAppend([_main, _container + "." + _main])),
+      [_wrapperCol]: searchFormatter(formatterCol, target, getItemContainerAppend([
+        _wrapperCol, _container + "." + _content, _container + "." + _wrapperCol
       ])),
-      labelCol: searchFormatter(formatterCol, target, getItemContainerAppend([
-        "labelCol", "container.label", "container.labelCol"
+      [_labelCol]: searchFormatter(formatterCol, target, getItemContainerAppend([
+        _labelCol, _container + "." + _label, _container + "." + _labelCol
       ]))
     })
 }
+
+// col: searchFormatter(formatterCol, target, getItemContainerAppend(["col", "container.col"])),
+  // wrapperCol: searchFormatter(formatterCol, target, getItemContainerAppend([
+    // "wrapperCol", "container.content", "container.wrapperCol"
+  // ])),
+    // labelCol: searchFormatter(formatterCol, target, getItemContainerAppend([
+      // "labelCol", "container.label", "container.labelCol"
+    // ]))

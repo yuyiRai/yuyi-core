@@ -84,9 +84,7 @@ export function isNotNaN(v: any): boolean {
 export function isNilAll(...valueArr: any[]): boolean {
   return filter(map(valueArr, value => isNil(value)), is => is).length === valueArr.length;
 }
-/**
- * @external
- */
+
 export const typeUtils = {
   isArrayLike,
   isArray,
