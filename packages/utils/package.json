@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/utils",
-  "version": "0.0.37",
+  "version": "0.0.39",
   "description": "",
   "keywords": [
     "mobx",
@@ -50,6 +50,7 @@
     "lint": "tslint --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf dist/**/*.js && rimraf dist/**/*.map && rimraf dist/**/*.d.ts",
     "build": "ttsc --build && cross-env NODE_ENV=production rollup -c rollup.config.ts",
+    "build2": "cross-env NODE_ENV=production rollup -c rollup.config2.ts",
     "start": "cross-env NODE_ENV=development rollup -c rollup.config.ts -w",
     "start:all": "yarn start && yarn run docs:watch",
     "test": "jest",
