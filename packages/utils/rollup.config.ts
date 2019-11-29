@@ -80,7 +80,7 @@ export default {
             "process.env.NODE_ENV": process.env.NODE_ENV || "production",
             // "global.Constant$": "global.K",
             "@Object": staticVarName + ".OBJECT",
-            // "@Object.defineProperty": staticVarName + ".OBJ_defineProperty$",
+            "@Object.defineProperty": staticVarName + ".OBJ_defineProperty$",
             "@Constant$": staticVarName,
             "@K$": staticVarName,
           }
