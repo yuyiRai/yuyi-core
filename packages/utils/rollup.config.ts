@@ -70,8 +70,6 @@ export default {
         // nameCache,
         compress: {
           keep_infinity: true,
-          hoist_funs: true,
-          hoist_props: true,
           pure_getters: true,
           passes: 10,
         },
