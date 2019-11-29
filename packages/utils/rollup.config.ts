@@ -76,7 +76,7 @@ export default {
           pure_getters: true,
           passes: 10,
           global_defs: {
-            "process.env.NODE_ENV": "\"production\"",
+            "process.env.NODE_ENV": "production",
             "@Constant$": "K"
           }
         },
