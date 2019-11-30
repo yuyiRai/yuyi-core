@@ -107,6 +107,5 @@ declare global {
   var K$: typeof Constant$;
 }
 
-
 // @ts-ignore
-K$ = Constant$
+K$ = exports["Constant$"]
