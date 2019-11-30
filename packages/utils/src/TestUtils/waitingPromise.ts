@@ -1,3 +1,5 @@
+import { Constant$ } from "../Constransts";
+
 /**
  * {@inheritDoc sleep}
  * @deprecated 该方法迟早被弃用，使用 {@link sleep | sleep()} 代替

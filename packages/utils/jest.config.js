@@ -14,7 +14,7 @@ module.exports = {
     require.resolve("react-app-polyfill/jsdom")
   ],
   "rootDir": process.cwd(),
-  "setupFilesAfterEnv": [],
+  "setupFilesAfterEnv": ["./src/Constransts.ts"],
   "testMatch": [
     "<rootDir>/test/**/*.{spec,test}.{js,jsx,ts,tsx}"
   ],

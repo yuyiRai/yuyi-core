@@ -1,37 +1,35 @@
-import isNumberLodash from 'lodash/isNumber';
+import { Constant$ } from "../Constransts";
 
-const native = global.isNaN
+// import isNumberLodash from 'lodash/isNumber';
+
+// const native = global.isNaN
 export function isNaN(value: any) {
-  return typeof value === 'number' && native(value)
+  return typeof value === 'number' && value !== value
 }
 (global as any).isNaN = isNaN
 
-const _ = { isNumber: isNumberLodash }
+const { KEY_NUM } = Constant$
+
+// const _ = { isNumber: isNumberLodash }
 /**
- * Checks if value is classified as a Number primitive or object.
- * Note: To exclude Infinity, -Infinity, and NaN, which are classified as numbers, use the _.isFinite method.
- * @param value — The value to check.
- * @param allowNaN 
- * @returns — Returns true if value is correctly classified, else false.
+ * 判断一个值是否为数字
+ * @param value — 检查对象
+ * @param allowNaN 是否允许NaN(默认不允许)
+ * @returns — 返回true/false
  */
 function isNumberAuto(value: any, allowNaN: boolean = false): value is number {
   // return isNumberLodash(value) && (allowNaN || !isNaN(value));
-  return (allowNaN || !isNaN(value)) && _.isNumber(value);
+  return allowNaN ? isNumberOrNaN(value) : isNumberStrict(value);
 }
 
 function isNumber(value: any, allowNaN: boolean = false): value is number {
-  return allowNaN ? isNumberOrNaN(value) : isNumberStrict(value)
+  return typeof value === KEY_NUM && (allowNaN || value === value)
 }
 function isNumberOrNaN(value: any): value is number {
-  return typeof value === 'number';
+  return typeof value === KEY_NUM;
 }
 function isNumberStrict(value: any): value is number {
-  return typeof value === 'number' && !isNaN(value);
+  return typeof value === KEY_NUM && !isNaN(value);
 }
 
 export { isNumber, isNumberAuto, isNumberStrict, isNumberOrNaN }
-
-/**
- * @remarks see:  {@link https://www.lodashjs.com/docs/latest#_isequalvalue-other}
- */
-export { isNumberLodash };

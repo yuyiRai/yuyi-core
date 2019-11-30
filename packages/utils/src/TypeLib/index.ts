@@ -8,8 +8,7 @@ import {
   isNaN,
   isObject,
   isString, map, reduce, trim, values,
-  isNumber,
-  isNumberLodash
+  isNumber
 } from '../LodashExtra';
 import { EventEmitter } from '../EventEmitter';
 import { IKeyValueMap, IsBaseType, IsArray, IsObject, IsAny } from '../TsUtils';
@@ -53,10 +52,10 @@ export function isEmptyArrayStrict(value: any): value is any[] {
   return isArray(value) && filter(value, i => isNotEmptyValue(i)).length === 0;
 }
 export function isEmptyData(value: any): value is any[] {
-  return !isBoolean(value) && !isNumberLodash(value) && (isEmptyArrayStrict(value) || isEmpty(value));
+  return !isBoolean(value) && !isNumber(value) && (isEmptyArrayStrict(value) || isEmpty(value));
 }
 export function isNotEmptyData(value: any): boolean {
-  return isBoolean(value) || isNumberLodash(value) || !(isEmptyArrayStrict(value) || isEmpty(value));
+  return isBoolean(value) || isNumber(value) || !(isEmptyArrayStrict(value) || isEmpty(value));
 }
 export function isEmptyObject(value: any, checkValue: boolean = false): value is {} {
   return isObject(value) && !isArray(value) && (checkValue ? filter(values(value), v => isNotEmptyData(v)).length === 0 : isEmpty(value));
