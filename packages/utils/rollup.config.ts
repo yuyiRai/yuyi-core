@@ -5,7 +5,7 @@ import json from 'rollup-plugin-json'
 // import typescript from 'rollup-plugin-typescript2';
 // import ttypescript from 'ttypescript';
 import external from 'rollup-plugin-peer-deps-external'
-import minify from 'rollup-plugin-babel-minify'
+// import minify from 'rollup-plugin-babel-minify'
 import rollup_plugin_terser from "rollup-plugin-terser";
 import wasm from '@yuyi/wasm-rollup'
 import path from 'path'
@@ -75,7 +75,7 @@ export default {
         compress: {
           keep_infinity: true,
           pure_getters: true,
-          passes: 22,
+          passes: 10,
           global_defs: {
             "process.env.NODE_ENV": process.env.NODE_ENV || "production",
             // "global.Constant$": "global.K",
@@ -84,9 +84,6 @@ export default {
             "@Constant$": staticVarName,
             "@K$": staticVarName,
           }
-        },
-        parse: {
-
         },
         mangle: {
           properties: {
