@@ -103,10 +103,10 @@ declare global {
   }
   type TKey = string | number | symbol
   type IKeyValueMap<V = any, K extends TKey = TKey> = Record<K, V>
+  // @ts-ignore
+  var K$: typeof Constant$;
 }
 
-// @ts-ignore
-var K$: typeof Constant$;
 
 // @ts-ignore
 K$ = Constant$
