@@ -1,10 +1,6 @@
 /**
  * @module PropertyUtils
  */
-import { HttpBox } from "@/HttpBox";
-
-
-console.error(HttpBox)
 
 /**
  * 根据 object对象的path路径获取值。 如果解析 value 是 undefined 会以 defaultValue 取代。

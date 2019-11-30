@@ -1,12 +1,9 @@
-import { Args } from '@yuyi919/utils/dist/NodeUtils';
 import colors from 'colors';
-import fs from 'fs-extra'
-import path from 'path'
+import fs from 'fs-extra';
 import { Package } from 'normalize-package-data';
-import publish from '../src/modules/publish'
-
-const pkgPath = path.join(__dirname, '../package.json')
-const { version, description = '' } = require(pkgPath)
+import path from 'path';
+import publish from '../src/modules/publish';
+import { main } from './params';
 // console.log(version, description)
 
 
@@ -20,62 +17,12 @@ export function requireCwdFile(pathStr: string) {
   }
 }
 
-const args = new Args({
-  version,
-  description
-})
-
-const sub = args.parser.addSubparsers({ title: 'actions', description: 'anothers' })
-
-const commitParser = sub.addParser("commit", {
-  help: 'dev commit',
-  version
-})
-commitParser.addArgument(["-p", "--push"], {
-  action: 'storeTrue',
-  dest: "push",
-  defaultValue: false
-})
-
-const pubParser = sub.addParser("pub", {
-  help: 'dev publish',
-  version
-})
-pubParser.addArgument(["-p", "--package"], {
-  action: 'store',
-  type: 'string',
-  dest: "usePublish",
-  defaultValue: './package.json'
-})
-pubParser.addArgument(["-g", "--global-module"], {
-  action: 'storeTrue',
-  dest: "isGlobalModule"
-})
-
-const execParser = sub.addParser("exec", {
-  help: 'exec *.ts file',
-  version
-})
-execParser.addArgument('execFile', {
-  action: 'store',
-  type: 'string',
-  metavar: '<file>',
-  defaultValue: 'unknown'
-})
-execParser.addArgument(['-c', '--compiler'], {
-  action: 'store',
-  type: 'string',
-  metavar: '<module_name>',
-  defaultValue: 'typescript'
-})
-
 try {
-  const [r, other] = args.parser.parseKnownArgs()
+  const r = main
   // console.log(r, other)
-
   if (r.execFile) {
     var install = require('./exec-base').install
-    console.error(r)
+    // console.error(r)
     install(r.compiler)
     requireCwdFile(r.execFile)
   } else if (r.usePublish) {

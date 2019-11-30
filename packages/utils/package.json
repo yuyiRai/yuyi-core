@@ -53,6 +53,7 @@
     "build2": "cross-env NODE_ENV=production rollup -c rollup.config2.ts",
     "start": "cross-env NODE_ENV=development rollup -c rollup.config.ts -w",
     "start:all": "yarn start && yarn run docs:watch",
+    "benchmark": "yuyi -c ttypescript exec test/benchmark/forEach.ts",
     "test": "jest",
     "test:cover": "jest --coverage",
     "test:watch": "jest --coverage --watch",

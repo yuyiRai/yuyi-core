@@ -1,10 +1,18 @@
-import Benchmark from 'benchmark'
+import { sleep } from './waitingPromise';
+import { cloneDeep } from '../LodashExtra';
 
 export namespace BenchmarkUtils {
-  export function paramDiff(group: { [k: string]: (...args: any[]) => any }, params: any[]) {
+  export async function paramDiff(group: { [k: string]: (...args: any[]) => any }, params: any[], options = {
+    delay: 1000
+  }) {
+    const Benchmark = await import('benchmark')
     let suite = new Benchmark.Suite;
     for (const key of Object.keys(group)) {
-      suite.add(key, () => group[key](...params))
+      suite.add(key, () => group[key](...cloneDeep(params)))
+    }
+    if (options.delay) {
+      console.log('test is will be start after ' + options.delay + 'ms')
+      await sleep(options.delay)
     }
     return new Promise(resolve => {
       suite.on('cycle', (event) => {

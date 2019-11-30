@@ -92,15 +92,6 @@ export namespace Constant$ {
   export var PARSE_INT = parseInt
 
 
-  /**
-   * 原生的reduce改为函数调用
-   * @param arr
-   * @param callbackfn
-   * @param initialValue
-   */
-  export const REDUCE = Array.prototype.reduce.call.bind(Array.prototype.reduce) as {
-    <T, R = T>(arr: T[], callbackfn: (previousValue: R, currentValue: T, currentIndex: number, array: T[]) => R, initialValue?: R): T
-  }
 
 
   export type ForFuncCalbackFn<T, K extends TKey, R = void> = (currentValue: T, currentIndex: K, array: T[]) => R
@@ -114,6 +105,26 @@ export namespace Constant$ {
   export const MAP = Function.call.bind(Array.prototype.map) as {
     <T, R = T>(arr: T[], callbackfn: LoopCalbackFn<T, R>, initialValue?: any[]): R[]
   }
+  /**
+   * 原生的for循环改为函数调用
+   * @param arr
+   * @param callbackfn
+   */
+  export const FOR_EACH = Function.call.bind(Array.prototype.forEach) as {
+    <T>(arr: T[], callbackfn: LoopCalbackFn<T, any>): void;
+  }
+
+  /**
+   * 原生的reduce改为函数调用
+   * @param arr
+   * @param callbackfn
+   * @param initialValue
+   */
+  export const REDUCE = Array.prototype.reduce.call.bind(Array.prototype.reduce) as {
+    <T, R = T>(arr: T[], callbackfn: (previousValue: R, currentValue: T, currentIndex: number, array: T[]) => R, initialValue?: R): T
+  }
+
+  export const delay$$ = setTimeout;
 
   /**
    *
@@ -127,14 +138,6 @@ export namespace Constant$ {
     return i < length ? MAP$$(arr, callbackfn, initialValue, i + 1, length) : initialValue
   }
 
-  /**
-   * 原生的for循环改为函数调用
-   * @param arr
-   * @param callbackfn
-   */
-  export const FOR_EACH = Function.call.bind(Array.prototype.forEach) as {
-    <T>(arr: T[], callbackfn: LoopCalbackFn<T, any>): void;
-  }
 
   /**
    *
