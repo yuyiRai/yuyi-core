@@ -108,4 +108,4 @@ declare global {
 }
 
 // @ts-ignore
-K$ = exports["Constant$"]
+export const K$ = Constant$
