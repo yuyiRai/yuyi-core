@@ -67,7 +67,7 @@ export default {
       rollup_plugin_terser.terser({
         sourcemap: true,
         output: {
-          preamble: "var " + staticVarName + ';',
+          preamble: "var " + staticVarName + '={};',
           // beautify: true,
           comments: false,
         },
