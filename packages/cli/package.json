@@ -1,13 +1,14 @@
 {
   "name": "@yuyi919/cli",
-  "version": "0.0.49",
+  "version": "0.0.50",
   "description": "yuyi919's test",
   "main": "src/index.ts",
   "types": "types/index.d.ts",
   "license": "MIT",
   "private": false,
   "scripts": {
-    "pub": "node ./scripts/exec.js pub -g",
+    "pub": "node ./scripts/exec.js pub -g -c ttypescript",
+    "h": "node ./scripts/exec.js -h",
     "dev": "node -r ./scripts/exec.js",
     "tsc": "ttsc --build",
     "clean": "rimraf src/**/*.js && rimraf src/**/*.map && rimraf src/**/*.d.ts"
