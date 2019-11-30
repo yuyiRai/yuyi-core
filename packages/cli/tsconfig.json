@@ -23,7 +23,7 @@
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "noUnusedLocals": true,
+    "noUnusedLocals": false,
     "skipDefaultLibCheck": true,
     "skipLibCheck": true,
     "allowUnreachableCode": true,

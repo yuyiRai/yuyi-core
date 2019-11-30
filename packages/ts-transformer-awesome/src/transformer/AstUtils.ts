@@ -1,12 +1,12 @@
-import * as ts from 'typescript';
+import ts from 'typescript';
 
-export namespace AstUtils {
+export namespace AstUtils$$ {
   /**
    * 创建简单变量行
    * @param name 名称
    * @param value 表达式
    */
-  export function createVariableStatement(name: string | ts.Identifier | ts.ObjectBindingPattern | ts.ArrayBindingPattern, value?: ts.Expression, isLet = false) {
+  export function createVariableStatement$$(name: string | ts.Identifier | ts.ObjectBindingPattern | ts.ArrayBindingPattern, value?: ts.Expression, isLet = false) {
     return ts.createVariableStatement([
       ts.createToken((!isLet ? ts.SyntaxKind.ConstKeyword : ts.SyntaxKind.LetKeyword) as any)
     ], [
@@ -18,8 +18,8 @@ export namespace AstUtils {
    * 创建是否为null的判断语句
    * @param sub
    */
-  export function createIsNotNil(sub: ts.Expression, strict: boolean = false) {
-    return createIsNot(sub, ts.createNull(), strict);
+  export function createIsNotNil$$(sub: ts.Expression, strict: boolean = false) {
+    return createIsNot$$(sub, ts.createNull(), strict);
   }
 
   /**
@@ -27,7 +27,7 @@ export namespace AstUtils {
    * @param sub
    * @param target 
    */
-  export function createIsNot(sub: ts.Expression, target: ts.Expression = ts.createIdentifier('undefined'), strict: boolean = true) {
+  export function createIsNot$$(sub: ts.Expression, target: ts.Expression = ts.createIdentifier('undefined'), strict: boolean = true) {
     const { ExclamationEqualsToken, ExclamationEqualsEqualsToken } = ts.SyntaxKind
     return ts.createBinary(
       sub,
@@ -41,7 +41,7 @@ export namespace AstUtils {
    * @param sub
    * @param target 
    */
-  export function createTypeof(sub: ts.Expression, target: ts.StringLiteral = ts.createStringLiteral('object')) {
+  export function createTypeof$$(sub: ts.Expression, target: ts.StringLiteral = ts.createStringLiteral('object')) {
     const { EqualsEqualsEqualsToken } = ts.SyntaxKind
     return ts.createBinary(
       ts.createTypeOf(sub),
@@ -55,7 +55,7 @@ export namespace AstUtils {
    * @param line - 闭包行
    * @param isCall - 是否立即调用
    */
-  export function createArrowCall(line: ts.Statement[], isCall = true) {
+  export function createArrowCall$$(line: ts.Statement[], isCall = true) {
     const func = ts.createParen(ts.createArrowFunction([], [], [], ts.createLiteralTypeNode(ts.createLiteral('any')), ts.createToken(ts.SyntaxKind.EqualsGreaterThanToken), ts.createBlock(line, true)));
     return isCall ? ts.createCall(func, [], []) : func;
   }
@@ -66,7 +66,7 @@ export namespace AstUtils {
    * @param whenTrue - 当为真
    * @param whenFalse - 当为false(默认值为undefined)
    */
-  export function createConditional(express: ts.Expression, whenTrue: ts.Expression, whenFalse?: ts.Expression) {
+  export function createConditional$$(express: ts.Expression, whenTrue: ts.Expression, whenFalse?: ts.Expression) {
     // tslint:disable-next-line: deprecation
     return ts.createConditional(
       express,
@@ -82,7 +82,7 @@ export namespace AstUtils {
    * @param input 
    * @param node 节点信息获取
    */
-  export function createAstFromString(input: string) {
+  export function createAstFromString$$(input: string) {
     // console.log(ts.createSourceFile('temp.ts', input, ts.ScriptTarget.ES5).getFullText())
     return ts.createSourceFile('', input, ts.ScriptTarget.ES5, true, ts.ScriptKind.TS).statements
   }
@@ -91,13 +91,13 @@ export namespace AstUtils {
    * @param input 
    * @param node 节点信息获取
    */
-  export function createAstExpressionFromString(input: string) {
+  export function createAstExpressionFromString$$(input: string) {
     // console.log(ts.createSourceFile('temp.ts', input, ts.ScriptTarget.ES5).getFullText())
     return (ts.createSourceFile('', input, ts.ScriptTarget.ES5, true, ts.ScriptKind.TS).statements[0] as ts.ExpressionStatement).expression;
   }
 
 
-  export function isSimpleDeclareOrLiteral(target: ts.Node) {
+  export function isSimpleDeclareOrLiteral$$(target: ts.Node) {
     return ts.isLiteralExpression(target) || ts.isIdentifier(target) || ts.isToken(target)
   }
 
@@ -106,18 +106,18 @@ export namespace AstUtils {
    * @param source 元素表达式集合
    * @param when 条件表达式
    */
-  export function createConditionalChainsFromExpression(
+  export function createConditionalChainsFromExpression$$(
     source: ts.Expression[],
-    when: ((tmpDeclare: ts.Identifier) => ts.Expression) = createIsNotNil,
+    when: ((tmpDeclare: ts.Identifier) => ts.Expression) = createIsNotNil$$,
     latestValue?: ts.Expression,
     resultTransformer: (expr: ts.Expression) => ts.Expression = expr => expr,
-    conditionalFunction = createConditional
+    conditionalFunction = createConditional$$
   ) {
     let sub = latestValue || source.pop() as ts.Expression
     while (source.length > 0) {
       const a = source.pop() as ts.Identifier;
       // console.log(ts.isLiteralExpression(a) || ts.isIdentifier(a), a.getFullText());
-      const prev: ts.Identifier = a && isSimpleDeclareOrLiteral(a) ? a : ts.createParen(a) as any
+      const prev: ts.Identifier = a && isSimpleDeclareOrLiteral$$(a) ? a : ts.createParen(a) as any
       sub = conditionalFunction(when(prev), resultTransformer(prev), ts.createParen(sub))
       // console.log(sub.getFullText());
     }
@@ -128,9 +128,9 @@ export namespace AstUtils {
    * @param source 元素表达式集合
    * @param when 条件表达式
    */
-  export function createWhileFromExpressions(
+  export function createWhileFromExpressions$$(
     source: ts.Expression[],
-    when: ((tmpDeclare: ts.Identifier | ts.Expression) => ts.Expression) = createIsNotNil,
+    when: ((tmpDeclare: ts.Identifier | ts.Expression) => ts.Expression) = createIsNotNil$$,
     latestValue: ts.Expression = source.pop() as ts.Expression,
     resultTransformer: (
       expr: ts.Expression
@@ -142,16 +142,16 @@ export namespace AstUtils {
     const tmpResultDeclare = createIdentifier('tempResult')
     const tmpLengthDeclare = createIdentifier('tempLength')
     const tmpIndexDeclare = createIdentifier('tempIndex')
-    const tmpResult = createVariableStatement(tmpResultDeclare)
-    const tmpArr = createVariableStatement(tmpArrDeclare, ts.createArrayLiteral(source))
-    const tmpLength = createVariableStatement(tmpLengthDeclare,
+    const tmpResult = createVariableStatement$$(tmpResultDeclare)
+    const tmpArr = createVariableStatement$$(tmpArrDeclare, ts.createArrayLiteral(source))
+    const tmpLength = createVariableStatement$$(tmpLengthDeclare,
       hasSpread 
       ? ts.createPropertyAccess(tmpArrDeclare, 'length')
       : ts.createNumericLiteral(
         source.length + ''
       )
     )
-    const tmpIndex = createVariableStatement(tmpIndexDeclare, ts.createNumericLiteral('0'))
+    const tmpIndex = createVariableStatement$$(tmpIndexDeclare, ts.createNumericLiteral('0'))
     const todo: ts.Statement[] = [
       ts.createIf(
         when(ts.createParen(ts.createBinary(
@@ -171,7 +171,7 @@ export namespace AstUtils {
         ts.createBinary(tmpIndexDeclare, ts.SyntaxKind.LessThanToken, tmpLengthDeclare),
         ts.createBlock(todo)
       ),
-      resultTransformer(createConditional(when(tmpResultDeclare), tmpResultDeclare, latestValue))
+      resultTransformer(createConditional$$(when(tmpResultDeclare), tmpResultDeclare, latestValue))
     ]
   }
   /**
@@ -179,9 +179,9 @@ export namespace AstUtils {
    * @param source 元素表达式集合
    * @param when 条件表达式
    */
-  export function createIfElseChainsFromExpression(
+  export function createIfElseChainsFromExpression$$(
     source: ts.Expression[],
-    when: ((tmpDeclare: ts.Identifier) => ts.Expression) = createIsNotNil,
+    when: ((tmpDeclare: ts.Identifier) => ts.Expression) = createIsNotNil$$,
     latestValue: ts.Expression = source.pop() as ts.Expression,
     resultTransformer: (expr: ts.Expression) => ts.Statement = ts.createExpressionStatement,
     ifelseFunction = ts.createIf
@@ -191,7 +191,7 @@ export namespace AstUtils {
     while (source.length > 0) {
       const a = source.pop() as ts.Identifier;
       // console.log(ts.isLiteralExpression(a) || ts.isIdentifier(a), a.getFullText());
-      const prev: ts.Identifier = a && isSimpleDeclareOrLiteral(a) ? a : ts.createParen(a) as any
+      const prev: ts.Identifier = a && isSimpleDeclareOrLiteral$$(a) ? a : ts.createParen(a) as any
       sub = ifelseFunction(
         when(prev),
         resultTransformer(prev),
@@ -203,9 +203,9 @@ export namespace AstUtils {
     return result
   }
 
-  export function createIfReturn(
+  export function createIfReturn$$(
     expression: ts.Expression,
-    when: ((tmpDeclare: ts.Expression) => ts.Expression) = createIsNotNil,
+    when: ((tmpDeclare: ts.Expression) => ts.Expression) = createIsNotNil$$,
     whenTrue: ((e: ts.Expression) => ts.Statement) = ts.createReturn
   ) {
     return ts.createIf(
@@ -216,7 +216,7 @@ export namespace AstUtils {
 
   // const simpleRegexExpression = /^((?!([+-/\\()]^%))\S)+$/
 
-  export function getUpperBlock(node: ts.Node) {
+  export function getUpperBlock$$(node: ts.Node) {
     let p = node.parent;
     while (p) {
       if (ts.isBlock(p) || ts.isModuleBlock(p)) {
@@ -227,7 +227,7 @@ export namespace AstUtils {
     return p as ts.Block
   }
 
-  export function getUpperObjectDeclare(node: ts.Node) {
+  export function getUpperObjectDeclare$$(node: ts.Node) {
     let p = node.parent;
     while (p) {
       if (ts.isObjectLiteralExpression(p)) {
@@ -242,7 +242,7 @@ export namespace AstUtils {
   const expectMap = new Map<ts.Node, any>()
 
 
-  export function updateObjectPropertyAssignment(
+  export function updateObjectPropertyAssignment$$(
     node: ts.VariableStatement,
     expect: (node: ts.PropertyAssignment) => ts.Expression | false
   ) {
@@ -274,7 +274,7 @@ export namespace AstUtils {
    * @param value 
    * @param expect 判断是否为需要的节点，不满足条件则向上搜寻
    */
-  export function expectParentStatement(source: ts.Node, value: any = ++flag, expect: (node: ts.Node) => node is ts.Statement = ts.isExpressionStatement) {
+  export function expectParentStatement$$(source: ts.Node, value: any = ++flag, expect: (node: ts.Node) => node is ts.Statement = ts.isExpressionStatement) {
     let node = source.parent;
     while (node) {
       if (expect(node)) {
@@ -297,7 +297,7 @@ export namespace AstUtils {
    * @param identifier 
    * @param expression 
    */
-  export function createSetVariableStatement(identifier: ts.Identifier, expression?: ts.Expression | ts.Identifier) {
+  export function createSetVariableStatement$$(identifier: ts.Identifier, expression?: ts.Expression | ts.Identifier) {
     return ts.createExpressionStatement(ts.createBinary(identifier, ts.SyntaxKind.EqualsToken, expression || ts.createIdentifier('undefined')))
   }
   /**
@@ -307,9 +307,9 @@ export namespace AstUtils {
    * @param whenTrue 加入解析式为true
    * @param leftReturn 
    */
-  export function createWhenToDoForEach(
+  export function createWhenToDoForEach$$(
     expressList: ts.NodeArray<ts.Expression>,
-    when: ((tmpDeclare: ts.Expression) => ts.Expression) = createIsNotNil,
+    when: ((tmpDeclare: ts.Expression) => ts.Expression) = createIsNotNil$$,
     whenTrue: ((e: ts.Expression) => ts.Statement) = ((e) => ts.createReturn(e))
   ): UpdateNodeResults {
     const block: ts.Statement[] = [];
@@ -321,12 +321,12 @@ export namespace AstUtils {
     return [
       tmpDeclare,
       [
-        createVariableStatement(tmpDeclare, ts.createIdentifier('undefined')),
-        ...createWhileFromExpressions(
+        createVariableStatement$$(tmpDeclare, ts.createIdentifier('undefined')),
+        ...createWhileFromExpressions$$(
           [...expressList],
           when,
           ts.createIdentifier('undefined'),
-          (expr) => createSetVariableStatement(tmpDeclare, expr),
+          (expr) => createSetVariableStatement$$(tmpDeclare, expr),
           name => ts.createIdentifier(`_${name}_${tmpFlag}`)
         )
       ]
@@ -341,19 +341,19 @@ export namespace AstUtils {
       const isLast = index === list.length - 1
       // console.log(text);
       // 如果是简单字面量or变量
-      const isSimpleDeclare = isSimpleDeclareOrLiteral(sub)
+      const isSimpleDeclare = isSimpleDeclareOrLiteral$$(sub)
       if (isSimpleDeclare) {
         simpleExpression.push(sub)
         if (simpleExpression.length > 0 && simpleExpression.length === list.length) // 全都是简单定义的话直接返回一个三元链
           return [
-            createConditionalChainsFromExpression(simpleExpression, when, ts.createIdentifier('undefined'))
+            createConditionalChainsFromExpression$$(simpleExpression, when, ts.createIdentifier('undefined'))
           ]
         else if (!isLast) { // 直到第一次进入块模式前跳过下面的步骤
           continue
         }
       }
        else if (simpleExpression.length > 0) {
-        sub = createConditionalChainsFromExpression(simpleExpression, when, sub)
+        sub = createConditionalChainsFromExpression$$(simpleExpression, when, sub)
         if (isLast) {
           simpleExpression.push(tmpDeclare)
         }
@@ -363,7 +363,7 @@ export namespace AstUtils {
         if (multipleExpressions.length > 0 && multipleExpressions.length === list.length) // 全都是简单定义的话直接返回一个三元链
           return [
             tmpDeclare,
-            createIfElseChainsFromExpression(multipleExpressions, when, ts.createIdentifier('undefined'))
+            createIfElseChainsFromExpression$$(multipleExpressions, when, ts.createIdentifier('undefined'))
           ]
         else if (!isLast) { // 直到第一次进入块模式前跳过下面的步骤
           continue
@@ -372,27 +372,27 @@ export namespace AstUtils {
 
       if (!isBlockDeclare) {
         // 初始化临时变量
-        block.push(createVariableStatement(tmpDeclare, sub));
+        block.push(createVariableStatement$$(tmpDeclare, sub));
       } else if (!isSimpleDeclare) {
         // 再度赋值
         block.push(
-          createSetVariableStatement(tmpDeclare, sub)
+          createSetVariableStatement$$(tmpDeclare, sub)
         );
       }
 
       if (isLast) {
         // 最后一项时直接用三元判断
         block.push(
-          createSetVariableStatement(
+          createSetVariableStatement$$(
             tmpDeclare,
-            createConditionalChainsFromExpression(
+            createConditionalChainsFromExpression$$(
               simpleExpression, when, ts.createIdentifier('undefined')
             )
           )
         );
       } else {
         block.push(
-          createIfReturn(tmpDeclare, when, whenTrue)
+          createIfReturn$$(tmpDeclare, when, whenTrue)
         );
       }
     }
@@ -406,16 +406,16 @@ export namespace AstUtils {
    * @param whenTrue 加入解析式为true
    * @param leftReturn 
    */
-  export function createWhenToReturnConditional(
+  export function createWhenToReturnConditional$$(
     expressList: ts.NodeArray<ts.Expression>,
-    when: ((tmpDeclare: ts.Expression) => ts.Expression) = createIsNotNil
+    when: ((tmpDeclare: ts.Expression) => ts.Expression) = createIsNotNil$$
   ) {
     let isSimple = true
     // const name = '_$tmp_' + flag++
     const tmpDeclare = ts.getGeneratedNameForNode(expressList[0] && expressList[0].parent || expressList[0]);
     const last = ts.createIdentifier('undefined')
     const batchList = expressList.map(expr => {
-      if (isSimpleDeclareOrLiteral(expr)) {
+      if (isSimpleDeclareOrLiteral$$(expr)) {
         return expr
       }
       isSimple = false
@@ -440,18 +440,18 @@ export namespace AstUtils {
       // )
     })
     if (isSimple) {
-      return [createConditionalChainsFromExpression(batchList, when, last)] as UpdateNodeResults
+      return [createConditionalChainsFromExpression$$(batchList, when, last)] as UpdateNodeResults
     } else {
       const block: ts.Statement[] = [];
-      const r = createConditionalChainsFromExpression(
+      const r = createConditionalChainsFromExpression$$(
         batchList,
         when,
         last,
-        expr => isSimpleDeclareOrLiteral(expr) ? expr : tmpDeclare as ts.Identifier
+        expr => isSimpleDeclareOrLiteral$$(expr) ? expr : tmpDeclare as ts.Identifier
       )
       if (tmpDeclare) {
         block.push(
-          createVariableStatement(tmpDeclare)
+          createVariableStatement$$(tmpDeclare)
           // ts.createExpressionStatement(
           //   createAstExpressionFromString(`&&`)
           // )

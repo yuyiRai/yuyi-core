@@ -8,7 +8,7 @@
 // import * as kind from 'ts-is-kind';
 import '../../env'
 import ts from 'typescript';
-import { AstUtils } from './AstUtils';
+import { AstUtils$$ } from './AstUtils';
 
 const FUNCTION_SYMBOL = 'FilterFunction';
 
@@ -32,7 +32,7 @@ function isNeedClear(node: ts.Node) {
   return node.getSourceFile() && config.needClear.includes(node.getText())
 }
 
-export default function transformer(program: ts.Program): ts.TransformerFactory<ts.Node> {
+export default function (program: ts.Program): ts.TransformerFactory<ts.Node> {
   return (context) => (file) => {
     config.needImport = false
     config.needClear = []
@@ -41,7 +41,7 @@ export default function transformer(program: ts.Program): ts.TransformerFactory<
     if (config.needImports.size > 0) {
       if (__DEV__)
         console.log(config.needImports)
-      AstUtils.createVariableStatement('')
+      AstUtils$$.createVariableStatement$$('')
     }
     return node;
   };
@@ -51,7 +51,7 @@ function visitNodeAndChildren(node: ts.Node, program: ts.Program, context: ts.Tr
   node: ts.Node,
   preLine: ts.Statement[],
   afterLine: ts.Statement[],
-  parentHooks: AstUtils.UpdateHook[]
+  parentHooks: AstUtils$$.UpdateHook[]
 } {
   const { next, needImport, preLine = [], afterLine = [], parentHooks = [] } = visitNode(node, program, context)
   if (needImport && !config.needImport) {
@@ -152,7 +152,7 @@ function visitNode(node: ts.Node, program: ts.Program, context: ts.Transformatio
   needImport?: boolean,
   preLine?: ts.Statement[],
   afterLine?: ts.Statement[],
-  parentHooks?: AstUtils.UpdateHook[]
+  parentHooks?: AstUtils$$.UpdateHook[]
 } {
 
   const typeChecker = program.getTypeChecker();
@@ -166,7 +166,7 @@ function visitNode(node: ts.Node, program: ts.Program, context: ts.Transformatio
       if (__DEV__)
         console.log('escapedText', escapedText, typed && typed.getFullText(), typed && ts.isFunctionOrConstructorTypeNode(typed));
 
-      const isExpected = AstUtils.expectParentStatement(node, undefined, function (node): node is ts.Statement {
+      const isExpected = AstUtils$$.expectParentStatement$$(node, undefined, function (node): node is ts.Statement {
         return ts.isExpressionStatement(node) || ts.isReturnStatement(node) || ts.isVariableStatement(node)
       });
       const [returnNode, preLine = [], afterLine = []] = expandExpression(node.arguments, typed && typed.getFullText() as keyof typeof typedUtils || undefined)
@@ -246,13 +246,13 @@ function _isValidType(node: any): node is ts.CallExpression {
 const typedUtils = {
   nil: undefined,
   number(node: ts.Expression) {
-    return AstUtils.createTypeof(node, ts.createStringLiteral('number'))
+    return AstUtils$$.createTypeof$$(node, ts.createStringLiteral('number'))
   },
   string(node: ts.Expression) {
-    return AstUtils.createTypeof(node, ts.createStringLiteral('string'))
+    return AstUtils$$.createTypeof$$(node, ts.createStringLiteral('string'))
   },
   function(node: ts.Expression) {
-    return AstUtils.createTypeof(node, ts.createStringLiteral('function'))
+    return AstUtils$$.createTypeof$$(node, ts.createStringLiteral('function'))
   }
 }
 /**
@@ -262,9 +262,9 @@ const typedUtils = {
 function expandExpression(
   argList: ts.NodeArray<ts.Expression>,
   type: keyof typeof typedUtils = 'nil'
-): AstUtils.UpdateNodeResults {
+): AstUtils$$.UpdateNodeResults {
   if (argList.length === 0) {
     return [ts.createIdentifier('undefined')]
   }
-  return AstUtils.createWhenToDoForEach(argList, typedUtils[type])
+  return AstUtils$$.createWhenToDoForEach$$(argList, typedUtils[type])
 }

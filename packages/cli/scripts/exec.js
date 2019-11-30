@@ -1,26 +1,8 @@
 #!/usr/bin/env node
 "use strict";
-var ts = require('ts-node');
 var path = require('path');
-var fs = require('fs-extra');
-var colors = require('colors')
-
-var configPath = path.resolve('tsconfig.json')
-var tsconfig = fs.pathExistsSync(configPath) ? configPath : path.join(__dirname, '../tsconfig.json')
-console.log(colors.cyan('loading tsconfig file: ') + colors.yellow(tsconfig))
-ts.register({
-  project: tsconfig,
-  typeCheck: false,
-  compiler: 'typescript',
-  transpileOnly: true,
-  compilerOptions: {
-    module: 'commonjs'
-  },
-  ignore: [
-    'node_modules/(?!@yuyi919/cli)'
-  ],
-  pretty: false
-});
+var install = require('./exec-base').install
+install('typescript')
 
 // console.log(process.cwd(), process.argv, process.argv[2])
 require(path.join(__dirname, './cli.ts'))

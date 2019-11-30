@@ -1,4 +1,4 @@
-import { isNumber, isNumberAuto, trackMerge } from '../../src'
+import { isNumber, isNum, trackMerge } from '../../src'
 import { merge } from 'lodash'
 // const suite = new Benchmark.Suite;
 
@@ -45,12 +45,12 @@ describe("isNumber Auto Test", () => {
 describe("isNumber Auto Test", () => {
   A.forEach((r, v) => {
     it("isNumber Strict" + JSON.stringify(v) + "=" + r, () => {
-      expect(isNumberAuto(v)).toBe(r);
+      expect(isNum(v)).toBe(r);
     })
   })
   B.forEach((r, v) => {
     it("isNumber" + JSON.stringify(v) + "=" + r, () => {
-      expect(isNumberAuto(v, true)).toBe(r);
+      expect(isNum(v, true)).toBe(r);
     })
   })
 })

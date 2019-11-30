@@ -62,12 +62,21 @@ execParser.addArgument('execFile', {
   metavar: '<file>',
   defaultValue: 'unknown'
 })
+execParser.addArgument(['-c', '--compiler'], {
+  action: 'store',
+  type: 'string',
+  metavar: '<module_name>',
+  defaultValue: 'typescript'
+})
 
 try {
   const [r, other] = args.parser.parseKnownArgs()
   // console.log(r, other)
 
   if (r.execFile) {
+    var install = require('./exec-base').install
+    console.error(r)
+    install(r.compiler)
     requireCwdFile(r.execFile)
   } else if (r.usePublish) {
     const pkg: Package = requireCwdFile(r.usePublish)

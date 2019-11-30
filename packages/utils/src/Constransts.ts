@@ -92,8 +92,69 @@ export namespace Constant$ {
   export var PARSE_INT = parseInt
 
 
+  /**
+   * 原生的reduce改为函数调用
+   * @param arr
+   * @param callbackfn
+   * @param initialValue
+   */
   export const REDUCE = Array.prototype.reduce.call.bind(Array.prototype.reduce) as {
     <T, R = T>(arr: T[], callbackfn: (previousValue: R, currentValue: T, currentIndex: number, array: T[]) => R, initialValue?: R): T
+  }
+
+
+  export type ForFuncCalbackFn<T, K extends TKey, R = void> = (currentValue: T, currentIndex: K, array: T[]) => R
+  export type LoopCalbackFn<T, R = void> = ForFuncCalbackFn<T, number, R>
+
+  /**
+   * 原生的map循环改为函数调用
+   * @param arr
+   * @param callbackfn
+   */
+  export const MAP = Function.call.bind(Array.prototype.map) as {
+    <T, R = T>(arr: T[], callbackfn: LoopCalbackFn<T, R>, initialValue?: any[]): R[]
+  }
+
+  /**
+   *
+   * @param arr
+   * @param callbackfn
+   */
+  export function MAP$$<T, R>(arr: T[], callbackfn: LoopCalbackFn<T, R>): R[]
+  export function MAP$$<T, R>(arr: T[], callbackfn: LoopCalbackFn<T, R>, initialValue = [], i: number = 0, length = arr.length - 1) {
+    initialValue[i] = callbackfn(arr[i], i, arr)
+    // @ts-ignore
+    return i < length ? MAP$$(arr, callbackfn, initialValue, i + 1, length) : initialValue
+  }
+
+  /**
+   * 原生的for循环改为函数调用
+   * @param arr
+   * @param callbackfn
+   */
+  export const FOR_EACH = Function.call.bind(Array.prototype.forEach) as {
+    <T>(arr: T[], callbackfn: LoopCalbackFn<T, any>): void;
+  }
+
+  /**
+   *
+   * @param arr
+   * @param callbackfn
+   */
+  export function FOR_EACH$$<T>(arr: T[], callbackfn: LoopCalbackFn<T, any>): true {
+    var tmp = { i: 0 }
+    var length = arr.length - 1
+    try {
+      return FOR_EACH_P$$(arr, callbackfn, tmp, length)
+    } catch (error) {
+      while (length - tmp.i++) callbackfn(arr[tmp.i], tmp.i, arr)
+      return true
+    }
+  }
+  export function FOR_EACH_P$$<T>(arr: T[], callbackfn: LoopCalbackFn<T, any>, tmp: { i: number }, length: number) {
+    callbackfn(arr[tmp.i], tmp.i, arr)
+    // @ts-ignore
+    return tmp.i++ < length ? FOR_EACH_P$$(arr, callbackfn, tmp, length) : true
   }
 }
 

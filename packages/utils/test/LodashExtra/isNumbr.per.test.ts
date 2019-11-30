@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 import * as Utils from '../../src'
-const { isNumber, isNumberAuto, BenchmarkUtils } = Utils
+const { isNumber, isNum, BenchmarkUtils } = Utils
 // @ts-ignore
 import { A, B } from './isNumbr.test'
 
@@ -20,27 +20,46 @@ import { A, B } from './isNumbr.test'
 //   console.log('Fastest is ' + JSON.stringify(r));
 //   console.log('Fastest is ' + JSON.stringify(r2));
 // })
-
+function forEach<T>(arr: T[], render: Function, i: number = 0, length = arr.length) {
+  render(arr[i], i, arr)
+  return i < length ? forEach(arr, render, i + 1, length) : true
+}
+const forEach2 = Function.call.bind(Array.prototype.forEach)
 test('group', async () => {
   const r = await BenchmarkUtils.paramDiff({
-    'isNumber(static) Auto Test': (A, B) => {
-      A.forEach((r, v) => {
-        isNumber(v);
-        isNumber(v, true);
+    'isNumber(Multiple) Test': (A, B) => {
+      // tslint:disable-next-line: one-variable-per-declaration
+      // var length = A.length, i = -1;
+      // while (i < length) {
+      //   const v = A[++i]
+      //   isNum(v);
+      //   isNum(v, true);
+      // }
+      // // tslint:disable-next-line: one-variable-per-declaration
+      // length = B.length, i = -1;
+      // while (i < length) {
+      //   const v = B[++i]
+      //   isNum(v);
+      //   isNum(v, true);
+      // }
+
+      forEach(A, (r, v) => {
+        isNum(r);
+        isNum(r, true);
       })
-      B.forEach((r, v) => {
-        isNumber(v);
-        isNumber(v, true);
+      forEach(B, (r, v) => {
+        isNum(r);
+        isNum(r, true);
       })
     },
-    'isNumber Auto Test': (A, B) => {
-      A.forEach((r, v) => {
-        isNumberAuto(v);
-        isNumberAuto(v, true);
+    'isNumber Test': (A, B) => {
+      forEach2(A, (r, v) => {
+        isNumber(r);
+        isNumber(r, true);
       })
-      B.forEach((r, v) => {
-        isNumberAuto(v);
-        isNumberAuto(v, true);
+      forEach2(B, (r, v) => {
+        isNumber(r);
+        isNumber(r, true);
       })
     },
   }, [A, B])
