@@ -67,7 +67,7 @@ export default {
       rollup_plugin_terser.terser({
         sourcemap: true,
         output: {
-          preamble: "var " + staticVarName + ';',
+          // preamble: "var " + staticVarName + ';',
           // beautify: true,
           comments: false,
         },
@@ -82,7 +82,7 @@ export default {
             // "@Object": staticVarName + ".OBJECT",
             // "@Object.defineProperty": staticVarName + ".OBJ_defineProperty$",
             "@Constant$": staticVarName,
-            "@K$": staticVarName,
+            // "@K$": staticVarName,
           }
         },
         mangle: {

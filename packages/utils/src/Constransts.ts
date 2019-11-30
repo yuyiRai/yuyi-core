@@ -103,9 +103,9 @@ declare global {
   }
   type TKey = string | number | symbol
   type IKeyValueMap<V = any, K extends TKey = TKey> = Record<K, V>
-  // @ts-ignore
   var K$: typeof Constant$;
 }
 
 // @ts-ignore
-export const K$ = Constant$
+// tslint:disable-next-line: no-eval
+// K$ = eval('Constant$')
