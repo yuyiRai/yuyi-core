@@ -5013,6 +5013,14 @@
   resolved "https://registry.yarnpkg.com/@xtuc/long/-/long-4.2.2.tgz#d291c6a4e97989b5c61d9acf396ae4fe133a718d"
   integrity sha512-NuHqBY1PB/D8xU6s/thBgOAiAP7HOYDQ32+BFZILJ8ivkUkAHQnWfn6WhL79Owj1qmUnoN/YPhktdIoucipkAQ==
 
+"@yuyi919/utils@^0.0.23":
+  version "0.0.59"
+
+"@yuyi919/utils@^0.0.51":
+  version "0.0.51"
+  resolved "https://registry.yarnpkg.com/@yuyi919/utils/-/utils-0.0.51.tgz#d149a1306c106632f9b22d91462953b4e7faa13d"
+  integrity sha512-/7y9fQGXC7a1l78I7Pi3gX6qkCwcGcPPEpr/VpM3/i67Qq8dajlG8aBrxf/qXewc1mR5HOp1BK574i418mklLw==
+
 "@zkochan/cmd-shim@^3.1.0":
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/@zkochan/cmd-shim/-/cmd-shim-3.1.0.tgz#2ab8ed81f5bb5452a85f25758eb9b8681982fd2e"

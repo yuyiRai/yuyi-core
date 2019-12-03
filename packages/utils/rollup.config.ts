@@ -9,6 +9,7 @@ import external from 'rollup-plugin-peer-deps-external'
 import rollup_plugin_terser from "rollup-plugin-terser";
 import wasm from '@yuyi/wasm-rollup'
 import path from 'path'
+// import { InputOptions, OutputOptions } from 'rollup'
 
 const isDevelopment = process.env.NODE_ENV === 'development'
 const isProduction = process.env.NODE_ENV === 'production'
@@ -16,7 +17,8 @@ const pkg = require('./package.json')
 let cache = {};
 const nameCache = {}
 const staticVarName = "K$"
-export default {
+const config// : InputOptions & { output: OutputOptions | OutputOptions[] }
+  = {
   input: {
     "index": 'lib/index.js',
     "NodeUtils": 'lib/NodeUtils'
@@ -30,10 +32,11 @@ export default {
   cache: isDevelopment ? cache : false,
   treeshake: isProduction,
   // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
-  external: ["benchmark", "argparse", "fs"],
+  external: ["argparse", "fs"],
   watch: {
-    include: 'lib/**',
+    include: ['lib/**'],
   },
+  // @ts-ignore
   plugins: [
     wasm({
       sync: [
@@ -75,6 +78,7 @@ export default {
         compress: {
           keep_infinity: true,
           pure_getters: true,
+          keep_classnames: /Benchmark/,
           passes: 10,
           global_defs: {
             "process.env.NODE_ENV": process.env.NODE_ENV || "production",
@@ -106,6 +110,4 @@ export default {
   ],
 }
 
-setTimeout(() => {
-  console.log(nameCache)
-}, 10000);
+export default config

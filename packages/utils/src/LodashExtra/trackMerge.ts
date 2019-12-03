@@ -1,8 +1,7 @@
-import { mergeWith, MergeWithCustomizer } from 'lodash'
-import { stubFunction } from './stub'
-import { isNumber } from './isNumber';
+import { isBoolean, isRegExp, isString, mergeWith, MergeWithCustomizer } from 'lodash';
 import { isFunction } from './isFunction';
-import { isString, isBoolean, isRegExp } from '.';
+import { isNumber } from './isNumber';
+import { stubFunction } from './stub';
 
 /**
  * 栈合并

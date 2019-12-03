@@ -1,8 +1,5 @@
 import { Constant$ } from "../Constransts";
 
-// import isNumberLodash from 'lodash/isNumber';
-
-// const native = global.isNaN
 export function isNaN(value: any) {
   return typeof value === 'number' && value !== value
 }

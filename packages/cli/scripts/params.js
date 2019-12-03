@@ -54,11 +54,13 @@ for (const p of [args.parser, execParser, commitParser, pubParser]) {
     metavar: '<module_name>',
     defaultValue: 'typescript'
   })
+  p.addArgument(['-d', '--debug'], {
+    action: 'storeTrue'
+  })
 }
 
 const [main, other] = args.parser.parseKnownArgs()
 
-console.log(main)
 exports.main = main
 exports.other = other
 

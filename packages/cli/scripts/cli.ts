@@ -4,44 +4,68 @@ import { Package } from 'normalize-package-data';
 import path from 'path';
 import publish from '../src/modules/publish';
 import { main } from './params';
+import { Register } from 'ts-node'
 // console.log(version, description)
 
+function join(str: string, ...arr: string[]) {
+  return arr.filter(i => i).join(str)
+}
+function formatter(str: string) {
+  str = str.replace(/\[(.*?)\]/ig, colors.underline(colors.yellow(`$1`)))
+  str = str.replace(/\`(.*?)\`/ig, colors.bgWhite(colors.black(`$1`)))
+  str = str.replace(/\((.*?)\)/ig, colors.hidden(colors.grey(`$1`)))
+  return colors.cyan(str)
+}
 
-export function requireCwdFile(pathStr: string) {
-  const filePath = pathStr && path.join(process.cwd(), pathStr)
+function logger(message: string, source: string = 'cli') {
+  console.log(join('',
+    source && colors.green(`[${source}]> `),
+    formatter(message)
+  ))
+}
+ 
+export function requireCwdFile(pathStr: string, action: 'require' | 'exec' | 'read config' = 'require') {
+  const filePath = pathStr && path.resolve(pathStr)
   if (filePath && fs.pathExistsSync(filePath)) {
-    console.log(colors.cyan('require file ' + filePath))
+    logger(action + `: [${filePath}]`)
     return require(filePath) || true
   } else {
     return null
   }
 }
 
-try {
-  const r = main
-  // console.log(r, other)
-  if (r.execFile) {
-    var install = require('./exec-base').install
-    // console.error(r)
-    install(r.compiler)
-    requireCwdFile(r.execFile)
-  } else if (r.usePublish) {
-    const pkg: Package = requireCwdFile(r.usePublish)
-    if (pkg) {
-      // console.log(pkg)
+export default (tsconfig: string, loader: Register) => {
+  try {
+    if (main.debug) {
+      logger('use `debug` mode (123)')
+      console.log(main)
+    }
+    logger(`loaded tsconfig: [${tsconfig}]`)
+    const r = main
+    // console.log(r, other)
+    if (r.execFile) {
+      // console.error(r)
+      return requireCwdFile(r.execFile, "exec")
+    } else if (r.usePublish) {
+      const pkg: Package = requireCwdFile(r.usePublish, "read config")
+      if (pkg) {
+        // console.log(pkg)
+        publish({
+          pub: true,
+          access: 'public',
+          after: r.isGlobalModule && `yarn global add ${pkg.name}@latest` || null
+        })
+      }
+    } else if ('push' in r) {
       publish({
-        pub: true,
-        access: 'public',
-        after: r.isGlobalModule && `yarn global add ${pkg.name}@latest` || null
+        git: true,
+        push: r.push
       })
     }
-  } else if ('push' in r) {
-    publish({
-      git: true,
-      push: r.push
-    })
+  } catch (error) {
+    console.error(error)
+    process.exit(0)
   }
-} catch (error) {
-  console.error(error)
-  process.exit(0)
+
+  return null
 }

@@ -1,50 +1,20 @@
 /**
  * @module TypeUtils
  */
-import {
-  assign, filter, isArray,
-  isArrayLike, isBoolean, isDate,
-  isEmpty, isFunction, isNil,
-  isNaN,
-  isObject,
-  isString, map, reduce, trim, values,
-  isNumber
-} from '../LodashExtra';
+import { Constant$ } from '../Constransts';
 import { EventEmitter } from '../EventEmitter';
-import { IKeyValueMap, IsBaseType, IsArray, IsObject, IsAny } from '../TsUtils';
+import { filter, isArray, isArrayLike, isBoolean, isDate, isEmpty, isEmptyValue, isFunction, isNaN, isNil, isNotEmptyValue, isNotNil, isNumber, isObject, isPlainObject, isString, map, values } from '../LodashExtra';
+import { IKeyValueMap, IsAny, IsArray, IsBaseType, IsClasses, IsObject, IsUnknown } from '../TsUtils';
 
 // Array.prototype.map = ()
-/**
- * 是否为空或异常值，不包括0
- * 空值: null/undefined/''
- * 异常值: NaN
- * 不包括空对象/空数组
- * @param value
- */
-export function isEmptyValue(value: any): value is (null | undefined | '') {
-  // console.log('isEmptyValue', value, (isString(value) && trim(value) === ''), isNil(value), isNaN(value))
-  return (isString(value) && trim(value) === '') || isNil(value) || isNaN(value);
-}
-
-export const isNotNil = (v: any) => !isNil(v)
-
-/**
- * 是否非空且非异常值，不包括0
- * 空值: null/undefined/''
- * 不包括空对象/空数组
- * @param value
- */
-export function isNotEmptyValue(value: any): value is (string | number | boolean | object | Function) {
-  return !isEmptyValue(value);
-}
 
 export function isBooleanOrNumber(value: any): value is (boolean | number) {
   return isBoolean(value) || isNumber(value);
 }
-export function isEmptyArray(value: any): value is boolean {
+export function isEmptyArray<T>(value: any): value is T[] {
   return isArray(value) && !value.length;
 }
-export function isNotEmptyArray(value: any): value is any[] {
+export function isNotEmptyArray<T>(value: any): value is T[] {
   return isArray(value) && !!value.length;
 }
 export function isNotEmptyArrayStrict(value: any): value is any[] {
@@ -56,17 +26,25 @@ export function isEmptyArrayStrict(value: any): value is any[] {
 export function isEmptyData(value: any): value is any[] {
   return !isBoolean(value) && !isNumber(value) && (isEmptyArrayStrict(value) || isEmpty(value));
 }
+/**
+ * 不为空的数据
+ * @param value 
+ */
 export function isNotEmptyData(value: any): boolean {
   return isBoolean(value) || isNumber(value) || !(isEmptyArrayStrict(value) || isEmpty(value));
 }
+
+export function paramShiftObjPairs<T>(func?: T): T {
+  return func;
+}
+
 export function isEmptyObject(value: any, checkValue: boolean = false): value is {} {
-  return isObject(value) && !isArray(value) && (checkValue ? filter(values(value), v => isNotEmptyData(v)).length === 0 : isEmpty(value));
+  return isPlainObject(value) && (
+    checkValue ? Constant$.FILTER(values(value), isNotEmptyData).length === 0 : isEmpty(value)
+  );
 }
 export function isNotEmptyObject(value: any): value is object {
-  return isObject(value) && !isArray(value) && !isEmpty(value);
-}
-export function isEventEmitter(emitter: any): emitter is EventEmitter {
-  return emitter instanceof EventEmitter;
+  return isPlainObject(value) && !isEmpty(value);
 }
 
 /**
@@ -95,7 +73,7 @@ export const typeUtils = {
   isString,
   isEmptyData,
   isNotEmptyData,
-  isEventEmitter,
+  isEventEmitter: EventEmitter.is,
   isNotEmptyString,
   isFunction,
   isNil,
@@ -116,23 +94,32 @@ export const typeUtils = {
   isNotEmptyObject
 };
 
-// export type AA = IsArray<any>
 
-export type FilterFunction<T = any> = <
-  ST extends (
-    IsBaseType<T, T, (
-      IsArray<T, any, (
-        IsObject<T, any, (
-          IsAny<T, any, T>
+// export type AA = IsArray<any>
+/**
+ * 过滤函数类型
+ */
+export type FilterFunction<Target> = <Expect extends (
+    IsBaseType<Target, Target, (
+      IsArray<Target, any, (
+        IsObject<Target, any, (
+          IsAny<Target, any, Target>
         )>
       )>
     )>
-  ) = any
-  >(...key: any[]) => (
-    IsBaseType<T, T, (
-      IsArray<T, Array<ST>, (
-        IsObject<T, IsObject<ST, ST, IKeyValueMap<ST>>, (
-          IsAny<ST, T, ST>
+  ) = any>(...key: any[]) => (
+    // 
+    IsArray<Target, Array<Expect>, (
+      IsBaseType<Target, IsUnknown<Expect, Target, Expect>, (
+        IsUnknown<Target, Expect, (
+          // 
+          IsObject<Target, (
+            IsClasses<Target, Target extends EventEmitter ? EventEmitter<Expect> : Target, (
+              IsBaseType<Expect, IKeyValueMap<Expect>, Expect>
+            )>
+          ), (
+            IsUnknown<Expect, Target, Expect>
+          )>
         )>
       )>
     )>
@@ -140,45 +127,85 @@ export type FilterFunction<T = any> = <
 
 
 
-export function todoFilter(handler: (v: any) => boolean): FilterFunction {
-  function Filter<T>(...values: any[]): T | undefined {
-    for (const v of values) {
-      if (handler(v)) {
-        return v;
-      }
+export function todoFilter<V>(handler: (v: any) => boolean, ...values: any[]): V {
+  // tslint:disable-next-line: one-variable-per-declaration
+  var i = 0, length = values.length, v: any;
+  while (i < length) {
+    if (handler(v = values[i++])) {
+      return v;
     }
-    return undefined;
-  };
-  return Filter
+  }
+  return undefined;
 }
 
-export interface ITypeFilterUtils {
+export type ITypeMetaFilters = {
+  isNumber: FilterFunction<number>;
+  isBoolean: FilterFunction<boolean>;
+  isString: FilterFunction<string>;
+  isNotEmptyString: FilterFunction<string>;
+  isArray: FilterFunction<Array<any>>;
+  isObject: FilterFunction<object>;
+  isNotEmptyArray: FilterFunction<Array<any>>;
+  isNotEmptyArrayStrict: FilterFunction<Array<any>>;
+  isFunction: FilterFunction<(...arg: any[]) => any>;
+  isEventEmitter: FilterFunction<EventEmitter>;
+  isEmptyObject: FilterFunction<Record<string, never>>;
+  isNotEmptyObject: FilterFunction<{}>;
+}
+export type ITypeOtherFilters = {
+  [K in Exclude<keyof typeof typeUtils, keyof ITypeMetaFilters>]: FilterFunction<any>
+}
+export type ITypeFilters = ITypeMetaFilters & ITypeOtherFilters
+
+// const t: IsBaseType<any, 'string', false> = null
+export interface ITypeFilterUtils extends ITypeMetaFilters {
   isNumberFilter: FilterFunction<number>;
   isBooleanFilter: FilterFunction<boolean>;
   isStringFilter: FilterFunction<string>;
   isNotEmptyStringFilter: FilterFunction<string>;
   isArrayFilter: FilterFunction<Array<any>>;
-  isObjectFilter: FilterFunction<object>;
+  isObjectFilter: FilterFunction<{}>;
   isNotEmptyArrayFilter: FilterFunction<Array<any>>;
-  isNotEmptyValueFilter: FilterFunction;
+  isNotEmptyValueFilter: FilterFunction<any>;
   isFunctionFilter: FilterFunction<(...arg: any[]) => any>
 }
 type Type<T> = T
 
-export interface ITypeUtils extends Type<typeof typeUtils>, ITypeFilterUtils { }
+export interface ITypeUtils extends Type<typeof typeUtils> {
+  filter: ITypeFilterUtils
+}
 
-/**
- * @external
- */
-export const typeFilterUtils: ITypeFilterUtils = reduce<IKeyValueMap<(v: any) => boolean>, any>(
-  typeUtils,
-  function (group, func: (v: any) => boolean, key) {
-    return assign(group, {
-      [key + "Filter"]: todoFilter(func)
+// console.log(typeUtils)
+var keyTmp: any;
+export const typeFilterUtils = Constant$.REDUCE<[string, (v: any) => boolean], ITypeFilterUtils & ITypeMetaFilters & ITypeOtherFilters>(
+  Constant$.ENTRIES(typeUtils),
+  function (target, keyAndValue) {
+    var execTmp: any = keyAndValue[1]
+    execTmp.filter = Constant$.STATIC_BIND(todoFilter, keyAndValue[1])
+    return Constant$.OBJ_ASSIGN(target, {
+      [keyTmp = keyAndValue[0]]: execTmp.filter,
+      [keyTmp + "Filter"]: execTmp.filter
     });
   },
-  {}
+  {} as any
 );
+
+export type MultipleExpector<Core = Type<typeof typeUtils>> = {
+  [K in keyof Core]: Core[K] & {
+    filter: K extends keyof ITypeFilters ? ITypeFilters[K] : FilterFunction<unknown>
+  };
+}
+
+export interface Expector<Core = Type<typeof typeUtils>> extends MultipleExpector {
+  filter: ITypeFilters;
+  pure: MultipleExpector<Core>;
+}
+
+export const expect$: Expector = Constant$.OBJ_FREEZE(Constant$.OBJ_ASSIGN({}, typeUtils as any, {
+  filter: typeFilterUtils,
+  pure: Constant$.OBJ_FREEZE(typeUtils)
+}))
+export { isNotEmptyValue, isEmptyValue }
 // typeFilterUtils.isObjectFilter<number>({}, [])
 // typeFilterUtils.isNumberFilter<number>({})
 // typeFilterUtils.isArrayFilter<number>({})

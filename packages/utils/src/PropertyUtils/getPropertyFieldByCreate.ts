@@ -2,9 +2,9 @@
  * @module PropertyUtils
  */
 
-import { includes, reduce, isObject, isString } from '@/LodashExtra';
+import { includes, reduce, isObject, isString } from '../LodashExtra';
 import { IKeyValueMap } from '../TsUtils/interface';
-import { isEmptyValue, isNotEmptyArray } from '@/TypeLib';
+import { isEmptyValue, isNotEmptyArray } from '../TypeLib';
 
 /**
  * 从对象中提取成员，不存在则新建一个成员（默认为一个空对象）

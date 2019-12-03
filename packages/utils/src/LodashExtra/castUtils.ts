@@ -2,10 +2,11 @@
  * @module LodashExtraUtils
  */
 
-import { castArray as castArrayLodash, cloneDeep, isFunction, toString } from 'lodash';
-import { isObject } from '.';
+import { castArray as castArrayLodash, cloneDeep, toString } from 'lodash';
 import { Constant$ } from '../Constransts';
-import { isNotEmptyObject, isNotEmptyValue, isNotNil, typeFilterUtils } from '../TypeLib';
+import { isFunction } from './isFunction';
+import { isNotEmptyValue, isNotNil } from './isNil';
+import { isObject } from './lodash';
 import { stubReturn } from './stub';
 // import '@yuyi919/env'
 
@@ -90,10 +91,11 @@ export function castString(value: any) {
  * @param allowEmpty 
  */
 export function castObjectArray(objOrArr: any[], allowEmpty = true): any[] {
-  return typeFilterUtils.isArrayFilter(
-    objOrArr,
-    (allowEmpty ? isObject : isNotEmptyObject)(objOrArr) && [objOrArr],
-  ) || []
+  return Constant$.IS_ARR(
+    objOrArr
+  ) ? objOrArr : (
+      (allowEmpty ? isObject(objOrArr) : Constant$.OBJ_KEYS(objOrArr).length) && [objOrArr] || []
+    )
 }
 
 // const oc = typeFilterUtils.isArrayFilter

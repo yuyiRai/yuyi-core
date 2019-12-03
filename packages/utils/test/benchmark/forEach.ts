@@ -1,7 +1,7 @@
 /**
  * @jest-environment node
  */
-import * as Utils from '../..'
+import * as Utils from '../../src'
 // @ts-ignore
 import { Constant$ } from '../../src/Constransts'
 // import { BenchmarkUtils } from '@yuyi919/utils'

@@ -2,14 +2,8 @@
  * @module LodashExtraUtils
  */
 /** @internal */
-import { isEqual as isEqualLodash } from 'lodash'
-import { typeFilterUtils } from '../TypeLib'
-const ia = typeFilterUtils.isNotEmptyValueFilter
-
-declare interface isEqual {
-  _: typeof isEqualLodash
-}
-isEqual._ = isEqualLodash
+import isEqualLodash from 'lodash/isEqual'
+import { isNotEmptyValue } from './isNil'
 
 /**
  * 深比较两个值是否相等
@@ -34,11 +28,18 @@ isEqual._ = isEqualLodash
  */
 export function isEqual(value: any, other: any, noStrict: boolean = false): boolean {
   if (noStrict) {
-    return ia(value) === ia(other) || isEqualLodash(ia(value), ia(other))
+    var value1 = isNotEmptyValue(value) ? value : undefined
+    var value2 = isNotEmptyValue(other) ? other : undefined
+    return value1 === value2 || isEqualLodash(value1, value2)
   } else {
     return isEqualLodash(value, other)
   }
 }
+// tslint:disable-next-line: class-name
+declare interface isEqual {
+  _: typeof isEqualLodash
+}
+isEqual._ = isEqualLodash
 
 /**
  * @remarks see:  {@link https://www.lodashjs.com/docs/latest#_isequalvalue-other}

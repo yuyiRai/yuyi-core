@@ -5,8 +5,8 @@ import { cloneDeep, isEqual, property, camelCase, set, isNil, isString } from '.
 import { action, extendObservable, observable } from 'mobx';
 import { autobind } from 'core-decorators';
 import { IKeyValueMap } from '../../TsUtils/interface';
-import { isNotEmptyString, isNotEmptyValue, isEmptyValue } from '@/TypeLib';
-import { getPropertyFieldByCreate, getExpressByStr } from '@/PropertyUtils';
+import { isNotEmptyString, isNotEmptyValue, isEmptyValue } from '../../TypeLib';
+import { getPropertyFieldByCreate, getExpressByStr } from '../../PropertyUtils';
 
 /**
  * 一个通用的实体类

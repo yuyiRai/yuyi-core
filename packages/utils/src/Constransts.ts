@@ -94,6 +94,12 @@ export namespace Constant$ {
   export var PARSE_INT = parseInt
 
 
+  export function BIND<T extends Function>(Func: T, thisArgs: any, ...args: any[]): T {
+    return FUNCTION.bind.call(Func, thisArgs, ...args)
+  }
+  export function STATIC_BIND<T extends Function>(Func: T, ...args: any[]): T {
+    return BIND(Func, null, ...args)
+  }
 
 
   export type ForFuncCalbackFn<T, K extends TKey, R = void> = (currentValue: T, currentIndex: K, array: T[]) => R
@@ -104,7 +110,7 @@ export namespace Constant$ {
    * @param arr
    * @param callbackfn
    */
-  export const MAP = CALLER.bind(ARRAY[KEY_PROTOTYPE].map) as {
+  export const MAP = BIND(CALLER, ARRAY[KEY_PROTOTYPE].map) as {
     <T, R = T>(arr: T[], callbackfn: LoopCalbackFn<T, R>, initialValue?: any[]): R[]
   }
   /**
@@ -112,7 +118,7 @@ export namespace Constant$ {
    * @param arr
    * @param callbackfn
    */
-  export const FOR_EACH = CALLER.bind(ARRAY[KEY_PROTOTYPE].forEach) as {
+  export const FOR_EACH = BIND(CALLER, ARRAY[KEY_PROTOTYPE].forEach) as {
     <T>(arr: T[], callbackfn: LoopCalbackFn<T, any>): void;
   }
 
@@ -121,7 +127,7 @@ export namespace Constant$ {
    * @param arr
    * @param callbackfn
    */
-  export const FILTER = CALLER.bind(ARRAY[KEY_PROTOTYPE].filter) as {
+  export const FILTER = BIND(CALLER, ARRAY[KEY_PROTOTYPE].filter) as {
     <T>(arr: T[], callbackfn: LoopCalbackFn<T, boolean>): T[];
   }
 
@@ -134,8 +140,12 @@ export namespace Constant$ {
    * @example
    * REDUCE([1, 2, 3, 4], (target: any, i: number) => ({ ...target, [i]: i }), {})
    */
-  export const REDUCE = CALLER.bind(ARRAY[KEY_PROTOTYPE].reduce) as {
-    <T, R = T>(arr: T[], callbackfn: (previousValue: R, currentValue: T, currentIndex: number, array: T[]) => R, initialValue?: R): T
+  export const REDUCE = BIND(CALLER, ARRAY[KEY_PROTOTYPE].reduce) as {
+    <T, R = T>(
+      arr: T[],
+      callbackfn: (previousValue: R, currentValue: T, currentIndex: number, array: T[]) => R,
+      initialValue?: R
+    ): R
   }
   /**
    * 原生的push改为函数调用
@@ -144,7 +154,7 @@ export namespace Constant$ {
    * @example
    * ARR_PUSH([1, 2, 3, 4], 5, 6, 7)
    */
-  export const ARR_PUSH = CALLER.bind(ARRAY[KEY_PROTOTYPE].push) as {
+  export const ARR_PUSH = BIND(CALLER, ARRAY[KEY_PROTOTYPE].push) as {
     <T, E = T>(arr: T[], ...elements: E[]): number
   }
 
@@ -180,6 +190,7 @@ export namespace Constant$ {
   }
   export function FOR_EACH_P$$<T>(arr: T[], callbackfn: LoopCalbackFn<T, any>, tmp: { i: number }, length: number) {
     callbackfn(arr[tmp.i], tmp.i, arr)
+    // console.trace('test')
     // @ts-ignore
     return tmp.i++ < length ? FOR_EACH_P$$(arr, callbackfn, tmp, length) : true
   }

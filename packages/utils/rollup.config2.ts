@@ -11,13 +11,8 @@ let cache = {};
 const nameCache = {}
 const staticVarName = "K$"
 export default {
-  input: 'dist/index.js',
-  output: [
-    // { dir: path.dirname(pkg.main), name: 'Utils', exports: 'named', format: 'es', sourcemap: true },
-    // { dir: path.dirname(pkg.main), format: 'es', exports: 'named', sourcemap: true },
-    // { dir: path.dirname(pkg.main), format: 'cjs', exports: 'named', sourcemap: true },
-    { dir: 'dist/umd', format: 'umd', exports: 'named', name: 'yuyiUtils', sourcemap: true },
-  ],
+  input: 'lib/index.js',
+  output: { file: 'dist/index.umd.js', format: 'umd', exports: 'named', name: 'yuyiUtils', sourcemap: true },
   cache: isDevelopment ? cache : false,
   treeshake: isProduction,
   // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')

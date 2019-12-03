@@ -2,11 +2,8 @@
  * @module LodashExtraUtils
  */
 
-import { IKeyValueMap } from '../TsUtils';
-import { reduce, List } from 'lodash';
+import { List } from 'lodash';
 import { Constant$ } from '../Constransts';
-
-export { reduce }
 
 export type ReduceMapObjectIterator<TSource = any, Result = TSource[keyof TSource], TResult = {
   [K in keyof TSource]?: Result;

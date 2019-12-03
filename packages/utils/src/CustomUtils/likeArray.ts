@@ -1,5 +1,5 @@
 import { find, isEqual } from '../LodashExtra';
-import { typeUtils } from '@/TypeLib';
+import { typeUtils } from '../TypeLib';
 
 /**
  * 判断两个数组是否相似

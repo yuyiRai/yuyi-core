@@ -2,10 +2,8 @@
  * @module LodashExtraUtils
  */
 
-import { reduce } from "lodash";
-import { isString } from ".";
-import { Constant$ } from "../Constransts";;
-import { typeFilterUtils } from "../TypeLib";
+import { isString } from "lodash";
+import { Constant$ } from "../Constransts";
 import { isFunction } from "./isFunction";
 
 /**
@@ -18,10 +16,12 @@ import { isFunction } from "./isFunction";
  * 更复杂的控制参照{@link https://www.lodashjs.com/docs/latest#_groupbycollection-iteratee_identity | Lodash.groupBy}
  */
 export function createGroupWith<T extends object = any>(list: T[], keyOrWith: string | ((item: T) => string)): IKeyValueMap<T[]> {
-  return reduce(typeFilterUtils.isArrayFilter(list, []), function (map, item) {
-    const mapKey = isString(keyOrWith) ? item[keyOrWith] : (isFunction(keyOrWith) ? keyOrWith(item) : "default")
-    map[mapKey] = typeFilterUtils.isArrayFilter(map[mapKey], [])
-    Constant$.ARR_PUSH(map[mapKey], item)
-    return map;
-  }, {})
+  if (list instanceof Constant$.ARRAY && list.length > 0) {
+    return Constant$.REDUCE(list, function (map, item) {
+      const mapKey = isString(keyOrWith) ? item[keyOrWith] : (isFunction(keyOrWith) ? keyOrWith(item) : "default")
+      Constant$.IS_ARR(map[mapKey]) ? Constant$.ARR_PUSH(map[mapKey], item) : (map[mapKey] = [item])
+      return map;
+    }, {})
+  }
+  return {}
 }

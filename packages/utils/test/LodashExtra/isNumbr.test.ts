@@ -3,8 +3,8 @@ import { merge } from 'lodash'
 // const suite = new Benchmark.Suite;
 
 test('tttt', () => {
-  expect(trackMerge({ a: [1, 2, 3] }, { a: [1, 2, 3] })).toEqual({
-    a: [1, 2, 3, 1, 2, 3]
+  expect(trackMerge({ a: [1, 2, 3] }, { a: [1, 2, 3, 5] })).toEqual({
+    a: [1, 2, 3, 1, 2, 3, 5]
   })
   expect(merge({ a: [1, 2, 3] }, { a: [1, 2, 3] })).toEqual({
     a: [1, 2, 3]

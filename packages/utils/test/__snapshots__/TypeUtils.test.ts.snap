@@ -1,0 +1,75 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TypeUtils test 测试 expect$.filters - isArray 1`] = `
+Array [
+  null,
+]
+`;
+
+exports[`TypeUtils test 测试 expect$.filters - isArrayLike 1`] = `
+Array [
+  null,
+]
+`;
+
+exports[`TypeUtils test 测试 expect$.filters - isBoolean 1`] = `undefined`;
+
+exports[`TypeUtils test 测试 expect$.filters - isBooleanOrNumber 1`] = `1`;
+
+exports[`TypeUtils test 测试 expect$.filters - isDate 1`] = `undefined`;
+
+exports[`TypeUtils test 测试 expect$.filters - isEmptyArray 1`] = `undefined`;
+
+exports[`TypeUtils test 测试 expect$.filters - isEmptyArrayStrict 1`] = `
+Array [
+  null,
+]
+`;
+
+exports[`TypeUtils test 测试 expect$.filters - isEmptyData 1`] = `NaN`;
+
+exports[`TypeUtils test 测试 expect$.filters - isEmptyObject 1`] = `Object {}`;
+
+exports[`TypeUtils test 测试 expect$.filters - isEmptyValue 1`] = `NaN`;
+
+exports[`TypeUtils test 测试 expect$.filters - isEventEmitter 1`] = `undefined`;
+
+exports[`TypeUtils test 测试 expect$.filters - isFunction 1`] = `undefined`;
+
+exports[`TypeUtils test 测试 expect$.filters - isNaN 1`] = `NaN`;
+
+exports[`TypeUtils test 测试 expect$.filters - isNil 1`] = `null`;
+
+exports[`TypeUtils test 测试 expect$.filters - isNilAll 1`] = `null`;
+
+exports[`TypeUtils test 测试 expect$.filters - isNotEmptyArray 1`] = `
+Array [
+  null,
+]
+`;
+
+exports[`TypeUtils test 测试 expect$.filters - isNotEmptyArrayStrict 1`] = `
+Array [
+  1,
+]
+`;
+
+exports[`TypeUtils test 测试 expect$.filters - isNotEmptyData 1`] = `1`;
+
+exports[`TypeUtils test 测试 expect$.filters - isNotEmptyObject 1`] = `undefined`;
+
+exports[`TypeUtils test 测试 expect$.filters - isNotEmptyString 1`] = `"1,2,3"`;
+
+exports[`TypeUtils test 测试 expect$.filters - isNotEmptyValue 1`] = `1`;
+
+exports[`TypeUtils test 测试 expect$.filters - isNotFunction 1`] = `NaN`;
+
+exports[`TypeUtils test 测试 expect$.filters - isNotNaN 1`] = `null`;
+
+exports[`TypeUtils test 测试 expect$.filters - isNotNil 1`] = `NaN`;
+
+exports[`TypeUtils test 测试 expect$.filters - isNumber 1`] = `1`;
+
+exports[`TypeUtils test 测试 expect$.filters - isObject 1`] = `Object {}`;
+
+exports[`TypeUtils test 测试 expect$.filters - isString 1`] = `"1,2,3"`;

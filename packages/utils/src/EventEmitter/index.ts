@@ -121,8 +121,12 @@ export class EventEmitter<EventType = any> extends Subject<EventType> {
       })
     })
   }
+  static create() {
+    return new EventEmitter()
+  }
+  static is(target: any): target is EventEmitter {
+    return target instanceof EventEmitter
+  }
 }
 
-export function getEventEmitter() {
-  return new EventEmitter()
-}
+export const getEventEmitter = EventEmitter.create

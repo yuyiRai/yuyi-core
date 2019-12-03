@@ -2,7 +2,7 @@
  * @module CustomUtils
  */
 import { CommonDto } from "./CommonDto";
-import { isObject } from "@/LodashExtra";
+import { isObject } from "../../LodashExtra";
 
 /**
  * 

@@ -7,11 +7,66 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "启动程序",
-      "program": "${workspaceFolder}\\dev",
+      "name": "Current TS File",
+      "program": "C:\\Users\\yuyi9\\AppData\\Local\\Yarn\\Data\\global\\node_modules\\@yuyi919\\cli\\scripts\\exec.js",
+      "autoAttachChildProcesses": true,
+      "outFiles": ["C:\\Users\\yuyi9\\AppData\\Local\\Yarn\\Data\\global\\node_modules\\"],
+      "console": "integratedTerminal",
+      "protocol": "inspector",
+      "outputCapture": "console",
+      "internalConsoleOptions": "neverOpen",
+      "args": [
+        "exec",
+        "${relativeFile}",
+        "-d",
+      ],
+      "sourceMapPathOverrides": {
+        "webpack:///./~/*": "${workspaceRoot}/node_modules/*",
+        "webpack:///./*": "${workspaceRoot}/*",
+        "webpack:///*": "*"
+      },
+      "cwd": "${workspaceFolder}",
+      "sourceMaps": true
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Current TS File(ttypescipt)",
+      "program": "C:\\Users\\yuyi9\\AppData\\Local\\Yarn\\Data\\global\\node_modules\\@yuyi919\\cli\\scripts\\exec.js",
+      "autoAttachChildProcesses": true,
       "outFiles": [
-        "${workspaceFolder}/**/*.js"
-      ]
+        "C:\\Users\\yuyi9\\AppData\\Local\\Yarn\\Data\\global\\node_modules\\"
+      ],
+      "console": "integratedTerminal",
+      "protocol": "inspector",
+      "outputCapture": "console",
+      "internalConsoleOptions": "neverOpen",
+      "args": [
+        "exec",
+        "${relativeFile}",
+        "-d",
+        "-c=ttypescript"
+      ],
+      "sourceMapPathOverrides": {
+        "webpack:///./~/*": "${workspaceRoot}/node_modules/*",
+        "webpack:///./*": "${workspaceRoot}/*",
+        "webpack:///*": "*"
+      },
+      "cwd": "${workspaceFolder}",
+      "sourceMaps": true
+    },
+    {
+      "name": "TS To JS File",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "tsc",
+      "runtimeArgs": [
+        "--target es5 --module commonjs --noEmit false --outDir ${workspaceRoot}",
+        "${relativeFile}"
+      ],
+      "cwd": "${workspaceRoot}",
+      "protocol": "inspector",
+      "sourceMaps": true
     }
   ]
 }
