@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/cli",
-  "version": "0.0.51",
+  "version": "0.0.52",
   "description": "yuyi919's test",
   "main": "src/index.ts",
   "types": "types/index.d.ts",

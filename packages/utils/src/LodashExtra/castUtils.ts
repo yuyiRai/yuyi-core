@@ -2,8 +2,11 @@
  * @module LodashExtraUtils
  */
 
-import { castArray as castArrayLodash, cloneDeep, isFunction, toString, isString } from 'lodash';
-import { typeUtils, typeFilterUtils } from '../TypeLib';
+import { castArray as castArrayLodash, cloneDeep, isFunction, toString } from 'lodash';
+import { isObject } from '.';
+import { Constant$ } from '../Constransts';
+import { isNotEmptyObject, isNotEmptyValue, isNotNil, typeFilterUtils } from '../TypeLib';
+import { stubReturn } from './stub';
 // import '@yuyi919/env'
 
 
@@ -14,27 +17,25 @@ import { typeUtils, typeFilterUtils } from '../TypeLib';
  * @default
  * @returns 由输入值转化而来的数组
  * @example
- * 允许为nil时
- * ```
+ * * 允许为nil时
  * castArray(null)
  * // => [null]
  * 
  * castArray([undefined, null])
  * // => [undefined, null]
- * ```
  * @remarks 注意，如果不允许空值（allowEmpty为false），即便输入值本身为数组也会进行过滤
  * @example
- * 不允许为nil时
- * ```
+ * * 不允许为nil时
  * castArray(null, false)
  * // => []
  * 
  * castArray([undefined, null], false)
  * // => []
- * ```
  */
-export function castArray<T = any>(value: T | T[], allowEmpty = true): T[] {
-  return allowEmpty ? castArrayLodash(value) : (typeUtils.isNotEmptyValue(value) ? castArrayLodash(value) : []);
+export function castArray<T = any>(value: T | T[], allowEmpty: boolean | 'strict' = true): T[] {
+  return allowEmpty === true
+    ? castArrayLodash(value)
+    : Constant$.FILTER(castArrayLodash(value), allowEmpty === Constant$.KEY_STRICT ? isNotEmptyValue : isNotNil);
 }
 
 export type NotFunction = string | symbol | object | number | boolean
@@ -45,15 +46,11 @@ export type NotFunction = string | symbol | object | number | boolean
  * @param computedArgs - 计算用参数
  * @returns computedFunc(...computedArgs) -> 计算结果
  * @example
- * ```
  * castComputed((a, b, c) => a + b + c, 1, 2, 3);
  * // => 6
- * ```
  * @example
- * ```
  * castComputed(a => a);
  * // => undefined
- * ```
  */
 export function castComputed<T, Args extends any[]>(computedFunc: Type.Function<Args, T>, ...computedArgs: Args): T;
 /**
@@ -62,33 +59,29 @@ export function castComputed<T, Args extends any[]>(computedFunc: Type.Function<
  * @param args - 可以传入参数不过没用
  * @returns 原值返回
  * @example
- * ```
  * castComputed(1, 2, 3);
  * // => 1 
- * ```
  */
-export function castComputed<T extends NotFunction>(nativeValue: T): T;
+export function castComputed<T extends NotFunction>(nativeValue: T, ...args: any[]): T;
 export function castComputed<T, Args extends any[]>(functionOrValue: Type.Function<Args, T> | T, ...computedArgs: Args): T {
   return isFunction(functionOrValue) ? (functionOrValue as Type.Function<Args>)(...computedArgs) : functionOrValue
 }
 /**
- * 将输入值转换为function
- * @param withFunction - 输入值
- * @param deepClone - `default: false`对于对象，是否返回深拷贝
+ * 将参数转换为function
+ * @param withFunction - 参数
+ * @param raw - `default: false`是否返回深拷贝的值而非引用值（通常为对象）
  * @returns 
- * 输入值类型为`function`时直接返回输入值<P/>
- * 其他情况返回一个`function`，这个`function`会返回你的输入值
- * @remarks `deepClone`为`true`时，返回的对象会解除和原对象的引用
+ * 参数类型为`function`时直接返回参数<P/>
+ * 其他情况返回一个`function`，这个`function`会返回你的参数
+ * @remarks `raw`为`true`时，返回的对象会进行深拷贝（完全解除和原对象的引用）
  */
-export function castFunction<T = any>(withFunction?: T, deepClone = false): Type.Function<any[], T> {
-  if (deepClone) {
-    withFunction = cloneDeep(withFunction)
-  }
-  return isFunction(withFunction) ? withFunction : function () { return withFunction; };
+export function castFunction<T = any>(withFunction?: T, raw = false): Type.Function<any[], T> {
+  raw && (withFunction = cloneDeep(withFunction))
+  return isFunction(withFunction) ? withFunction : stubReturn.bind(null, withFunction);
 }
 
 export function castString(value: any) {
-  return isString(value) ? value : toString(value)
+  return typeof value === Constant$.KEY_STR ? value : toString(value)
 }
 
 /**
@@ -99,13 +92,11 @@ export function castString(value: any) {
 export function castObjectArray(objOrArr: any[], allowEmpty = true): any[] {
   return typeFilterUtils.isArrayFilter(
     objOrArr,
-    allowEmpty
-      ? typeUtils.isObject(objOrArr) && [objOrArr]
-      : typeUtils.isNotEmptyObject(objOrArr) && [objOrArr],
+    (allowEmpty ? isObject : isNotEmptyObject)(objOrArr) && [objOrArr],
   ) || []
 }
 
-const oc = typeFilterUtils.isArrayFilter
+// const oc = typeFilterUtils.isArrayFilter
 
-export const test = oc([] instanceof Function ? [] : 1242, [], Math.min(10, 3), 21)
-export const test2 = oc([] instanceof Function ? [] : 12424)
+// const test = oc([] instanceof Function ? [] : 1242, [], Math.min(10, 3), 21)
+// const test2 = oc([] instanceof Function ? [] : 12424)

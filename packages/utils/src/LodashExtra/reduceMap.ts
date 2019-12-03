@@ -4,6 +4,7 @@
 
 import { IKeyValueMap } from '../TsUtils';
 import { reduce, List } from 'lodash';
+import { Constant$ } from '../Constransts';
 
 export { reduce }
 
@@ -21,7 +22,11 @@ export type ReduceMapObjectIterator<TSource = any, Result = TSource[keyof TSourc
  */
 export function reduceMap<T, Result extends IKeyValueMap, TResult = {
   [K in keyof T]?: Result;
-}>(collection: List<T> | T[] | null | undefined, callback: ReduceMapObjectIterator<List<T> | T[] | null | undefined, Result, TResult>, accumulator?: TResult): TResult;
+}>(
+  collection: List<T> | T[] | null | undefined,
+  callback: ReduceMapObjectIterator<List<T> | T[] | null | undefined, Result, TResult>,
+  accumulator?: TResult
+): TResult;
 
 /**
  * @remarks see:  _.reduce
@@ -30,5 +35,5 @@ export function reduceMap<T extends IKeyValueMap, Result = any, TResult = {
   [K in keyof T]?: Result;
 }>(collection: T | null | undefined, callback: ReduceMapObjectIterator<T, Result, TResult>, accumulator?: TResult): TResult;
 export function reduceMap(a: any, b: any, c?: any): any {
-  return reduce(a, (obj, v, key, list) => ({ ...obj, ...b(v, key, list, obj) }), c || {});
+  return Constant$.REDUCE(a, (obj, v, key, list) => Constant$.OBJ_ASSIGN(obj, b(v, key, list, obj)), c || {});
 }

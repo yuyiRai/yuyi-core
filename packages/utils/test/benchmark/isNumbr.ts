@@ -4,7 +4,7 @@
 import * as Utils from '../../src'
 const { isNumber, isNum, BenchmarkUtils } = Utils
 // @ts-ignore
-import { A, B } from './isNumbr.test'
+import { A, B } from '../LodashExtra/isNumbr.test'
 
 // test('one', async () => {
 //   const r = await BenchmarkUtils.paramDiff({

@@ -1,4 +1,4 @@
-import * as OptionsUtils from "../src";
+import * as OptionsUtils from '../src/OptionsUtils'
 
 const optionsList = [
   { label: 'A', value: 'a' },
@@ -11,12 +11,33 @@ const optionsList = [
 /**
  * Dummy test
  */
-describe("OptionsUtils test", () => {
-  it("works if getOptionsByLabel is Function", () => {
+describe('OptionsUtils test', () => {
+  it('works if getOptionsByLabel is Function', () => {
     expect(OptionsUtils.getOptionsByLabel).toBeInstanceOf(Function)
   })
+  it('works if getOptionsByLabel is Function', () => {
+    expect(OptionsUtils.convertValueOption([1, 2, 3, 4, 5])).toMatchInlineSnapshot(`
+      Array [
+        Object {
+          "value": "1",
+        },
+        Object {
+          "value": "2",
+        },
+        Object {
+          "value": "3",
+        },
+        Object {
+          "value": "4",
+        },
+        Object {
+          "value": "5",
+        },
+      ]
+    `)
+  })
 
-  it("OptionsUtils getOptionsByLabel", () => {
+  it('OptionsUtils getOptionsByLabel', () => {
     const findList = OptionsUtils.getOptionsByLabel(optionsList, 'A')
     const findOne = OptionsUtils.getOptionsByLabel(optionsList, 'A', true)
     expect(findList).toBeInstanceOf(Array)

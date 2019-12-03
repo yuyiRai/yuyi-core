@@ -44,8 +44,6 @@ export function isNum2(value: any, allowNaN?: true): value is number {
 function _isNum(value: any): value is number {
   return typeof value === KEY_NUM;
 }
-function isNumStrict(value: any): value is number {
+export function isNumStrict(value: any): value is number {
   return typeof value === KEY_NUM && value === value;
 }
-
-export { isNumStrict }

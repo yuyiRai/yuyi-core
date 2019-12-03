@@ -3,6 +3,7 @@ import { IsTrue, IKeyValueMap } from '../TsUtils';
 import { ArrayIterator, castArray, escapeRegExp, filter, find, isArray, isEqual, isFunction, isNil, isRegExp, join, map, some } from '../LodashExtra';
 import { isNotEmptyArray, isNotEmptyArrayStrict, isNotEmptyString, isNotEmptyValue, typeFilterUtils } from '../TypeLib';
 import { SearchKey, KeywordMatcher, KeyMatcherFunc, Option, OptionSearcher, RemoteSearcher } from './interface'
+import { Constant$ } from '../Constransts';
 
 export { SearchKey, KeywordMatcher as keyMatcher, KeyMatcherFunc, Option, OptionSearcher, RemoteSearcher }
 
@@ -294,7 +295,10 @@ export function getCodeListByKey(codeType: Option[] | OptionSearcher, optionFact
  * @param valueList 
  * @param useLabel 是否提供label，是则label同value
  */
-export function convertValueOption(valueList: string[], useLabel: boolean = false): Option[] {
-  return map(valueList, value => Object.assign({ value }, useLabel ? { label: value } : {}))
+export function convertValueOption(valueList: (string | number)[], useLabel?: boolean): Option[] {
+  return map(valueList, function (value) {
+    value = value + ''
+    return Constant$.OBJ_ASSIGN({ [Constant$.KEY_VAL]: value }, useLabel ? { label: value } : {})
+  })
 }
 // }

@@ -14,12 +14,14 @@ export namespace Constant$ {
     E = 'enumerable'
   };
   export var KEY_PREFIX_INJECT: '__$$_' = '__$$_'
+  export var KEY_STRICT: 'strict' = 'strict'
   export var KEY_CONSTRUCTOR: 'constructor' = 'constructor';
   export var KEY_PROPERTY: 'property' = 'property';
   export var KEY_PROTOTYPE: 'prototype' = 'prototype'
   export var KEY_NUM: 'number' = 'number';
   export var KEY_STR: 'string' = 'string';
   export var KEY_BOOL: 'boolean' = 'boolean';
+  export var KEY_FUNC: 'function' = 'function';
   export var KEY_OBJ: 'object' = 'object';
   export var KEY_VAL: 'value' = DefPropDec$.V;
   export var TRUE: true = true;
@@ -29,11 +31,11 @@ export namespace Constant$ {
   export var ARRAY = Array;
   export var IS_ARR = ARRAY.isArray;
   export var FUNCTION = Function;
+  export var CALLER = FUNCTION.call
   export var Num = Number;
   // tslint:disable-next-line: variable-name
-  export var IS_Num = Num.isFinite;
-  export var IS_NAN = Num.isNaN;
   export var OBJECT = Object;
+  export var EMPTY_OBJECT = OBJECT.seal(OBJECT.create(null))
 	/**
 	 * ```ts
 	 * Object.keys
@@ -45,7 +47,7 @@ export namespace Constant$ {
 	 * Object.freeze
 	 * ``` 
 	 * */
-  export var OBJ_FREESE = OBJECT.freeze;
+  export var OBJ_FREEZE = OBJECT.freeze;
 	/**
 	 * ```ts
 	 * Object.assign
@@ -102,7 +104,7 @@ export namespace Constant$ {
    * @param arr
    * @param callbackfn
    */
-  export const MAP = Function.call.bind(Array.prototype.map) as {
+  export const MAP = CALLER.bind(ARRAY[KEY_PROTOTYPE].map) as {
     <T, R = T>(arr: T[], callbackfn: LoopCalbackFn<T, R>, initialValue?: any[]): R[]
   }
   /**
@@ -110,18 +112,40 @@ export namespace Constant$ {
    * @param arr
    * @param callbackfn
    */
-  export const FOR_EACH = Function.call.bind(Array.prototype.forEach) as {
+  export const FOR_EACH = CALLER.bind(ARRAY[KEY_PROTOTYPE].forEach) as {
     <T>(arr: T[], callbackfn: LoopCalbackFn<T, any>): void;
   }
+
+  /**
+   * 原生的for循环改为函数调用
+   * @param arr
+   * @param callbackfn
+   */
+  export const FILTER = CALLER.bind(ARRAY[KEY_PROTOTYPE].filter) as {
+    <T>(arr: T[], callbackfn: LoopCalbackFn<T, boolean>): T[];
+  }
+
 
   /**
    * 原生的reduce改为函数调用
    * @param arr
    * @param callbackfn
    * @param initialValue
+   * @example
+   * REDUCE([1, 2, 3, 4], (target: any, i: number) => ({ ...target, [i]: i }), {})
    */
-  export const REDUCE = Array.prototype.reduce.call.bind(Array.prototype.reduce) as {
+  export const REDUCE = CALLER.bind(ARRAY[KEY_PROTOTYPE].reduce) as {
     <T, R = T>(arr: T[], callbackfn: (previousValue: R, currentValue: T, currentIndex: number, array: T[]) => R, initialValue?: R): T
+  }
+  /**
+   * 原生的push改为函数调用
+   * @param arr 目标数组
+   * @param elements 新元素
+   * @example
+   * ARR_PUSH([1, 2, 3, 4], 5, 6, 7)
+   */
+  export const ARR_PUSH = CALLER.bind(ARRAY[KEY_PROTOTYPE].push) as {
+    <T, E = T>(arr: T[], ...elements: E[]): number
   }
 
   export const delay$$ = setTimeout;

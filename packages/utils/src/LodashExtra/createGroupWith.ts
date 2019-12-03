@@ -3,8 +3,10 @@
  */
 
 import { reduce } from "lodash";
-import { IKeyValueMap } from "../TsUtils/interface";
-import { typeFilterUtils, typeUtils } from "../TypeLib";
+import { isString } from ".";
+import { Constant$ } from "../Constransts";;
+import { typeFilterUtils } from "../TypeLib";
+import { isFunction } from "./isFunction";
 
 /**
  * 根据条件将一个数组拆分为多个数组
@@ -17,9 +19,9 @@ import { typeFilterUtils, typeUtils } from "../TypeLib";
  */
 export function createGroupWith<T extends object = any>(list: T[], keyOrWith: string | ((item: T) => string)): IKeyValueMap<T[]> {
   return reduce(typeFilterUtils.isArrayFilter(list, []), function (map, item) {
-    const mapKey = typeUtils.isString(keyOrWith) ? item[keyOrWith] : (typeUtils.isFunction(keyOrWith) ? keyOrWith(item) : "default")
+    const mapKey = isString(keyOrWith) ? item[keyOrWith] : (isFunction(keyOrWith) ? keyOrWith(item) : "default")
     map[mapKey] = typeFilterUtils.isArrayFilter(map[mapKey], [])
-    map[mapKey].push(item)
+    Constant$.ARR_PUSH(map[mapKey], item)
     return map;
   }, {})
 }

@@ -26,6 +26,8 @@ export function isEmptyValue(value: any): value is (null | undefined | '') {
   return (isString(value) && trim(value) === '') || isNil(value) || isNaN(value);
 }
 
+export const isNotNil = (v: any) => !isNil(v)
+
 /**
  * 是否非空且非异常值，不包括0
  * 空值: null/undefined/''
@@ -40,10 +42,10 @@ export function isBooleanOrNumber(value: any): value is (boolean | number) {
   return isBoolean(value) || isNumber(value);
 }
 export function isEmptyArray(value: any): value is boolean {
-  return isArray(value) && isEmpty(value);
+  return isArray(value) && !value.length;
 }
 export function isNotEmptyArray(value: any): value is any[] {
-  return isArray(value) && !isEmpty(value);
+  return isArray(value) && !!value.length;
 }
 export function isNotEmptyArrayStrict(value: any): value is any[] {
   return isArray(value) && filter(value, i => isNotEmptyValue(i)).length > 0;
@@ -97,6 +99,7 @@ export const typeUtils = {
   isNotEmptyString,
   isFunction,
   isNil,
+  isNotNil,
   isDate,
   isNaN,
   isNotFunction,
