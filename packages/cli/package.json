@@ -1,13 +1,13 @@
 {
   "name": "@yuyi919/cli",
-  "version": "0.0.53",
+  "version": "0.0.54",
   "description": "yuyi919's test",
   "main": "src/index.ts",
   "types": "types/index.d.ts",
   "license": "MIT",
   "private": false,
   "scripts": {
-    "pub": "node ./scripts/exec.js pub -g -c ttypescript",
+    "pub": "node ./scripts/exec.js pub -g -c ttypescript -d",
     "h": "node ./scripts/exec.js -h",
     "dev": "node -r ./scripts/exec.js",
     "tsc": "ttsc --build",
