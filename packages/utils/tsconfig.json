@@ -25,7 +25,7 @@
     "tsBuildInfoFile": "../.tsBuildInfo/utils.json",
     "resolveJsonModule": true,
     "incremental": true,
-    "target": "es5",
+    "target": "esnext",
     "noEmitHelpers": false,
     "noUnusedLocals": false,
     "module": "esnext",

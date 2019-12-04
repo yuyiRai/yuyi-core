@@ -8,6 +8,7 @@
     "jsdoc-format": false,
     "no-conditional-assignment": false,
     "no-floating-promises": false,
+    "radix": false,
     "no-empty": false
   }
 }

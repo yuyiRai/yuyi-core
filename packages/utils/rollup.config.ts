@@ -1,5 +1,6 @@
 import resolve from 'rollup-plugin-node-resolve'
 import commonjs from 'rollup-plugin-commonjs'
+import babel from 'rollup-plugin-babel';
 import sourceMaps from 'rollup-plugin-sourcemaps'
 import json from 'rollup-plugin-json'
 // import typescript from 'rollup-plugin-typescript2';
@@ -34,20 +35,25 @@ const config // : InputOptions & { output: OutputOptions | OutputOptions[] }
   },
   output: [
     // { dir: path.dirname(pkg.main), name: 'Utils', exports: 'named', format: 'es', sourcemap: true },
-    // { dir: path.dirname(pkg.main), format: 'es', exports: 'named', sourcemap: true },
-    { dir: path.dirname(pkg.main), dynamicImportFunction: "import", format: 'cjs', exports: 'named', sourcemap: true },
+    // { dir: path.dirname(pkg.module), dynamicImportFunction: "import", format: 'es', exports: 'named', sourcemap: true },
+    { dir: path.dirname(pkg.main), format: 'cjs', exports: 'named', sourcemap: true },
     // { dir: 'dist/umd', format: 'umd', exports: 'named', libraryName: 'Utils', sourcemap: true },
   ],
   cache: isDevelopment ? cache : false,
   inlineDynamicImports: false,
   treeshake: isProduction,
   // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
-  external: ["benchmark", "argparse", "fs"],
+  external: ["argparse", "fs"],
   watch: {
     include: ['lib/**'],
   },
   // @ts-ignore
   plugins: [
+    babel({
+      exclude: /node_modules/,
+      runtimeHelpers: true,
+      plugins: [['@babel/transform-runtime', { useESModules: true }], '@babel/plugin-syntax-dynamic-import']
+    }),
     wasm({
       sync: [
         // 不在这里登陆过的只能使用() => import("..")的方式

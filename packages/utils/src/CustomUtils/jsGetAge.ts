@@ -18,9 +18,7 @@ export function jsGetAge(strBirthday: string) {
   let nowDay = d.getDate();
   if (nowYear + '' === birthYear) {
     returnAge = 0; // 同年 则为0岁
-  }
-  else {
-    // tslint:disable-next-line: radix
+  } else {
     let ageDiff = nowYear - parseInt(birthYear); // 年之差
     if (ageDiff > 0) {
       if (nowMonth + '' === birthMonth) {

@@ -986,7 +986,7 @@
         "signature": "4d8d4c3ee27f87161002f36320453b65e195e65f9985f06cab056fbc032c8e80"
       },
       "../utils/src/customutils/jsgetage.ts": {
-        "version": "6ca62c13d33e3f0155776023bdc1652626c6ed6ed8e0f8c7fad67d8387588481",
+        "version": "d3bba9b5d5ae32c585ec04b4e543457bbfbe642df425920e7f324be8bcc76658",
         "signature": "fc801892afe81655b9d21d1a6da5d2da73b66a16ccfb72fb3135ef2415daa2b4"
       },
       "../utils/src/customutils/likearray.ts": {
@@ -2035,7 +2035,7 @@
       "strictNullChecks": false,
       "suppressImplicitAnyIndexErrors": true,
       "module": 99,
-      "target": 1,
+      "target": 99,
       "lib": [
         "lib.es2015.d.ts",
         "lib.dom.d.ts",
