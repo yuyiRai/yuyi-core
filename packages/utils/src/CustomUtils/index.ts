@@ -13,6 +13,7 @@ import { jsGetAge } from './jsGetAge';
 import { likeArray } from './likeArray';
 import { getRealLength } from './getRealLength'
 import { MultipleSplit } from './MultipleSplit'
+import { shiftKeyGroup } from './changeKeys'
 
 export {
   pipe,
@@ -26,6 +27,7 @@ export {
   connectTo,
   jsGetAge,
   likeArray,
-  MultipleSplit
+  MultipleSplit,
+  shiftKeyGroup
 }
 export * from './getTimeProfile'

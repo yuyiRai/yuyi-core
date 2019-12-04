@@ -6,6 +6,4 @@
 export * from './getPropByPath';
 export * from './getPropertyFieldByCreate';
 export * from './CommonDto'
-/// <reference path="./get"/>
-/// <reference path="./set"/>
 

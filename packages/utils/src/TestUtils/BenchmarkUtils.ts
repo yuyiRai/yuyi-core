@@ -5,9 +5,8 @@ export namespace BenchmarkUtils {
   export async function paramDiff(group: { [k: string]: (...args: any[]) => any }, params: any[], options = {
     delay: 1000
   }) {
-    // @ts-ignore
-    const { Benchmark } = await import('benchmark').then(r => r.default)
-    let suite = new Benchmark.Suite();
+    const Benchmark = await import('benchmark')
+    let suite = new Benchmark.Suite;
     for (const key of Object.keys(group)) {
       suite.add(key, () => group[key](...cloneDeep(params)))
     }

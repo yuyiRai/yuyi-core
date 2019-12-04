@@ -1,11 +1,11 @@
 import { arrayMapToKeysDive } from '../commonUtils';
-import { IsTrue, IKeyValueMap } from '../TsUtils';
-import { ArrayIterator, castArray, escapeRegExp, isNotEmptyValue, filter, find, isArray, isEqual, isFunction, isNil, isRegExp, join, map, some } from '../LodashExtra';
-import { isNotEmptyArray, isNotEmptyArrayStrict, isNotEmptyString, typeFilterUtils } from '../TypeLib';
-import { SearchKey, KeywordMatcher, KeyMatcherFunc, Option, OptionSearcher, RemoteSearcher } from './interface'
 import { Constant$ } from '../Constransts';
+import { ArrayIterator, castArray, escapeRegExp, filter, find, isArray, isEqual, isFunction, isNil, isNotEmptyValue, isRegExp, join, map } from '../LodashExtra';
+import { IKeyValueMap, IsTrue } from '../TsUtils';
+import { expect$, isNotEmptyArray, isNotEmptyArrayStrict, isNotEmptyString, typeFilterUtils } from '../TypeLib';
+import { KeyMatcherFunc, KeywordMatcher, Option, OptionSearcher, RemoteSearcher, SearchKey } from './interface';
 
-export { SearchKey, KeywordMatcher as keyMatcher, KeyMatcherFunc, Option, OptionSearcher, RemoteSearcher }
+export { SearchKey, KeywordMatcher as keyMatcher, KeyMatcherFunc, Option, OptionSearcher, RemoteSearcher };
 
 // /**
 //  * 操作Options的工具集合
@@ -20,22 +20,21 @@ export function createEqualsMatcher<K = any>(searchKey: SearchKey<K>): KeywordMa
   if (isFunction(searchKey)) {
     // console.error('isFunction', searchKey);
     return searchKey;
-  } else if (isRegExp(searchKey)) {
+  }
+  if (isRegExp(searchKey)) {
     // console.error('isRegExp', searchKey);
-    return function (key: string) {
-      return searchKey.test(key)
-    };
-  } else if (isArray(searchKey)) {
+    return Constant$.BindArg$$(Constant$.REGEXP_TEST, searchKey)
+  }
+  if (Constant$.IS_ARR(searchKey)) {
     // console.error('isArray', searchKey);
-    const searchMatcher = map(searchKey, key => createEqualsMatcher(key));
+    const searchMatcher = Constant$.MAP(searchKey, key => createEqualsMatcher(key));
     return function (key) {
-      return some(searchMatcher, match => match(key));
+      return Constant$.SOME(searchMatcher, match => match(key));
     }
-  } else {
-    // console.error('else', searchKey);
-    return function (key) {
-      return isEqual(searchKey, key)
-    }
+  }
+  // console.error('else', searchKey);
+  return function (key) {
+    return isEqual(searchKey, key)
   }
 }
 /**
@@ -44,9 +43,9 @@ export function createEqualsMatcher<K = any>(searchKey: SearchKey<K>): KeywordMa
  * @param item 
  */
 export function isLabelMatchedItem<V extends string, D extends string>(labelSearcher: SearchKey<string>, item: Option<V, D>): boolean {
-  if (isNotEmptyValue(item)) {
-    const { label, value } = item;
-    const name = typeFilterUtils.isNotEmptyValueFilter(label, value, item);
+  if (expect$.isNotEmptyValue(item)) {
+    var { label, value } = item;
+    var name = expect$.isNotEmptyValue.filter(label, value, item);
     return createEqualsMatcher(labelSearcher)(name, value, item)
   }
   return false
@@ -58,9 +57,9 @@ export function isLabelMatchedItem<V extends string, D extends string>(labelSear
  * @param item 
  */
 export function isValueMatchedItem(valueSearcher: SearchKey<string>, item: Option): boolean {
-  if (isNotEmptyValue(item)) {
-    const { label } = item;
-    const value = typeFilterUtils.isNotEmptyValueFilter(item.value, item);
+  if (expect$.isNotEmptyValue(item)) {
+    var { label } = item;
+    var value = expect$.isNotEmptyValue.filter(item.value, item);
     return createEqualsMatcher(valueSearcher)(value, label, item)
   }
   return false

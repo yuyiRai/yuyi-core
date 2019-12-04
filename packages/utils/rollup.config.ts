@@ -17,22 +17,32 @@ const pkg = require('./package.json')
 let cache = {};
 const nameCache = {}
 const staticVarName = "K$"
-const config// : InputOptions & { output: OutputOptions | OutputOptions[] }
+const config // : InputOptions & { output: OutputOptions | OutputOptions[] }
   = {
   input: {
-    "index": 'lib/index.js',
+    "index": 'lib/index',
+    // "TypeLib": 'lib/TypeLib',
+    // "MobxUtils": 'lib/MobxUtils',
+    // "EventEmitter": 'lib/EventEmitter',
+    // "CustomUtils": 'lib/CustomUtils',
+    // "OptionsUtils": 'lib/OptionsUtils',
+    // "LodashExtra": 'lib/LodashExtra',
+    // "PropertyUtils": 'lib/PropertyUtils',
+    // "WasmLoader": 'lib/WasmLoader',
+    // "TimeBuffer": 'lib/TimeBuffer',
     "NodeUtils": 'lib/NodeUtils'
   },
   output: [
     // { dir: path.dirname(pkg.main), name: 'Utils', exports: 'named', format: 'es', sourcemap: true },
     // { dir: path.dirname(pkg.main), format: 'es', exports: 'named', sourcemap: true },
-    { dir: path.dirname(pkg.main), format: 'cjs', exports: 'named', sourcemap: true },
+    { dir: path.dirname(pkg.main), dynamicImportFunction: "import", format: 'cjs', exports: 'named', sourcemap: true },
     // { dir: 'dist/umd', format: 'umd', exports: 'named', libraryName: 'Utils', sourcemap: true },
   ],
   cache: isDevelopment ? cache : false,
+  inlineDynamicImports: false,
   treeshake: isProduction,
   // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
-  external: ["argparse", "fs"],
+  external: ["benchmark", "argparse", "fs"],
   watch: {
     include: ['lib/**'],
   },
@@ -78,10 +88,11 @@ const config// : InputOptions & { output: OutputOptions | OutputOptions[] }
         compress: {
           keep_infinity: true,
           pure_getters: true,
-          keep_classnames: /Benchmark/,
+          // keep_classnames: /Suite/,
           passes: 10,
           global_defs: {
             "process.env.NODE_ENV": process.env.NODE_ENV || "production",
+            "@__DEV__": ((process.env.NODE_ENV || "production") === "development") + '',
             // "global.Constant$": "global.K",
             // "@Object": staticVarName + ".OBJECT",
             // "@Object.defineProperty": staticVarName + ".OBJ_defineProperty$",

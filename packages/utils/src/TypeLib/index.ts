@@ -91,7 +91,7 @@ export const typeUtils = {
   isEmptyArrayStrict,
   isNotEmptyArrayStrict,
   isEmptyObject,
-  isNotEmptyObject
+  isNotEmptyObject,
 };
 
 
@@ -181,7 +181,7 @@ export const typeFilterUtils = Constant$.REDUCE<[string, (v: any) => boolean], I
   Constant$.ENTRIES(typeUtils),
   function (target, keyAndValue) {
     var execTmp: any = keyAndValue[1]
-    execTmp.filter = Constant$.STATIC_BIND(todoFilter, keyAndValue[1])
+    execTmp.filter = Constant$.BindArg$$(todoFilter, keyAndValue[1])
     return Constant$.OBJ_ASSIGN(target, {
       [keyTmp = keyAndValue[0]]: execTmp.filter,
       [keyTmp + "Filter"]: execTmp.filter

@@ -11,7 +11,8 @@ module.exports = {
   //   "!src/**/*.d.ts"
   // ],
   "setupFiles": [
-    require.resolve("react-app-polyfill/jsdom")
+    require.resolve("react-app-polyfill/jsdom"),
+    require.resolve("./config/dev.env.js")
   ],
   "rootDir": process.cwd(),
   "setupFilesAfterEnv": ["./src/Constransts.ts"],

@@ -23,9 +23,11 @@
     "outDir": "./lib",
     "declarationDir": "./lib",
     "tsBuildInfoFile": "../.tsBuildInfo/utils.json",
+    "resolveJsonModule": true,
     "incremental": true,
-    "target": "esnext",
+    "target": "es5",
     "noEmitHelpers": false,
+    "noUnusedLocals": false,
     "module": "esnext",
     "typeRoots": [
       "../env/types",

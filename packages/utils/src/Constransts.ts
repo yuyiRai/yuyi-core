@@ -1,5 +1,44 @@
 // tslint:disable: variable-name
 
+declare global {
+  namespace NodeJS {
+    interface Global {
+      __DEV__?: boolean;
+    }
+  }
+}
+var __DEV__ = process.env.NODE_ENV === 'development'
+if (__DEV__) {
+  global.__DEV__ = true
+}
+
+export namespace FunctionFactory {
+  export type Base<Args extends any[] = any[], Result = any> = (...args: Args) => Result;
+
+  export type ReturnType<F> = F extends Base<any, infer R> ? R : any;
+
+  export type Bind1<A, Args extends any[] = [], Result = any> = (a: A, ...args: Args) => Result;
+  export type Bind2<A, B, Args extends any[] = [], Result = any> = (a: A, b: B, ...args: Args) => Result;
+  export type Bind3<A, B, C, Args extends any[] = [], Result = any> = (a: A, b: B, c: C, ...args: Args) => Result;
+
+  export type Arg0<T> = T extends Bind1<infer T, any[]> ? T : any;
+  export type Arg1<T> = T extends Bind2<any, infer T, any[]> ? T : any;
+  export type Arg2<T> = T extends Bind3<any, any, infer T, any[]> ? T : any;
+
+  export type Shift1<T, A> = T extends Bind1<A, infer Args, infer Re> ? Base<Args, Re> : Function
+  export type Shift2<T, A, B> = T extends Bind2<A, B, infer Args, infer Re> ? Base<Args, Re> : Function
+  export type Shift3<T, A, B, C> = T extends Bind3<A, B, C, infer Args, infer Re> ? Base<Args, Re> : Function
+
+
+  // export type Bind<BindArgs extends any[], Args extends any[] = [], Result = any> = ((binds: BindArgs, ...args: Args) => Result);
+  // export interface ShiftAuto<T, A = any, B = any, C = any, Re = ReturnType<T>> {
+  //   <Args extends T extends Bind<[A], infer Args> ? Args : any[]>(...args: Args): Re
+  //   <Args extends T extends Bind<[A, B], infer Args> ? Args : any[]>(...args: Args): Re
+  //   <Args extends T extends Bind<[A, B, C], infer Args> ? Args : any[]>(...args: Args): Re
+  // }
+  // export type Shift<T, A extends any[]> = T extends Bind<A, infer Args, infer Re> ? Base<Args, Re> : Function
+}
+
 export namespace Constant$ {
 
   export const ENTRIES = Object.entries
@@ -7,11 +46,13 @@ export namespace Constant$ {
    * * keyof PropertyDescriptor
    * writable, configurable, value, enumerable
    */
-  export enum DefPropDec$ {
+  export enum DefPropDec$$ {
     W = 'writable',
     C = 'configurable',
     V = 'value',
-    E = 'enumerable'
+    E = 'enumerable',
+    G = 'get',
+    S = 'set'
   };
   export var KEY_PREFIX_INJECT: '__$$_' = '__$$_'
   export var KEY_STRICT: 'strict' = 'strict'
@@ -23,7 +64,7 @@ export namespace Constant$ {
   export var KEY_BOOL: 'boolean' = 'boolean';
   export var KEY_FUNC: 'function' = 'function';
   export var KEY_OBJ: 'object' = 'object';
-  export var KEY_VAL: 'value' = DefPropDec$.V;
+  export var KEY_VAL: 'value' = DefPropDec$$.V;
   export var TRUE: true = true;
   export var FALSE: false = false;
   export var UNDEFINED = undefined;
@@ -33,6 +74,7 @@ export namespace Constant$ {
   export var FUNCTION = Function;
   export var CALLER = FUNCTION.call
   export var Num = Number;
+  export var REGEXP = RegExp;
   // tslint:disable-next-line: variable-name
   export var OBJECT = Object;
   export var EMPTY_OBJECT = OBJECT.seal(OBJECT.create(null))
@@ -94,11 +136,55 @@ export namespace Constant$ {
   export var PARSE_INT = parseInt
 
 
-  export function BIND<T extends Function>(Func: T, thisArgs: any, ...args: any[]): T {
+  export function BIND<T extends FunctionFactory.Base<[any, ...any[]], any>,
+    TA,
+    R extends T extends (thisArgs: any, ...other: infer K) => infer Re ? FunctionFactory.Base<K, Re> : Function
+  >(Func: T, thisArgs: TA, ...args: any[]): R {
     return FUNCTION.bind.call(Func, thisArgs, ...args)
   }
-  export function STATIC_BIND<T extends Function>(Func: T, ...args: any[]): T {
+
+  // tslint:disable-next-line: class-name
+  // export type STATIC_BIND<
+  //   T extends Function,
+  //   Bindex extends any[]
+  // > = {
+    
+  // }
+  export function BindArg$$<
+    T extends Function,
+    A extends FunctionFactory.Arg0<T>
+    >(Func: T, arg0: A): FunctionFactory.Shift1<T, A>
+  export function BindArg$$<
+    T extends Function,
+    A extends FunctionFactory.Arg0<T>,
+    B extends FunctionFactory.Arg1<T>,
+    >(Func: T, arg0: A, arg1: B): FunctionFactory.Shift2<T, A, B>;
+  export function BindArg$$<
+    T extends Function,
+    A extends FunctionFactory.Arg0<T>,
+    B extends FunctionFactory.Arg1<T>,
+    C extends FunctionFactory.Arg2<T>,
+    >(Func: T, arg0: A, arg1: B, arg2: C): FunctionFactory.Shift3<T, A, B, C>;
+  export function BindArg$$(Func: any, ...args: any[]): any {
+    // @ts-ignore
     return BIND(Func, null, ...args)
+  }
+
+  export interface FunctionArgsShifter<
+    T extends Function,
+    P extends T['prototype'],
+    K extends keyof P
+    > {
+    <Args extends P[K] extends (arg: infer A) => any ? A : any>(source: P, arg: Args): P[K] extends (...args: any[]) => infer R ? R : any;
+  }
+
+  export function INSTANCE_BIND<
+    T extends Function,
+    P extends T['prototype'],
+    K extends keyof P,
+  >(instance: T, key: K): FunctionArgsShifter<T, P, K> {
+    // @ts-ignore
+    return BIND(CALLER, instance[KEY_PROTOTYPE][key])
   }
 
 
@@ -110,16 +196,26 @@ export namespace Constant$ {
    * @param arr
    * @param callbackfn
    */
-  export const MAP = BIND(CALLER, ARRAY[KEY_PROTOTYPE].map) as {
-    <T, R = T>(arr: T[], callbackfn: LoopCalbackFn<T, R>, initialValue?: any[]): R[]
+  export const MAP = INSTANCE_BIND(ARRAY, 'map') as {
+    <T extends any, R = T>(arr: T[], callbackfn: LoopCalbackFn<T, R>, initialValue?: any[]): R[]
+  }
+  // MAP()
+  /**
+   * 原生的Array.prototype.some改为函数调用
+   * @param arr
+   * @param callbackfn
+   * @param thisArg
+   */
+  export const SOME = INSTANCE_BIND(ARRAY, 'some') as {
+    <T extends any>(arr: T[], callbackfn: LoopCalbackFn<T, boolean>, thisArg?: any): boolean
   }
   /**
    * 原生的for循环改为函数调用
    * @param arr
    * @param callbackfn
    */
-  export const FOR_EACH = BIND(CALLER, ARRAY[KEY_PROTOTYPE].forEach) as {
-    <T>(arr: T[], callbackfn: LoopCalbackFn<T, any>): void;
+  export const FOR_EACH = INSTANCE_BIND(ARRAY, 'forEach') as {
+    <T extends any>(arr: T[], callbackfn: LoopCalbackFn<T, any>): void;
   }
 
   /**
@@ -127,8 +223,8 @@ export namespace Constant$ {
    * @param arr
    * @param callbackfn
    */
-  export const FILTER = BIND(CALLER, ARRAY[KEY_PROTOTYPE].filter) as {
-    <T>(arr: T[], callbackfn: LoopCalbackFn<T, boolean>): T[];
+  export const FILTER = INSTANCE_BIND(ARRAY, 'filter') as {
+    <T extends any>(arr: T[], callbackfn: LoopCalbackFn<T, boolean>): T[];
   }
 
 
@@ -140,22 +236,33 @@ export namespace Constant$ {
    * @example
    * REDUCE([1, 2, 3, 4], (target: any, i: number) => ({ ...target, [i]: i }), {})
    */
-  export const REDUCE = BIND(CALLER, ARRAY[KEY_PROTOTYPE].reduce) as {
-    <T, R = T>(
+  export const REDUCE = INSTANCE_BIND(ARRAY, 'reduce') as {
+    <T extends any, R = T>(
       arr: T[],
       callbackfn: (previousValue: R, currentValue: T, currentIndex: number, array: T[]) => R,
       initialValue?: R
     ): R
   }
   /**
-   * 原生的push改为函数调用
+   * 原生的Array<T>.push改为函数调用
    * @param arr 目标数组
    * @param elements 新元素
    * @example
    * ARR_PUSH([1, 2, 3, 4], 5, 6, 7)
    */
-  export const ARR_PUSH = BIND(CALLER, ARRAY[KEY_PROTOTYPE].push) as {
-    <T, E = T>(arr: T[], ...elements: E[]): number
+  export const ARR_PUSH = INSTANCE_BIND(ARRAY, 'push') as {
+    <T extends any, E = T>(arr: T[], ...elements: E[]): number
+  }
+
+  /**
+   * 原生的push改为函数调用
+   * @param arr 目标数组
+   * @param elements 新元素
+   * @example
+   * REGEXP_TEST(/123/, '123') // => true
+   */
+  export const REGEXP_TEST = INSTANCE_BIND(REGEXP, 'test') as {
+    (reg: RegExp, str: string): boolean
   }
 
   export const delay$$ = setTimeout;

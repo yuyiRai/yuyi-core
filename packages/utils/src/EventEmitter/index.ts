@@ -1,13 +1,30 @@
 /**
  * @module UtilClass
  */
+import { PartialObserver } from 'rxjs';
+import { Observable } from 'rxjs/internal/Observable';
+import { Subject } from 'rxjs/internal/Subject';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { share } from 'rxjs/operators';
-import { Subject } from 'rxjs/internal/Subject';
-import { Observable } from 'rxjs/internal/Observable';
+import { Constant$ } from '../Constransts';
 
 
 export { Subscription } from 'rxjs/internal/Subscription';
+
+export namespace Observable$$ {
+  export function subscribe$$<T>(source: Observable<T>, observer?: PartialObserver<T>): Subscription;
+  export function subscribe$$<T>(source: Observable<T>, next?: (value: T) => void, error?: (error: any) => void, complete?: () => void): Subscription;
+  export function subscribe$$<T>(source: Observable<T>, ...observer: any[]) {
+    return source.subscribe(...observer)
+  }
+  export function unsubscribe$$(source: Subscription) {
+    source.unsubscribe()
+  }
+}
+
+const { subscribe$$, unsubscribe$$ } = Observable$$
+const { CREATE_PROMISE } = Constant$
+
 /**
  * @internal
  */
@@ -44,7 +61,7 @@ export class EventEmitter<EventType = any> extends Subject<EventType> {
    * @param error 订阅错误事件方法
    * @param complete 订阅completed事件方法
    */
-  public constructor(next?: NextEvent<EventType>, error?: ErrorEvent<EventType>, complete?: CompletedEvent<EventType>) {
+  constructor(next?: NextEvent<EventType>, error?: ErrorEvent<EventType>, complete?: CompletedEvent<EventType>) {
     super();
     this.pipe(share());
     if (next) {
@@ -86,12 +103,13 @@ export class EventEmitter<EventType = any> extends Subject<EventType> {
    * 注销
    */
   public dispose() {
-    if (this.sub && !this.sub.closed) {
-      this.sub.unsubscribe();
-      this.sub = null;
+    var _this = this;
+    if (_this.sub && !_this.sub.closed) {
+      _this.sub.unsubscribe();
+      _this.sub = null;
     }
-    if (!this.closed) {
-      this.complete();
+    if (!_this.closed) {
+      _this.complete();
     }
   }
   /**
@@ -114,10 +132,10 @@ export class EventEmitter<EventType = any> extends Subject<EventType> {
    * 转化成标准Promise
    */
   public toPromise() {
-    return new Promise(r => {
-      const sub = this.subscribe(data => {
+    return CREATE_PROMISE(r => {
+      const sub = subscribe$$(this, data => {
         r(data);
-        sub.unsubscribe()
+        unsubscribe$$(sub)
       })
     })
   }

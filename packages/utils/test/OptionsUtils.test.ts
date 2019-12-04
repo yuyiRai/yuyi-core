@@ -12,9 +12,12 @@ const optionsList = [
  * Dummy test
  */
 describe('OptionsUtils test', () => {
-  it('works if getOptionsByLabel is Function', () => {
-    expect(OptionsUtils.getOptionsByLabel).toBeInstanceOf(Function)
-  })
+  const { Setter, ...o } = OptionsUtils
+  for (const key of Object.keys(o)) {
+    it('works if ' + key + ' is Function', () => {
+      expect(o[key]).toBeInstanceOf(Function)
+    })
+  }
   it('works if getOptionsByLabel is Function', () => {
     expect(OptionsUtils.convertValueOption([1, 2, 3, 4, 5])).toMatchInlineSnapshot(`
                   Array [

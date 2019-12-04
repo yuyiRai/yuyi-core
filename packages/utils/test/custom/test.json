@@ -1,0 +1,110 @@
+{
+  "UNITCUST_1-H_UNITNATURE": [
+    "140"
+  ],
+  "UNITCUST_1-HIGH_SCORE": "4",
+  "UNITCUST_1-M_UNITNATURE": [
+    "280",
+    "300",
+    "360",
+    "107"
+  ],
+  "UNITCUST_1-MEDIUM_SCORE": "2",
+  "UNITCUST_1-L_UNITNATURE": [
+    "110",
+    "120",
+    "270"
+  ],
+  "UNITCUST_1-LOW_SCORE": "1",
+  "UNITCUST_2-H_BUSISOURCE": [
+    "002",
+    "1403"
+  ],
+  "UNITCUST_2-HIGH_SCORE": "3",
+  "UNITCUST_2-M_BUSISOURCE": [
+    "2202",
+    "2203"
+  ],
+  "UNITCUST_2-MEDIUM_SCORE": "2",
+  "UNITCUST_2-L_BUSISOURCE": [
+    "000",
+    "100"
+  ],
+  "UNITCUST_2-LOW_SCORE": "1",
+  "UNITCUST_3-H_COMPANY-LE-TIME": "1",
+  "UNITCUST_3-HIGH_SCORE": "3",
+  "UNITCUST_3MCOMPANYLETIME": "1",
+  "UNITCUST_3-M_COMPANY-LE-TIME": "3",
+  "UNITCUST_3-MEDIUM_SCORE": "2",
+  "UNITCUST_3-L_COMPANY-GT-TIME": "3",
+  "UNITCUST_3-LOW_SCORE": "1",
+  "UNITCUST_4-H_SHAREHOLDERTYPE": [
+    "01",
+    "02"
+  ],
+  "UNITCUST_4-HIGH_SCORE": "3",
+  "UNITCUST_4-M_SHAREHOLDERTYPE": [
+    "03",
+    "04",
+    "05",
+    "06"
+  ],
+  "UNITCUST_4-MEDIUM_SCORE": "2",
+  "UNITCUST_4-L_SHAREHOLDERTYPE": [
+    "07",
+    "08",
+    "09",
+    "10",
+    "11"
+  ],
+  "UNITCUST_4-LOW_SCORE": "1",
+  "UNITCUST_5-H_IDCHECK": [
+    "101",
+    "104",
+    "105",
+    "107",
+    "108"
+  ],
+  "UNITCUST_5-HIGH_SCORE": "6",
+  "UNITCUST_5-M_IDCHECK": [
+    "102",
+    "103",
+    "109",
+    "106"
+  ],
+  "UNITCUST_5-MEDIUM_SCORE": "2",
+  "UNITCUST_5-L_IDCHECK": [
+    "100"
+  ],
+  "UNITCUST_5-LOW_SCORE": "1",
+  "UNITCUST_6-HIGH_SCORE": "6",
+  "UNITCUST_6-MEDIUM_SCORE": "2",
+  "UNITCUST_6-LOW_SCORE": "1",
+  "UNITCUST_7-C_TRADECOUNT-LT-YEAR": "1",
+  "UNITCUST_7-H_TRADECOUNT-GE-TRADE_COUNT": "3",
+  "UNITCUST_7-HIGH_SCORE": "5",
+  "UNITCUST_7MYEAR": "1",
+  "UNITCUST_7-M_TRADECOUNT-LT-TRADE_COUNT": "3",
+  "UNITCUST_7-MEDIUM_SCORE": "4",
+  "UNITCUST_7LYEAR": "1",
+  "UNITCUST_7-LOW_SCORE": "1",
+  "UNITAREA_1-H_NATIONALITY": [
+    "PRK",
+    "SSD",
+    "CAF",
+    "COD",
+    "GNB"
+  ],
+  "UNITIDSY_1-MEDIUM_SCORE": "3",
+  "UNITIDSY_1-LOW_SCORE": "1",
+  "UNITIDSY_2-H_JOBTITLE": [
+    "01",
+    "02",
+    "03"
+  ],
+  "UNITIDSY_2-HIGH_SCORE": "5",
+  "UNITIDSY_2-MEDIUM_SCORE": "2",
+  "UNITIDSY_2-LOW_SCORE": "1",
+  "custType": "4",
+  "busiNo": null
+}
