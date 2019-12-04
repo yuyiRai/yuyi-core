@@ -1,4 +1,5 @@
 import * as OptionsUtils from '../src/OptionsUtils'
+import { getOptionsByLabel } from '..'
 
 const optionsList = [
   { label: 'A', value: 'a' },
@@ -41,8 +42,8 @@ describe('OptionsUtils test', () => {
   })
 
   it('OptionsUtils getOptionsByLabel', () => {
-    const findList = OptionsUtils.getOptionsByLabel(optionsList, 'A')
-    const findOne = OptionsUtils.getOptionsByLabel(optionsList, 'A', true)
+    const findList = getOptionsByLabel(optionsList, 'A')
+    const findOne = getOptionsByLabel(optionsList, 'A', true)
     expect(findList).toBeInstanceOf(Array)
     expect(findList.length).toBe(1)
     expect(findOne).toBeInstanceOf(Object)
