@@ -7,10 +7,9 @@ declare global {
     }
   }
 }
-var __DEV__ = process.env.NODE_ENV === 'development'
-if (__DEV__) {
-  global.__DEV__ = true
-}
+
+export type LoopIterator<T, K extends TKey, TResult = void> = (currentValue: T, currentIndex: K, array: T[]) => TResult
+export type ArrayIterator<T, TResult = void> = LoopIterator<T, number, TResult>
 
 export namespace FunctionFactory {
   export type Base<Args extends any[] = any[], Result = any> = (...args: Args) => Result;
@@ -57,6 +56,8 @@ export namespace Constant$ {
   export var KEY_PREFIX_INJECT: '__$$_' = '__$$_'
   export var KEY_STRICT: 'strict' = 'strict'
   export var KEY_CONSTRUCTOR: 'constructor' = 'constructor';
+  export var KEY_EXTEND: 'extend' = 'extend';
+  export var KEY_FILTER: 'filter' = 'filter';
   export var KEY_PROPERTY: 'property' = 'property';
   export var KEY_PROTOTYPE: 'prototype' = 'prototype'
   export var KEY_NUM: 'number' = 'number';
@@ -187,17 +188,21 @@ export namespace Constant$ {
     return BIND(CALLER, instance[KEY_PROTOTYPE][key])
   }
 
-
-  export type ForFuncCalbackFn<T, K extends TKey, R = void> = (currentValue: T, currentIndex: K, array: T[]) => R
-  export type LoopCalbackFn<T, R = void> = ForFuncCalbackFn<T, number, R>
-
+  /**
+   * 原生的map循环改为函数调用
+   * @param arr
+   * @param callbackfn
+   */
+  export const APPLY = (fn: any, args: any[], thisArgs?: any) => fn.apply(thisArgs, args) as {
+    <TArgs extends any[], TResult = any, T = any>(source: Function, args: TArgs, thisArgs?: T): TResult
+  }
   /**
    * 原生的map循环改为函数调用
    * @param arr
    * @param callbackfn
    */
   export const MAP = INSTANCE_BIND(ARRAY, 'map') as {
-    <T extends any, R = T>(arr: T[], callbackfn: LoopCalbackFn<T, R>, initialValue?: any[]): R[]
+    <T extends any, R = T>(arr: T[], callbackfn: ArrayIterator<T, R>, initialValue?: any[]): R[]
   }
   // MAP()
   /**
@@ -207,7 +212,7 @@ export namespace Constant$ {
    * @param thisArg
    */
   export const SOME = INSTANCE_BIND(ARRAY, 'some') as {
-    <T extends any>(arr: T[], callbackfn: LoopCalbackFn<T, boolean>, thisArg?: any): boolean
+    <T extends any>(arr: T[], callbackfn: ArrayIterator<T, boolean>, thisArg?: any): boolean
   }
   /**
    * 原生的for循环改为函数调用
@@ -215,16 +220,26 @@ export namespace Constant$ {
    * @param callbackfn
    */
   export const FOR_EACH = INSTANCE_BIND(ARRAY, 'forEach') as {
-    <T extends any>(arr: T[], callbackfn: LoopCalbackFn<T, any>): void;
+    <T extends any>(arr: T[], callbackfn: ArrayIterator<T, any>): void;
   }
-
+  /**
+   * 原生数组的silce改为函数调用
+   * @param arr
+   * @param callbackfn
+   */
+  export const ARR_SLICE = INSTANCE_BIND(ARRAY, 'slice') as {
+    <T extends any>(arr: T[], startIndex?: number, endIndex?: number): T[];
+    // tslint:disable-next-line: unified-signatures
+    <T extends any>(arr: IArguments, startIndex?: number, endIndex?: number): T[]; 
+  }
+  
   /**
    * 原生的for循环改为函数调用
    * @param arr
    * @param callbackfn
    */
   export const FILTER = INSTANCE_BIND(ARRAY, 'filter') as {
-    <T extends any>(arr: T[], callbackfn: LoopCalbackFn<T, boolean>): T[];
+    <T extends any>(arr: T[], callbackfn: ArrayIterator<T, boolean>): T[];
   }
 
 
@@ -272,8 +287,8 @@ export namespace Constant$ {
    * @param arr
    * @param callbackfn
    */
-  export function MAP$$<T, R>(arr: T[], callbackfn: LoopCalbackFn<T, R>): R[]
-  export function MAP$$<T, R>(arr: T[], callbackfn: LoopCalbackFn<T, R>, initialValue = [], i: number = 0, length = arr.length - 1) {
+  export function MAP$$<T, R>(arr: T[], callbackfn: ArrayIterator<T, R>): R[]
+  export function MAP$$<T, R>(arr: T[], callbackfn: ArrayIterator<T, R>, initialValue = [], i: number = 0, length = arr.length - 1) {
     initialValue[i] = callbackfn(arr[i], i, arr)
     // @ts-ignore
     return i < length ? MAP$$(arr, callbackfn, initialValue, i + 1, length) : initialValue
@@ -285,7 +300,7 @@ export namespace Constant$ {
    * @param arr
    * @param callbackfn
    */
-  export function FOR_EACH$$<T>(arr: T[], callbackfn: LoopCalbackFn<T, any>): true {
+  export function FOR_EACH$$<T>(arr: T[], callbackfn: ArrayIterator<T, any>): true {
     var tmp = { i: 0 }
     var length = arr.length - 1
     try {
@@ -295,7 +310,7 @@ export namespace Constant$ {
       return true
     }
   }
-  export function FOR_EACH_P$$<T>(arr: T[], callbackfn: LoopCalbackFn<T, any>, tmp: { i: number }, length: number) {
+  export function FOR_EACH_P$$<T>(arr: T[], callbackfn: ArrayIterator<T, any>, tmp: { i: number }, length: number) {
     callbackfn(arr[tmp.i], tmp.i, arr)
     // console.trace('test')
     // @ts-ignore

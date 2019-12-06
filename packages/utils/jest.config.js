@@ -15,7 +15,7 @@ module.exports = {
     require.resolve("./config/dev.env.js")
   ],
   "rootDir": process.cwd(),
-  // "setupFilesAfterEnv": ["./src/Constransts.ts"],
+  "setupFilesAfterEnv": ["./src/Constransts.ts"],
   "testMatch": [
     "<rootDir>/test/**/*.{spec,test}.{js,jsx,ts,tsx}"
   ],

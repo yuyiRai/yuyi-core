@@ -1,11 +1,11 @@
 /**
  * @module UtilClass
  */
-import { cloneDeep, isEqual, property, camelCase, set, isNil, isString } from '../../LodashExtra/index';
+import { cloneDeep, isEqual, property, camelCase, set, isNil, isString, isEmptyValue, isNotEmptyValue } from '../../LodashExtra/index';
 import { action, extendObservable, observable } from 'mobx';
 import { autobind } from 'core-decorators';
 import { IKeyValueMap } from '../../TsUtils/interface';
-import { isNotEmptyString, isNotEmptyValue, isEmptyValue } from '../../TypeLib';
+import { isNotEmptyString } from '../../TypeLib';
 import { getPropertyFieldByCreate, getExpressByStr } from '../../PropertyUtils';
 
 /**

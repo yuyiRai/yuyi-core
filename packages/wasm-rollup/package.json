@@ -17,7 +17,7 @@
   },
   "devDependencies": {
     "rimraf": "^2.6.2",
-    "rollup": "^0.49.3",
+    "rollup": "^1.27.8",
     "semantic-release": "^8.2.0",
     "tape": "^4.8.0",
     "typescript": "3.6.4"
@@ -32,6 +32,6 @@
     "emscripten"
   ],
   "dependencies": {
-    "@yuyi919/utils": "^0.0.23"
+    "@yuyi919/utils": "^0.0.60"
   }
 }

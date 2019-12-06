@@ -21,6 +21,6 @@
   },
   "gitHead": "b6a439f1d79269da2843d054887dd42e7a7555c7",
   "dependencies": {
-    "@yuyi919/utils": "^0.0.23"
+    "@yuyi919/utils": "^0.0.60"
   }
 }

@@ -39,7 +39,7 @@
   "dependencies": {
     "@material-ui/core": "^4.5.2",
     "@material-ui/icons": "^4.5.1",
-    "@yuyi919/utils": "^0.0.23",
+    "@yuyi919/utils": "^0.0.60",
     "react-virtualized-auto-sizer": "^1.0.2",
     "react-vtree": "^1.0.0-beta.0",
     "react-window": "^1.8.5",
@@ -47,9 +47,8 @@
     "vue": "^2.6.10"
   },
   "devDependencies": {
-    "@types/jest": "^24.0.21",
-    "@types/react": "^16.9.11",
-    "@types/react-dom": "^16.9.3",
+    "@types/jest": "^24.0.23",
+    "@types/react": "^16.9.15",
     "@types/react-virtualized-auto-sizer": "^1.0.0",
     "@types/react-window": "^1.8.1",
     "@wessberg/rollup-plugin-ts": "^1.1.73",
@@ -63,7 +62,6 @@
     "ts-import-plugin": "^1.6.1",
     "tsdx": "^0.11.0",
     "tslib": "^1.10.0",
-    "tsx-control-statements": "^2.16.5",
     "typescript": "^3.6.4"
   },
   "husky": {

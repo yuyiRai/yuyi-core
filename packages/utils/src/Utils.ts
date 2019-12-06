@@ -2,15 +2,16 @@
  * @module Main
  */
 
+import { Constant$ } from './Constransts';
 import * as commonUtils from './commonUtils';
 import * as CustomUtils from './CustomUtils';
 import * as EventEmitterUtils from './EventEmitter';
+import * as LodashExtra from './LodashExtra';
 import * as MobxUtils from './MobxUtils';
 import * as OptionsUtils from './OptionsUtils';
-import * as LodashExtra from './LodashExtra'
-import * as TestUtils from './TestUtils'
 import * as ParseUtils from "./ParseUtils";
 import * as PropertyUtils from './PropertyUtils';
+import * as TestUtils from './TestUtils';
 // tslint:disable-next-line: no-duplicate-imports
 import TimeBufferUtils from './TimeBuffer';
 import { typeFilterUtils, typeUtils } from "./TypeLib";
@@ -32,7 +33,7 @@ export interface IUtils extends IUtilsGroup {
 
 }
 
-export const Utils: IUtils = Object.freeze(LodashExtra.assign(
+export const Utils: IUtils = Object.freeze(Constant$.OBJ_ASSIGN(
   {},
   LodashExtra,
   commonUtils,

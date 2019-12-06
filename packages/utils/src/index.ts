@@ -2,7 +2,7 @@
  * @author yuyi
  * @packageDocumentation
  */
-import './Constransts'
+// import './Constransts'
 // import { oc } from 'ts-optchain';
 // import { ArrayList } from 'typescriptcollectionsframework'
 // Import here Polyfills if needed. Recommended core-js (npm i -D core-js)
@@ -26,6 +26,7 @@ export * from './FormGirdUtils'
 export * from './TypeLib'
 export * from './HttpBox'
 export * from './PropertyUtils'
+export * from './commonUtils'
 export * from './TestUtils'
 export * from './ParseUtils'
 export * from './MobxUtils'

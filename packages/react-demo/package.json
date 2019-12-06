@@ -3,11 +3,10 @@
   "version": "0.0.4",
   "private": true,
   "dependencies": {
-    "@types/jest": "24.0.16",
-    "@types/node": "12.6.9",
+    "@types/jest": "^24.0.23",
+    "@types/node": "^12.12.14",
     "@types/react": "16.8.24",
-    "@types/react-dom": "16.8.5",
-    "@yuyi919/utils": "^0.0.23",
+    "@yuyi919/utils": "^0.0.60",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-scripts": "3.0.1"

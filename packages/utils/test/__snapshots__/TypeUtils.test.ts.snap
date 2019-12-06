@@ -40,8 +40,6 @@ exports[`TypeUtils test 测试 expect$.filters - isNaN 1`] = `NaN`;
 
 exports[`TypeUtils test 测试 expect$.filters - isNil 1`] = `null`;
 
-exports[`TypeUtils test 测试 expect$.filters - isNilAll 1`] = `null`;
-
 exports[`TypeUtils test 测试 expect$.filters - isNotEmptyArray 1`] = `
 Array [
   null,

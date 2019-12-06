@@ -1,8 +1,9 @@
-import { arrayMapToKeysDive } from '../commonUtils';
-import { Constant$ } from '../Constransts';
-import { ArrayIterator, castArray, escapeRegExp, filter, find, isArray, isEqual, isFunction, isNil, isNotEmptyValue, isRegExp, join, map } from '../LodashExtra';
+import { mapToKeyValues } from '../commonUtils';
+import { Constant$, ArrayIterator } from '../Constransts';
+import { castArray, escapeRegExp, filter, find, isArray, isEqual, isFunction, isNil, isNotEmptyValue, isRegExp, join, map } from '../LodashExtra';
 import { IKeyValueMap, IsTrue } from '../TsUtils';
-import { expect$, isNotEmptyArray, isNotEmptyArrayStrict, isNotEmptyString, typeFilterUtils } from '../TypeLib';
+import { expect$, typeFilterUtils } from '../TypeLib';
+import { isNotEmptyArray, isNotEmptyArrayStrict, isNotEmptyString } from '../TypeLib/expect';
 import { KeyMatcherFunc, KeywordMatcher, Option, OptionSearcher, RemoteSearcher, SearchKey } from './interface';
 
 export { SearchKey, KeywordMatcher as keyMatcher, KeyMatcherFunc, Option, OptionSearcher, RemoteSearcher };
@@ -233,12 +234,12 @@ export function valuesToLabels(options: Option[], value: SearchKey<string>, join
  * @param joinKey 
  */
 export function valuesToLabels(options: Option[], value: SearchKey<string>, joinKey?: string): string | string[] {
-  const result: string[] = typeFilterUtils.isArrayFilter(typeFilterUtils.isArrayFilter(
-    arrayMapToKeysDive(
+  const result: string[] = expect$.isArray.filter(
+    mapToKeyValues(
       getOptionsByValue(options, value) || [],
       'label'
-    ), []
-  )) || []
+    )
+  ) || [];
   return !isNil(joinKey) ? join(result, joinKey) : result
 }
 
@@ -252,12 +253,12 @@ export function labelsToValues(options: Option[], label: SearchKey<string>, join
  * @param joinKey 
  */
 export function labelsToValues(options: Option[], label: SearchKey<string>, joinKey?: string): string | string[] {
-  const result: string[] = castArray(typeFilterUtils.isArrayFilter(
-    arrayMapToKeysDive(
+  const result: string[] = expect$.isArray.filter(
+    mapToKeyValues(
       getOptionsByLabel(options, label) || [],
       'value'
-    ), []
-  ))
+    )
+  ) || [];
   return !isNil(joinKey) ? join(result, joinKey) : result
 }
 

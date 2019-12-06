@@ -1,24 +1,22 @@
 /**
  * @module CustomUtils
  */
-import { assign, filter, isArray, keys, reduce } from '../LodashExtra';
-import { IKeyValueMap } from '../TsUtils';
+import { Constant$ } from '../Constransts';
+import { isNotEmptyValue } from '../LodashExtra';
 import { pipe } from "./pipe";
-import { typeUtils } from '../TypeLib';
-import { jsxIf } from '../commonUtils';
-import _ from 'lodash'
+// import _ from 'lodash'
 
 
-export function App(param1: App.ParamA): any {
-  return param1;
-};
+// export function App(param1: App.ParamA): any {
+//   return param1;
+// };
 
-export namespace App {
-  export type ParamA = number
-  export function C() {
-    return 1
-  }
-}
+// export namespace App {
+//   export type ParamA = number
+//   export function C() {
+//     return 1
+//   }
+// }
 
 
 /**
@@ -32,7 +30,22 @@ export function zipEmptyData<T = any>(target: Array<T | undefined | null>, isRem
 export function zipEmptyData<T = any>(target: IKeyValueMap<T | undefined | null>, isRemoveRepeat?: boolean): IKeyValueMap<T>;
 
 export function zipEmptyData<T = any>(target: IKeyValueMap<T | undefined | null> | Array<T | undefined | null>, isRemoveRepeat = true): IKeyValueMap<T> | T[] {
-  return isArray(target)
-    ? pipe(filter(target, v => typeUtils.isNotEmptyValue(v)), (list: any[]) => jsxIf(isRemoveRepeat, Array.from(new Set(list)), list))
-    : reduce<any, any>(filter(keys(target), (k) => typeUtils.isNotEmptyValue(target[k])), (o, key) => assign(o, { [key]: target[key] }), {});
+  return target instanceof Constant$.OBJECT && (
+    Constant$.IS_ARR(target)
+    ? pipe(Constant$.FILTER<any>(target, isNotEmptyValue), (list: any[]) => isRemoveRepeat ? Array.from(new Set(list)) : list)
+    : Constant$.REDUCE<any, any>(Constant$.FILTER<any>(Constant$.OBJ_KEYS(target), (k) => isNotEmptyValue(target[k])), (o, key) => Constant$.OBJ_ASSIGN(o, { [key]: target[key] }), {})
+  ) || target;
+}
+
+
+export function zipEmptyData2<T = any>(target: Array<T | undefined | null>, isRemoveRepeat?: boolean): T[];
+
+export function zipEmptyData2<T = any>(target: IKeyValueMap<T | undefined | null>, isRemoveRepeat?: boolean): IKeyValueMap<T>;
+
+export function zipEmptyData2<T = any>(target: IKeyValueMap<T | undefined | null> | Array<T | undefined | null>, isRemoveRepeat = true): IKeyValueMap<T> | T[] {
+  return target instanceof Constant$.OBJECT && (
+    Constant$.IS_ARR(target)
+      ? pipe(Constant$.FILTER<any>(target, isNotEmptyValue), (list: any[]) => isRemoveRepeat ? Array.from(new Set(list)) : list)
+      : Constant$.REDUCE<any, any>(Constant$.FILTER<any>(Constant$.OBJ_KEYS(target), (k) => isNotEmptyValue(target[k])), (o, key) => Constant$.OBJ_ASSIGN(o, { [key]: target[key] }), {})
+  ) || target;
 }

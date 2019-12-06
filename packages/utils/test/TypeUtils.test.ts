@@ -1,4 +1,4 @@
-import { EventEmitter, expect$, FilterFunction, isEmptyObject, isFunction, isNotEmptyObject, isNotEmptyValue } from '../src'
+import { EventEmitter, expect$, isFunction, FilterFunction, isEmptyObject, isNotEmptyObject, isNotEmptyValue, filterTo } from '../src'
 import { Constant$ } from '../src/Constransts'
 
 /**
@@ -31,6 +31,21 @@ describe('TypeUtils test', () => {
         expect((expect$[key].filter as FilterFunction<any>)(...testGroupA)).toMatchSnapshot()
       })
     }
+  })
+  it('FilterTo', () => {
+    const fnIsFinite = jest.fn(isFinite)
+    
+    expect(filterTo(fnIsFinite, NaN, 1)).toBe(1)
+    expect(filterTo(fnIsFinite, 1)).toBe(1)
+    expect(filterTo(fnIsFinite, 2, NaN, 1)).toBe(2)
+    expect(filterTo(fnIsFinite, NaN, 2, 1)).toBe(2)
+    expect(filterTo(fnIsFinite, NaN)).toBe(undefined)
+    expect(filterTo(fnIsFinite)).toBe(undefined)
+    expect(fnIsFinite).toBeCalledTimes(7)
+
+    const isFiniteFilter = filterTo.extend<number>(fnIsFinite)
+    expect(isFiniteFilter(NaN, 2, 1)).toBe(2)
+
   })
   it('isEmpty etc.', () => {
     expect(expect$.isEmptyObject({})).toBe(true)

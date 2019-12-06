@@ -2,7 +2,7 @@
  * @module CustomUtils
  */
 
-import { App, zipEmptyData } from './zipEmptyData';
+import { zipEmptyData } from './zipEmptyData';
 import { pipe } from './pipe';
 import { uuid } from './uuid';
 import { downloadFile } from './downloadFile';
@@ -17,7 +17,6 @@ import { shiftKeyGroup } from './changeKeys'
 
 export {
   pipe,
-  App,
   uuid,
   downloadFile,
   zipEmptyData,

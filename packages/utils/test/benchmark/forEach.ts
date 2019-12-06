@@ -1,27 +1,37 @@
 /**
  * @jest-environment node
  */
+var __DEV__ = true
 import * as Utils from '../../src'
 // @ts-ignore
 import { Constant$ } from '../../src/Constransts'
 // import { BenchmarkUtils } from '@yuyi919/utils'
 const { isNumber } = Utils
 const { MAP$$, FOR_EACH$$, FOR_EACH, MAP } = Constant$
-
+const callbackfn = (r) => {
+  isNumber(r);
+  isNumber(r, true);
+}
 const runner = () => Utils.BenchmarkUtils.paramDiff({
-  'Function.call forEach': (A) => {
-    FOR_EACH(Utils.cloneDeep(A), (r) => {
-      isNumber(r);
-      isNumber(r, true);
-    })
-  },
   '尾递归forEach': (A) => {
-    FOR_EACH$$(Utils.cloneDeep(A), (r) => {
-      isNumber(r);
-      isNumber(r, true);
-    })
+    FOR_EACH$$((A), callbackfn)
   },
-}, [new Array(1000).fill(10)], { delay: 2000 })
+  'Function. forEach': (A) => {
+    (A).forEach(callbackfn)
+  },
+  'Function.call forEach': (A) => {
+    FOR_EACH((A), callbackfn)
+  },
+  '尾递归forEach2': (A) => {
+    FOR_EACH$$((A), callbackfn)
+  },
+  'Function.call forEach2': (A) => {
+    FOR_EACH((A), callbackfn)
+  },
+  'Function. forEach2': (A) => {
+    (A).forEach(callbackfn)
+  },
+}, [new Array(1000).fill(10)], { delay: 5000 })
 
 // tslint:disable-next-line: no-floating-promises
 runner().then((r) => {

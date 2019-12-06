@@ -1,7 +1,23 @@
 import { isNil, isString, trim } from './lodash';
 import { isNaN } from './isNumber';
 
-export const isNotNil = (v: any) => v !== null && v !== undefined
+/**
+  * 检查`value`是否为 `null` 或 `undefined`
+  * @param value 检查的`value`
+  * @return 是则返回`true`，不是则返回`false`
+  * @example
+  * isNotNil(null);
+  * // => false
+  *
+  * isNotNil(void 0);
+  * // => false
+  *
+  * isNotNil(NaN);
+  * // => true
+*/
+export function isNotNil(value: any): boolean {
+  return value !== null && value !== undefined
+}
 
 /**
  * 是否为空或异常值，不包括0
@@ -24,5 +40,6 @@ export function isEmptyValue(value: any): value is (null | undefined | '') {
 export function isNotEmptyValue(value: any): value is (string | number | boolean | object | Function) {
   return !isEmptyValue(value);
 }
+
 export { isNil };
 
