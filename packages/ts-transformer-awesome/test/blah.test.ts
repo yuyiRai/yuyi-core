@@ -2,12 +2,13 @@ import { writeFileSync } from 'fs';
 import path from 'path';
 import contextRequire from "require-context";
 import { compile } from '../src';
+import ts from 'typescript';
 
 // import '@types/webpack'
-for (const p of contextRequire(path.join(__dirname, './src'), true, /\.(ts|tsx)$/).keys()) {
+for (const p of contextRequire(path.join(__dirname, './src/Mobx'), true, /\.(ts|tsx)$/).keys()) {
   // test('work: ' + p, () => {
     // expect(
-      run(path.join(__dirname, './src', p))
+  run(path.join(__dirname, './src/Mobx', p))
       // ).toMatchSnapshot(p)
   // });
 }
@@ -29,20 +30,37 @@ for (const p of contextRequire(path.join(__dirname, './src'), true, /\.(ts|tsx)$
 export function run(path: string) {
   let r;
   compile([path], (fileName, fileText) => {
-    console.log(fileName, fileText)
+    // console.log(fileName, fileText)
     writeFileSync(fileName, fileText)
     r = fileText
   }, {
+      compilerOptions: {
+        target: ts.ScriptTarget.ES5,
+        module: ts.ModuleKind.ESNext
+      },
       importLibs: [
         '@material-ui/core',
         "@material-ui/icons",
         "lodash"
       ],
+      // useEnumerate: false,
+      // useMiniftyPrivate: false,
+      // useMacros: false,
+      useMobxDecorate: {
+        importName: 'mobx',
+        includeDecorate: [
+          'observable',
+          'computed',
+          'action',
+          'observable.ref',
+          'autobind'
+        ]
+      },
     // importLibs: ['lodash'],
     logger: true,
-    useEnumerate: false,
-    useTsxControlStatments: false,
-    useMacros: false
+    // useEnumerate: false,
+    // useTsxControlStatments: false,
+    // useMacros: false
   })
   return r
 }

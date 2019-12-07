@@ -35,10 +35,10 @@ local item_circle = iup.item {title = "Circle"}
 local menu_create = iup.menu {item_line, item_circle, submenu_triangle}
 
 -- Creates submenu create
-local submenu_create = iup.submenu {menu_create; title = "´´½¨"}
+local submenu_create = iup.submenu {menu_create; title = "ï¿½ï¿½ï¿½ï¿½"}
 
 -- Creates items of menu help
-local item_help = iup.item {title = "°ïÖú"}
+local item_help = iup.item {title = "ï¿½ï¿½ï¿½ï¿½"}
 
 -- Creates menus of the main menu
 local menu_file = iup.menu {item_new, item_open, item_close, iup.separator{}, item_exit }
@@ -73,11 +73,11 @@ end
 local tmp = {
   file = '**'
 }
--- ¶¨ÒåÏÔÊ¾»Øµ÷
+-- ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¾ï¿½Øµï¿½
 function dlg:show_cb()
   -- local colordlg = iup.colorbrowser{}
   -- iup.Popup(colordlg, iup.CENTER, iup.CENTER)
-  res, inf, outf = iup.GetParam("Title", nil, [[
+  local res, inf, outf = iup.GetParam("Title", nil, [[
       Input File %f[SAVE,,,]
       Output File %f[SAVE,,,]
     ]], "*", "*")

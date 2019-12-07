@@ -9,6 +9,7 @@
 import '../../env'
 import ts from 'typescript';
 import { AstUtils$$ } from './AstUtils';
+import { createVisitNodeAndChildren } from './visitNodeAndChildren';
 
 const FUNCTION_SYMBOL = 'FilterFunction';
 
@@ -37,101 +38,14 @@ export default function (program: ts.Program): ts.TransformerFactory<ts.Node> {
     config.needImport = false
     config.needClear = []
 
-    let { node } = visitNodeAndChildren(file, program, context)
+    let { next } = createVisitNodeAndChildren(visitNode, config)(file, program, context)
     if (config.needImports.size > 0) {
       if (__DEV__)
         console.log(config.needImports)
       AstUtils$$.createVariableStatement$$('')
     }
-    return node;
+    return next;
   };
-}
-
-function visitNodeAndChildren(node: ts.Node, program: ts.Program, context: ts.TransformationContext): {
-  node: ts.Node,
-  preLine: ts.Statement[],
-  afterLine: ts.Statement[],
-  parentHooks: AstUtils$$.UpdateHook[]
-} {
-  const { next, needImport, preLine = [], afterLine = [], parentHooks = [] } = visitNode(node, program, context)
-  if (needImport && !config.needImport) {
-    config.needImport = true
-  }
-  let childrenPreLines: typeof preLine = []
-  let childrenAfterLines: typeof preLine = []
-  let childrenParentHooks: typeof parentHooks = []
-  let nextNodeAndChildren: ts.Node = ts.visitEachChild(
-    next,
-    (childNode) => {
-      const { node, preLine: childrenPreLine, afterLine: childrenAfterLine, parentHooks: childrenParentHook } = visitNodeAndChildren(childNode, program, context)
-      if (childrenPreLine) {
-        childrenPreLines.push(...childrenPreLine)
-      }
-      if (childrenAfterLine) {
-        childrenAfterLines.push(...childrenAfterLine)
-      }
-      if (childrenParentHook) {
-        childrenParentHooks.push(...childrenParentHook)
-      }
-      return node
-    },
-    context,
-  ) as ts.SourceFile
-  const updated = updateBlock(node, (statements, replacedStatements) => {
-    return ([
-      ...childrenPreLines,
-      ...statements.reduce((r, statement, index) => {
-        let result: ts.Node[] | null = [replacedStatements[index]]
-        childrenParentHooks = childrenParentHooks.filter(hook => {
-          if (hook instanceof Function) {
-            const replaced = hook(statement, replacedStatements[index] as any)
-            if (replaced) {
-              result = replaced
-              return false
-            }
-            return true
-          }
-          return false
-        })
-        return result ? r.concat(result) : r
-      }, [] as ts.Node[]),
-      ...childrenAfterLines
-    ]) as ts.Statement[]
-  }, nextNodeAndChildren)
-  if (!updated) {
-    preLine.push(...childrenPreLines)
-    afterLine.push(...childrenAfterLines)
-  }
-  parentHooks.push(...childrenParentHooks);
-  return {
-    node: updated || nextNodeAndChildren,
-    preLine,
-    afterLine,
-    parentHooks
-  };
-}
-
-export function updateBlock(node: ts.Node, statements: (statements: ts.Statement[], statements2: ts.Statement[]) => ts.Statement[], replaced = node) {
-  if (ts.isBlock(node) && ts.isBlock(replaced)) {
-    return ts.updateBlock(node, statements([...node.statements], [...replaced.statements]))
-  } else if (ts.isSourceFile(node) && ts.isSourceFile(replaced)) {
-    return ts.updateSourceFileNode(node, statements([...node.statements], [...replaced.statements]))
-  }
-  return false
-}
-
-export function mapChildren(children: ts.NodeArray<any> | ts.Node[], times = 1) {
-  const r = [] as any[]
-  if (times !== 0) {
-    for(const c of children) {
-      r.push(mapChildren(c.getChildren(), times - 1))
-    }
-  } else {
-    for (const c of children) {
-      r.push(c.getText())
-    }
-  }
-  return r
 }
 
 // export function visitImportNode(node: ts.Node, program: ts.Program, context: ts.TransformationContext): ts.NamedImports | ts.Node {

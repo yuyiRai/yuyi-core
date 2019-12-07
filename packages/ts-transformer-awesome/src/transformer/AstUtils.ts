@@ -1,13 +1,15 @@
-import ts from 'typescript';
-
+import ts, { Expression, Identifier } from 'typescript';
+import { castArray } from 'lodash'
 export namespace AstUtils$$ {
+
   /**
    * 创建简单变量行
    * @param name 名称
    * @param value 表达式
    */
-  export function createVariableStatement$$(name: string | ts.Identifier | ts.ObjectBindingPattern | ts.ArrayBindingPattern, value?: ts.Expression, isLet = false) {
+  export function createVariableStatement$$(name: string | ts.Identifier | ts.ObjectBindingPattern | ts.ArrayBindingPattern, value?: ts.Expression, isLet = false, preModifier: ts.Modifier[] | ts.ModifiersArray = []) {
     return ts.createVariableStatement([
+      ...preModifier,
       ts.createToken((!isLet ? ts.SyntaxKind.ConstKeyword : ts.SyntaxKind.LetKeyword) as any)
     ], [
       ts.createVariableDeclaration(name, undefined, value)
@@ -22,6 +24,19 @@ export namespace AstUtils$$ {
     return createIsNot$$(sub, ts.createNull(), strict);
   }
 
+  /**
+   * 创建是否为XXX的判断语句
+   * @param sub
+   * @param target 
+   */
+  export function createSetVar$$(sub: ts.Identifier, target: ts.Expression = ts.createIdentifier('undefined')) {
+    const { EqualsToken } = ts.SyntaxKind;
+    return ts.createExpressionStatement(ts.createBinary(
+      sub,
+      EqualsToken,
+      target
+    ));
+  }
   /**
    * 创建是否为XXX的判断语句
    * @param sub
@@ -399,6 +414,34 @@ export namespace AstUtils$$ {
     return [tmpDeclare, block]
   }
 
+  export function useName(name: string | ts.Identifier): ts.Identifier;
+  export function useName(name?: string | ts.Identifier): ts.Identifier | undefined;
+  export function useName(name: string | ts.Identifier | undefined): ts.Identifier | undefined {
+    return typeof name === 'string' ? ts.createIdentifier(name) : name
+  }
+  export function useNameOrExpression(name: string | ts.Identifier | ts.CallExpression): ts.Identifier | ts.CallExpression;
+  export function useNameOrExpression(name: string | ts.Identifier | ts.CallExpression | undefined): ts.Identifier | ts.CallExpression | undefined;
+  export function useNameOrExpression(name: string | ts.Identifier | ts.CallExpression | undefined): ts.Identifier | ts.CallExpression | undefined {
+    return typeof name === 'string' ? ts.createIdentifier(name) : name;
+  }
+
+  export function createNamedImports(moduleName: string, importNames: (string | ts.Identifier | [ts.Identifier, ts.Identifier])[]) {
+    return ts.createImportDeclaration(
+      undefined,
+      undefined,
+      ts.createImportClause(
+        undefined /** ？？ **/,
+        ts.createNamedImports(
+          importNames.map(names => {
+            const [name, asName = undefined] = castArray(names);
+            const nameIdent = useName(name)
+            return ts.createImportSpecifier(useName(asName) /** 别名**/, nameIdent)
+          })
+        )
+      ),
+      ts.createStringLiteral(moduleName)
+    )
+  }
   /**
    * 
    * @param expressList 
@@ -461,6 +504,42 @@ export namespace AstUtils$$ {
     }
   }
 
+  export function createObjectWithDeclare(obj: Record<string, string | Expression | Identifier>) {
+    return createObjectWithEntries(Object.entries(obj))
+  }
+  export function createObjectWithEntries(entries: [string, string | Expression | Identifier][], stringKey = false) {
+    return ts.createObjectLiteral(entries.map(([key, value]: [string, string | Expression | Identifier]) => {
+      return ts.createPropertyAssignment(stringKey ? ts.createStringLiteral(key) : key, typeof value === 'string' ? ts.createIdentifier(value) : value);
+    }));
+  }
+
   export type UpdateNodeResults = [ts.Expression, ts.Statement[]?, ts.Statement[]?]
-  export type UpdateHook = (sourceNode: ts.Node, replaceNode: ts.Node) => ts.Node[] | false
+  export type UpdateHook = (sourceNode: ts.Node, replaceNode: ts.Node, rollupParams?: any[]) => ts.Node[] | false
+
+
+  /**
+   * 抽取类装饰器
+   * @param node 类定义节点
+   * @param decortor 装饰器（名称或者表达式）
+   * @param appendParams 装饰器方法首个参数必定为类自身，通过此追加参数
+   * @param placeholderName 如果是无名类，提供默认名称
+   */
+  export function extractClassCallExpression(
+    node: ts.ClassDeclaration,
+    decortor: string | ts.Identifier | ts.CallExpression,
+    appendParams: any[],
+    placeholderName?: string | ts.Identifier
+  ) {
+    const modifiers = node.modifiers;
+    const classT = ts.createClassExpression(undefined, node.name, node.typeParameters, node.heritageClauses, node.members);
+    return createVariableStatement$$(
+      node.name || useName(placeholderName) || ts.createIdentifier('tmp'),
+      ts.createCall(useNameOrExpression(decortor), undefined, [
+        classT,
+        ...appendParams
+      ]),
+      false,
+      modifiers
+    );
+  }
 }

@@ -18,3 +18,4 @@ build
 markdown
 *.d.ts
 *.map
+*.7z

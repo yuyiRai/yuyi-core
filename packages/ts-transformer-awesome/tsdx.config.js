@@ -1,13 +1,15 @@
 const rollup_plugin_typescript = require("rollup-plugin-typescript2");
 const external = require('rollup-plugin-peer-deps-external')
 const rollup_plugin_terser = require("rollup-plugin-terser");
+const resolve = require("rollup-plugin-node-resolve");
 // const { transformers } = require('./transformers')
 const utils_1 = require("tsdx/dist/utils");
+const package = require('./package.json')
 // const ts = require("@wessberg/rollup-plugin-ts");
 // const path = require('path')
 // const fs = require('fs-extra')
-// const { getCustomTransformers } = require('@yuyi919/ts-transformer-awesome')
-
+// const getCustomTransformers = require('@yuyi919/ts-transformer-awesome').default
+// const v = getCustomTransformers({})
 // const resolve = (path) => {
 //   return path.join(__dirname, path)
 // }
@@ -15,58 +17,35 @@ const utils_1 = require("tsdx/dist/utils");
 
 const filter = [
   'babel-plugin-transform-async-to-promises/helpers',
-  '@material-ui/core'
+  // '@material-ui/core',
+  // "ts-is-kind",
+  // "tslib",
+  // '@avensia-oss/ts-transform-hoist-objects-in-props',
+  // 'reflect-metadata',
+  // 'ts-import-plugin',
+  // 'ts-nameof',
+  // 'ts-optchain',
+  // 'ts-plugin-mmlpx',
+  // 'ts-transform-react-constant-elements',
+  // 'ts-transformer-enumerate',
+  // 'ts-transformer-keys',
+  // 'ts-transformer-minify-privates',
+  // 'tsx-control-statements',
+  // 'typescript-is',
+  // 'typescript-transform-macros',
+  // 'typescript-transform-paths',
+  // 'typesmith'
 ]
+console.log(filter)
 module.exports = {
   // This function will run for each entry/format/env combination
   rollup(config, options) {
     // console.log(options)
     const { plugins } = config;
+    plugins.push(resolve())
     // swap out rollup-plugin-typescript2
     config.plugins = plugins.map(p => {
-      if (p && p.name === 'terser') {
-        return rollup_plugin_terser.terser({
-          sourcemap: true,
-          output: {
-            beautify: true,
-            comments: false
-          },
-          // nameCache,
-          compress: {
-            keep_infinity: true,
-            hoist_funs: true,
-            hoist_props: true,
-            pure_getters: true,
-            passes: 10,
-            global_defs: {
-              "@Object.entries": "console.log"
-            },
-          },
-          mangle: {
-            properties: {
-              keep_quoted: true,
-              regex: /^_|\$\$$|(^([A-Z0-9$_])+$)/
-            },
-            toplevel: true
-          },
-          ecma: 5,
-          toplevel: options.format === 'cjs',
-          warnings: true,
-        })
-      } else if (p && p.name === "rpt2") {
-        // return ts({
-        //   tsconfig: tsconfig => {
-        //     return {
-        //       ...tsconfig,
-        //       target: "ESNext",
-        //       sourceMap: true,
-        //       declaration: true
-        //     };
-        //   },
-        //   transpileOnly: true,
-        //   transformers,
-        //   transpiler: "typescript"
-        // });
+      if (p && p.name === "rpt2") {
         return rollup_plugin_typescript({
           typescript: require('typescript'),
           cacheRoot: `./node_modules/.cache/.rts2_cache_${options.format}`,
@@ -99,9 +78,9 @@ module.exports = {
       }
       return p;
     });
-    config.plugins.unshift(external({
-      includeDependencies: true
-    }))
+    // config.plugins.unshift(external({
+    //   includeDependencies: true
+    // }))
     // config.plugins.shift(multiEntry());
     // config.plugins.push(
     //   visualizer({

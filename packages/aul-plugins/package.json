@@ -10,19 +10,27 @@
     "cupx": ".bin/upx.bat"
   },
   "scripts": {
+    "dev": "yarn gulp watch-scripts",
     "start": "lua src/main.lua",
-    "build": "luac -o build/YuyiCore.lua src/YuyiCore.lua",
+    "build": "yarn gulp build-bin",
+    "build2": "yarn gulp build-script",
+    "build:main": "yarn gulp build-main",
+    "build:lib": "yarn gulp build-lib",
+    "build:luac": "luac -s -o lib/main.luac lib/main.lua",
+    "gulp": "gulp --cwd . -f ./scripts/gulp.ts",
     "iupdll": "ciuplua iup/olecontrol_browser.wlua iup/olecontrol_browser.exe",
-    "dist": "ciuplua src/main.lua build/main.exe",
+    "dist": "ciuplua lib/main.luac build/main.exe",
     "upx": "cupx build/main.exe min.exe",
     "upx:help": "cupx -h",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "CHCP 65001 && yarn test:native",
+    "test:native": "lua ./test.lua \"([？！。」]+)\""
   },
   "author": "",
   "license": "ISC",
   "gitHead": "b6a439f1d79269da2843d054887dd42e7a7555c7",
   "devDependencies": {
-    "typescript": "3.6.4"
+    "gulp-convert-encoding": "^2.0.1",
+    "typescript": "^3.6.4"
   },
   "dependencies": {
     "@yuyi919/utils": "^0.0.60"

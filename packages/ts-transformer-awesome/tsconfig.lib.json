@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "allowJs": true,
+    "module": "commonjs",
+    "outDir": "./",
+    "importHelpers": false,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "declarationDir": "./",
+    "removeComments": true,
+    "baseUrl": "./src",
+    "rootDir": "./src",
+    "paths": {}
+  },
+  "files": ["./src/env.ts", "./src/tslib-extra.ts"]
+}
