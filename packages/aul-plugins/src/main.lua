@@ -10,6 +10,6 @@ package.path = package.path..table.concat({
   "src/utils/?.lua"
 }, ";")    --搜索lua模块
 require("YuyiCore")
-local show = require("utils.Frame")
+local show = require("utils/Frame")
 
 show()

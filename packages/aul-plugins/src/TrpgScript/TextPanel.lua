@@ -1,5 +1,5 @@
 -- 配置对象
-require "YuyiCore"
+require("../YuyiCore")
 
 local TextPanel = {}
 local Utils = {}
@@ -9,7 +9,7 @@ TextPanel.Utils = Utils
 TextPanel.KEY_LineSize = "lineSize"
 TextPanel.KEY_LinePrefix = "linePrefix"
 TextPanel.KEY_LineSuffix = "lineSuffix"
-TextPanel.KEY_IsDebug = "IsDebug"
+TextPanel.KEY_IsDebug = "IsDebug" 
 local Config = {
   fontType = "Arial",
   fontSize = 35,

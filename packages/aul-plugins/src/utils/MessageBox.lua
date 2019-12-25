@@ -1,5 +1,5 @@
 local iup = require( "iuplua" )
-local defaultParam = { "确定", "取消" }
+local defaultParam = { "确锟斤拷", "取锟斤拷" }
 local MessageBox = {}
 function MessageBox.alarm(title, message, ...)
   local param = { ... }

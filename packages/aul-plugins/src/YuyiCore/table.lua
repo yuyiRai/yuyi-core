@@ -1,4 +1,4 @@
-local lib = require('YuyiCore.lib')
+local lib = require('lib')
 local utils = {}
 
 local function concatTableWithTable(target, source)

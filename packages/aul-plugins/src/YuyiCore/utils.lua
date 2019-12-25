@@ -1,7 +1,7 @@
-local baseLib = require('YuyiCore.lib')
-local tableLib = require('YuyiCore.table')
-local strLib = require('YuyiCore.string')
-local class = require('YuyiCore.class')
+local baseLib = require('lib')
+local tableLib = require('table')
+local strLib = require('string')
+local class = require('class')
 
 local utils = class.classBase(baseLib, {
   class.create(tableLib),

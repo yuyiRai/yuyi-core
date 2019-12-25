@@ -1,5 +1,5 @@
-local lib = require("YuyiCore.lib")
-local tableLib = require("YuyiCore.table")
+local lib = require("lib")
+local tableLib = require("table")
 local utils = {}
 local keyN = '\n'
 

@@ -1,5 +1,5 @@
 -- Core
-local utils = require('YuyiCore.utils')
+local utils = require('./YuyiCore/utils')
 
 local YuyiCore = utils.module({
   _vars = {
@@ -30,7 +30,7 @@ end
 --       local v = format == true and getUnicode(utfChar) or utfChar
 --       -- print(v, utfChar)
 --       table.insert(tb, v)
---     end
+--     end 
 --     return tb
 -- end
 

@@ -1,5 +1,5 @@
 --class.lua
-local tableLib = require('YuyiCore.table')
+local tableLib = require('table')
 local _class = { }
 local function instanceof(self_ptr, compare_class)
     if not compare_class or not self_ptr then return false end
@@ -52,8 +52,8 @@ local function classBase(defined, super)
       setmetatable(vtbl, {
         __index =
         function(target, key)
-          if key and __proto__[key] then
-            return __proto__[key]
+          if key and class_type.__proto__[key] then
+            return class_type.__proto__[key]
           elseif key and super ~= nil and #super > 0 then
             local find, length = tableLib.findMapTableWith(_class, super)
             if key and find then
@@ -71,7 +71,7 @@ local function classBase(defined, super)
         end
       } )
     else
-      setmetatable(vtbl, { __index = __proto__ })
+      setmetatable(vtbl, { __index = class_type.__proto__ })
     end
     
     return class_type
