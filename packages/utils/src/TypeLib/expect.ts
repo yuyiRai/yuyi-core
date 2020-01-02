@@ -94,3 +94,5 @@ export const typeUtils = {
   isEmptyObject,
   isNotEmptyObject,
 };
+
+// export const typeUtilsKeys = tsKeys<typeof typeUtils>()

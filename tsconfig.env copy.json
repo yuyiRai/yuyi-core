@@ -1,0 +1,66 @@
+{
+  "compilerOptions": {
+    "declaration": true,
+    "declarationDir": "lib",
+    "allowJs": false,
+    "declarationMap": true,
+    "outDir": "types",
+    "rootDir": ".",
+    "baseUrl": "./",
+    "paths": {
+      "@yuyi/*": [
+        "package/*/src"
+      ],
+      "@/*": [
+        "./src/*"
+      ],
+      "*": [
+        "node_modules",
+        "package"
+      ]
+    },
+    "plugins": [
+      {
+        "transform": "@yuyi919/ts-transformer-awesome",
+        "importLibs": [
+          "lodash",
+          {
+            "libraryName": "antd",
+            "libraryDirectory": "lib",
+            "style": "css"
+          },
+          {
+            "libraryName": "rxjs/operators",
+            "libraryDirectory": "../_esm5/internal/operators",
+            "camel2DashComponentName": false,
+            "transformToDefaultImport": false
+          },
+          {
+            "libraryName": "rxjs",
+            "libraryDirectory": "_esm5/internal/observable",
+            "camel2DashComponentName": false,
+            "transformToDefaultImport": false
+          },
+          {
+            "style": false,
+            "libraryName": "@material-ui/core",
+            "libraryDirectory": "",
+            "camel2DashComponentName": false
+          },
+          {
+            "libraryName": "element-ui",
+            "libraryDirectory": "lib",
+            "camel2DashComponentName": true,
+            "style": false
+          },
+          {
+            "libraryName": "element-react",
+            "libraryDirectory": "dist/npm/es6/src",
+            "camel2DashComponentName": true,
+            "style": false
+          }
+        ]
+      }
+    ]
+  }
+}

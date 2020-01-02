@@ -2,8 +2,9 @@
 
 declare global {
   namespace NodeJS {
+    // @ts-ignore
     interface Global {
-      __DEV__?: boolean;
+      __DEV__: boolean;
     }
   }
 }
@@ -66,10 +67,6 @@ export namespace Constant$ {
   export var KEY_FUNC: 'function' = 'function';
   export var KEY_OBJ: 'object' = 'object';
   export var KEY_VAL: 'value' = DefPropDec$$.V;
-  export var TRUE: true = true;
-  export var FALSE: false = false;
-  export var UNDEFINED = undefined;
-  export var NULL = null;
   export var ARRAY = Array;
   export var IS_ARR = ARRAY.isArray;
   export var FUNCTION = Function;
@@ -78,7 +75,10 @@ export namespace Constant$ {
   export var REGEXP = RegExp;
   // tslint:disable-next-line: variable-name
   export var OBJECT = Object;
-  export var EMPTY_OBJECT = OBJECT.seal(OBJECT.create(null))
+  export var KEY_DESIGN_TYPE: "design:type" = "design:type";
+  export var KEY_DESIGN_RETURNTYPE: "design:returntype" = "design:returntype"; 
+  export var KEY_DESIGN_PARAMTYPES: "design:paramtypes" = "design:paramtypes";
+  export var EMPTY_OBJECT = OBJECT.seal(OBJECT.create(null));
 	/**
 	 * ```ts
 	 * Object.keys
@@ -204,6 +204,10 @@ export namespace Constant$ {
   export const MAP = INSTANCE_BIND(ARRAY, 'map') as {
     <T extends any, R = T>(arr: T[], callbackfn: ArrayIterator<T, R>, initialValue?: any[]): R[]
   }
+
+  export function DEFINED_ESMODULE(_exports: any, desc: any) {
+    return Object.defineProperty(_exports, "__esModule", desc)
+  }
   // MAP()
   /**
    * 原生的Array.prototype.some改为函数调用
@@ -221,6 +225,14 @@ export namespace Constant$ {
    */
   export const FOR_EACH = INSTANCE_BIND(ARRAY, 'forEach') as {
     <T extends any>(arr: T[], callbackfn: ArrayIterator<T, any>): void;
+  };
+  /**
+   * 原生数组的concat改为函数调用
+   * @param arr
+   * @param callbackfn
+   */
+  export const ARR_CONCAT = INSTANCE_BIND(ARRAY, 'concat') as {
+    <T extends any[]>(...arr: T[]): T[];
   }
   /**
    * 原生数组的silce改为函数调用
@@ -280,7 +292,7 @@ export namespace Constant$ {
     (reg: RegExp, str: string): boolean
   }
 
-  export const delay$$ = setTimeout;
+  export const delay$$ = BIND(setTimeout, global);
 
   /**
    *
@@ -310,12 +322,16 @@ export namespace Constant$ {
       return true
     }
   }
-  export function FOR_EACH_P$$<T>(arr: T[], callbackfn: ArrayIterator<T, any>, tmp: { i: number }, length: number) {
+  function FOR_EACH_P$$<T>(arr: T[], callbackfn: ArrayIterator<T, any>, tmp: { i: number }, length: number) {
     callbackfn(arr[tmp.i], tmp.i, arr)
     // console.trace('test')
     // @ts-ignore
     return tmp.i++ < length ? FOR_EACH_P$$(arr, callbackfn, tmp, length) : true
   }
+
+
+  //
+  export var Key_useDeprecatedSynchronousErrorHandling$$ = 'useDeprecatedSynchronousErrorHandling'
 }
 
 declare global {
@@ -324,7 +340,7 @@ declare global {
   }
   type TKey = string | number | symbol
   type IKeyValueMap<V = any, K extends TKey = TKey> = Record<K, V>
-  var K$: typeof Constant$;
+  // var K$: typeof Constant$;
 }
 
 // @ts-ignore

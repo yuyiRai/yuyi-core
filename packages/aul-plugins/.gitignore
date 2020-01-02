@@ -7,6 +7,7 @@ coverage
 .idea
 dist
 compiled
+backup
 .awcache
 .rpt2_cache
 docs
@@ -19,3 +20,7 @@ markdown
 *.d.ts
 *.map
 *.7z
+AviutlDevelopingScripts
+iupdll/**
+rikkymodule&memory
+*.exe

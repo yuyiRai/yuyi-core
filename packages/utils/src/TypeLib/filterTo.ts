@@ -11,12 +11,14 @@ export function filterTo<Target>(expect: (target: any) => boolean): Target | voi
     if (expect(v = arguments[i])) return v;
   return;
 }
+// @ts-ignore
 filterTo[Constant$.KEY_EXTEND] = function <T>(expect: (value: any) => boolean): FilterFunction<T> {
   return Constant$.BindArg$$(filterTo, expect) as any
 }
 
 export declare namespace filterTo {
-  var extend: <T>(expect: (value: any) => boolean) => FilterFunction<T>
+  // @ts-ignore
+  var extend: <T>(expect: (value: any) => boolean) => FilterFunction<T>;
 }
 
 // function filterToExtra<Target>(expect: (target: any) => boolean, ...values: any[]): Target | undefined;

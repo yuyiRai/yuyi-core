@@ -9,8 +9,8 @@
   ],
   "private": false,
   "main": "dist/index.js",
-  "types": "lib/index.d.ts",
-  "typings": "lib/index.d.ts",
+  "types": "lib/index.export.d.ts",
+  "typings": "lib/index.export.d.ts",
   "files": [
     "dist",
     "types",
@@ -49,11 +49,10 @@
     "deploy-docs": "gh-pages -d docs",
     "lint": "tslint --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
     "prebuild": "rimraf dist/**/*.js && rimraf dist/**/*.map && rimraf dist/**/*.d.ts",
-    "build": "ttsc --build && cross-env NODE_ENV=production rollup -c rollup.config.ts",
-    "build2": "cross-env NODE_ENV=production rollup -c rollup.config2.ts",
+    "build": "ttsc --build && cross-env NODE_ENV=production ts-node -O \"{ \\\"module\\\": \\\"CommonJS\\\" }\" -T ./config/rollup.config.ts",
     "build3": "ttsc --build && tsdx build --noClean",
     "build4": "tsdx build -h",
-    "start": "cross-env NODE_ENV=development rollup -c rollup.config.ts -w",
+    "start": "cross-env NODE_ENV=development rollup -c ./config/rollup.config.ts -w",
     "start:all": "yarn start && yarn run docs:watch",
     "benchmark": "yuyi -c ttypescript exec test/benchmark/forEach.ts",
     "test": "jest",
@@ -62,9 +61,7 @@
     "test:prod": "npm run lint && npm run test -- --no-cache",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
     "pub": "npm publish --access=public",
-    "commit": "git-cz",
-    "precommit": "lint-staged",
-    "travis-deploy-once": "travis-deploy-once"
+    "rimraf": "rimraf"
   },
   "lint-staged": {
     "{src,test}/**/*.ts": [
@@ -114,10 +111,6 @@
       "@commitlint/config-conventional"
     ]
   },
-  "peerDependencies": {
-    "argparse": "^1.0.10",
-    "lodash": "^4.17.15"
-  },
   "devDependencies": {
     "@commitlint/cli": "^8.0.0",
     "@commitlint/config-conventional": "^8.0.0",
@@ -136,7 +129,7 @@
     "gulp-convert": "^0.2.0",
     "gulp-shell": "^0.7.1",
     "gulp-yml-merge": "^0.0.2",
-    "husky": "^2.3.0",
+    "husky": "^3.1.0",
     "immer": "^5.0.0",
     "jest": "^24.9.0",
     "jest-config": "^24.9.0",
@@ -150,16 +143,17 @@
     "mobx-utils": "^5.5.2",
     "prettier": "^1.18.2",
     "replace-in-file": "^4.1.0",
-    "rimraf": "^2.6.2",
+    "rimraf": "^3.0.0",
     "rollup": "^1.27.8",
     "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-dts": "^1.1.5",
+    "rollup-plugin-dts": "^1.1.12",
     "rollup-plugin-json": "^4.0.0",
     "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-peer-deps-external": "^2.2.0",
     "rollup-plugin-sourcemaps": "^0.4.2",
-    "rollup-plugin-terser": "^5.1.2",
-    "rxjs": "^6.5.2",
+    "rollup-plugin-terser": "^5.1.3",
+    "rollup-plugin-visualizer": "^3.0.0",
+    "rxjs": "^6.5.3",
     "shelljs": "^0.8.3",
     "travis-deploy-once": "^5.0.9",
     "ts-jest": "^24.0.2",
@@ -167,7 +161,7 @@
     "tslint": "^5.18.0",
     "tslint-config-prettier": "^1.15.0",
     "tslint-config-standard": "^8.0.1",
-    "typescript": "3.6.4",
+    "typescript": "^3.6.4",
     "typescriptcollectionsframework": "^4.4.10"
   },
   "gitHead": "597143961bd701bb3522727988cb256d97025955"

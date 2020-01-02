@@ -46,8 +46,7 @@ export function getPropByPath<
     let key = keyArr[i];
     if (key in tempObj) {
       tempObj = tempObj[key];
-    }
-    else {
+    } else {
       if (strict) {
         throw new Error('please transfer a valid prop path to form item!');
       }
@@ -61,6 +60,36 @@ export function getPropByPath<
   };
 }
 
+export function getPropByPath2<
+  Target = any,
+  ExpectValue = any,
+  DeepTarget = Target
+>(
+  obj: Target, path: string, strict = false
+): IGetPathResult<ExpectValue, DeepTarget> {
+  // tslint:disable-next-line: one-variable-per-declaration
+  let keyArr = path.replace(/\[(\w+)\]/g, '.$1').replace(/^\./, '').split('.'),
+    tempObj: DeepTarget = obj as any,
+    i = -1,
+    len = keyArr.length - 1,
+    key: string;
+  while (tempObj && ++i < len) {
+    if ((key = keyArr[i]) in tempObj) {
+      tempObj = tempObj[key];
+    } else {
+      if (strict) {
+        throw new Error('please transfer a valid prop path to form item!');
+      }
+      break;
+    }
+  }
+  return {
+    deep: i,
+    innerObj: tempObj,
+    key: keyArr[i],
+    value: tempObj ? tempObj[keyArr[i]] : null
+  };
+}
 export interface IGetPathResult<ExpectValue, DeepT> {
   /**
    * 解析到达最深处的对象
@@ -74,4 +103,5 @@ export interface IGetPathResult<ExpectValue, DeepT> {
    * 预期解析得到的值
    */
   value: ExpectValue;
+  deep?: number;
 }

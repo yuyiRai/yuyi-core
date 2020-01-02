@@ -1,8 +1,8 @@
 import { Layer, Psd, readPsd } from 'ag-psd';
 import 'ag-psd/initialize-canvas'; // only needed for reading image data and thumbnails
-import * as fs from 'fs';
+import * as fs from 'fs-extra';
 import paths from 'path';
-import './encoding';
+import { detect, toStr } from './encoding';
 // import { FileUtil } from './main/index';
 
 export default interface ILayerTree {
@@ -18,7 +18,7 @@ const pathGroup: { [key: string]: any } = {}
 export class Utils {
   public static findLayer(child: Layer | Psd): ILayerTree | null {
     const { name, canvas, children } = child;
-    const layerName = (name || '').toStr();
+    const layerName = toStr(name || '', "UTF8", "UTF8");
     if (canvas && name) {
       return { [layerName]: child }
     } else if (children) {
@@ -34,7 +34,15 @@ export class Utils {
   }
 
   public static getTree(child: any): ILayer | null {
-    const layerName = (child.get('name') || '').toStr();
+    const layerName = (child.get('name') || '');
+
+    console.log(layerName, detect(layerName, "ASCII"));
+    console.log(layerName, detect(layerName, "AUTO"));
+    console.log(layerName, detect(layerName, "UTF16LE"), toStr(layerName, "SJIS", "UTF16LE"));
+    console.log(layerName, detect(layerName, "UTF16BE"), toStr(layerName, "SJIS", "UTF16BE"));
+    console.log(layerName, detect(layerName, "UTF8"));
+    console.log(layerName, detect(layerName, "SJIS"));
+    console.log(layerName, detect(layerName, "GB2312"), toStr(layerName, "GB2312", "SJIS"))
     child.name = layerName;
     // this.getMask(child)
     if (child.hasChildren()) {
@@ -68,18 +76,23 @@ export class Utils {
     // })
 
     // console.log(fs.readFileSync(userFolder+fileName+'.pfv', 'utf8'))
-    const buffer = fs.readFileSync(userFolder + fileName + '.psd');
-    // read only document structure
+    const filePath = userFolder + fileName + '.psd'
+    const buffer = fs.readFileSync(filePath);
+    // // read only document structure
+    // console.log(detect(buffer, "EUCJP"));
+    // console.log(detect(buffer, "BINARY"))
+    // fs.writeFileSync(__dirname + "\\test.psd", toStr(buffer, "SJIS"), { encoding: "base64" })
     const psd1 = readPsd(buffer);
+    // psd1.metadata
     // console.log(psd1, psd1.children && psd1.children.length);
-    // const tree: ILayerTree | null = Utils.findLayer(psd1)
+    const tree2: ILayerTree | null = Utils.findLayer(psd1)
     // if(tree != null){
     //   for(const item of Object.keys(tree)){
     //     console.log(item, tree[item].canvas)
     //     Utils.output(userFolder, tree[item])
     //   }
     // }
-    const psd = PSD.fromFile(userFolder + fileName + '.psd');
+    const psd = PSD.fromFile(filePath);
     psd.parse();
     const nativeTree = psd.tree()
     const tree: any = Utils.getTree(nativeTree);
@@ -95,9 +108,9 @@ export class Utils {
     const outPath = paths.join(userFolder, "resource", pathFolder.replace(layer.name, "").replace(/\!/ig, "force-").replace(/\*/ig, "select-"));
     const { ensureDirSync } = require('fs-extra')
     if (!fs.existsSync(outPath)) {
-      ensureDirSync(outPath)
+      fs.mkdirSync(outPath)
     }
-    fs.writeFileSync(paths.join(outPath, fileName + '.txt'), fileName);
+    fs.writeFileSync(paths.join(outPath, 'testt' + fileName + '.txt'), fileName);
     // if (layer.canvas) {
     //   return fs.writeFileSync(paths.join(outPath, fileName + '.png'), layer.canvas.toBuffer('image/png'));
     // } else if (layer.name.indexOf('.mask') == -1) {

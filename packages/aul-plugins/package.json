@@ -1,6 +1,6 @@
 {
   "name": "aul-plugins",
-  "version": "0.0.5",
+  "version": "0.0.7",
   "description": "",
   "main": "index.js",
   "private": true,
@@ -10,26 +10,32 @@
     "cupx": ".bin/upx.bat"
   },
   "scripts": {
-    "dev": "yarn gulp watch-scripts",
+    "dev": "yarn gulp dev:scripts",
     "start": "lua src/main.lua",
-    "build": "yarn gulp build-bin",
-    "build2": "yarn gulp build-script",
-    "build:main": "yarn gulp build-main",
-    "build:lib": "yarn gulp build-lib",
+    "build": "yarn gulp default",
+    "build:bin": "yarn gulp build:bin",
+    "build:script": "yarn gulp build:script",
+    "build2": "luapak merge ./src/YuyiCore/lib.lua ./src/YuyiCore/class.lua ./src/YuyiCore/string.lua ./src/YuyiCore/table.lua  ./src/YuyiCore/utils.lua ./src/YuyiCore.lua -o ./lib/YuyiCore_min.lua",
+    "build:main": "yarn gulp build:main",
+    "build:lib": "yarn gulp build:lib",
     "build:luac": "luac -s -o lib/main.luac lib/main.lua",
     "gulp": "gulp --cwd . -f ./scripts/gulp.ts",
     "iupdll": "ciuplua iup/olecontrol_browser.wlua iup/olecontrol_browser.exe",
     "dist": "ciuplua lib/main.luac build/main.exe",
     "upx": "cupx build/main.exe min.exe",
     "upx:help": "cupx -h",
-    "test": "CHCP 65001 && yarn test:native",
-    "test:native": "lua ./test.lua \"([？！。」]+)\""
+    "test": "yarn gulp test",
+    "test:watch": "yarn gulp test:watch",
+    "test:utf8": "CHCP 65001 && lua ./test.lua \"([？！。」]+)\""
   },
   "author": "",
   "license": "ISC",
   "gitHead": "b6a439f1d79269da2843d054887dd42e7a7555c7",
   "devDependencies": {
-    "gulp-convert-encoding": "^2.0.1",
+    "gulp-luaminify": "^0.0.1",
+    "gulp-luapack": "^1.0.0",
+    "gulp-rename": "^2.0.0",
+    "luamin": "^1.0.4",
     "typescript": "^3.6.4"
   },
   "dependencies": {

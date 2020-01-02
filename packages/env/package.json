@@ -21,18 +21,16 @@
     "tsconfig.env.json"
   ],
   "devDependencies": {
-    "@avensia-oss/ts-transform-hoist-objects-in-props": "0.0.5",
     "colors": "^1.4.0",
     "gulp-json-editor": "^2.5.3",
     "json5": "^2.1.0",
     "ts-jest": "^24.0.2",
     "ts-node": "^8.5.4",
-    "ttypescript": "^1.5.7",
-    "typescript-plugin-styled-components": "^1.4.2"
+    "ttypescript": "^1.5.7"
   },
   "gitHead": "597143961bd701bb3522727988cb256d97025955",
   "dependencies": {
     "@yuyi919/utils": "^0.0.60",
-    "typescript": "3.6.4"
+    "typescript": "^3.6.4"
   }
 }

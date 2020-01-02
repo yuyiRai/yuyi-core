@@ -1,5 +1,8 @@
 import { autorun, computed, observable, toJS } from 'mobx';
 import { sortBy } from 'lodash'
+import { Options } from './Options';
+import { toBuffer } from './encoding';
+
 export class PfvFilterGroup {
   @observable
   private source: string[][];
@@ -7,26 +10,47 @@ export class PfvFilterGroup {
   private Params: {
     [key: string]: string[];
   };
-  private $name: string | undefined;
-  constructor(array: string[][], name?: string) {
+  private $name: string[] | undefined;
+  constructor(array: string[][], key: string, public options: Options) {
     this.source = array;
-    this.$name = name;
+    this.$name = key.split("\/");
     autorun(() => {
       this.Params = this.params;
     });
   }
+
+  @computed
+  public get key() {
+    return this.$name && this.$name.join('/')
+  }
+
+  @computed
+  public get rootName() {
+    return this.$name && this.$name[0].replace("*", "")
+  }
+
   @computed
   public get filter(): string[] {
     return this.source[0];
   }
   @computed
   public get name(): string {
-    return this.$name || '';
+    return this.$name && this.$name[1] || '';
   }
+
+  public get encodingName(): string {
+    return toBuffer(this.name, "SJIS")
+  }
+
   @computed
   public get children(): ParamOptions[] {
-    const [top, ...children] = this.source;
+    const [, ...children] = this.source;
     return children.map(child => new ParamOptions(child, this.filter));
+  }
+
+  @computed
+  public get length() {
+    return this.childrenList.length
   }
 
   @computed
@@ -34,7 +58,7 @@ export class PfvFilterGroup {
     const [top, ...children] = this.source;
     const toSort: [number, string][] = children.map((c = [], index) => [index, c[0]]).filter(i => i && i[1]) as [number, string][]
 
-    return toSort.sort((a, b) => b[0] - a[0]).map(r => r[1]);
+    return (this.options.reverse ? toSort.sort((a, b) => b[0] - a[0]) : toSort).map(r => r[1]);
   }
 
   @computed

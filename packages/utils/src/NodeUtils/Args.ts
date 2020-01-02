@@ -1,4 +1,5 @@
-import { ArgumentParser, ArgumentOptions, ActionConstructorOptions, Action, Namespace, ArgumentParserOptions } from 'argparse'
+import argparse, { ArgumentParser, ArgumentOptions, ActionConstructorOptions, Action, Namespace, ArgumentParserOptions } from 'argparse';
+// const argparse = require('argparse')
 
 export declare interface ArgumentOptionsFixed extends ArgumentOptions {
   action?: 'store' // 只存储参数的值。这是默认操作。
@@ -18,7 +19,7 @@ export declare interface ArgumentParserFixed extends Partial<ArgumentParser> {
 export class Args implements ArgumentParserFixed {
   parser: ArgumentParserFixed
   constructor(config: ArgumentParserOptions = {}) {
-    this.parser = new ArgumentParser({
+    this.parser = new argparse.ArgumentParser({
       version: '0.0.1',
       addHelp: true,
       description: 'Argparse example',

@@ -7,7 +7,11 @@ import { logger } from './logger';
 const convertEncoding = require('gulp-convert-encoding');
 
 export namespace ScriptsTasks {
-  
+
+  export const importStatic = GulpUtils.task("static:scripts", () => {
+    return gulp.src(["./static/scripts/**/*"])
+      .pipe(gulp.dest("./build/scripts"));
+  });
   export function createBuildTask(name: string, ...path: string[]) {
     return GulpUtils.task(name, () => {
       return gulp.src([...path])
@@ -38,7 +42,7 @@ export namespace ScriptsTasks {
       .pipe(logger("移动.Obj文件")("'${sourcePath}' => '${path}'"));
   });
 
-  export const packScripts = GulpUtils.task("scripts2Build", GulpUtils.parallel(packLib, packObj));
+  export const packScripts = GulpUtils.task("scripts2Build", GulpUtils.parallel(packLib, packObj, importStatic));
 
   export const pack = GulpUtils.task("build:script", GulpUtils.series([
     // 先构建lua脚本

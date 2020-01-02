@@ -1,0 +1,33 @@
+{
+  "name": "@yuyi/builder",
+  "version": "0.0.3",
+  "description": "",
+  "private": true,
+  "main": "scripts/index.js",
+  "scripts": {
+    "pub": "node scripts/index.js scripts/index.js",
+    "test": "builder.exe scripts/test.js -o ./test-build.exe",
+    "build": "yarn build:bin -o ./node_modules/.cache/upx_build/tmp.exe && yarn build:upx",
+    "build:upx": "node scripts/index.js ./node_modules/.cache/upx_build/tmp.exe -o ./builder.exe && rimraf ./node_modules/.cache/upx_build/tmp.exe",
+    "build:bin": "nexe -t win32-x64-6.17.1 -i ./scripts/index.js --name builder",
+    "bbb": "yarn nexe --make=\"-j4\" --verbose --enableNodeCli --build --vcBuild=\"openssl-no-asm\" --configure=\"--openssl-no-asm\" --configure=\"--dest-cpu=x64\" --python \"D:\\Program Files\\Python\\python2.7.17\" -i ./scripts/index.js -r template/**.lua --name pfv-exc"
+  },
+  "bin": {
+    "yuyi-builder": "scripts/index.js"
+  },
+  "author": "yuyi919",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^24.0.23",
+    "ag-psd": "^6.2.0",
+    "nexe": "^3.3.2",
+    "typescript": "^3.6.4"
+  },
+  "gitHead": "b6a439f1d79269da2843d054887dd42e7a7555c7",
+  "dependencies": {
+    "@yuyi919/utils": "^0.0.60",
+    "argparse": "^1.0.10",
+    "encoding-japanese": "^1.0.29",
+    "psd": "^3.2.0"
+  }
+}

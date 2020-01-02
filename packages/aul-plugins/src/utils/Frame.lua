@@ -81,6 +81,7 @@ function dlg:show_cb()
       Input File %f[SAVE,,,]
       Output File %f[SAVE,,,]
     ]], "*", "*")
+  -- local initPath = 
       
     if res ~= 0 and inf ~= nil and outf ~= nil then	
       iup.Message("Files", inf .. outf)

@@ -1,0 +1,127 @@
+@操作_お好きになり_1
+--track0:服,0,4,0,1
+--track1:姿勢,0,20,0,1
+--track2:表情,0,28,0,1
+--track3:顔色,0,15,0,1
+--dialog:默認/chk,local useDefault=1;默認[服],local default1=1;默認[姿勢],local default2=1;默認[表情],local default3=1;默認[顔色],local default4=1;
+--check0:Debug,1
+local lib = require("./lib")(package)
+local defaultOptions = { default1, default2, default3, default4 }
+local options, useDebug = lib.useOptions(obj)
+local params = require("./params_紲星あかり")
+
+lib.print(obj, "需要画布", useDebug)
+-- local txt = {}
+local indexParam = nil
+local paramTitle = nil
+local paramKeys = { "\149\158", "\142\112\144\168", "\149\92\143\238", "\138\231\144\70" }
+for i=1,#paramKeys do
+  indexParam = options[i]
+  local param = params[paramKeys[i]]
+  if useDebug then
+    paramTitle = param.display[indexParam]
+    param.current = { indexParam, paramTitle }
+  end
+  if indexParam ~= 0 then
+	  PSD:addstate(param, indexParam)
+	elseif useDefault and useDefault == 1 then 
+	  PSD:addstate(param, defaultOptions[i])
+	end
+end
+
+@操作_お好きになり_2
+--track0:左腕,0,21,0,1
+--track1:右腕,0,17,0,1
+--track2:眉,0,10,0,1
+--track3:目,0,37,0,1
+--dialog:默認/chk,local useDefault=1;默認[左腕],local default1=1;默認[右腕],local default2=1;默認[眉],local default3=1;默認[目],local default4=1;
+--check0:Debug,1
+local lib = require("./lib")(package)
+local defaultOptions = { default1, default2, default3, default4 }
+local options, useDebug = lib.useOptions(obj)
+local params = require("./params_紲星あかり")
+
+lib.print(obj, "需要画布", useDebug)
+-- local txt = {}
+local indexParam = nil
+local paramTitle = nil
+local paramKeys = { "\141\182\152\114", "\137\69\152\114", "\148\251", "\150\218" }
+for i=1,#paramKeys do
+  indexParam = options[i]
+  local param = params[paramKeys[i]]
+  if useDebug then
+    paramTitle = param.display[indexParam]
+    param.current = { indexParam, paramTitle }
+  end
+  if indexParam ~= 0 then
+	  PSD:addstate(param, indexParam)
+	elseif useDefault and useDefault == 1 then 
+	  PSD:addstate(param, defaultOptions[i])
+	end
+end
+
+@操作_お好きになり_3
+--track0:口,0,33,0,1
+--track1:頭飾り,0,4,0,1
+--track2:マイク,0,3,0,1
+--track3:@効果,0,9,0,1
+--dialog:默認/chk,local useDefault=1;默認[口],local default1=1;默認[頭飾り],local default2=1;默認[マイク],local default3=1;默認[@効果],local default4=1;
+--check0:Debug,1
+local lib = require("./lib")(package)
+local defaultOptions = { default1, default2, default3, default4 }
+local options, useDebug = lib.useOptions(obj)
+local params = require("./params_紲星あかり")
+
+lib.print(obj, "需要画布", useDebug)
+-- local txt = {}
+local indexParam = nil
+local paramTitle = nil
+local paramKeys = { "\140\251", "\147\170\143\252\130\232", "\131\125\131\67\131\78", "\64\140\248\137\202" }
+for i=1,#paramKeys do
+  indexParam = options[i]
+  local param = params[paramKeys[i]]
+  if useDebug then
+    paramTitle = param.display[indexParam]
+    param.current = { indexParam, paramTitle }
+  end
+  if indexParam ~= 0 then
+	  PSD:addstate(param, indexParam)
+	elseif useDefault and useDefault == 1 then 
+	  PSD:addstate(param, defaultOptions[i])
+	end
+end
+
+
+@描画_紲星あかり
+--track0:反転,-1,3,-1,1
+--track1:縮小率,0.01,100,100,0.01
+--track2:オフセットX,-5000,5000,0,1
+--track3:オフセットY,-5000,5000,0,1
+--dialog:Debug offset,debugOffset={0,0};
+--check0:Debug,0
+require("./lib")(package)
+local params = require("./params_紲星あかり")
+
+if obj.track0 ~= -1 then
+  PSD:addstate("L." .. obj.track0)
+end
+PSD.scale = obj.track1/100
+PSD.offsetx = obj.track2
+PSD.offsety = obj.track3
+local ok, msg = pcall(PSD.render, PSD, obj)
+if not ok then require("PSDToolKit").print(obj, msg) end
+
+if obj.getoption("gui") and obj.check0 and type(debugOffset) == 'table' then
+  local txt = {}
+  for i=1, #params do
+    local param = params[i]
+    local current = param.current
+    table.insert(txt, param.name..":"..(current[2] and (current[2]) or "默認"))
+  end
+	obj.copybuffer("tmp", "obj")
+	obj.setoption("dst", "tmp")
+	obj.setfont("Times New Roman Greek",35,3,0xff0000,0xffffff)
+	obj.load("text", table.concat(txt, "\n"), 0, obj.time)
+	obj.draw(debugOffset[1] or 0, debugOffset[2] or 0, 0, 1)
+	obj.load("tempbuffer")
+end

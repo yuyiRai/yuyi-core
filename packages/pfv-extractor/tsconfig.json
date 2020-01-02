@@ -15,10 +15,16 @@
     "declarationDir": "./types",
     "tsBuildInfoFile": "../.tsBuildInfo/pfv-extractor.json",
     "incremental": true,
-    "types": ["@yuyi919/env/types/global"],
+    "module": "esnext",
+    "esModuleInterop": true,
     "allowUnusedLabels": true,
     "noUnusedLocals": false,
-    "typeRoots": ["node_modules/@types", "../../node_modules/@types", "@yuyi919/env/src/global/index.ts"]
+    "allowSyntheticDefaultImports": true,
+    "typeRoots": [
+      "../env/types",
+      "node_modules/@types",
+      "../../node_modules/@types"
+    ]
   },
   "include": ["src"],
   "exclude": ["tools", "../../node_modules"]

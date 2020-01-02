@@ -12,7 +12,10 @@
 /build
 /lib
 /types
+/reports
 /dist
+
+/packages/kakasi
 
 # misc
 .DS_Store
@@ -28,3 +31,5 @@ yarn-error.log*
 
 **/temp/**
 **/etc/**
+.rts2_cache_cjs
+.rts2_cache_esm

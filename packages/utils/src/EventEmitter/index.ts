@@ -2,14 +2,15 @@
  * @module UtilClass
  */
 import { PartialObserver } from 'rxjs';
-import { Observable } from 'rxjs/internal/Observable';
+import { Observable } from 'rxjs/internal/observable';
 import { Subject } from 'rxjs/internal/Subject';
+// @ts-ignore
 import { Subscription } from 'rxjs/internal/Subscription';
 import { share } from 'rxjs/operators';
 import { Constant$ } from '../Constransts';
 
-
-export { Subscription } from 'rxjs/internal/Subscription';
+export type Subscription = InstanceType<typeof Subscription>;
+// export { Subscription } from 'rxjs/internal/Subscription';
 
 export namespace Observable$$ {
   export function subscribe$$<T>(source: Observable<T>, observer?: PartialObserver<T>): Subscription;

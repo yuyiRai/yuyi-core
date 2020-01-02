@@ -4,8 +4,8 @@ import luapack from 'gulp-luapack';
 import { GulpUtils } from './GulpUtils';
 import { logger } from './logger';
 export namespace BinTasks {
-  export const packIupDll = GulpUtils.task("iuplib", () => {
-    return gulp.src(["./scripts/clib/**/*.dll"])
+  export const importStatic = GulpUtils.task("static:bin", () => {
+    return gulp.src(["./static/bin/**/*"])
       .pipe(gulp.dest("./build/bin"));
   });
   export const build = GulpUtils.task("build:main", () => {
@@ -17,5 +17,5 @@ export namespace BinTasks {
       .pipe(shell("ciuplua lib/main.lua build/bin/main.exe"))
       .pipe(logger("Building")("'${sourcePath}' => '${path}'"));
   });
-  export const pack = GulpUtils.task("build:bin", GulpUtils.parallel(build, packIupDll));
+  export const pack = GulpUtils.task("build:bin", GulpUtils.parallel(build, importStatic));
 }

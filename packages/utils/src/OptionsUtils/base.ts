@@ -2,16 +2,28 @@ import map from 'lodash/map'
 import { Constant$ } from '../Constransts'
 
 export namespace Setter {
-  export function setWithOptions$$<T>(o: T, option: any, keywordKey: TKey, keywordVal: TKey): T {
-    return (o[option[keywordKey]] = option[keywordVal], o)
+  /**
+   * 设置目标map或对象属性并返回目标自身
+   * @param target 
+   * @param source 
+   * @param keywordKey 
+   * @param keywordVal 
+   */
+  export function setWith$$<T extends {} | Map<any, any>>(target: T, source: any, keywordKey: TKey, keywordVal: TKey): T {
+    return (
+      target instanceof Map
+        ? target.set(source[keywordKey], source[keywordVal])
+        : (target[source[keywordKey]] = source[keywordVal]),
+      target
+    )
   }
 
   export function setWithEntries$$<T>(o: T, option: [string, string]): T {
-    return setWithOptions$$(o, option, 0, 1)
+    return setWith$$(o, option, 0, 1)
   }
 
-  export function setWithEntriesReverse$$<T>(o: T, option: [string, string]): T {
-    return setWithOptions$$(o, option, 1, 0)
+  export function setWithEntriesReverse$$<T, K extends string, V extends string>(o: T, option: [K, V]): T {
+    return setWith$$(o, option, 1, 0)
   }
 
   export function setValue$$<T>(o: T, key: TKey, value: any): T {
@@ -22,14 +34,14 @@ export namespace Setter {
     return (o[key] = true) && o
   }
 
-  export function setWithKeyValue$$<T>(o: T, option: any): T {
-    return (o[option.key] = option.value, o)
+  export function setWithKeyValue$$<T>(target: T, source: { key: any; value: any; }): T {
+    return (target[source.key] = source.value, target)
   }
-  export function setWithValueLabel$$<T>(o: T, option: any): T {
-    return (o[option.value] = option.label, o)
+  export function setWithValueLabel$$<T>(target: T, source: { label: any; value: any; }): T {
+    return (target[source.value] = source.label, target)
   }
-  export function setWithLabelValue$$<T>(o: T, option: any): T {
-    return (o[option.label] = option.value, o)
+  export function setWithLabelValue$$<T>(target: T, source: { label: string; value: any }): T {
+    return (target[source.label] = source.value, target)
   }
 }
 
@@ -65,5 +77,5 @@ export function convertKeys2ValuesMap<O extends IKeyValueMap<string>>(obj: O): {
  * @param valKey 
  */
 export function convertOptions2Map<T extends IKeyValueMap>(arr: T[], labelKey: TKey = 'label', valKey: TKey = 'value'): IKeyValueMap {
-  return REDUCE(arr, (r, i) => Setter.setWithOptions$$(r, i, valKey, labelKey), {})
+  return REDUCE(arr, (r, i) => Setter.setWith$$(r, i, valKey, labelKey), {})
 }

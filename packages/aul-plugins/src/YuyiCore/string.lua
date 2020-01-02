@@ -63,7 +63,7 @@ local function chunkString(str, size, linePrifix, dangerSuffix)
       table.insert(line, charts[i])
     end
 
-    local matchSpecial = tableLib.tableIncludes(suffix, charts[i+1]) and tableLib.tableIncludes(suffix, charts[i + 2])
+    local matchSpecial = tableLib.tableIncludes(suffix, charts[i+1]) and (true or tableLib.tableIncludes(suffix, charts[i+2]))
     if matchSpecial == false and (size ~= 0 and (#line%size == 0 or normal ~= true)) then
       -- local append = tableLib.condition(i==#charts, '', '\n')
       -- print('line', table.concat(line, ''))

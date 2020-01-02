@@ -24,11 +24,12 @@ module.exports = {
     const { plugins } = config;
     // swap out rollup-plugin-typescript2
     config.plugins = plugins.map(p => {
-      if (p && p.name === 'terser') {
-        const p = require('./config/terser').terserPlugin
-        // console.log(p)
-        return p
-      } else if (p && p.name === "rpt2") {
+      // if (p && p.name === 'terser') {
+      //   const p = require('./config/terser').terserPlugin
+      //   // console.log(p)
+      //   return p
+      // } else
+      if (p && p.name === "rpt2") {
         return false
       //   return rollup_plugin_typescript({
       //     typescript: require('typescript'),

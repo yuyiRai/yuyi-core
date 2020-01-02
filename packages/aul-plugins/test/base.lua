@@ -1,16 +1,27 @@
-package.path = package.path..table.concat({
+package.path = package.path..";"..table.concat({
   "src/?.lua",
+  "src/YuyiCore/?.lua",
   "src/TrpgScript/?.lua",
   "./?.lua",
   "lib/?.lua",
-  "lib/?.exe",
-  "clib/?.dll",
-  "clib/?51.dll",
   "utils/?.lua",
-  "build/bin/?.exe",
   "src/lib/?.lua",
   "src/utils/?.lua"
-}, ";")    --搜索lua模块
+}, ";")..";"    --搜索lua模块
+package.cpath = package.cpath..";"..table.concat({
+  "static/scripts/?.dll",
+  "static/bin/?.dll",
+  "static/bin/?51.dll"
+}, ";")..";"    --搜索clua模块
+
+-- local rikky_module = require("rikky_module")
+-- rikky_module.getinfo("text", 1)
+-- <?
+-- local rikky_module = require("rikky_module")
+-- obj.mes(rikky_module.getinfo("text", 1).."1234")
+-- ?>
+
+
 local testTxt = [[
 　分かりましたよ。でも明日は急に帰省して両親に会いたいような…」
 「ふざけないでください！ゆかりさんがそこまで親孝行をする人なわけがないです！」
@@ -27,6 +38,7 @@ local testTxt = [[
 ]] --YuyiCore.readFile('./test.txt')
 
 local loaded = require 'lib.YuyiCore'
+
 
 -- local std = require "std.table"
 -- print(std.empty())

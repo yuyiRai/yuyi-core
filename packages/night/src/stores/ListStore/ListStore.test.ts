@@ -1,5 +1,5 @@
 import { List } from "./ListStore";
-import { Utils } from "@/utils";
+import { Utils } from "@yuyi919/utils";
 import { IKeyValueMap } from "mobx";
 
 describe("mobx array-test", () => {

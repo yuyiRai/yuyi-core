@@ -1,26 +1,51 @@
 {
   "name": "@yuyi/pfv-extractor",
-  "version": "0.0.10",
-  "description": "",
+  "version": "0.0.14",
+  "description": "将pfv转化为便利的aul脚本",
   "private": true,
   "main": "dist/index.js",
+  "files": [
+    "dist",
+    "scripts"
+  ],
   "scripts": {
+    "dev": "tsdx watch",
+    "build:prod": "cross-env NODE_ENV=production yarn build:js && yarn build:bin -u",
+    "build": "yarn build:js && yarn build:bin",
+    "build:bin": "yuyi-builder -i scripts/index.js -r bin/kakasi.exe -r template/**.lua --name pfvec",
+    "build:js": "tsdx build --target node --format cjs",
+    "build:py": "yuyi-builder -i ./index.js --name pfvec",
+    "build:pytest": "node ./index.js",
+    "test": "tsdx test",
+    "tsdx": "tsdx",
+    "rollup": "rollup",
     "tscc": "yuyi exec ./src/index.ts",
     "yuyi": "yuyi",
     "tsc": "ttsc --build",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "nexe": "nexe",
+    "ttst": "pfv2aulscripts ./test/MtU_akane_ver2.pfv",
+    "ttst2": "pfv2aulscripts"
   },
-  "author": "",
+  "bin": {
+    "pfv2aulscripts": "scripts/index.js"
+  },
+  "author": "yuyi919",
   "license": "ISC",
   "devDependencies": {
+    "@types/jest": "^24.0.23",
     "ag-psd": "^6.2.0",
-    "canvas": "^2.5.0",
-    "encoding-japanese": "^1.0.29",
-    "psd": "^3.2.0",
-    "typescript": "3.6.4"
+    "nexe": "^3.3.2",
+    "rollup-plugin-copy": "^3.1.0",
+    "rollup-plugin-copy-glob": "^0.3.1",
+    "typescript": "^3.6.4",
+    "windows-registry": "^0.1.5"
   },
   "gitHead": "b6a439f1d79269da2843d054887dd42e7a7555c7",
   "dependencies": {
-    "@yuyi919/utils": "^0.0.60"
+    "@yuyi919/utils": "^0.0.60",
+    "argparse": "^1.0.10",
+    "encoding-japanese": "^1.0.29",
+    "kuromojin": "^2.0.0",
+    "psd": "^3.2.0"
   }
 }

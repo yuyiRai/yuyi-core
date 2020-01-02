@@ -17,3 +17,5 @@ temp
 markdown
 *.d.ts
 *.map
+
+*.exe

@@ -1,11 +1,12 @@
 const { defaults: tsjPreset, jsWithTs, jsWithBabel } = require('ts-jest/presets');
 const { pathsToModuleNameMapper } = require('ts-jest/utils');
 const { compilerOptions } = require('./tsconfig');
+const pkg = require("./package.json")
 // console.error(pathsToModuleNameMapper(compilerOptions.paths, { prefix: '<rootDir>/' }));
-
 module.exports = {
   "preset": "ts-jest",
   "testEnvironment": "jest-environment-jsdom-fourteen",
+  "coverageDirectory": `../../reports/${pkg.name.split('\/')[1]}/coverage`,
   // "collectCoverageFrom": [
   //   "src/**/*.{ts}",
   //   "!src/**/*.d.ts"
@@ -15,7 +16,7 @@ module.exports = {
     require.resolve("./config/dev.env.js")
   ],
   "rootDir": process.cwd(),
-  "setupFilesAfterEnv": ["./src/Constransts.ts"],
+  "setupFilesAfterEnv": [require.resolve("./src/Constransts.ts")],
   "testMatch": [
     "<rootDir>/test/**/*.{spec,test}.{js,jsx,ts,tsx}"
   ],
@@ -23,7 +24,7 @@ module.exports = {
     "[/\\\\]node_modules/",
     "<rootDir>/node_modules/"
   ],
-  // "extraGlobals": ["React"],
+  "extraGlobals": [],
   "transform": {
     '^.+\\.(ts|jsx)$': 'ts-jest',
     "^.+\\.(js|jsx)$": "<rootDir>/../night/config/jest/babelTransform.js",
@@ -52,6 +53,7 @@ module.exports = {
     "jest-watch-typeahead/testname"
   ],
   globals: {
+    "__DEV__": "true",
     // 'ts-jest': {
     //   compiler: 'typescript',
     //   config: 'tsconfig.json',

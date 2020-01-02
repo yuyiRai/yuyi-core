@@ -1,5 +1,5 @@
 import * as OptionsUtils from '../src/OptionsUtils'
-import { getOptionsByLabel } from '..'
+import { getOptionsByLabel } from '../src'
 
 const optionsList = [
   { label: 'A', value: 'a' },

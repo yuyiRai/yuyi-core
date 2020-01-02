@@ -3,7 +3,6 @@
  */
 
 import { includes, reduce, isObject, isString, isEmptyValue } from '../LodashExtra';
-import { IKeyValueMap } from '../TsUtils/interface';
 import { isNotEmptyArray } from '../TypeLib';
 
 /**

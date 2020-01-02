@@ -1,4 +1,4 @@
-import { zipEmptyData, argShifter } from "../..";
+import { zipEmptyData, argShifter } from '../../src'
 
 test('zip', () => {
   expect(zipEmptyData([])).toEqual([])
@@ -12,4 +12,19 @@ test('zip', () => {
   const zzip = argShifter(zipEmptyData)
   expect(zzip([1, 2, null])).toEqual(undefined)
   expect(zzip(0, [1, 2, null])).toEqual([1, 2])
+})
+import { getPropByPath, getPropByPath2 } from '../../src'
+
+test('zip', () => {
+  expect(getPropByPath({ a: [2] }, 'a[0]')).toEqual({
+    "innerObj": [2],
+    "key": "0",
+    "value": 2,
+  })
+  expect(getPropByPath2({ a: [2] }, 'a[0]')).toEqual({
+    "deep": 1,
+    "innerObj": [2],
+    "key": "0",
+    "value": 2,
+  })
 })
