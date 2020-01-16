@@ -15,7 +15,10 @@ export const waitingPromise = sleep
  * @public
  */
 export function sleep<V = void>(time: number, emitValue?: V, isError = false): Promise<V> {
-  return Constant$.CREATE_PROMISE<V>((resolve, reject) => {
-    Constant$.delay$$(isError ? reject : resolve, time, emitValue);
+  const { CREATE_PROMISE, delay$$ } = Constant$
+  return isError ? CREATE_PROMISE<V>(function (_, reject) {
+    delay$$(reject, time, emitValue);
+  }) : CREATE_PROMISE<V>(function (resolve) {
+    delay$$(resolve, time, emitValue);
   });
 }

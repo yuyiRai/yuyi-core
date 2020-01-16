@@ -3,7 +3,7 @@ import hoistObjectsInProps from '@avensia-oss/ts-transform-hoist-objects-in-prop
 import color from 'colors';
 import memoize from 'lodash/memoize';
 import tsImportPluginFactory from 'ts-import-plugin';
-import { Options as ImportOptions } from 'ts-import-plugin/lib/index';
+import { Options as ImportOptions2 } from 'ts-import-plugin/lib/index';
 import nameofTransformer from 'ts-nameof';
 import ocTransformer from 'ts-optchain/transform';
 import mmlpxTransformer from 'ts-plugin-mmlpx';
@@ -39,6 +39,9 @@ const presetOptions = {
 }
 export type PresetKeys = keyof typeof presetOptions;
 
+export interface ImportOptions extends ImportOptions2 {
+  afterDeclarations?: boolean;
+}
 export interface AwesomeTsTransformerOptions {
   program: Program;
   importLibs?: (string | ImportOptions | [string, Partial<ImportOptions>])[];
@@ -151,8 +154,19 @@ export function getCustomTransformers({
       
   //   }
   // }
+  const before = allowList.filter(i => i) || []
   return ({
-    before: allowList.filter(i => i) || []
+    before,
+    after: filterToImport(importConfig, 'after'),
+    afterDeclarations: filterToImport(importConfig, 'afterDeclarations')
   }) as CustomTransformers;
 }
 
+function filterToImport(confit: any[], has: string) {
+  const hased = confit && confit.length > 0 && confit.filter(i => i[has]) || []
+  return [
+    hased.length > 0 && use(tsImportPluginFactory, `(${has})[${
+      hased.map(c => c.libraryName).join(']/[')
+      }]`)(hased)
+  ].filter(i => i)
+}

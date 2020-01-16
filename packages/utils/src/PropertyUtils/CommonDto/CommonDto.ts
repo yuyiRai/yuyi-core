@@ -6,7 +6,7 @@ import { action, extendObservable, observable } from 'mobx';
 import { autobind } from 'core-decorators';
 import { IKeyValueMap } from '../../TsUtils/interface';
 import { isNotEmptyString } from '../../TypeLib';
-import { getPropertyFieldByCreate, getExpressByStr } from '../../PropertyUtils';
+import { getPropertyFieldByCreate, getExpressByStr } from '../getPropertyFieldByCreate';
 
 /**
  * 一个通用的实体类

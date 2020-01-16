@@ -1,11 +1,12 @@
 import gulp from 'gulp';
 import rename from 'gulp-rename';
+import replace from 'gulp-replace'
 import luapack from 'gulp-luapack';
 import { GulpUtils } from './GulpUtils';
-import { logger } from './logger';
 // const luaminify = require('gulp-luaminify');
 const convertEncoding = require('gulp-convert-encoding');
 
+const { logger } = GulpUtils;
 export namespace ScriptsTasks {
 
   export const importStatic = GulpUtils.task("static:scripts", () => {
@@ -25,7 +26,7 @@ export namespace ScriptsTasks {
     });
   }
 
-  export const build = createBuildTask("build:lib", "src/**/TextPanel.lua", "src/**/YuyiCore.lua");
+  export const build = createBuildTask("build:lib", "src/**/TextPanel.lua", "src/**/TachieLib.lua", "src/**/YuyiCore.lua");
 
   export const packLib = GulpUtils.task("lib2build", () => {
     return gulp.src(["lib/**/*.luac"], { ignore: ["lib/main.luac"] })
@@ -35,7 +36,13 @@ export namespace ScriptsTasks {
   });
 
   export const packObj = GulpUtils.task("obj2build", () => {
-    return gulp.src(["src/**/*.obj", "src/**/*.anm"])
+    return gulp.src(["src/**/*.obj", "src/**/*.anm", "src/**/*.anm.lua", "src/**/*.obj.lua"])
+      .pipe(replace(/----@/g, '@'))
+      // 创建临时文件
+      .pipe(rename((path: any) => {
+        console.log(path)
+        return /\.(obj|anm)/.test(path.basename) ? ({ ...path, extname: "" }) : path
+      }))
       .pipe(convertEncoding({ from: 'utf-8', to: 'Shift-JIS' }))
       .pipe(logger("编码转换为Shift-JIS")` source: '${file => file.path}'`)
       .pipe(gulp.dest("build/scripts"))

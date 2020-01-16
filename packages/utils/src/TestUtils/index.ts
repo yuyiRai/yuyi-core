@@ -3,7 +3,6 @@
  * @packageDocumentation
  */
 
-export * from './waitingPromise'
 export * from './BenchmarkUtils'
 
 export function getTestArray(length: number) {

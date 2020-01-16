@@ -4,6 +4,6 @@
  */
 // export * from './AsyncProperty';
 export * from './getPropByPath';
-export * from './getPropertyFieldByCreate';
-export * from './CommonDto'
+// export * from './getPropertyFieldByCreate';
+// export * from './CommonDto'
 

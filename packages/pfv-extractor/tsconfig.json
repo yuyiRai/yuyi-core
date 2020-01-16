@@ -17,6 +17,7 @@
     "incremental": true,
     "module": "esnext",
     "esModuleInterop": true,
+    "allowJs": true,
     "allowUnusedLabels": true,
     "noUnusedLocals": false,
     "allowSyntheticDefaultImports": true,

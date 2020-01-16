@@ -1,4 +1,4 @@
-local lib = require('lib')
+local lib = require('./lib')
 local utils = {}
 
 local function concatTableWithTable(target, source)

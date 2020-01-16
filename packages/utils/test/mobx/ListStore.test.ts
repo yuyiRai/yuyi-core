@@ -1,4 +1,4 @@
-import { sleep, List } from "../../src";
+import { sleep, List } from "../..";
 
 describe("mobx array-test", () => {
   let list = new List<IKeyValueMap>([], null, true);

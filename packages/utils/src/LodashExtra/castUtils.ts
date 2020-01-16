@@ -6,7 +6,8 @@ import { castArray as castArrayLodash, cloneDeep, toString } from 'lodash';
 import { Constant$ } from '../Constransts';
 import { isFunction } from './isFunction';
 import { isNotEmptyValue, isNotNil } from './isNil';
-import { isObject } from './lodash';
+import { isObject, isNil } from './lodash';
+import { KeyOf, BaseType } from '../TsUtils'
 import { stubReturn } from './stub';
 // import '@yuyi919/env'
 
@@ -39,6 +40,29 @@ export function castArray<T = any>(value: T | T[], allowEmpty: boolean | 'strict
     : Constant$.FILTER(castArrayLodash(value), allowEmpty === Constant$.KEY_STRICT ? isNotEmptyValue : isNotNil);
 }
 
+/**
+ * 转化一个对象为object
+ * 如果对象不是object，则返回一个嵌入指定key的新对象
+ * 可选第三个参数，判断条件变更为是否存在指定key的对象
+ * @param target 
+ * @param keyInObject 嵌入的key
+ * @param checkRequired 判定时key是否必须存在
+ * @example
+ * const t = { a: 1, b: 2 }
+ * castObject(t, 'c')
+ * //=> { a: 1, b: 2 }
+ * @example //! checkRequired的场合
+ * castObject(t, 'c', true)
+ * //=> { c: { a: 1, b: 2 } }
+ */
+export function castObject<T, K extends KeyOf<T> | string>(target: T | BaseType, keyInObject: K, checkRequired = false): Exclude<T, BaseType> & {
+  [Key in K]: T extends object ? (K extends KeyOf<T> ? T[K] : unknown) : unknown
+} {
+  return isObject(target) && (!checkRequired || (keyInObject in target)) ? target : { [keyInObject]: target } as any
+}
+// const t = { a: 1, b: 2 };
+// castObject(t, 'c')
+
 export type NotFunction = string | symbol | object | number | boolean
 
 /**
@@ -67,6 +91,15 @@ export function castComputed<T extends NotFunction>(nativeValue: T, ...args: any
 export function castComputed<T, Args extends any[]>(functionOrValue: Type.Function<Args, T> | T, ...computedArgs: Args): T {
   return isFunction(functionOrValue) ? (functionOrValue as Type.Function<Args>)(...computedArgs) : functionOrValue
 }
+/**
+ * 计算用管道函数，如果非函数则传递值自身
+ * @param func
+ * @param value 
+ */
+export function castComputedPipe<V, T = V>(func: Type.Function<[V], T> | T, value: V): T {
+  return func instanceof Function ? (func as Type.Function<[V]>)(value) : value;
+}
+
 /**
  * 将参数转换为function
  * @param withFunction - 参数

@@ -1,9 +1,8 @@
 import gulp from 'gulp';
 import path from 'path';
 import rename from 'gulp-rename';
-import { GulpUtils } from './GulpUtils';
+import { GulpUtils, Tasks, Pipes } from './GulpUtils';
 // import { exec } from 'shelljs'
-import { logger } from './logger';
 import { ScriptsTasks } from './ScriptsTasks';
 const convertEncoding = require('gulp-convert-encoding');
 // const sourceCHCP = /([0-9]+)/.exec(exec("CHCP", { silent: false }).stdout)[1]
@@ -12,10 +11,11 @@ const clear = () => process.stdout.write(process.platform === 'win32' ? '\x1Bc' 
 
 // clear()
 
+const { logger } = GulpUtils;
 export namespace TestTasks {
   const Series = GulpUtils.series;
 
-  export const setEvnJp = GulpUtils.task("配置测试Shift-JIS环境", "CHCP 932");
+  export const setEvnJp = Tasks.CHCP(Tasks.CHCP_CODE.shiftjis);
   export const cls = GulpUtils.task("清屏", "cls");
 
   export const cleanTmpfiles = GulpUtils.task("test:clean_tmp", "rimraf test/__tests__");
@@ -24,7 +24,7 @@ export namespace TestTasks {
   export const execTest = GulpUtils.task("test:exec", () => {
     return gulp.src(["test/**/*.lua"], { ignore: ["test/__tests__/**/*.lua.tmp"] })
       // 测试时以Shift-JIS编码环境进行
-      .pipe(convertEncoding({ from: 'utf-8', to: 'Shift-JIS' }))
+      .pipe(Pipes.encoding("Shift-JIS", 'utf-8'))
       // 创建临时文件
       .pipe(rename((path: any) => ({ ...path, extname: ".lua.tmp" })))
       .pipe(gulp.dest("test/__tests__"))

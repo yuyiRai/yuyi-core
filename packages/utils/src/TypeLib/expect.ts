@@ -3,11 +3,11 @@
  */
 import { Constant$ } from '../Constransts';
 import { EventEmitter } from '../EventEmitter';
-import { filter, isArray, isArrayLike, isBoolean, isDate, isEmpty, isEmptyValue, isFunction, isNaN, isNil, isNotEmptyValue, isNotNil, isNumber, isObject, isPlainObject, isString, map, values } from '../LodashExtra';
+import { filter, isArray, isArrayLike, isBoolean, isDate, isEmpty, isEmptyValue, isFunction, isNaN, isNil, isNotEmptyValue, isNotNil, isNumber, isObject, isPlainObject, isPureObj, isString, map, values } from '../LodashExtra';
 
 // Array.prototype.map = ()
 
-export function isBooleanOrNumber(value: any): value is (boolean | number) {
+export function isBoolOrNum(value: any): value is (boolean | number) {
   return isBoolean(value) || isNumber(value);
 }
 export function isEmptyArray<T>(value: any): value is T[] {
@@ -17,10 +17,10 @@ export function isNotEmptyArray<T>(value: any): value is T[] {
   return isArray(value) && !!value.length;
 }
 export function isNotEmptyArrayStrict(value: any): value is any[] {
-  return isArray(value) && value.filter(i => isNotEmptyValue(i)).length > 0;
+  return isArray(value) && Constant$.FILTER(value, i => isNotEmptyValue(i)).length > 0;
 }
 export function isEmptyArrayStrict(value: any): value is any[] {
-  return isArray(value) && value.filter(i => isNotEmptyValue(i)).length === 0;
+  return isArray(value) && Constant$.FILTER(value, i => isNotEmptyValue(i)).length === 0;
 }
 export function isEmptyData(value: any): value is any[] {
   return !isBoolean(value) && !isNumber(value) && (isEmptyArrayStrict(value) || isEmpty(value));
@@ -39,12 +39,12 @@ export function paramShiftObjPairs<T>(func?: T): T {
 }
 
 export function isEmptyObject(value: any, checkValue: boolean = false): value is {} {
-  return isPlainObject(value) && (
+  return isPureObj(value) && (
     checkValue ? Constant$.FILTER(values(value), isNotEmptyData).length === 0 : isEmpty(value)
   );
 }
 export function isNotEmptyObject(value: any): value is object {
-  return isPlainObject(value) && !isEmpty(value);
+  return isPureObj(value) && !isEmpty(value);
 }
 
 /**
@@ -53,12 +53,6 @@ export function isNotEmptyObject(value: any): value is object {
  */
 export function isNotEmptyString(str: any): str is string {
   return isString(str) && str.length > 0;
-}
-export function isNotFunction(func: any) {
-  return !isFunction(func);
-}
-export function isNotNaN(v: any): boolean {
-  return !isNaN(v);
 }
 export function isNilAll(...valueArr: any[]): boolean {
   return filter(map(valueArr, value => isNil(value)), is => is).length === valueArr.length;
@@ -69,6 +63,7 @@ export const typeUtils = {
   isArrayLike,
   isArray,
   isBoolean,
+  isPureObj,
   isObject,
   isNumber,
   isString,
@@ -81,10 +76,9 @@ export const typeUtils = {
   isNotNil,
   isDate,
   isNaN,
-  isNotFunction,
-  isNotNaN,
+  isPlainObject,
   // isNilAll,
-  isBooleanOrNumber,
+  isBooleanOrNumber: isBoolOrNum,
   isEmptyValue,
   isNotEmptyValue,
   isEmptyArray,
@@ -92,7 +86,7 @@ export const typeUtils = {
   isEmptyArrayStrict,
   isNotEmptyArrayStrict,
   isEmptyObject,
-  isNotEmptyObject,
+  isNotEmptyObject
 };
 
 // export const typeUtilsKeys = tsKeys<typeof typeUtils>()

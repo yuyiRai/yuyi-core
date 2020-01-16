@@ -21,7 +21,7 @@ if obj.getinfo("saving") ~= true and (guiOnly ~= 1 or obj.getoption("gui")) and 
   local txt = {}
   for i=1, #params do
     local param = params[i]
-    local current = param.current
+    local current = param.current or {}
     table.insert(txt, param.name..":"..(current[2] and (current[2]) or "默認"))
   end
 	obj.copybuffer("tmp", "obj")

@@ -12,7 +12,7 @@
     "dev": "tsdx watch",
     "build:prod": "cross-env NODE_ENV=production yarn build:js && yarn build:bin -u",
     "build": "yarn build:js && yarn build:bin",
-    "build:bin": "yuyi-builder -i scripts/index.js -r bin/kakasi.exe -r template/**.lua --name pfvec",
+    "build:bin": "yuyi-builder -i scripts/index.js -r template/**.lua --name pfvec",
     "build:js": "tsdx build --target node --format cjs",
     "build:py": "yuyi-builder -i ./index.js --name pfvec",
     "build:pytest": "node ./index.js",

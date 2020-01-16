@@ -60,14 +60,14 @@ exports[`TypeUtils test 测试 expect$.filters - isNotEmptyString 1`] = `"1,2,3"
 
 exports[`TypeUtils test 测试 expect$.filters - isNotEmptyValue 1`] = `1`;
 
-exports[`TypeUtils test 测试 expect$.filters - isNotFunction 1`] = `NaN`;
-
-exports[`TypeUtils test 测试 expect$.filters - isNotNaN 1`] = `null`;
-
 exports[`TypeUtils test 测试 expect$.filters - isNotNil 1`] = `NaN`;
 
 exports[`TypeUtils test 测试 expect$.filters - isNumber 1`] = `1`;
 
 exports[`TypeUtils test 测试 expect$.filters - isObject 1`] = `Object {}`;
+
+exports[`TypeUtils test 测试 expect$.filters - isPlainObject 1`] = `Object {}`;
+
+exports[`TypeUtils test 测试 expect$.filters - isPureObj 1`] = `Object {}`;
 
 exports[`TypeUtils test 测试 expect$.filters - isString 1`] = `"1,2,3"`;

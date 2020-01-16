@@ -2,7 +2,7 @@ import { mapToKeyValues } from '../commonUtils';
 import { Constant$, ArrayIterator } from '../Constransts';
 import { castArray, escapeRegExp, filter, find, isArray, isEqual, isFunction, isNil, isNotEmptyValue, isRegExp, join, map } from '../LodashExtra';
 import { IKeyValueMap, IsTrue } from '../TsUtils';
-import { expect$, typeFilterUtils } from '../TypeLib';
+import { expect$ } from '../TypeLib';
 import { isNotEmptyArray, isNotEmptyArrayStrict, isNotEmptyString } from '../TypeLib/expect';
 import { KeyMatcherFunc, KeywordMatcher, Option, OptionSearcher, RemoteSearcher, SearchKey } from './interface';
 
@@ -74,7 +74,7 @@ export function isValueMatchedItem(valueSearcher: SearchKey<string>, item: Optio
 export function isValueMatchedItemByMatcher(keyMatcher: KeywordMatcher, item: Option): boolean {
   if (isNotEmptyValue(item)) {
     const { label } = item;
-    const value = typeFilterUtils.isNotEmptyValueFilter(item.value, item);
+    const value = expect$.isNotEmptyValue.filter(item.value, item);
     return keyMatcher(value, label, item)
   }
   return false
@@ -90,7 +90,7 @@ export function isLabelMatchedItemByMatcher(keyMatcher: KeywordMatcher, item: Op
   if (isNotEmptyValue(item)) {
     const { label, value } = item;
 
-    const name = typeFilterUtils.isNotEmptyValueFilter(label, value, item);
+    const name = expect$.isNotEmptyValue.filter(label, value, item);
     // console.error('isNotEmptyValueFilter', label, value, item, name);
     return keyMatcher(name, value, item)
   }
@@ -274,7 +274,6 @@ export function getCodeListByKey(codeType: OptionSearcher, optionFactory?: Array
  */
 export function getCodeListByKey(codeType: Option[] | OptionSearcher, optionFactory?: ArrayIterator<IKeyValueMap, Option>): RemoteSearcher {
   // debugger
-  const { isArrayFilter } = typeFilterUtils
   if (isArray(codeType)) {
     return async function (keyWord: string, isOnlySearch?: boolean): Promise<Option[]> {
       if (isOnlySearch && !isNotEmptyString(keyWord)) {
@@ -284,7 +283,7 @@ export function getCodeListByKey(codeType: Option[] | OptionSearcher, optionFact
     }
   } else if (isFunction(codeType)) {
     return async function (keyWord: string, isOnlySearch?: boolean): Promise<Option[]> {
-      const res = isArrayFilter(await codeType(keyWord, isOnlySearch)) || [];
+      const res = expect$.isArray.filter(await codeType(keyWord, isOnlySearch)) || [];
       return optionFactory ? map(res, optionFactory) : res
     }
   }

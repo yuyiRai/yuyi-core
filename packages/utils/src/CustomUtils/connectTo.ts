@@ -1,9 +1,9 @@
 /**
  * @module CustomUtils
  */
-import { typeUtils } from '../TypeLib';
+import { expect$ } from '../TypeLib';
 export function connectTo(target: any, source: any, ...keyNames: string[]) {
-  if (typeUtils.isNil(target) || typeUtils.isNil(source)) {
+  if (expect$.isNil(target) || expect$.isNil(source)) {
     return false;
   }
   if (keyNames.length === 0) {

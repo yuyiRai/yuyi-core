@@ -15,4 +15,6 @@ export * from './isFunction'
 export * from './createGroupWith'
 export * from './isObject'
 export * from './lodash'
-export * from './trackMerge'
+export * from './trackMerge';
+export * from './filterMap';
+export * from './escapeConvert'

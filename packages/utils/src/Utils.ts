@@ -11,10 +11,11 @@ import * as MobxUtils from './MobxUtils';
 import * as OptionsUtils from './OptionsUtils';
 import * as ParseUtils from "./ParseUtils";
 import * as PropertyUtils from './PropertyUtils';
-import * as TestUtils from './TestUtils';
+import * as DecoratorUtils from './DecoratorUtils';
+// import * as TestUtils from './TestUtils';
 // tslint:disable-next-line: no-duplicate-imports
 import TimeBufferUtils from './TimeBuffer';
-import { typeFilterUtils, typeUtils } from "./TypeLib";
+import { expect$, typeFilterUtils } from "./TypeLib";
 
 type IUtilsGroup = typeof CustomUtils
   & typeof OptionsUtils
@@ -22,11 +23,12 @@ type IUtilsGroup = typeof CustomUtils
   & typeof commonUtils
   & typeof TimeBufferUtils
   & typeof PropertyUtils
-  & typeof TestUtils
+  & typeof DecoratorUtils
+  // & typeof TestUtils
   & typeof LodashExtra
   & typeof ParseUtils
   & typeof MobxUtils
-  & typeof typeUtils
+  & typeof expect$
   & typeof typeFilterUtils
 
 export interface IUtils extends IUtilsGroup {
@@ -40,15 +42,16 @@ export const Utils: IUtils = Object.freeze(Constant$.OBJ_ASSIGN(
   OptionsUtils,
   TimeBufferUtils,
   EventEmitterUtils,
-  TestUtils,
+  // TestUtils,
   PropertyUtils,
-  typeUtils,
-  typeFilterUtils,
+  expect$,
   CustomUtils,
   ParseUtils,
-  MobxUtils
+  MobxUtils,
+  typeFilterUtils,
+  DecoratorUtils
 )) as IUtils;
 
-export function UtilsTest() {
-  return Utils.isFunction(1)
-}
+// export function UtilsTest() {
+//   return Utils.isFunction(1)
+// }

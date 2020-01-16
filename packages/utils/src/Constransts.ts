@@ -111,6 +111,28 @@ export namespace Constant$ {
   export var OBJ_defineProperty$ = OBJECT.defineProperty;
 	/**
 	 * ```ts
+	 * Object.defineProperties
+	 * ```
+	 * */
+  export var OBJ_defineProperties$ = OBJECT.defineProperties;
+
+  const { V, E, C, W } = Constant$.DefPropDec$$
+	/**
+	 * ```ts
+	 * Object.defineProperty
+   * writable: true,
+   * configurable: true,
+   * enumerable: true,
+   * value: param
+	 * ```
+	 * */
+  export var OBJ_definePropertyNormal$ = function (target: any, key: Exclude<keyof typeof target, number>, value: any) {
+    return OBJECT.defineProperty(target, key, {
+      [V]: value, [W]: true, [C]: true, [E]: true
+    })
+  };
+	/**
+	 * ```ts
 	 * Object.getPrototypeOf
 	 * ```
 	 * */
@@ -130,8 +152,12 @@ export namespace Constant$ {
   export var OBJ_getOwnPropertyNames$ = OBJECT.getOwnPropertyNames;
   export var PROMISE = Promise;
   export var CREATE_NEW = Reflect.construct
+
   export function CREATE_PROMISE<T>(executor: (resolve: (value?: T | PromiseLike<T>) => void, reject: (reason?: any) => void) => void): Promise<T> {
     return CREATE_NEW(PROMISE, [executor])
+  }
+  export function EMPTY_PROMISE<T = any>(value: T) {
+    return PROMISE.resolve(value)
   }
   export var PARSE_FLOAT = parseFloat
   export var PARSE_INT = parseInt
@@ -171,6 +197,10 @@ export namespace Constant$ {
     return BIND(Func, null, ...args)
   }
 
+  export function CREATE_OBJECT_IS(value: any): (value: any) => boolean {
+    return BindArg$$(OBJECT.is, value)
+  }
+
   export interface FunctionArgsShifter<
     T extends Function,
     P extends T['prototype'],
@@ -186,6 +216,14 @@ export namespace Constant$ {
   >(instance: T, key: K): FunctionArgsShifter<T, P, K> {
     // @ts-ignore
     return BIND(CALLER, instance[KEY_PROTOTYPE][key])
+  }
+  export function PROTOTYPE_BIND<
+    T extends Function,
+    P extends T['prototype'],
+    K extends keyof P,
+    >(instance: T, key: K): P[K] {
+    // @ts-ignore
+    return BIND(instance[KEY_PROTOTYPE][key], instance[KEY_PROTOTYPE]);
   }
 
   /**
@@ -231,9 +269,10 @@ export namespace Constant$ {
    * @param arr
    * @param callbackfn
    */
-  export const ARR_CONCAT = INSTANCE_BIND(ARRAY, 'concat') as {
-    <T extends any[]>(...arr: T[]): T[];
-  }
+  export const ARR_CONCAT = PROTOTYPE_BIND(ARRAY, 'concat') as {
+    <T extends any, A extends any = T>(arr: T[], ...next: A[][]): (A | T)[];
+    <T extends any, A extends any = T>(arr: T[], ...next: A[]): (A | T)[];
+  };
   /**
    * 原生数组的silce改为函数调用
    * @param arr

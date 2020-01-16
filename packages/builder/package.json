@@ -5,6 +5,7 @@
   "private": true,
   "main": "scripts/index.js",
   "scripts": {
+    "build:arg": "tsdx build --target node --format cjs",
     "pub": "node scripts/index.js scripts/index.js",
     "test": "builder.exe scripts/test.js -o ./test-build.exe",
     "build": "yarn build:bin -o ./node_modules/.cache/upx_build/tmp.exe && yarn build:upx",

@@ -4,15 +4,14 @@
 import { from, merge, MonoTypeOperatorFunction, of, timer } from 'rxjs';
 import { bufferTime, bufferWhen, distinctUntilChanged, first, shareReplay, switchMap, tap } from 'rxjs/operators';
 import { Constant$ } from './Constransts';
+import { sleep } from './CustomUtils';
 import { EventEmitter, Observable$$ } from './EventEmitter';
 import { forEach, isArray, isEqual, isNil, stubFunction } from './LodashExtra';
-import { sleep } from './TestUtils';
 import { expect$ } from './TypeLib';
 // import rx from 'rxjs'
 // import * as rx2 from 'rxjs/operators';
 // window.rx = rx;
 // window.rx2 = rx2;
-var { V, C, W, G } = Constant$.DefPropDec$$
 
 
 var testGroup: any;
@@ -153,68 +152,8 @@ export function createSimpleTimeBufferInput<K extends object = Window, V = any>(
     return simpleTimeBufferInput<K, V>(instance, value, callback, time, isDeepDiff)
   };
 }
-/**
- *
- * @param { number } time
- */
-export function timebuffer(time: number, mode = 'last') {
-  return function (target: any, methodName: string, descriptor: PropertyDescriptor) {
-    var func: Function = target[methodName];
-    var methodKey = Constant$.KEY_PREFIX_INJECT + methodName
-    var methodTmpKey = methodKey + '2'
-    delete descriptor[V]
-    delete descriptor[W]
-    Constant$.OBJ_ASSIGN(descriptor, {
-      [C]: false,
-      [G]: function () {
-        var THIS = this;
-        if (!THIS[methodKey]) {
-          THIS[methodTmpKey] = func.bind(THIS)
-          THIS[methodKey] = (...args: any[]) => {
-            // console.log(methodName + 'Tmp', args)
-            return simpleTimeBufferInput(THIS[methodTmpKey], args, (argsList) => {
-              const todoArgs = argsList[argsList.length - 1];
-              // console.log(todoArgs, argsList)
-              return THIS[methodTmpKey](...todoArgs);
-            }, time);
-          };
-        }
-        return THIS[methodKey]
-      },
-    })
-    // console.log(descriptor)
-  };
-}
-
-export function logger<P extends any = any>(name?: string, time = false) {
-  return function (target: any, methodName: string, descriptor: PropertyDescriptor) {
-    if (__DEV__) {
-      /**
-       * @type {function}
-       */
-      const func: Function = target[methodName];
-      if (time) {
-        descriptor.value = function (...args: P[]) {
-          console.time(methodName)
-          const r = func.apply(this, args)
-          console.log(name, methodName, args, r)
-          console.timeEnd(methodName)
-          return r;
-        }
-      } else {
-        descriptor.value = function (...args: P[]) {
-          const r = func.apply(this, args)
-          console.log(name, methodName, args, r)
-          return r;
-        }
-      }
-    }
-  }
-}
 
 export default {
-  timebuffer,
-  logger,
   simpleTimeBuffer,
   simpleTimeBufferInput,
   createSimpleTimeBufferInput,

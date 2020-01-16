@@ -1,5 +1,13 @@
-import { tokenize } from "kuromojin"
-tokenize("紲星あかり").then(r => {
-  console.log(r)
-  process.exit()
-})
+// import { getTokenizer } from "kuromojin"
+// import isEqual from 'lodash/isEqual'
+const shell = require('shelljs')
+// const igrone = {
+//   "*": true
+// }
+// getTokenizer().then(r => {
+//   const b = r.tokenizeForSentence("東北きりたん立ち絵Ver1β").map(v => v.reading && igrone[v.reading] !== '*'  && v.reading || v.basic_form).join("")
+//   const a = r.tokenize("東北きりたん立ち絵Ver1β").map(v => v.reading && igrone[v.reading] !== '*' && v.reading || v.basic_form).join("")
+//   console.log(a, b, isEqual(a, b))
+// })
+
+console.log(shell.exec("AVIUTL_DIR").stdout)

@@ -1,5 +1,5 @@
 import { find, isEqual } from '../LodashExtra';
-import { typeUtils } from '../TypeLib';
+import { expect$ } from '../TypeLib';
 
 /**
  * 判断两个数组是否相似
@@ -12,14 +12,14 @@ import { typeUtils } from '../TypeLib';
 export function likeArray(array: any[], other: any[]) {
   // if the other array is a falsy value, return
   if (
-    !typeUtils.isArray(other) || !typeUtils.isArray(array) ||
+    !expect$.isArray(other) || !expect$.isArray(array) ||
     // compare lengths - can save a lot of time 
     array.length !== other.length
   ) {
     return false;
   }
   for (const v of array) {
-    if (typeUtils.isNil(find(other, (item: any) => isEqual(item, v)))) {
+    if (expect$.isNil(find(other, (item: any) => isEqual(item, v)))) {
       return false;
     }
   }

@@ -3,7 +3,9 @@
 --dialog:默認/chk,local useDefault=1;${dialogs}
 --check0:Debug,1
 local lib = require("./lib")(package)
-local defaultOptions = { default1, default2, default3, default4 }
+local defaultOptions = { 
+  ----${paramDefaultOptions} 
+}
 local options, useDebug = lib.useOptions(obj)
 local params = require("./${paramsFileName}")
 
@@ -22,6 +24,11 @@ for i=1,#paramKeys do
   if indexParam ~= 0 then
 	  PSD:addstate(param, indexParam)
 	elseif useDefault and useDefault == 1 then 
+    indexParam = defaultOptions[i]
+    if indexParam ~= 0 then
+      paramTitle = "默認["..param.display[indexParam].."]"
+      param.current = { indexParam, paramTitle }
+    end
 	  PSD:addstate(param, defaultOptions[i])
 	end
 end

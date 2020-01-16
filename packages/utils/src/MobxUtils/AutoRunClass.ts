@@ -1,10 +1,11 @@
-import { action, autorun, computed, has, IReactionOptions, isObservable, observable, reaction, set } from 'mobx';
+import { action, autorun, computed, has, IReactionOptions, isObservable, observable, reaction, set, IReactionDisposer } from 'mobx';
 import { ITransformer } from 'mobx-utils';
 import { expect$ } from '../TypeLib';
 import { BaseStore } from "./BaseStore";
 import { createTransformer } from './mobx.export';
+import { stubObjectReturn } from '../LodashExtra';
 
-const tmpTransformerWeak = new WeakMap()
+export const tmpTransformerWeak = new WeakMap()
 function setterWithGetter<K, V>(map: Map<K, V>, key: K, value: V) {
   return map.get(key) || (map.set(key, value) && value)
 }
@@ -12,7 +13,7 @@ function setterWithGetter<K, V>(map: Map<K, V>, key: K, value: V) {
 function cloneDeep<T extends IKeyValueMap<any>>(values: T): T {
   if (values instanceof Object) {
     var r = values instanceof Array ? [] : {}, key: string, value: any;
-    var tmp: any;
+    var tmp: Map<any, any>;
     for ([key, value] of Object.entries(values)) {
       r[key] = value instanceof Object ? (
         // @ts-ignore
@@ -28,8 +29,9 @@ function cloneDeep<T extends IKeyValueMap<any>>(values: T): T {
 export const cloneTransform = createTransformer(cloneDeep)
 
 export class AutoRunClass<T = any, TrackType = T> extends BaseStore {
-  constructor() {
+  constructor(public initData: T = {} as T) {
     super()
+    this.nextData(initData)
     this.init()
   }
 
@@ -86,7 +88,19 @@ export class AutoRunClass<T = any, TrackType = T> extends BaseStore {
 
 
   @action.bound
-  public autorun(callbackfn: (form: T) => any) {
+  public autorun(callbackfn: (form: T) => any, options?: Pick<IReactionOptions, 'fireImmediately'>) {
+    const { fireImmediately } = options || { fireImmediately: false }
+    if (fireImmediately !== true) {
+      let handle: IReactionDisposer = this.reaction(stubObjectReturn, () => {
+        handle && handle()
+        handle = autorun(() => {
+          callbackfn(this.data);
+        })
+      })
+      return () => {
+        handle && handle()
+      }
+    }
     return this.registerDisposer(autorun(() => {
       callbackfn(this.data);
     }));
@@ -111,7 +125,9 @@ function patchUpdate<T>(data: T, next: T, parentKey?: string) {
         set(data, key, result);
         isDeteced = true;
         isDecetePath = true;
-        console.error('add field', key)
+        if (__DEV__) {
+          console.error('add field', key)
+        }
       } else if (result !== data[key]) {
         data[key] = result;
       }

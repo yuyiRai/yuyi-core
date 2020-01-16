@@ -1,8 +1,8 @@
 import { get } from 'lodash'
-import { AutoRunClass } from '../../src'
+import { AutoRunClass } from '../..'
 
 describe('mobx autorun 1', () => {
-  const context = new AutoRunClass()
+  const context = new AutoRunClass<any>({ a: { z: 1 }, b: 2 })
   let result: any = undefined
   let times = 0
 
@@ -12,8 +12,7 @@ describe('mobx autorun 1', () => {
   })
 
   it('初始化自动触发一次', () => {
-    context.nextData({ a: { z: 1 }, b: 2 })
-    context.autorun(callbackfn)
+    context.autorun(callbackfn, { fireImmediately: true })
     expect(callbackfn).toBeCalledTimes(++times)
     expect(result).toBe(2)
   })
@@ -30,7 +29,7 @@ describe('mobx autorun 1', () => {
     expect(result).toBe(2)
   })
 
-  var tmp: any;
+  var tmp: any
   it('新增字段会触发同级', () => {
     context.nextData({ a: { z: 3 }, b: 2, c: { d: 1 } })
     expect(callbackfn).toBeCalledTimes(++times)
@@ -108,8 +107,8 @@ describe('mobx autorun 2', () => {
   it('初始化，AB自动触发一次', () => {
     context.nextData({ a: 1, b: 2 })
     context.reaction(form => form && form.a, callbackfnA)
-    context.autorun(callbackfnB)
-    context.autorun(callbackfnC)
+    context.autorun(callbackfnB, { fireImmediately: true })
+    context.autorun(callbackfnC, { fireImmediately: true })
     expect(callbackfnA).toBeCalledTimes(a_times)
     expect(callbackfnB).toBeCalledTimes(++b_times)
     expect(callbackfnC).toBeCalledTimes(++c_times)

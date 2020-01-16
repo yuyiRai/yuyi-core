@@ -1,4 +1,6 @@
-import argparse, { ArgumentParser, ArgumentOptions, ActionConstructorOptions, Action, Namespace, ArgumentParserOptions } from 'argparse';
+import argparse, { SubparserOptions, ArgumentParser, ArgumentOptions, ActionConstructorOptions, Action, Namespace, ArgumentParserOptions } from 'argparse';
+import { KeyOf } from '../TsUtils';
+import isEqual from 'lodash/isEqual';
 // const argparse = require('argparse')
 
 export declare interface ArgumentOptionsFixed extends ArgumentOptions {
@@ -12,26 +14,67 @@ export declare interface ArgumentOptionsFixed extends ArgumentOptions {
   | 'version'// 打印版本信息并退出。version= 期望在addArgument（）调用中使用关键字参数。
   | (new (options: ActionConstructorOptions) => Action)
 }
-export declare interface ArgumentParserFixed extends Partial<ArgumentParser> {
-  addArgument(args: string | string[], options?: ArgumentOptionsFixed): Args;
+export declare interface ArgumentParserFixed<T> extends Partial<ArgumentParser> {
+  addArgument(args: string | string[], options?: ArgumentOptionsFixed): this;
 }
 
-export class Args implements ArgumentParserFixed {
-  parser: ArgumentParserFixed
+const replacer = {
+  'v': 'V',
+  'version': 'Version'
+}
+export class Args<T = any> {
+  // parser: ArgumentParserFixed
+  private config: ArgumentParserOptions;
+  private options: [string | string[], ArgumentOptionsFixed][] = ([]) as any[]
+  private namesMap: any = {}
   constructor(config: ArgumentParserOptions = {}) {
-    this.parser = new argparse.ArgumentParser({
+    this.config = {
       version: '0.0.1',
       addHelp: true,
-      description: 'Argparse example',
+      description: 'Argparse',
       ...config
-    }) as ArgumentParserFixed
+    }
   }
-  public addArgument: ArgumentParserFixed['addArgument'] = (a, b) => {
-    this.parser.addArgument(a, b)
+  /** @deprecated */
+  public addOption(name: "version", option: ArgumentOptionsFixed): this;
+  public addOption<K extends KeyOf<T>>(name: K, option: ArgumentOptionsFixed): this;
+  public addOption<K extends KeyOf<T>>(name: K, option: ArgumentOptionsFixed) {
+    var n = (replacer[name[0]] || name[0]) as string
+    if (!!this.namesMap[n]) {
+      n = n.toUpperCase()  + (replacer[name[1]] || name[1])
+    }
+    this.namesMap[n] = (replacer[name as any] || name)
+    return this.addArgument(["-" + n, "--" + this.namesMap[n]], option);
+  }
+  public addArgument(name: string | string[], option: ArgumentOptionsFixed) {
+    // this.parser.addArgument(a, b)
+    if (this.options.some(i => isEqual(i, [name, option]))) {
+      return this
+    }
+    this.options.push([name, option])
     return this;
   }
-  public init(args?: string[], ns?: object | Namespace) {
-    return this.parser.parseArgs(args, ns)
+  get parser(): ArgumentParserFixed<T> {
+    const parser = new argparse.ArgumentParser(this.config) as ArgumentParserFixed<T>;
+    this.options.forEach((option) => {
+      parser.addArgument(option[0], option[1]);
+    })
+    return parser
+  }
+  public init(args?: string[], ns?: object | Namespace, allowUnknown?: false): [T, any[]];
+  public init(args?: string[], ns?: object | Namespace, allowUnknown?: true): T;
+  public init(args?: string[], ns?: object | Namespace, allowUnknown = true) {
+    const parser = this.parser
+    return allowUnknown ? parser.parseKnownArgs(args, ns) : parser.parseArgs(args, ns)
+  }
+
+  public registerSub<T>(parse: ArgumentParserFixed<T>, { name, ...option }: { name: string } & SubparserOptions) {
+    const sub = parse.addSubparsers(option);
+    const parser = sub.addParser(name, this.config)
+    this.options.forEach((option) => {
+      parser.addArgument(option[0], option[1]);
+    })
+    return parse
   }
 };
 

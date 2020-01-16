@@ -1,0 +1,26 @@
+{
+  "name": "@yuyi919/gulp-awesome",
+  "version": "0.0.4",
+  "description": "",
+  "main": "dist/index.js",
+  "private": true,
+  "scripts": {
+    "build": "tsdx build --target node --format cjs",
+    "build:bin": "yuyi-builder -i scripts/bin.js -n yuyiGulp"
+  },
+  "bin": {
+    "yuyi-gulp": "scripts/bin.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "gitHead": "b6a439f1d79269da2843d054887dd42e7a7555c7",
+  "devDependencies": {
+    "gulp-luaminify": "^0.0.1",
+    "gulp-luapack": "^1.0.0",
+    "gulp-rename": "^2.0.0",
+    "typescript": "^3.6.4"
+  },
+  "dependencies": {
+    "@yuyi919/utils": "^0.0.60"
+  }
+}

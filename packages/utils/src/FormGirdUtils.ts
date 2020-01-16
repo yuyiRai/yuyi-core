@@ -1,6 +1,8 @@
 import { defaults, defaultTo, defaultsDeep, reduce } from 'lodash';
-import { castArray, cloneDeep, get, isNumber, isObject } from './LodashExtra';
-import { typeFilterUtils } from './TypeLib';
+import { castArray, cloneDeep, get, isNumber, isObject, filterMap } from './LodashExtra';
+import { expect$ } from './TypeLib';
+import { Constant$ } from './Constransts';
+import { Setter } from './OptionsUtils';
 
 export type PropFormatter<T, InputT = any, DefaultT = any> = (value: InputT, defaultValue?: DefaultT) => T
 export type NativeOrProp<T, K extends string> = K extends string ? { [key in K]: T } : T
@@ -11,14 +13,14 @@ export type NativeOrProp<T, K extends string> = K extends string ? { [key in K]:
  * @param formatter - 格式化方法
  * @param searchTarget - 检索对象
  * @param replaceKey - 检索来源，优先级为前>后
- * @param targetKey - 嵌入检索对象时指定的Key
+ * @param targetInnerKey - 嵌入检索对象指定的Key
  * @returns 返回由检索而来的值聚合而成的格式化后的值，指定[targetKey]时返回检索对象
  */
 export function searchFormatter<T, Target extends (object | any[]), TargetKey extends string>(
-  formatter: PropFormatter<T> | null,
   searchTarget: Target,
   replaceKey: string | string[],
-  targetKey?: TargetKey
+  formatter?: PropFormatter<T>,
+  targetInnerKey?: TargetKey
 ): NativeOrProp<ReturnType<PropFormatter<T>>, TargetKey> {
   const replaceKeys = castArray(replaceKey)
   let target = undefined
@@ -28,7 +30,7 @@ export function searchFormatter<T, Target extends (object | any[]), TargetKey ex
     const lift = isObject(target) ? defaults : defaultTo
     target = lift(target, after)
   }
-  return targetKey ? { ...cloneDeep(searchTarget), [targetKey]: target } : target
+  return targetInnerKey ? Object.assign(cloneDeep(searchTarget), { [targetInnerKey]: target }) : target
 }
 
 
@@ -37,7 +39,7 @@ export function defaultFromKey<T>(target: T, key: string, source: T) {
 }
 
 export function formatterCol(col: ColProps): IColProps {
-  return isNumber(col) ? { span: col } : typeFilterUtils.isObjectFilter(col) || {}
+  return isNumber(col) ? { span: col } : expect$.isObject.filter(col) || {}
 }
 
 
@@ -90,13 +92,29 @@ const { _content, _container, _label, _main, _Main } = {
   _main: "col",
   _Main: "Col"
 }
-export const GirdKeywords$$ = {
+const GirdKeys = {
   _content, _label, _main, _Main,
   _wrapperCol: "wrapperCol",
   _labelCol: _label + _Main
 }
-const { _wrapperCol, _labelCol } = GirdKeywords$$
+const { _wrapperCol, _labelCol } = GirdKeys
 
+const { setValue$$ } = Setter
+
+function searchDefaultOptions(target: any, r: any, main: string, alise?: string) {
+  // console.log('defaultValue', r, alise)
+  const keys = Constant$.ARR_CONCAT([main], filterMap([alise, main], i => i && (_container + '.' + i)));
+  return setValue$$(
+    r,
+    main,
+    searchFormatter(target, getItemContainerAppend(keys), formatterCol)
+  );
+}
+const defaultKeys = [
+  [_main],
+  [_wrapperCol, _content],
+  [_labelCol, _label]
+]
 export function getItemContainer(
   item: Partial<IItemConfig>,
   defaultContainer: ICommonFormContainer,
@@ -104,24 +122,15 @@ export function getItemContainer(
 ): ICommonFormContainerTarget & {
   [key: string]: any;
 } {
-  const target = { item, default: defaultContainer }
-  return appendKeys.reduce((obj, key) => {
-    return { ...obj, [key]: searchFormatter(null, target, getItemContainerAppend([key, _container +'.' + key])) }
-  }, {
-      [_main]: searchFormatter(formatterCol, target, getItemContainerAppend([_main, _container + "." + _main])),
-      [_wrapperCol]: searchFormatter(formatterCol, target, getItemContainerAppend([
-        _wrapperCol, _container + "." + _content, _container + "." + _wrapperCol
-      ])),
-      [_labelCol]: searchFormatter(formatterCol, target, getItemContainerAppend([
-        _labelCol, _container + "." + _label, _container + "." + _labelCol
-      ]))
-    })
+  const target = { item, default: defaultContainer };
+  const defaultValue = Constant$.REDUCE(defaultKeys, (init, key) => searchDefaultOptions(target, init, key[0], key[1]), {})
+  return Constant$.REDUCE(
+    appendKeys,
+    (obj, key) => setValue$$(
+      obj,
+      key,
+      searchFormatter(target, getItemContainerAppend([key, _container + '.' + key]), null)
+    ),
+    defaultValue
+  )
 }
-
-// col: searchFormatter(formatterCol, target, getItemContainerAppend(["col", "container.col"])),
-  // wrapperCol: searchFormatter(formatterCol, target, getItemContainerAppend([
-    // "wrapperCol", "container.content", "container.wrapperCol"
-  // ])),
-    // labelCol: searchFormatter(formatterCol, target, getItemContainerAppend([
-      // "labelCol", "container.label", "container.labelCol"
-    // ]))

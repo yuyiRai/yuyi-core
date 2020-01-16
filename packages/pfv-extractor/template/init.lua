@@ -3,18 +3,24 @@
 --track1:口部件的Layer号,0,100,0,1
 --track2:反転,-1,3,-1,1
 --track3:縮小率,0.01,100,100,0.01
---dialog:User目録,local userDir="${absoluteDir}";psd文件名,local psd_n="${psdName}";pfv文件名,local pfv_n="${pfvName}";全体初始化/chk,local isInit=0;初始化参数,local initParams=1;識別用Tag,local p_tag="${tag}";Ptkl,local ptkl="";使用minipsd/chk,local useMin=0;minipsd文件名,local psd_n_min="${minPsdName}";
+--dialog:全体初始化/chk,local isInit=0;初始化参数,local initParams=1;識別用Tag,local p_tag="${tag}";Ptkl,local ptkl="";使用minipsd/chk,local useMin=0;;
 --check0:复制脚本到剪贴板,1
 local lib = require("./lib")(package)
 local params = require("./${paramsFileName}")
+
+local userDir="${absoluteDir}" -- User目録
+local psd_n="${psdName}" --psd文件名
+local pfv_n="${pfvName}" --pfv文件名
+local psd_n_min="${minPsdName}" --minipsd文件名
 
 if useMin == 1 then
   psd_n = psd_n_min
 end
 
 local ptfk = userDir.."/"..psd_n.."|"..pfv_n
+
 obj.setfont("Times New Roman Greek",35,3,0xff0000,0x000000)
-obj.load("text","error: "..ptfk,1,obj.time)
+obj.load("text","error: "..ptfk,0,0)
 obj.setoption("dst","tmp")
 obj.draw(0,0,0,1)
 
@@ -42,6 +48,8 @@ end
 
 if obj.check0 or obj.check0 then
   lib.setClipboard(lib.getScriptsText(psd_n, obj.track1, obj.track0, p_tag, ptfk, ptkl))
+else
+  lib.clearClipboard()
 end
 
 if isInit==1 then

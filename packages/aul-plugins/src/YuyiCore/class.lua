@@ -1,5 +1,5 @@
 --class.lua
-local tableLib = require('table')
+local tableLib = require('./table')
 local _class = { }
 local function instanceof(self_ptr, compare_class)
     if not compare_class or not self_ptr then return false end

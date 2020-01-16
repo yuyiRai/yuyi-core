@@ -4,8 +4,9 @@ import pathlib from 'path';
 import { toBuffer, EncodingType, toStr } from './encoding';
 import { PfvFilterGroup } from './PfvFilterGroup';
 import { Options, initParams, Config } from './Options';
-import { kakasi } from '@yuyi919/kakasi'
+import { convertKuromojiTokenToString, Tokenizer } from './kuromoji';
 
+// import { kakasi } from '@yuyi919/kakasi'
 export type ReadResult = {
   characterName: string;
   rootName: string;
@@ -35,6 +36,9 @@ export async function readPfv(path: string, options?: Options): Promise<ReadResu
   }
 }
 
+export const parseToUnicodeStr = str => {
+  return toBuffer(str, "SJIS");
+}
 export function convertToParamsLua(data: ReadResult, { encoding = "UNICODE" }: Options = {}) {
   console.log(data.rootName)
   // const generatedParams = data.params.map((item, index) => {
@@ -60,19 +64,16 @@ export function convertToParamsLua(data: ReadResult, { encoding = "UNICODE" }: O
   // `
   // }).join('\r\n');
 
-  const parse = str => {
-    return toBuffer(str, "SJIS")
-  }
   const generatedParams = data.params.map((item, index) => {
     const paramIndex = index + 1;
     const optionsNames = item.childrenList.map(i => i.replace(`//${item.key}/`, ''))
     return `
     --${item.key}: ${JSON.stringify(optionsNames)}
     optionsDisplay[${paramIndex}] = {
-      ${JSON.stringify(optionsNames.map(parse)).replace(/[\[\]]/g, "").replace(/\\\\/g, "\\")}
+      ${JSON.stringify(optionsNames.map(parseToUnicodeStr)).replace(/[\[\]]/g, "").replace(/\\\\/g, "\\")}
     }
     --常用表互相链接
-    paramsDisplay[${paramIndex}] = "${parse(item.name)}"
+    paramsDisplay[${paramIndex}] = "${parseToUnicodeStr(item.name)}"
     params[${paramIndex}] = {
       name = paramsDisplay[${paramIndex}],
       display = optionsDisplay[${paramIndex}]
@@ -84,7 +85,7 @@ export function convertToParamsLua(data: ReadResult, { encoding = "UNICODE" }: O
           .replace(item.name + '/', item.name + '~')}
     params[${paramIndex}][${index + 1}] = "${
           ((r).replace('//', 'S."..controlType.."/')
-          .replace(item.name + '/' + optionsNames[index], parse(item.name + '~' + optionsNames[index]))
+          .replace(item.name + '/' + optionsNames[index], parseToUnicodeStr(item.name + '~' + optionsNames[index]))
           .replace(item.rootName + '/', `"..fileName.."/`))
           }"`
       ).join(`
@@ -175,11 +176,12 @@ function resolvePath(dir: string, ...path: string[]) {
 
 async function getJp(str: string) {
   try {
-    return (await kakasi(str, true)).split("").filter(i => /[\.a-z0-9A-Z_ ]+/.test(i)).join("")
+    return convertKuromojiTokenToString((await Tokenizer).tokenize(str))
+    // return (await kakasi(str, true)).split("").filter(i => /[\.a-z0-9A-Z_ ]+/.test(i)).join("")
   } catch (error) {
     console.log("罗马音转换失败：", error.message)
-    return str
   }
+  return str
 }
 
 export async function generateLua(userFolder: string, fileName: string, options: Options) {
@@ -193,6 +195,7 @@ export async function generateLua(userFolder: string, fileName: string, options:
       params: params,
       characterName,
       dialogs: params.map((p, i) => `默認[${p.name}],local default${i + 1}=1;`).join(""),
+      paramDefaultOptions: params.map((p, i) => `default${i + 1}`).join(", "),
       paramOptions: params.map((param, i) => `--track${i}:${param.name},0,${param.length},0,1`).join('\r\n'),
       paramKeys: params.map(p => p.encodingName).join('", "'),
       paramsFileName: paramsFileName,
@@ -205,14 +208,15 @@ export async function generateLua(userFolder: string, fileName: string, options:
     paramsFileName: paramsFileName,
     paramsName: "お好きになり"
   });
+  const fileNameCode = parseToUnicodeStr(fileName)
   const initObjStr = useTemplate("init", {})({
     characterName,
     params,
     tag: new Date().getTime(),
-    psdName: fileName + '.psd',
-    minPsdName: fileName + '.min.psd',
-    pfvName: fileName + '.pfv',
-    absoluteDir: userFolder.replace(/([\\])/g, "/"),
+    psdName: fileNameCode + '.psd',
+    minPsdName: fileNameCode + '.min.psd',
+    pfvName: fileNameCode + '.pfv',
+    absoluteDir: parseToUnicodeStr(userFolder.replace(/([\\])/g, "/")),
     paramsFileName: paramsFileName
   });
   // try {

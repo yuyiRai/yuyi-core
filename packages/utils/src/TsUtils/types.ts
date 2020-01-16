@@ -24,3 +24,4 @@ export type IsClasses<T = unknown, TRUE = true, FALSE = false> = IsObject<T, IsE
 export type t = IsClasses<any>
 export type IsTrue<T = unknown, TRUE = true, FALSE = false> = IsTargetTyped<true, T, TRUE, FALSE>
 export type IsNil<T = unknown, TRUE = true, FALSE = false> = IsTargetTyped<false | undefined | never, T, TRUE, FALSE>
+export type BaseType = string | number | boolean | Function | undefined | null;

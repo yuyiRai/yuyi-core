@@ -1,4 +1,4 @@
-@Platform
+----@Platform
 --
 --
 --track0:配置ID,0,10,0,1

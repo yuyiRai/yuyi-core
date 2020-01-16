@@ -21,27 +21,27 @@ export function initParams() {
     description: pkg.description
   })
     .addArgument("input", { help: '输入的pfv文件(路径)' })
-    .addArgument(["-e", "--encoding"], {
+    .addOption("encoding", {
       dest: "encoding",
       defaultValue: "SJIS",
       help: "输出转换编码类型"
     })
-    .addArgument(["-c", "--config"], {
+    .addOption("config", {
       dest: "config",
       defaultValue: "./pfvec.json",
       help: "配置文件存放位置,默认为\"./pfvec.json\""
     })
-    .addArgument(["-o", "--outdir"], {
+    .addOption("outdir", {
       dest: "outdir",
       help: "指定输出路径(为空时表示当前文件夹)"
     })
-    .addArgument(["-r", "--reverse"], {
+    .addOption("reverse", {
       action: "storeTrue",
       dest: "reverse",
       defaultValue: false,
       help: "倒叙解析Pfv-options"
     })
-    .addArgument(["-p", "--pack"], {
+    .addOption("pack", {
       action: "storeTrue",
       dest: "pack",
       defaultValue: false,

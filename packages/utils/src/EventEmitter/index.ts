@@ -8,6 +8,7 @@ import { Subject } from 'rxjs/internal/Subject';
 import { Subscription } from 'rxjs/internal/Subscription';
 import { share } from 'rxjs/operators';
 import { Constant$ } from '../Constransts';
+import { sleep } from '../CustomUtils/waitingPromise';
 
 export type Subscription = InstanceType<typeof Subscription>;
 // export { Subscription } from 'rxjs/internal/Subscription';
@@ -48,13 +49,13 @@ type CompletedEvent<EventType> = () => void;
  *
  * 销毁 见{@link EventEmitter.dispose | dispose()}
  * 
- * @typeParam EventType - 事件类型
+ * @typeParam T - 事件类型
  * @beta 1.2.2
  * @noInheritDoc
  */
-export class EventEmitter<EventType = any> extends Subject<EventType> {
+export class EventEmitter<T = any> extends Subject<T> {
   private sub: Subscription | null;
-  private lastValue: EventType | null;
+  private lastValue: { value?: T; } | null = null;
 
   /**
    * 实例化EventEmitter
@@ -62,7 +63,7 @@ export class EventEmitter<EventType = any> extends Subject<EventType> {
    * @param error 订阅错误事件方法
    * @param complete 订阅completed事件方法
    */
-  constructor(next?: NextEvent<EventType>, error?: ErrorEvent<EventType>, complete?: CompletedEvent<EventType>) {
+  constructor(next?: NextEvent<T>, error?: ErrorEvent<T>, complete?: CompletedEvent<T>) {
     super();
     this.pipe(share());
     if (next) {
@@ -84,20 +85,24 @@ export class EventEmitter<EventType = any> extends Subject<EventType> {
 
   /**
    * 发射值
-   * @param value
+   * @param value 发射值，并记录lastValue
+   * @param timeout 超时时间，超过指定时间后清理lastValue
    */
-  public emit(value: EventType) {
+  public emit(value: T, timeout?: number) {
     this.next(value);
-    this.lastValue = value;
+    this.lastValue = { value };
+    if (typeof timeout === 'number' && timeout > -1) {
+      setTimeout(this.clearCache, timeout)
+    }
   }
   /**
    * 发射一个事件后立即销毁监听器
    * @param value
    */
-  public once(value: EventType) {
+  public once(value: T) {
     this.emit(value);
     this.dispose();
-    this.lastValue = value;
+    this.lastValue = { value };
   }
 
   /**
@@ -126,20 +131,35 @@ export class EventEmitter<EventType = any> extends Subject<EventType> {
    * 取得最后发射的值
    */
   public getLastValue() {
-    return this.lastValue;
+    return this.lastValue && this.lastValue.value;
+  }
+  public clearCache = () => {
+    this.lastValue = null
+  }
+  public hasCache() {
+    return this.lastValue !== null;
   }
 
   /**
    * 转化成标准Promise
    */
   public toPromise() {
-    return CREATE_PROMISE(r => {
+    return CREATE_PROMISE<T>(r => {
       const sub = subscribe$$(this, data => {
         r(data);
         unsubscribe$$(sub)
       })
     })
   }
+
+  /**
+   * 转化成标准Promise，指定超时时间
+   */
+  public toPromiseUntil(timeout: number) {
+    return Promise.race([this.toPromise(), sleep(timeout)]);
+  }
+
+  
   static create() {
     return new EventEmitter()
   }

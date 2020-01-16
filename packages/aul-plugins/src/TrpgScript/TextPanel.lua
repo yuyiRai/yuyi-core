@@ -67,7 +67,7 @@ end
 -- 输出增量
 function TextPanel.increment(preMsg, nextTime, preTime)
   local preLength = YuyiCore.getStringLength(preMsg)
-  local incrementLength = 20 * (nextTime - preTime) - preLength + 1.5
+  local incrementLength = 20 * (nextTime - preTime) - preLength
   -- local pm = preLength.."("..preTime..":"..nextTime..""..":"..incrementLength..")".."\r\n"
   -- obj.mes(pm)
   -- obj.mes(string.rep("1", incrementLength - getStringLength(pm)))
@@ -243,6 +243,7 @@ end
 _G["TextPanel"] = TextPanel
 -- 消除结尾return直接将模块赋值给package.loaded
 package.loaded["TextPanel"] = TextPanel
+
 
 local handler_key = "$TextPanel_displayHandler"
 local textTmp_key = "$TextPanel_displayText"

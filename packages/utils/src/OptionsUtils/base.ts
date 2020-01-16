@@ -63,11 +63,11 @@ export function convertMap2UnieqArray<
 }
 
 export function convertArr2Map(arr: string[]): IKeyValueMap<boolean> {
-  return REDUCE(arr, Setter.setTrue$$, {}) as any
+  return arr ? REDUCE(arr, Setter.setTrue$$, {}) as any : {}
 }
 
 export function convertKeys2ValuesMap<O extends IKeyValueMap<string>>(obj: O): { [K in O[keyof O]]: K } {
-  return REDUCE(Object.entries(obj), Setter.setWithEntriesReverse$$, {}) as any
+  return obj ? REDUCE(Object.entries(obj), Setter.setWithEntriesReverse$$, {}) as any : {}
 }
 
 /**

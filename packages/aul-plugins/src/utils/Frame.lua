@@ -2,9 +2,17 @@
 -- Creates a dialog with a menu with three submenus. One of the submenus has a submenu, which has another submenu. 
 local iup = require( "iuplua" )
 require( "iupluacontrols" )
-
+-- local MessageBox = require('./MessageBox')
 -- Creates a text, sets its value and turns on text readonly mode 
-local text = iup.text {value = "This text is here only to compose", expand = "YES"}
+local text = iup.text { DROPFILESTARGET = true, ALIGNMENT = "ACENTER", value = "This text is here only to compose", expand = "YES"}
+
+function text:dropfiles_cb(filepath, num, x, y)
+  -- print(filepath, iup.IGNORE)
+  -- MessageBox.alarm("title", "123456")
+  text.VALUE = filepath
+  -- return filepath
+  -- return iup.IUP_IGNORE
+end
 
 -- Creates items of menu file
 local item_new = iup.item {title = "New"}
@@ -73,28 +81,28 @@ end
 local tmp = {
   file = '**'
 }
+local show = false
 -- ������ʾ�ص�
 function dlg:show_cb()
+  if show == false then
   -- local colordlg = iup.colorbrowser{}
   -- iup.Popup(colordlg, iup.CENTER, iup.CENTER)
   local res, inf, outf = iup.GetParam("Title", nil, [[
+      Sep1 %t
+      Main File %f[OPEN|*.bmp;*.jpg|CURRENT|NO|NO]{123456}
       Input File %f[SAVE,,,]
-      Output File %f[SAVE,,,]
-    ]], "*", "*")
+      Output File %f[SAVE|||]
+    ]], "", "*", "*")
   -- local initPath = 
       
     if res ~= 0 and inf ~= nil and outf ~= nil then	
       iup.Message("Files", inf .. outf)
     end
-
+    show = true
   -- print("onShow")
+  end
 end
 
-function text:dropfiles_cb(filepath, num, x, y)
-  -- print(filepath, iup.IGNORE)
-  tmp.file = filepath
-  return iup.IUP_IGNORE
-end
 
 local function showDialog()
   dlg:show()

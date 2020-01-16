@@ -1,4 +1,4 @@
-import { sleep } from './waitingPromise';
+import { sleep } from '../CustomUtils';
 import { cloneDeep } from '../LodashExtra';
 
 export namespace BenchmarkUtils {

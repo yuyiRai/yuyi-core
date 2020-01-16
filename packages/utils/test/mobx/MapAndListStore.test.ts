@@ -1,6 +1,6 @@
 // import { toJS } from 'mobx'
 // import {  } from 'mobx-utils'
-import { IKeyData, IMapTransformer, observable, reaction, RecordMapStore, toJS } from '../../src'
+import { IKeyData, IMapTransformer, observable, reaction, RecordMapStore, toJS } from '../..'
 
 console.info = () => { }
 

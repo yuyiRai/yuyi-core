@@ -1,48 +1,60 @@
-import wasm from '@yuyi/wasm-rollup';
-import copy from 'rollup-plugin-copy-glob'
 import fs from 'fs-extra';
-import { castArray } from 'lodash';
 import path from 'path';
-import { InputOptions, OutputOptions, rollup } from 'rollup';
+import { InputOptions, OutputOptions, RollupCache } from 'rollup';
 import babel from 'rollup-plugin-babel';
 import commonjs from 'rollup-plugin-commonjs';
+import copy from 'rollup-plugin-copy-glob';
 import json from 'rollup-plugin-json';
 import resolve from 'rollup-plugin-node-resolve';
 import external from 'rollup-plugin-peer-deps-external';
 import sourceMaps from 'rollup-plugin-sourcemaps';
-import { getTerser } from './terser';
 // import analyze from 'rollup-plugin-analyzer'
-import visualizer from 'rollup-plugin-visualizer'
+import visualizer from 'rollup-plugin-visualizer';
+import { getTerser } from './terser';
 
+// const babelPluginTsdx = require("tsdx/dist/babelPluginTsdx");
 
-export class NameCache {
-  static path = path.join(__dirname, './nameCache.json')
-  static read(): { vars: NameCache.CacheEntires, props: NameCache.CacheEntires } {
-    return fs.existsSync(NameCache.path) ? fs.readJSONSync(NameCache.path) : { vars: { props: {} }, props: { props: {} }}
+export class Cache<T = any> {
+
+  constructor(public name: string, public cache: T = {} as T) {
   }
-  static write(data: any) {
-    return fs.writeJSONSync(path.join(__dirname, './nameCache.json'), data, { spaces: 2 })
+  get path() {
+    return path.join(__dirname, './.cache/' + this.name + 'Cache.json');
+  }
+
+  read(): T {
+    this.cache = Cache.read<T>(this);
+    return this.cache;
+  }
+
+  write(data: T = this.cache) {
+    // console.log('write', data)
+    return Cache.write(this, data);
+  }
+
+  static read<T>(cache: Cache<T>): T {
+    return fs.existsSync(cache.path) ? fs.readJSONSync(cache.path) : cache.cache;
+  }
+  static write<T>(cache: Cache<T>, data: T) {
+    return fs.writeJSONSync(cache.path, data, { spaces: 2 });
   }
 }
-export namespace NameCache {
-  export type CacheEntires = { props: IKeyValueMap<string> }
-}
 
-const nameCache = NameCache.read()
+export type CacheEntires = { props: IKeyValueMap<string>; };
 
-const ignoredWarn = {
+const nameCache = new Cache<{ vars: CacheEntires, props: CacheEntires; }>('name', { vars: { props: {} }, props: { props: {} } });
+
+export const ignoredWarn = {
   'NAMESPACE_CONFLICT': false,
   'NON_EXISTENT_EXPORT': false,
   'UNUSED_EXTERNAL_IMPORT': false,
   'CIRCULAR_DEPENDENCY': false
-}
+};
 
-
-const isDevelopment = process.env.NODE_ENV === 'development'
-const isProduction = process.env.NODE_ENV === 'production'
+const isDevelopment = process.env.NODE_ENV === 'development';
+const isProduction = process.env.NODE_ENV !== 'development';
 const pkg = require('../package.json');
 const now = new Date(Date.now());
-const cache = {};
 
 const modeOptions = {
   libs(minify = true) {
@@ -64,7 +76,7 @@ const modeOptions = {
       output: [
         { dir: path.dirname(pkg.main) + '/lib', format: 'cjs', exports: 'named', sourcemap: true }
       ]
-    }
+    };
   },
   node: (minify = false) => ({
     minify,
@@ -73,6 +85,19 @@ const modeOptions = {
     output: [
       {
         file: 'dist/NodeUtils.js',
+        format: 'cjs',
+        exports: 'named',
+        sourcemap: true,
+      }
+    ]
+  }),
+  testUtils: (minify = false) => ({
+    minify,
+    mangle: false,
+    input: 'lib/TestUtils',
+    output: [
+      {
+        file: 'dist/TestUtils.js',
         format: 'cjs',
         exports: 'named',
         sourcemap: true,
@@ -114,16 +139,16 @@ const modeOptions = {
       { file: 'dist/index.production.umd.js', format: 'umd', exports: 'named', name: 'yuyiUtils', sourcemap: true },
     ]
   })
-}
+};
 
-type ConfigKey = keyof typeof modeOptions
+type ConfigKey = keyof typeof modeOptions;
 
 function getConfig({ mode = 'cjs', ...other }: { mode: ConfigKey | ConfigKey[]; }) {
   if (mode instanceof Array) {
-    return mode.map(mode => getConfig({ mode, ...other}))
+    return mode.map(mode => getConfig({ mode, ...other }));
   }
-  const { minify, mangle = minify, debug = false, ...assignOptions } = modeOptions[mode]() as any
-  const visualizerPlugin = (opt: { open: boolean } = { open: false }) => {
+  const { minify, mangle = minify, debug = false, ...assignOptions } = modeOptions[mode]() as any;
+  const visualizerPlugin = (opt: { open: boolean; } = { open: false }) => {
     return visualizer({
       // summaryOnly: true,
       filename: `../../reports/${pkg.name.split('\/')[1]}/${mode}.stats.html`,
@@ -132,25 +157,54 @@ function getConfig({ mode = 'cjs', ...other }: { mode: ConfigKey | ConfigKey[]; 
       template: "treemap",
       ...opt
     });
-  }
-  const config: InputOptions & { output: OutputOptions | OutputOptions[] } = {
+  };
+  const filter = [
+    'babel-plugin-transform-async-to-promises/helpers',
+    'mobx',
+    'rxjs',
+    'immer',
+    'core-decorators',
+    // 'lodash',
+    'tslib',
+    'dayjs'
+  ];
+
+  const complieCache = new Cache<RollupCache>('complie' + mode, { modules: [] });
+  const config: InputOptions & { output: OutputOptions | OutputOptions[]; } = {
     // const config = {
     ...assignOptions,
-    cache: isDevelopment ? cache : false,
+    complieCache,
+    cache: complieCache.read(),
     inlineDynamicImports: false,
     treeshake: isProduction,
     // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
-    external: ["benchmark", "argparse", "fs"],
+    external: (id) => {
+      if (filter.some(s => id.indexOf(s) > -1)) {
+        return false;
+      }
+      return require("tsdx/dist/utils").external(id);
+    },
     watch: {
       include: ['lib/**'],
     },
+    onwarn(warning, handler) {
+      if (!/node_modules/.test(warning.importer) && ignoredWarn[warning.code] !== false) {
+        // console.log(warning)
+        handler(warning);
+      }
+    },
     // @ts-ignore
     plugins: [
-      copy([
-        { files: "lib/**/*.d.ts", dest: 'dist' },
-        { files: "lib/**/*.d.ts.map", dest: 'dist' },
-        { files: "config/index.js", dest: 'dist' }
-      ]),
+      // babelPluginTsdx.babelPluginTsdx({
+      //   exclude: 'node_modules/**',
+      //   // extensions: [...core_1.DEFAULT_EXTENSIONS, 'ts', 'tsx'],
+      //   // passPerPreset: true,
+      //   custom: {
+      //     // targets: opts.target === 'node' ? { node: '8' } : undefined,
+      //     // extractErrors: true,
+      //     format: 'cjs',
+      //   },
+      // }),
       babel({
         exclude: /node_modules/,
         runtimeHelpers: true,
@@ -171,48 +225,28 @@ function getConfig({ mode = 'cjs', ...other }: { mode: ConfigKey | ConfigKey[]; 
       resolve(),
       commonjs(),
       json(),
-      ...getTerser(nameCache, minify, mangle, debug),
+      ...getTerser(nameCache.read(), minify, mangle, debug),
       sourceMaps(),
-      visualizerPlugin()
+      visualizerPlugin(),
+      copy([
+        { files: "lib/**/*.d.ts", dest: 'dist' },
+        { files: "lib/**/*.d.ts.map", dest: 'dist' },
+        { files: "config/index.js", dest: 'dist' }
+      ])
     ],
-  }
-  return config
+  };
+  return config;
 }
 
-const config = [
+const config = Object.assign([
   getConfig({ mode: 'cjs' }),
   getConfig({ mode: 'dev' }),
   getConfig({ mode: 'node' }),
   // // getConfig({ mode: 'libs' }),
-  // getConfig({ mode: 'helpersOnly' })
-]
+  getConfig({ mode: 'testUtils' }),
+  getConfig({ mode: 'helpersOnly' })
+] as (InputOptions & ({ output: OutputOptions | OutputOptions[]; complieCache: Cache<RollupCache>; }))[], {
+  nameCache
+});
 export default config;
 
-
-(async () => {
-  const resList = []
-  for (const option of config) {
-    resList.push({
-      res: await rollup({
-        ...option,
-        onwarn(warning, handler) {
-          if (!/node_modules/.test(warning.importer) && ignoredWarn[warning.code] !== false) {
-            // console.log(warning)
-            handler(warning)
-          }
-        }
-      }),
-      config: option
-    })
-  }
-  for (const { res, config } of resList) {
-    const generater = castArray(config.output).map(output => res.write({
-      ...output,
-      banner: '/* @yuyi919/utils */'
-    }))
-    for await (const r of generater) {
-    }
-  }
-  NameCache.write(nameCache)
-  // console.log('write', nameCache)
-})()

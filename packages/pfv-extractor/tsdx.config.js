@@ -40,7 +40,7 @@ module.exports = {
       if (!p)
         return r
       if (p.name === 'node-resolve')
-        return [p, commonjs({})]
+        return r.concat([p, commonjs({})])
       if (p.name === "rpt2") {
         return r.concat([
           rollup_plugin_typescript({
@@ -81,14 +81,14 @@ module.exports = {
       replacer({
         values: {
           'require.resolve': 'require("path").resolve',
-          'path_1.default.join(kuromojiDir, "..", "dict");': 'path_1.default.join(kuromojiDir, "assets/kuromoji/dict");',
+          // 'path_1.default.join(kuromojiDir, "..", "dict");': 'path_1.default.join(kuromojiDir, "assets/kuromoji/dict");',
         },
         delimiters: ["", ""]
       })
     )
     config.plugins.unshift(
       copy([
-        { files: modulePathResolve('@yuyi919/kakasi', './bin/*.*'), dest: 'bin' },
+        // { files: modulePathResolve('@yuyi919/kakasi', './bin/*.*'), dest: 'bin' },
         { files: modulePathResolve('kuromoji', './dict/*.*'), dest: 'assets/kuromoji/dict' },
       ])
     )

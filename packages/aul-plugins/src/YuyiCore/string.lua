@@ -1,5 +1,5 @@
-local lib = require("lib")
-local tableLib = require("table")
+local lib = require("./lib")
+local tableLib = require("./table")
 local utils = {}
 local keyN = '\n'
 

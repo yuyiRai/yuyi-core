@@ -13,7 +13,9 @@ import { jsGetAge } from './jsGetAge';
 import { likeArray } from './likeArray';
 import { getRealLength } from './getRealLength'
 import { MultipleSplit } from './MultipleSplit'
-import { shiftKeyGroup } from './changeKeys'
+import { shiftKeyGroup } from './changeKeys';
+export * from './waitingPromise';
+export * from './autobind'
 
 export {
   pipe,

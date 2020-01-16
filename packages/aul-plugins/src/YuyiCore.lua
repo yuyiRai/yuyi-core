@@ -147,6 +147,12 @@ function YuyiCore.getMixedPertten(main, append)
 end
 
 
+function YuyiCore.easein(p) 
+  return p*p 
+end
+function YuyiCore.easeout(p) 
+  return p*(2-p) 
+end
 
 function YuyiCore.splitStrMul(szFullString, szSeparators, startIndex, margeMap)
   -- YuyiCore.log(szSeparators)
@@ -196,3 +202,4 @@ end
 _G["YuyiCore"] = YuyiCore
 -- 消除结尾return直接将模块赋值给package.loaded
 package.loaded["YuyiCore"] = YuyiCore
+return YuyiCore

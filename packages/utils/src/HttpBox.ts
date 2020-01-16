@@ -2,7 +2,7 @@
  * @module UtilClass
  */
 import { includes, last } from './LodashExtra'
-import { typeFilterUtils } from './TypeLib';
+import { expect$ } from './TypeLib';
 import { createObjectKey } from './CustomUtils';
 import { simpleTimeBufferInput } from './TimeBuffer';
 import { Constant$ } from './Constransts';
@@ -23,10 +23,9 @@ export class HttpBox {
   }
 
   getRes$$(param: any) {
-    const { isObjectFilter } = typeFilterUtils
 
     // console.time(param.url)
-    param.__res_key = [param.url, createObjectKey({ ...isObjectFilter(param.params, param.data) })].join('')
+    param.__res_key = [param.url, createObjectKey({ ...expect$.isObject.filter(param.params, param.data) })].join('')
     // console.timeEnd(param.url)
     // if('params' in param)
     //   param.params =zipEmptyData(param.params)
@@ -64,7 +63,7 @@ export class HttpBox {
       }
     }).catch(function (e) {
       // console.log(e, e.message, typeFilterUtils.isNotEmptyValueFilter(e.message, e))
-      const message = typeFilterUtils.isNotEmptyValueFilter(e.message, e)
+      const message = expect$.isNotEmptyValue.filter(e.message, e)
       for (const i of list) {
         i.reject(new Error(message))
       }

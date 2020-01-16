@@ -1,7 +1,9 @@
 /**
  * @module CustomUtils
  */
-import { concat, join, keys, values } from '../LodashExtra';
+import { values } from '../LodashExtra';
+import { Constant$ } from '../Constransts';
 export function createObjectKey(obj: any): string {
-  return join(concat(keys(obj), values(obj)));
+  const { ARR_CONCAT, OBJ_KEYS } = Constant$
+  return ARR_CONCAT(OBJ_KEYS(obj), values(obj)).join();
 }

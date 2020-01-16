@@ -1,7 +1,7 @@
 /**
  * @module TypeUtils
  */
-import { Constant$ } from '../Constransts';
+import { Constant$, FunctionFactory } from '../Constransts';
 import { EventEmitter } from '../EventEmitter';
 import { typeUtils } from './expect';
 import { FilterFunction, filterTo } from './filterTo';
@@ -52,7 +52,10 @@ export const typeFilterUtils = Constant$.REDUCE<[string, (v: any) => boolean], I
   Constant$.ENTRIES(typeUtils),
   function (target, keyAndValue) {
     var execTmp: any = keyAndValue[1]
-    execTmp.filter = Constant$.BindArg$$(filterTo, keyAndValue[1])
+    execTmp.filter = Constant$.BindArg$$(filterTo, keyAndValue[1]);
+    execTmp.not = function () {
+      return !execTmp.apply(null, arguments)
+    };
     return Constant$.OBJ_ASSIGN(target, {
       [keyTmp = keyAndValue[0]]: execTmp.filter,
       [keyTmp + "Filter"]: execTmp.filter
@@ -61,9 +64,12 @@ export const typeFilterUtils = Constant$.REDUCE<[string, (v: any) => boolean], I
   {} as any
 );
 
+
+
 export type MultipleExpector<Core = Type<typeof typeUtils>> = {
   [K in keyof Core]: Core[K] & {
-    filter: K extends keyof ITypeFilters ? ITypeFilters[K] : FilterFunction<unknown>
+    filter: K extends keyof ITypeFilters ? ITypeFilters[K] : FilterFunction<unknown>,
+    not(value: any): boolean;
   };
 }
 

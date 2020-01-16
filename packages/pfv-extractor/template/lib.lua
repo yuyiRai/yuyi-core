@@ -22,6 +22,10 @@ local function print(obj, msg, use)
   end
 end
 
+local function clearClipboard()
+    store.lastMsg = ""
+end
+
 local function setClipboard(msg)
   if msg ~= store.lastMsg then
     writeFile("./pfv_loader.cache", msg)
@@ -32,6 +36,7 @@ end
 
 local function getScriptsText(psdName, lipsync, scene, p_tag, ptfk, ptkl)
   return [[<?--]]..psdName..[[
+
 o={ -- オプション設定
 lipsync = ]]..lipsync..[[    ,-- 口パク準備のレイヤー番号
 scene = ]]..scene..[[    ,-- シーン番号
@@ -65,6 +70,7 @@ return function ()
     useOptions = useOptions,
     print = print,
     setClipboard = setClipboard,
+    clearClipboard = clearClipboard,
     getScriptsText = getScriptsText
   }
 end
