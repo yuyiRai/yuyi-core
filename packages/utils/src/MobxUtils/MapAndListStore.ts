@@ -1,6 +1,6 @@
 import { autobind, readonly } from 'core-decorators';
 import { action, computed, $get, $keys, observable, ObservableMap, toJS, $values } from './mobx.export';
-import { Constant$ } from '../Constransts';
+import { Constant$, IKeyValueMap } from '../Constransts';
 import { isNil, isNumber, isString, reduce } from '../LodashExtra';
 import { CommonStore } from './CommonStore';
 

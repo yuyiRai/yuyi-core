@@ -4,6 +4,7 @@
 
 import { includes, reduce, isObject, isString, isEmptyValue } from '../LodashExtra';
 import { isNotEmptyArray } from '../TypeLib';
+import { IKeyValueMap } from '../Constransts';
 
 /**
  * 从对象中提取成员，不存在则新建一个成员（默认为一个空对象）

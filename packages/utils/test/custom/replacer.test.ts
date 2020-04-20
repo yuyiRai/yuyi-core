@@ -10,7 +10,8 @@ describe('changeObjectKey', () => {
     const shiftTest = { a: true, b: 1, c: '2' }
     expect(shiftKeyTo(shiftTest, 'a', 'b')).toEqual({ a: 1, b: true, c: '2' })
     expect(shiftKeyTo(shiftTest, 'a', 'b', ShiftMode.Auto)).toEqual({ a: 1, b: true, c: '2' })
-    expect(shiftKeyTo(shiftTest, 'a', 'b', ShiftMode.Copy)).toEqual({ a: true, b: true, c: '2' })
+    expect(shiftKeyTo(shiftTest, 'a', 'b', ShiftMode.Copy)).toEqual({ a: true, b: true, c: '2' });
+    expect(shiftKeyTo.copy(shiftTest, 'a', 'b')).toEqual({ a: true, b: true, c: '2' })
 
     const r = shiftKeyTo.cut(shiftTest, 'a', 'b')
     expect(shiftKeyTo(shiftTest, 'a', 'b', ShiftMode.Cut)).toEqual(r)

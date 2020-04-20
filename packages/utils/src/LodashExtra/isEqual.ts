@@ -34,10 +34,6 @@ export function isEqual(value: any, other: any, noStrict: boolean = false): bool
     return isEqualLodash(value, other)
   }
 }
-// tslint:disable-next-line: class-name
-declare interface isEqual {
-  _: typeof isEqualLodash
-}
 isEqual._ = isEqualLodash
 
 /**

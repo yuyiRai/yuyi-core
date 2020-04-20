@@ -2,14 +2,13 @@
 // import { greet } from '@yuyi919/core'
 export type Loader<T> = () => Promise<T | { default: T }>
 
+/* istanbul ignore next */
 /**
  * [静态import]的*.wasm为wasm模块
  * 采用es6的import语法
  * @param install - import install from '../*.wasm'
  */
-export function requireWebAssembly(
-  install: WasmImporter
-): WebAssembly.Instance {
+export function requireWebAssembly(install: WasmImporter): WebAssembly.Instance {
   console.log(typeof install)
   const imports = (requireWebAssembly as any).imports
   imports.env = imports.env || {};
@@ -26,8 +25,10 @@ export function requireWebAssembly(
   }
   return install(imports) as any
 }
+/* istanbul ignore next */
 (requireWebAssembly as any).imports = {}
 
+/* istanbul ignore next */
 /**
  * [动态import]*.wasm模块
  * 采用es6的() => import语法

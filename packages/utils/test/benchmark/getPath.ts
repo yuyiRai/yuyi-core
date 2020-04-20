@@ -2,6 +2,7 @@ import * as Utils from "../..";
 
 // tslint:disable-next-line: no-duplicate-imports
 import { getValuePathIterator, getValuePathIteratorRunner } from "../..";
+import { BenchmarkUtils } from "../../dist/TestUtils";
 
 export var testObject = {
   a: {
@@ -21,7 +22,7 @@ export var testObject = {
   }
 };
 
-const runner = () => Utils.BenchmarkUtils.paramDiff({
+const runner = () => BenchmarkUtils.paramDiff({
   'getValuePathIterator(栈循环)': (obj) => {
     for (const o of getValuePathIterator(obj)) {
 

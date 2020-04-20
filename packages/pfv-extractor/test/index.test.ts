@@ -10,7 +10,7 @@ import { getTokenizer } from "kuromojin";
 describe("base", () => {
   console.log(__dirname);
   it("output", async () => {
-    const igrone = {
+    const ignore = {
       "*": true
     };
     const tokenizer = await getTokenizer({ dicPath: pathlib.join(__dirname, "..", 'assets/kuromoji/dict') });

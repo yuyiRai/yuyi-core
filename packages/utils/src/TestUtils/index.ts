@@ -5,6 +5,7 @@
 
 export * from './BenchmarkUtils'
 
+/* istanbul ignore next */
 export function getTestArray(length: number) {
   const arr = []
   for (let i = length; i > 0; i--) {

@@ -118,18 +118,18 @@ export function castString(value: any) {
   return typeof value === Constant$.KEY_STR ? value : toString(value)
 }
 
-/**
- * 
- * @param objOrArr 
- * @param allowEmpty 
- */
-export function castObjectArray(objOrArr: any[], allowEmpty = true): any[] {
-  return Constant$.IS_ARR(
-    objOrArr
-  ) ? objOrArr : (
-      (allowEmpty ? isObject(objOrArr) : Constant$.OBJ_KEYS(objOrArr).length) && [objOrArr] || []
-    )
-}
+// /**
+//  * 
+//  * @param objOrArr 
+//  * @param allowEmpty 
+//  */
+// export function castObjectArray(objOrArr: any[], allowEmpty = true): any[] {
+//   return Constant$.IS_ARR(
+//     objOrArr
+//   ) ? objOrArr : (
+//       (allowEmpty ? isObject(objOrArr) : Constant$.OBJ_KEYS(objOrArr).length) && [objOrArr] || []
+//     )
+// }
 
 // const oc = typeFilterUtils.isArrayFilter
 

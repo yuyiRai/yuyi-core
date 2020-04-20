@@ -7,22 +7,22 @@ module.exports = {
   "preset": "ts-jest",
   "testEnvironment": "jest-environment-jsdom-fourteen",
   "coverageDirectory": `../../reports/${pkg.name.split('\/')[1]}/coverage`,
-  // "collectCoverageFrom": [
-  //   "src/**/*.{ts}",
-  //   "!src/**/*.d.ts"
-  // ],
+  "rootDir": __dirname,
+  "collectCoverageFrom": [
+    "<rootDir>/src/**"
+  ],
   "setupFiles": [
     require.resolve("react-app-polyfill/jsdom"),
     require.resolve("./config/dev.env.js")
   ],
-  "rootDir": process.cwd(),
   "setupFilesAfterEnv": [require.resolve("./src/Constransts.ts")],
   "testMatch": [
     "<rootDir>/test/**/*.{spec,test}.{js,jsx,ts,tsx}"
   ],
   "testPathIgnorePatterns": [
-    "[/\\\\]node_modules/",
-    "<rootDir>/node_modules/"
+    "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs)$",
+    "<rootDir>/node_modules/",
+    "[/\\\\]node_modules[/\\\\]"
   ],
   "extraGlobals": [],
   "transform": {
@@ -31,14 +31,21 @@ module.exports = {
     "^.+\\.css$": "<rootDir>/../night/config/jest/cssTransform.js",
     "^(?!.*\\.(js|jsx|ts|tsx|css|sass|scss|json)$)": "<rootDir>/../night/config/jest/fileTransform.js"
   },
+  "transformIgnorePatterns": [
+    "\\\\node_modules\\\\"
+  ],
   "moduleNameMapper": {
     '^@/(.*)$': "<rootDir>/src/$1",
     '^src/(.*)$': "<rootDir>/src/$1",
   },
-  "cacheDirectory": "/jest_tmp/",
+  "cacheDirectory": `../../reports/${pkg.name.split('\/')[1]}/jest_tmp/`,
   "coveragePathIgnorePatterns": [
-    "/node_modules/",
-    "/test/"
+    "node_modules/",
+    "./node_modules/",
+    "NodeUtils",
+    "TestUtils",
+    "WasmLoader",
+    "test/"
   ],
   "moduleFileExtensions": [
     "js",

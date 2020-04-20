@@ -1,5 +1,6 @@
-import map from 'lodash/map'
-import { Constant$ } from '../Constransts'
+import map from 'lodash/map';
+import { Constant$, IKeyValueMap, TKey } from '../Constransts';
+import { isObject } from '../LodashExtra';
 
 export namespace Setter {
   /**
@@ -64,6 +65,10 @@ export function convertMap2UnieqArray<
 
 export function convertArr2Map(arr: string[]): IKeyValueMap<boolean> {
   return arr ? REDUCE(arr, Setter.setTrue$$, {}) as any : {}
+}
+
+export function getSafeMapOptions(options?: string[] | IKeyValueMap<boolean>, defaultValue?: IKeyValueMap<boolean>): IKeyValueMap<boolean> {
+  return Constant$.IS_ARR(options) ? convertArr2Map(options) : (isObject(options) ? options : defaultValue)
 }
 
 export function convertKeys2ValuesMap<O extends IKeyValueMap<string>>(obj: O): { [K in O[keyof O]]: K } {

@@ -1,5 +1,6 @@
-import { convertArr2Map } from './base';
+import { isPlainObject } from 'lodash';
 import { Constant$ } from '../Constransts';
+import { convertArr2Map } from './base';
 
 
 export function getValuePath(values: any, allowPath?: string[] | { [path: string]: boolean }) {
@@ -35,12 +36,10 @@ export function* getValuePathIterator(values: any, allowPath?: string[] | { [pat
     nextIndex = -1
     for (const [key, valueOrP, parentKey] of p) {
       currentPath = parentKey && parentKey + '.' + key || key;
-      if (valueOrP instanceof Constant$.OBJECT && (!allowPath || !allowPath[currentPath])) {
-
+      if (isPlainObject(valueOrP) && (!allowPath || !allowPath[currentPath])) {
         for (const keyVal of Constant$.ENTRIES(valueOrP)) {
           nextList[++nextIndex] = [keyVal[0], keyVal[1], currentPath] as [string, any, string]
         }
-
       } else if (!allowPath || allowPath[currentPath]) {
         yield [currentPath, valueOrP] as [string, any]
       }
@@ -77,7 +76,7 @@ export function* getValuePathIteratorRunner(
   for (key of p) {
     valueOrP = values[key]
     currentPath = parentKey ? parentKey + '.' + key : key;
-    if (valueOrP instanceof Constant$.OBJECT && (!fixedAllPath || !fixedAllPath[currentPath])) {
+    if (isPlainObject(valueOrP) && (!fixedAllPath || !fixedAllPath[currentPath])) {
       // @ts-ignore
       yield* getValuePathIteratorRunner(valueOrP, allowPath, currentPath, fixedAllPath)
       // console.trace('test')

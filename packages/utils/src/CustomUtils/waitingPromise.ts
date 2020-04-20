@@ -6,6 +6,7 @@ import { Constant$ } from "../Constransts";
  */
 export const waitingPromise = sleep
 
+const { CREATE_PROMISE, delay$$ } = Constant$
 /**
  * 异步等候
  * @param time - 等候时间
@@ -15,10 +16,20 @@ export const waitingPromise = sleep
  * @public
  */
 export function sleep<V = void>(time: number, emitValue?: V, isError = false): Promise<V> {
-  const { CREATE_PROMISE, delay$$ } = Constant$
   return isError ? CREATE_PROMISE<V>(function (_, reject) {
     delay$$(reject, time, emitValue);
-  }) : CREATE_PROMISE<V>(function (resolve) {
+  }) : CREATE_PROMISE(function (resolve) {
     delay$$(resolve, time, emitValue);
+  });
+}
+
+/* istanbul ignore next */
+/**
+ * 等待下一帧cpu时序
+ * @param emitValue - 默认不需要
+ */
+export function nextTick(): Promise<void> {
+  return CREATE_PROMISE(function (resolve) {
+    delay$$(resolve, 0);
   });
 }

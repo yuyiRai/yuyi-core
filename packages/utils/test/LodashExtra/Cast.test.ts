@@ -1,4 +1,4 @@
-import { castFunction, castArray, castComputed, castString } from '../../src'
+import { castFunction, castArray, castComputed, castString, castObject, castComputedPipe } from '../../src'
 
 test('castArray', () => {
   expect([
@@ -18,6 +18,9 @@ test('castComputed', () => {
     castComputed(1),
     castComputed(1, 2, 3)
   ]).toEqual([6, undefined, 1, 1])
+
+  expect(castComputedPipe(null, 1)).toBe(1);
+  expect(castComputedPipe((a: number) => a + 1, 1)).toBe(2)
 })
 
 test('castFunction', () => {
@@ -27,6 +30,14 @@ test('castFunction', () => {
   const tmp = {}
   expect(castFunction(tmp)()).toBe(tmp)
   expect(castFunction(tmp, true)()).not.toBe(tmp)
+})
+
+test('castObject', () => {
+  expect(castObject(null, 'a')).toEqual({ a: null })
+
+  const t = { a: 1, b: 2 };
+  expect(castObject(t, 'c')).toEqual({ a: 1, b: 2 })
+  expect(castObject(t, 'c', true)).toEqual({ c: { a: 1, b: 2 } })
 })
 
 test('castString', () => {

@@ -1,5 +1,5 @@
 import { defaults, defaultTo, defaultsDeep, reduce } from 'lodash';
-import { castArray, cloneDeep, get, isNumber, isObject, filterMap } from './LodashExtra';
+import { castArray, cloneDeep, get, isNumber, isObject, filterMapWith } from './LodashExtra';
 import { expect$ } from './TypeLib';
 import { Constant$ } from './Constransts';
 import { Setter } from './OptionsUtils';
@@ -103,7 +103,7 @@ const { setValue$$ } = Setter
 
 function searchDefaultOptions(target: any, r: any, main: string, alise?: string) {
   // console.log('defaultValue', r, alise)
-  const keys = Constant$.ARR_CONCAT([main], filterMap([alise, main], i => i && (_container + '.' + i)));
+  const keys = Constant$.ARR_CONCAT([main], filterMapWith([alise, main], false, i => i && (_container + '.' + i)));
   return setValue$$(
     r,
     main,

@@ -8,7 +8,28 @@ items:
         uid: CustomUtils!
         items:
           -
-            name: 'App (Namespace)'
+            name: 'pipe (Namespace)'
+          -
+            name: 'shiftKeyGroup (Namespace)'
+      -
+        name: DateUtils
+        uid: DateUtils!
+        items:
+          -
+            name: EDateFormatter
+            uid: 'DateUtils!EDateFormatter:enum'
+      -
+        name: DecoratorUtils
+        uid: DecoratorUtils!
+        items:
+          -
+            name: DecoratorContextBase
+            uid: 'DecoratorUtils!DecoratorContextBase:interface'
+          -
+            name: 'Trasaction (Namespace)'
+          -
+            name: TrasactionGenerator
+            uid: 'DecoratorUtils!TrasactionGenerator:interface'
       -
         name: EventEmitter
         uid: EventEmitter!
@@ -16,28 +37,67 @@ items:
           -
             name: EventEmitter
             uid: 'EventEmitter!EventEmitter:class'
+          -
+            name: Observable$$
       -
         name: index
         uid: index!
         items:
           -
-            name: 'App (Namespace)'
+            name: AutoRunClass
+            uid: 'index!AutoRunClass:class'
           -
-            name: CommonDto
-            uid: 'index!CommonDto:class'
+            name: DecoratorContextBase
+            uid: 'index!DecoratorContextBase:interface'
           -
-            name: 'DateUtils (Class)'
-            uid: 'index!DateUtils:class'
+            name: DeepPathUpdateOptions
+            uid: 'index!DeepPathUpdateOptions:interface'
           -
-            name: 'DateUtils (Namespace)'
-            items:
-              - { name: EFormatter, uid: 'index!DateUtils.EFormatter:enum' }
+            name: EDateFormatter
+            uid: 'index!EDateFormatter:enum'
           -
             name: EventEmitter
             uid: 'index!EventEmitter:class'
           -
+            name: EventStore
+            uid: 'index!EventStore:class'
+          -
+            name: EventStoreProvider
+            uid: 'index!EventStoreProvider:class'
+          -
+            name: Expector
+            uid: 'index!Expector:interface'
+          -
+            name: 'FilterFunction (Namespace)'
+          -
+            name: 'filterTo (Namespace)'
+          -
+            name: HttpBox
+            uid: 'index!HttpBox:class'
+          -
+            name: ICommonFormContainer
+            uid: 'index!ICommonFormContainer:interface'
+          -
+            name: ICommonFormContainerTarget
+            uid: 'index!ICommonFormContainerTarget:interface'
+          -
+            name: IEscapeConvert
+            uid: 'index!IEscapeConvert:interface'
+          -
+            name: IEventStore
+            uid: 'index!IEventStore:interface'
+          -
+            name: IEventStoreBase
+            uid: 'index!IEventStoreBase:interface'
+          -
             name: IGetPathResult
             uid: 'index!IGetPathResult:interface'
+          -
+            name: IItemConfig
+            uid: 'index!IItemConfig:interface'
+          -
+            name: IMapTransformer
+            uid: 'index!IMapTransformer:interface'
           -
             name: 'isEqual (Namespace)'
           -
@@ -47,17 +107,86 @@ items:
             name: ITypeUtils
             uid: 'index!ITypeUtils:interface'
           -
-            name: Option
-            uid: 'index!Option:interface'
+            name: 'List (Class)'
+            uid: 'index!List:class'
+          -
+            name: 'List (Namespace)'
+          -
+            name: Observable$$
+          -
+            name: PathUpdateOptions
+            uid: 'index!PathUpdateOptions:interface'
+          -
+            name: PathUpdateResult
+            uid: 'index!PathUpdateResult:interface'
+          -
+            name: 'pipe (Namespace)'
+          -
+            name: RecordMapStore
+            uid: 'index!RecordMapStore:class'
+          -
+            name: Setter
+          -
+            name: 'shiftKeyGroup (Namespace)'
+          -
+            name: TrackMergeOptions
+            uid: 'index!TrackMergeOptions:interface'
+          -
+            name: 'Trasaction (Namespace)'
+          -
+            name: TrasactionGenerator
+            uid: 'index!TrasactionGenerator:interface'
       -
         name: LodashExtra
         uid: LodashExtra!
         items:
           -
-            name: CustomizerAdapterType
-            uid: 'LodashExtra!CustomizerAdapterType:enum'
+            name: IEscapeConvert
+            uid: 'LodashExtra!IEscapeConvert:interface'
           -
             name: 'isEqual (Namespace)'
+          -
+            name: TrackMergeOptions
+            uid: 'LodashExtra!TrackMergeOptions:interface'
+      -
+        name: MobxUtils
+        uid: MobxUtils!
+        items:
+          -
+            name: AutoRunClass
+            uid: 'MobxUtils!AutoRunClass:class'
+          -
+            name: DeepPathUpdateOptions
+            uid: 'MobxUtils!DeepPathUpdateOptions:interface'
+          -
+            name: EventStore
+            uid: 'MobxUtils!EventStore:class'
+          -
+            name: EventStoreProvider
+            uid: 'MobxUtils!EventStoreProvider:class'
+          -
+            name: IEventStore
+            uid: 'MobxUtils!IEventStore:interface'
+          -
+            name: IEventStoreBase
+            uid: 'MobxUtils!IEventStoreBase:interface'
+          -
+            name: IMapTransformer
+            uid: 'MobxUtils!IMapTransformer:interface'
+          -
+            name: 'List (Class)'
+            uid: 'MobxUtils!List:class'
+          -
+            name: 'List (Namespace)'
+          -
+            name: PathUpdateOptions
+            uid: 'MobxUtils!PathUpdateOptions:interface'
+          -
+            name: PathUpdateResult
+            uid: 'MobxUtils!PathUpdateResult:interface'
+          -
+            name: RecordMapStore
+            uid: 'MobxUtils!RecordMapStore:class'
       -
         name: NodeUtils
         uid: NodeUtils!
@@ -74,19 +203,62 @@ items:
       -
         name: OptionsUtils
         uid: OptionsUtils!
+        items:
+          -
+            name: Setter
       -
         name: PropertyUtils
         uid: PropertyUtils!
         items:
           -
-            name: CommonDto
-            uid: 'PropertyUtils!CommonDto:class'
-          -
             name: IGetPathResult
             uid: 'PropertyUtils!IGetPathResult:interface'
       -
-        name: TestUtil
-        uid: TestUtil!
+        name: rxjs
+        uid: rxjs!
+        items:
+          -
+            name: CompletionObserver
+            uid: 'rxjs!CompletionObserver:interface'
+          -
+            name: ErrorObserver
+            uid: 'rxjs!ErrorObserver:interface'
+          -
+            name: MonoTypeOperatorFunction
+            uid: 'rxjs!MonoTypeOperatorFunction:interface'
+          -
+            name: NextObserver
+            uid: 'rxjs!NextObserver:interface'
+          -
+            name: Observer
+            uid: 'rxjs!Observer:interface'
+          -
+            name: OperatorFunction
+            uid: 'rxjs!OperatorFunction:interface'
+          -
+            name: SchedulerAction
+            uid: 'rxjs!SchedulerAction:interface'
+          -
+            name: SchedulerLike
+            uid: 'rxjs!SchedulerLike:interface'
+          -
+            name: Subscribable
+            uid: 'rxjs!Subscribable:interface'
+          -
+            name: SubscriptionLike
+            uid: 'rxjs!SubscriptionLike:interface'
+          -
+            name: TimeInterval
+            uid: 'rxjs!TimeInterval:interface'
+          -
+            name: Timestamp
+            uid: 'rxjs!Timestamp:interface'
+          -
+            name: UnaryFunction
+            uid: 'rxjs!UnaryFunction:interface'
+          -
+            name: Unsubscribable
+            uid: 'rxjs!Unsubscribable:interface'
       -
         name: TestUtils
         uid: TestUtils!
@@ -103,13 +275,17 @@ items:
           -
             name: IFunction
             uid: 'TsUtils!IFunction:interface'
-          -
-            name: IKeyValueMap
-            uid: 'TsUtils!IKeyValueMap:interface'
       -
         name: TypeLib
         uid: TypeLib!
         items:
+          -
+            name: Expector
+            uid: 'TypeLib!Expector:interface'
+          -
+            name: 'FilterFunction (Namespace)'
+          -
+            name: 'filterTo (Namespace)'
           -
             name: ITypeFilterUtils
             uid: 'TypeLib!ITypeFilterUtils:interface'

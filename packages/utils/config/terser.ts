@@ -39,7 +39,7 @@ export function getTerser(nameCache: any, minify = true, mangle = minify, debug 
     replacer({
       values: {
         "process.env.NODE_ENV": `"${process.env.NODE_ENV || "production"}"`,
-        "__DEV__": `${((process.env.NODE_ENV || "production") === "development")}`,
+        "__DEV__": `${debug}`,
       }
     }),
     ...(minify && mangle && !debug ? [

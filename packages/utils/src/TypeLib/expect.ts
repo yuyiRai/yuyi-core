@@ -34,9 +34,9 @@ export function isNotEmptyData(value: any): boolean {
   return isBoolean(value) || isNumber(value) || !(isEmptyArrayStrict(value) || isEmpty(value));
 }
 
-export function paramShiftObjPairs<T>(func?: T): T {
-  return func;
-}
+// export function paramShiftObjPairs<T>(func?: T): T {
+//   return func;
+// }
 
 export function isEmptyObject(value: any, checkValue: boolean = false): value is {} {
   return isPureObj(value) && (

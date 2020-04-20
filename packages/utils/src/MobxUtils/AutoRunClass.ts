@@ -3,7 +3,9 @@ import { ITransformer } from 'mobx-utils';
 import { expect$ } from '../TypeLib';
 import { BaseStore } from "./BaseStore";
 import { createTransformer } from './mobx.export';
-import { stubObjectReturn } from '../LodashExtra';
+import { stubObjectReturn, isObject, isArray } from '../LodashExtra';
+import { convertArr2Map, getSafeMapOptions } from '../OptionsUtils';
+import { Constant$, IKeyValueMap } from '../Constransts';
 
 export const tmpTransformerWeak = new WeakMap()
 function setterWithGetter<K, V>(map: Map<K, V>, key: K, value: V) {
@@ -108,38 +110,79 @@ export class AutoRunClass<T = any, TrackType = T> extends BaseStore {
 
   @action.bound
   public nextData(next: T) {
-    var { result, isDecetePath } = patchUpdate(this.data, next);
+    var { result } = deepPatchUpdate(this.data, next, { has, set });
     // console.log('isDecetePath', isDecetePath)
     this.data = safeObservable(result);
   }
 }
 
-function patchUpdate<T>(data: T, next: T, parentKey?: string) {
-  if (expect$.isObject(next) && expect$.isObject(data)) {
+export interface PathUpdateOptions {
+  has?(target: any, key: string): boolean;
+  set?(target: any, key: string, value: any): any;
+  keys?: typeof Object['keys'];
+  filterCodes?: string[] | IKeyValueMap<boolean, string>;
+}
+export interface DeepPathUpdateOptions extends PathUpdateOptions {
+  deep?: number;
+}
+export interface PathUpdateResult<T> {
+  result: T;
+  isDeteced: boolean;
+  isDiff: boolean;
+  decetePath?: Record<string, boolean>;
+}
+
+const defaultOptions = {
+  has(target: any, key: string) {
+    return key in target
+  },
+  set(target: any, key: string, value: any) {
+    return (target[key] = value);
+  },
+}
+
+export function patchUpdate<T>(data: T, next: T, options?: PathUpdateOptions): PathUpdateResult<T> {
+  return deepPatchUpdate(data, next, Object.assign(options || {}, {
+    deep: 1
+  }))
+}
+
+export function deepPatchUpdate<T>(data: T, next: T, options?: DeepPathUpdateOptions): PathUpdateResult<T>;
+export function deepPatchUpdate<T>(data: T, next: T, options?: DeepPathUpdateOptions, parentKey?: string, currentDeep: number = 0): PathUpdateResult<T> {
+  options = options || {}
+  options.deep = expect$.isNumber.filter(options.deep, 10);
+  if (currentDeep < options.deep && expect$.isObject(next) && expect$.isObject(data)) {
+    let decetePath: Record<string, boolean> = {};
     let isDeteced = false;
-    let isDecetePath = false;
-    for (const key of Object.keys(next)) {
+    let isDiff = false
+    options.filterCodes = getSafeMapOptions(options.filterCodes)
+    const { filterCodes, has, keys = Constant$.OBJ_KEYS, set } = Constant$.OBJ_ASSIGN(defaultOptions, options)
+    const objKeys = keys(next);
+    objKeys.forEach(key => {
       const deepKey = parentKey ? parentKey + '.' + key : key;
-      const { result, isDeteced: childIsDeteced, isDecetePath: childIsDetecedPath } = patchUpdate(data[key], next[key], deepKey);
-      if (!has(data, key)) {
-        set(data, key, result);
-        isDeteced = true;
-        isDecetePath = true;
-        if (__DEV__) {
-          console.error('add field', key)
+      if (!filterCodes || filterCodes[deepKey]) {
+        // @ts-ignore
+        const { result, ...other } = deepPatchUpdate<any>(data[key], next[key], options, deepKey, currentDeep + 1);
+        if (!has(data, key)) {
+          set(data, key, result);
+          decetePath[key] = isDeteced = true;
+          isDiff = true
+          if (__DEV__) {
+            console.error('add field', key);
+          }
+        } else if (result !== data[key]) {
+          set(data, key, result);
+          isDiff = true
         }
-      } else if (result !== data[key]) {
-        data[key] = result;
+        if (other.decetePath)
+          Object.assign(decetePath, other.decetePath);
+      } else {
+        data[key] = next[key]
       }
-      if (childIsDetecedPath)
-        isDecetePath = true;
-      // if (childIsDeteced) 
-      //   isDeteced = true
-    }
-    return { result: isDeteced ? safeObservable({ ...data }) : data, isDeteced, isDecetePath };
-  } else {
-    return { result: safeObservable(next), isDeteced: false, isDecetePath: false };
+    })
+    return { result: isDeteced ? { ...data } : data, isDiff, isDeteced, decetePath };
   }
+  return { result: next, isDeteced: false, isDiff: true };
 }
 
 function safeObservable(obj: any) {

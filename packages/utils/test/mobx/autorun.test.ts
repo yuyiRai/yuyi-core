@@ -1,5 +1,5 @@
 import { get } from 'lodash'
-import { AutoRunClass } from '../..'
+import { AutoRunClass } from '../../src'
 
 describe('mobx autorun 1', () => {
   const context = new AutoRunClass<any>({ a: { z: 1 }, b: 2 })

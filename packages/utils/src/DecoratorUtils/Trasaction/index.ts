@@ -1,6 +1,7 @@
 import { expect$ } from '../../TypeLib';
 import { FunctionFactory, Constant$ } from '../../Constransts';
 import { generateNamespace } from '../generateNamespace';
+
 export function generateLock(lockSet?: Set<Promise<unknown>>, taskId?: string | number) {
   var next: (() => void) = null;
   // console.log('任务开始', taskId)
@@ -29,17 +30,27 @@ export function waitingLock(lockSet: Set<Promise<unknown>>) {
   return true;
 }
 
-export function withAsyncOr<T>(waiter: T | Promise<T>, when?: (waiting: boolean) => void, or?: () => void): Promise<T> {
-  if (waiter instanceof Promise) {
-    return !when && waiter || (when(true), waiter.then(r => {
+/**
+ * 逻辑工具函数
+ * 接收一个值，如果是非Promise则自动包装为Promise
+ * 如果传入值为Promise，可传入回调函数
+ * 如果传入值为非Promise，可传入回调函数
+ * @param target 
+ * @param when 传入时，监听原生```Promise```的resolving(立即执行)/resolved(then后执行)状态并调用此回调函数
+ * @param or 在即将返回包装后的```Promise```之前调用
+ */
+export function withAsyncOr<T>(target: T | Promise<T>, when?: (resolving: boolean) => void, or?: () => void): Promise<T> {
+  if (target instanceof Promise) {
+    return !when && target || (when(true), target.then(r => {
       when && when(false)
       return r
     }));
   }
   or && or()
-  return Constant$.EMPTY_PROMISE(waiter);
+  return Constant$.EMPTY_PROMISE(target);
 }
-
+export interface TrasactionGenerator extends ReturnType<typeof createTrasaction> {
+}
 export function createTrasaction(runner?: (foreExit: () => void) => any) {
   const lockSet = new Set<Promise<unknown>>();
   const generated = {
@@ -89,15 +100,22 @@ export function createTrasaction(runner?: (foreExit: () => void) => any) {
   return generated;
 }
 
-const TrasactionMap: WeakMap<any, Record<string, ReturnType<typeof createTrasaction>>> = new WeakMap<any, Record<string, ReturnType<typeof createTrasaction>>>();
-export const Trasaction = Object.assign(function Trasaction(trasactionKey?: string) {
+
+
+const TrasactionMap: WeakMap<any, Record<string, TrasactionGenerator>> = new WeakMap<any, Record<string, TrasactionGenerator>>();
+
+/**
+ * 事务锁定修饰符，保证一个async/返回一个Promise的函数的时序性
+ * @param trasactionKey 指定命名，如果不指定则默认为函数名
+ */
+export function Trasaction(trasactionKey?: string) {
   const map = TrasactionMap;
-  return function (target: any, key: string, { value, ...desc }: TypedPropertyDescriptor<FunctionFactory.Base<any[], Promise<any>>>) {
+  return (function (target: any, key: string, { value, ...desc }: TypedPropertyDescriptor<FunctionFactory.Base<any[], Promise<any>>>) {
     if (value instanceof Function) {
       trasactionKey = trasactionKey || key;
       const namespaceKey = generateNamespace(target, '$$_trasaction_' + trasactionKey);
       if (__DEV__) {
-        console.info('generateNamespace', namespaceKey)
+        console.info('generateNamespace', namespaceKey);
       }
       return Object.defineProperty(target, key, {
         ...desc,
@@ -117,5 +135,8 @@ export const Trasaction = Object.assign(function Trasaction(trasactionKey?: stri
         }
       });
     }
-  };
-}, { cache: TrasactionMap })
+  }) as MethodDecorator;
+}
+
+Trasaction.cache = TrasactionMap
+

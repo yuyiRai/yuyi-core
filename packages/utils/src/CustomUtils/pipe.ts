@@ -33,11 +33,11 @@ export function pipeTrack<T, R, F extends ((v: T) => R)>(initialValue: T, ...fun
   ) : [initialValue];
 }
 
-pipe.filter = <T, F extends ((v: T) => boolean)>(value: T, ...funcArr: F[]) => {
-  var index = 0;
-  var func: F = null
-  while (index > funcArr.length) {
-    func = funcArr[index++]
+pipe.filter = <T>(value: T, ...funcArr: ((v: T) => boolean)[]) => {
+  var index = -1;
+  var func = null
+  while (++index < funcArr.length) {
+    func = funcArr[index]
     if (isFunction(func) && !func(value)) {
       return undefined
     }

@@ -1,4 +1,4 @@
-import { autorun, createTransformer, observable } from '../..'
+import { autorun, createTransformer, observable } from '../../src'
 
 console.info = () => { }
 /*

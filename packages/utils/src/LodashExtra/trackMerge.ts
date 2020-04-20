@@ -1,5 +1,5 @@
 import { isArray, isNull, isPlainObject, isUndefined, mergeWith, MergeWithCustomizer } from 'lodash';
-import { Constant$, FunctionFactory } from '../Constransts';
+import { Constant$, FunctionFactory, IKeyValueMap, TKey } from '../Constransts';
 import { pipe } from '../CustomUtils/pipe';
 import { isFunction } from './isFunction';
 // import 'typescript-transform-macros'
@@ -26,7 +26,7 @@ export function expectTo(value: any, configs: [any, any, boolean?][], elseValue?
   return (expect = r && r[1], expect !== undefined ? expect : elseValue);
 };
 
-function getType(v: any) {
+export function getType(v: any): Type {
   // console.log('mergeFuncPipe', v, expectTo(v, match, Type.BASE))
   return expectTo(v, match, Type.BASE);
 }
@@ -75,7 +75,7 @@ export function trackMergePipe<Object>(__merge: Object) {
 }
 
 export interface TrackMergeOptions {
-  igroneKeys?: string[];
+  ignoreKeys?: string[];
   extendsKeys?: string[];
 }
 /**
@@ -88,12 +88,12 @@ export interface TrackMergeOptions {
 export function trackMerge<Target, Source>(object: Target, source: Source, options?: TrackMergeOptions): Partial<Target & Source> {
   if (options) {
     const cacheExtends = convertArr2Map(options.extendsKeys);
-    const cacheIgrone = convertArr2Map(options.igroneKeys);
+    const cacheIgrone = convertArr2Map(options.ignoreKeys);
 
     return mergeWith(object, source, (value, srcValue, key?, object?, source?) => {
       if (cacheIgrone[key]) return value;
 
-      const adapter = cacheExtends[key]
+      const adapter = cacheExtends[key] && (getType(value) !== Type.NULL) && (getType(value) !== Type.UNDEFINED)
         ? TrackAdapter[CustomizerAdapterType.ArrWithArr]
         : useAdapter<FunctionFactory.Base>(TrackAdapter, getType(value) * 10 + getType(srcValue));
       

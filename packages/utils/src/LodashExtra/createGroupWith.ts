@@ -3,7 +3,7 @@
  */
 
 import { isString } from "lodash";
-import { Constant$ } from "../Constransts";
+import { Constant$, IKeyValueMap } from "../Constransts";
 import { isFunction } from "./isFunction";
 
 /**

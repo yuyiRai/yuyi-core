@@ -3,6 +3,7 @@
  */
 import { observable, computed, observe, runInAction, ObservableMap, ObservableSet, action, autorun, reaction, set as $set, get as $get, keys as $keys, values as $values, toJS, IReactionOptions } from 'mobx'
 import { createTransformer, expr } from 'mobx-utils'
+import { defaultTo } from 'lodash'
 export { createTransformer, expr, observable, computed, ObservableMap, ObservableSet, action, autorun, observe, runInAction, reaction, $set, $get, $keys, $values, toJS }
 
 // export namespace _mobxUtils {
@@ -11,18 +12,25 @@ export { createTransformer, expr, observable, computed, ObservableMap, Observabl
 //   export var keys$$ = $keys
 //   export var values$$ = $values
 // }
+/**
+ * (mobx)反应式追踪一个值的变化，并在符合要求的情况时注销追踪
+ * @param expression 反射函数，返回一个可观察的值
+ * @param match 捕捉符合要求的反射值
+ * @param emitValue 符合要求时返回的值，不传则返回expression函数返回的值
+ */
 export function reactionOnce<T = any>(
-  re: () => any,
+  expression: () => any,
   match: (value: any) => boolean,
   emitValue?: T
 ) {
-  if (match(re()))
-    return emitValue;
+  const getter = expression()
+  if (match(getter))
+    return defaultTo(emitValue, getter);
   return new Promise<T>(resolve => {
-    const listener = reaction(re, (updated: any) => {
+    const listener = reaction(expression, (updated: any) => {
       const ok = match(updated)
       if (ok) {
-        resolve(emitValue);
+        resolve(defaultTo(emitValue, getter));
         listener && listener();
       }
     });

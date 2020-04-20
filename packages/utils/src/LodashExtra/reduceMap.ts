@@ -3,7 +3,7 @@
  */
 
 import { List } from 'lodash';
-import { Constant$ } from '../Constransts';
+import { Constant$, IKeyValueMap } from '../Constransts';
 
 export type ReduceMapObjectIterator<TSource = any, Result = TSource[keyof TSource], TResult = {
   [K in keyof TSource]?: Result;

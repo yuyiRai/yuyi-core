@@ -5,7 +5,7 @@ import { includes, last } from './LodashExtra'
 import { expect$ } from './TypeLib';
 import { createObjectKey } from './CustomUtils';
 import { simpleTimeBufferInput } from './TimeBuffer';
-import { Constant$ } from './Constransts';
+import { Constant$, IKeyValueMap } from './Constransts';
 export type Service = (...params: any[]) => Promise<any>
 
 export class HttpBox {

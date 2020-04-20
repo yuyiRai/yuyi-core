@@ -1,11 +1,11 @@
-import { EventEmitter, expect$, isFunction, FilterFunction, isEmptyObject, isNotEmptyObject, isNotEmptyValue, filterTo } from '../src'
+import { EventEmitter, expect$, isFunction, FilterFunction, isEmptyObject, isNotEmptyObject, isNotEmptyValue, filterTo, isNilAll } from '../src'
 import { Constant$ } from '../src/Constransts'
 
 /**
  * 类型判断工具测试
  */
 describe('TypeUtils test', () => {
-  const expectMap = new Map()
+  const expectMap = new Map<any, boolean>()
   expectMap.set({}, true)
   expectMap.set([], true)
   expectMap.set(true, true)
@@ -17,7 +17,8 @@ describe('TypeUtils test', () => {
   expectMap.set(NaN, false)
   expectMap.forEach((r, v) => {
     it('isNotEmptyValue:' + JSON.stringify(v) + '=' + r, () => {
-      expect(isNotEmptyValue(v)).toBe(r)
+      expect(expect$.isNotEmptyValue(v)).toBe(r);
+      expect(expect$.isEmptyValue.not(v)).toBe(r)
     })
   })
 
@@ -47,9 +48,16 @@ describe('TypeUtils test', () => {
     expect(isFiniteFilter(NaN, 2, 1)).toBe(2)
 
   })
+  it('isNilAll', () => {
+    expect(isNilAll(null, undefined, null)).toBe(true);
+    expect(isNilAll(null, undefined, 0)).toBe(false);
+    expect(isNilAll()).toBe(true)
+  })
   it('isEmpty etc.', () => {
     expect(expect$.isEmptyObject({})).toBe(true)
-    expect(isEmptyObject({ test: 1 })).toBe(false)
+    expect(isEmptyObject({ test: 1 })).toBe(false);
+    expect(isEmptyObject({ test: 1 }, true)).toBe(false);
+    expect(isEmptyObject({ test: undefined }, true)).toBe(true)
     expect(isEmptyObject(Object.create(null))).toBe(true)
     expect(isEmptyObject(Function)).toBe(false)
     expect(isEmptyObject(TestFunction)).toBe(false)

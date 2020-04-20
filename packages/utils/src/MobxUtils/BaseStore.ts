@@ -3,6 +3,7 @@ import { IReactionDisposer, Lambda } from "mobx";
 import { isFunction, keys } from '../LodashExtra';
 import { EventStore } from './EventStore';
 import { action, computed, observable, ObservableSet, reaction, runInAction } from "./mobx.export";
+import { IKeyValueMap } from '../Constransts';
 
 export abstract class BaseStore<EventKeys extends string = string> {
   @nonenumerable

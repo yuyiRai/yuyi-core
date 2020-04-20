@@ -9,7 +9,7 @@ import { downloadFile } from './downloadFile';
 import { createObjectKey } from './createObjectKey';
 import { getListDifferent } from './getListDifferent';
 import { connectTo } from './connectTo';
-import { jsGetAge } from './jsGetAge';
+// import { jsGetAge } from './jsGetAge';
 import { likeArray } from './likeArray';
 import { getRealLength } from './getRealLength'
 import { MultipleSplit } from './MultipleSplit'
@@ -26,7 +26,7 @@ export {
   getListDifferent,
   getRealLength,
   connectTo,
-  jsGetAge,
+  // jsGetAge,
   likeArray,
   MultipleSplit,
   shiftKeyGroup

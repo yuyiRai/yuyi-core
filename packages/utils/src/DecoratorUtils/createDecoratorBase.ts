@@ -1,4 +1,4 @@
-import { Constant$ } from '../Constransts';
+import { Constant$, ConstructorType } from '../Constransts';
 import { injectNamespace } from './generateNamespace';
 import { hackConstructor } from './getConstructor';
 

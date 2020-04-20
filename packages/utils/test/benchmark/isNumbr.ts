@@ -2,9 +2,10 @@
  * @jest-environment node
  */
 import * as Utils from '../../src'
-const { isNumber, isNum, BenchmarkUtils } = Utils
+const { isNumber, isNum } = Utils
 // @ts-ignore
 import { A, B } from '../LodashExtra/isNumbr.test'
+import { BenchmarkUtils } from '../../dist/TestUtils';
 
 // test('one', async () => {
 //   const r = await BenchmarkUtils.paramDiff({

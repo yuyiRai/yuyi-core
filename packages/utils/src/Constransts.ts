@@ -373,13 +373,18 @@ export namespace Constant$ {
   export var Key_useDeprecatedSynchronousErrorHandling$$ = 'useDeprecatedSynchronousErrorHandling'
 }
 
+export type ConstructorType<T, Args extends any[] = [any?, any?, ...any[]]> = {
+  new(...args: Args): InstanceType<new (...args: any) => T>;
+};
+export type TKey = string | number | symbol;
+export type IKeyValueMap<V = any, K extends TKey = TKey> = Record<K, V>
 declare global {
-  type ConstructorType<T, Args extends any[] = [any?, any?, ...any[]]> = {
-    new(...args: Args): InstanceType<new (...args: any) => T>
-  }
-  type TKey = string | number | symbol
-  type IKeyValueMap<V = any, K extends TKey = TKey> = Record<K, V>
   // var K$: typeof Constant$;
+  type ConstructorType<T, Args extends any[] = [any?, any?, ...any[]]> = {
+    new(...args: Args): InstanceType<new (...args: any) => T>;
+  };
+  type TKey = string | number | symbol;
+  type IKeyValueMap<V = any, K extends TKey = TKey> = Record<K, V>
 }
 
 // @ts-ignore

@@ -1,4 +1,4 @@
-import { sleep, List } from "../..";
+import { sleep, List } from "../../src";
 
 describe("mobx array-test", () => {
   let list = new List<IKeyValueMap>([], null, true);
@@ -24,9 +24,14 @@ describe("mobx array-test", () => {
     console.log("set start");
     expect(list.watcherLength).toBe(2);
     expect(handleChanged).toBeCalledTimes(0);
-    list.set(3, { i: 0 });
+    const setter = { i: 0 }
+    list.set(3, setter);
     expect(list.watcherLength).toBe(4);
     expect(handleChanged).toBeCalledTimes(1);
+    const repeat = list.set(3, setter);
+    expect(list.watcherLength).toBe(4);
+    expect(handleChanged).toBeCalledTimes(1);
+    expect(repeat).toBe(false)
     return;
   });
   it("pop", async () => {

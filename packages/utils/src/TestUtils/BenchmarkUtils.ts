@@ -2,6 +2,7 @@ import { sleep } from '../CustomUtils';
 import { cloneDeep } from '../LodashExtra';
 
 export namespace BenchmarkUtils {
+  /* istanbul ignore next */
   export async function paramDiff(group: { [k: string]: (...args: any[]) => any }, params: any[], options = {
     delay: 1000
   }) {

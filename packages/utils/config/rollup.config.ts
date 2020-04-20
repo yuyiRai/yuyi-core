@@ -11,6 +11,7 @@ import sourceMaps from 'rollup-plugin-sourcemaps';
 // import analyze from 'rollup-plugin-analyzer'
 import visualizer from 'rollup-plugin-visualizer';
 import { getTerser } from './terser';
+import { IKeyValueMap } from '../src/Constransts';
 
 // const babelPluginTsdx = require("tsdx/dist/babelPluginTsdx");
 
@@ -208,12 +209,15 @@ function getConfig({ mode = 'cjs', ...other }: { mode: ConfigKey | ConfigKey[]; 
       babel({
         exclude: /node_modules/,
         runtimeHelpers: true,
-        // presets: [['@babel/preset-env', { 
-        //   corejs: 2,
-        //   useBuiltIns: 'usage'
-        // }]],
+        presets: [['@babel/preset-env', {
+          "corejs": 2,
+          'useBuiltIns': 'entry'
+        }]],
         // presets: [["@babel/preset-env", { "modules": 'commonjs' }]],
-        plugins: [['@babel/transform-runtime', { useESModules: true }], '@babel/plugin-syntax-dynamic-import']
+        plugins: [
+          // ['@babel/transform-runtime', { useESModules: true }],
+          '@babel/plugin-syntax-dynamic-import'
+        ]
       }),
       // wasm({
       //   sync: [

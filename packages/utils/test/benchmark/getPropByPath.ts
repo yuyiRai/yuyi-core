@@ -2,8 +2,8 @@
  * @jest-environment node
  */
 import * as Utils from '../..'
-
-const { getPropByPath, getPropByPath2, BenchmarkUtils } = Utils
+import { BenchmarkUtils } from '../../dist/TestUtils';
+const { getPropByPath, getPropByPath2 } = Utils
 
 const runner = async () => {
   const r = await BenchmarkUtils.paramDiff({
