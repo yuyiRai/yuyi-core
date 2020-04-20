@@ -1,0 +1,2698 @@
+﻿<!DOCTYPE html>
+<!--[if IE]><![endif]-->
+<html>
+  
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title> </title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="title" content=" ">
+    <meta name="generator" content="docfx 2.43.3.0">
+    
+    <link rel="shortcut icon" href="../favicon.ico">
+    <link rel="stylesheet" href="../styles/docfx.vendor.css">
+    <link rel="stylesheet" href="../styles/docfx.css">
+    <link rel="stylesheet" href="../styles/main.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <meta property="docfx:navrel" content="../toc.html">
+    <meta property="docfx:tocrel" content="toc.html">
+    
+    
+    
+  </head>  <body data-spy="scroll" data-target="#affix" data-offset="120">
+    <div id="wrapper">
+      <header>
+        
+        <nav id="autocollapse" class="navbar navbar-inverse ng-scope" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              
+              <a class="navbar-brand" href="../index.html">
+                <img id="logo" class="svg" src="../logo.svg" alt="">
+              </a>
+            </div>
+            <div class="collapse navbar-collapse" id="navbar">
+              <form class="navbar-form navbar-right" role="search" id="search">
+                <div class="form-group">
+                  <input type="text" class="form-control" id="search-query" placeholder="Search" autocomplete="off">
+                </div>
+              </form>
+            </div>
+          </div>
+        </nav>
+        
+        <div class="subnav navbar navbar-default">
+          <div class="container hide-when-search" id="breadcrumb">
+            <ul class="breadcrumb">
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </header>
+      <div role="main" class="container body-content hide-when-search">
+        
+        <div class="sidenav hide-when-search">
+          <a class="btn toc-toggle collapse" data-toggle="collapse" href="#sidetoggle" aria-expanded="false" aria-controls="sidetoggle">Show / Hide Table of Contents</a>
+          <div class="sidetoggle collapse" id="sidetoggle">
+            <div id="sidetoc"></div>
+          </div>
+        </div>
+        <div class="article row grid-right">
+          <div class="col-md-10">
+            <article class="content wrap" id="_content" data-uid="OptionsUtils!">
+  
+  
+  <h1 id="OptionsUtils_" data-uid="OptionsUtils!"></h1>
+  <div class="markdown level0 summary"><p># 操作Options的工具集合</p>
+</div>
+  <div class="markdown level0 conceptual"></div>
+  <h3 id="functions">
+  </h3>
+  
+  
+  <h4 id="OptionsUtils_convertArr2Map_function_1_" data-uid="OptionsUtils!convertArr2Map:function(1)">convertArr2Map(arr)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function convertArr2Map(arr: string[]): IKeyValueMap&lt;boolean&gt;;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">string[]</span></td>
+        <td><em>arr</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IKeyValueMap</span>&lt;boolean&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_convertKeys2ValuesMap_function_1_" data-uid="OptionsUtils!convertKeys2ValuesMap:function(1)">convertKeys2ValuesMap(obj)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function convertKeys2ValuesMap&lt;O extends IKeyValueMap&lt;string&gt;&gt;(obj: O): {
+    [K in O[keyof O]]: K;
+};</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">O</span></td>
+        <td><em>obj</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">{
+    [K in O[keyof O]]: K;
+}</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">&#31867;&#22411;&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>O</em></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_convertMap2UnieqArray_function_1_" data-uid="OptionsUtils!convertMap2UnieqArray:function(1)">convertMap2UnieqArray(obj, defineKey)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function convertMap2UnieqArray&lt;Target extends {}, Keys extends string, Map extends {
+    [k in Keys]: Target;
+}, PrimaryKey extends string = 'key'&gt;(obj: Map, defineKey?: PrimaryKey): ({
+    [Key in (keyof Target | PrimaryKey)]?: Key extends keyof Target ? Target[Key] : Keys;
+} &amp; {
+    [key: string]: any;
+})[];</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Map</span></td>
+        <td><em>obj</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">PrimaryKey</span></td>
+        <td><em>defineKey</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">({
+    [Key in (keyof Target | PrimaryKey)]?: Key extends keyof Target ? Target[Key] : Keys;
+} &amp; {
+    [key: string]: any;
+})[]</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">&#31867;&#22411;&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>Target</em></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><em>Keys</em></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><em>Map</em></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><em>PrimaryKey</em></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_convertOptions2Map_function_1_" data-uid="OptionsUtils!convertOptions2Map:function(1)">convertOptions2Map(arr, labelKey, valKey)</h4>
+  <div class="markdown level1 summary"><p>将下拉OptionList转化为Map<!-- -->&lt;<!-- -->value, label<!-- -->&gt;<!-- -->用于快速翻译查表</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function convertOptions2Map&lt;T extends IKeyValueMap&gt;(arr: T[], labelKey?: TKey, valKey?: TKey): IKeyValueMap;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T[]</span></td>
+        <td><em>arr</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">TKey</span></td>
+        <td><em>labelKey</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">TKey</span></td>
+        <td><em>valKey</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IKeyValueMap</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">&#31867;&#22411;&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>T</em></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_convertValueOption_function_1_" data-uid="OptionsUtils!convertValueOption:function(1)">convertValueOption(valueList, useLabel)</h4>
+  <div class="markdown level1 summary"><p>将一个数据数组转换为OptoinsList</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function convertValueOption(valueList: (string | number)[], useLabel?: boolean): Option[];</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">(string | number)[]</span></td>
+        <td><em>valueList</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">boolean</span></td>
+        <td><em>useLabel</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Option</span>[]</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_createEqualsMatcher_function_1_" data-uid="OptionsUtils!createEqualsMatcher:function(1)">createEqualsMatcher(searchKey)</h4>
+  <div class="markdown level1 summary"><p>提供匹配方法/正则/匹配项数组/其它，返回通用匹配方法</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function createEqualsMatcher&lt;K = any&gt;(searchKey: SearchKey&lt;K&gt;): KeywordMatcher;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">SearchKey</span>&lt;K&gt;</td>
+        <td><em>searchKey</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">KeywordMatcher</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">&#31867;&#22411;&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>K</em></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_getCodeListByKey_function_1_" data-uid="OptionsUtils!getCodeListByKey:function(1)">getCodeListByKey(codeType)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function getCodeListByKey(codeType: Option[]): RemoteSearcher;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Option</span>[]</td>
+        <td><em>codeType</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RemoteSearcher</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_getCodeListByKey_function_2_" data-uid="OptionsUtils!getCodeListByKey:function(2)">getCodeListByKey(codeType, optionFactory)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function getCodeListByKey(codeType: OptionSearcher, optionFactory?: ArrayIterator&lt;IKeyValueMap, Option&gt;): RemoteSearcher;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">OptionSearcher</span></td>
+        <td><em>codeType</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">ArrayIterator</span>&lt;<span class="xref">IKeyValueMap</span>, <span class="xref">Option</span>&gt;</td>
+        <td><em>optionFactory</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">RemoteSearcher</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_getOptions_function_1_" data-uid="OptionsUtils!getOptions:function(1)">getOptions(optionList, searchKey, keyMatcherFunc, findOne)</h4>
+  <div class="markdown level1 summary"><p>使用关键字从optionList中获取匹配的option</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function getOptions&lt;TOption extends Option = Option, FindOne extends boolean = false, TResult = IsTrue&lt;FindOne, TOption | undefined, TOption[]&gt;&gt;(optionList: TOption[], searchKey: SearchKey&lt;any&gt;, keyMatcherFunc: KeyMatcherFunc, findOne?: FindOne): TResult;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TOption[]</span></td>
+        <td><em>optionList</em></td>
+        <td>
+          <p>待搜索的Options数组</p>
+
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">SearchKey</span>&lt;any&gt;</td>
+        <td><em>searchKey</em></td>
+        <td>
+          <p>查找关键字</p>
+
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">KeyMatcherFunc</span></td>
+        <td><em>keyMatcherFunc</em></td>
+        <td>
+          <p>匹配器</p>
+
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">FindOne</span></td>
+        <td><em>findOne</em></td>
+        <td>
+          <p>是否只返回第一个（默认为返回数组）</p>
+
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">TResult</span></td>
+        <td><p>返回匹配的Option</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">&#31867;&#22411;&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>TOption</em></td>
+        <td><p>Option对象类型</p>
+</td>
+      </tr>
+      <tr>
+        <td><em>FindOne</em></td>
+        <td><p>Option关键标识符</p>
+</td>
+      </tr>
+      <tr>
+        <td><em>TResult</em></td>
+        <td><p>匹配结果</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="OptionsUtils_getOptions_function_1__remarks">&#22791;&#27880;</h5>
+  <div class="markdown level1 remarks"><p>相关api： <a class="xref" href="optionsutils.html#OptionsUtils_getOptions_function_1_">getOptions()</a></p>
+</div>
+  
+  
+  <h4 id="OptionsUtils_getOptionsByKey_function_1_" data-uid="OptionsUtils!getOptionsByKey:function(1)">getOptionsByKey(optionList, searchKey, findOne)</h4>
+  <div class="markdown level1 summary"><p>通过Label或Value从optionList中获取匹配的option</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function getOptionsByKey&lt;T extends Option, K = string&gt;(optionList: T[], searchKey: SearchKey&lt;K&gt;, findOne?: boolean): T | T[] | undefined;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T[]</span></td>
+        <td><em>optionList</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">SearchKey</span>&lt;K&gt;</td>
+        <td><em>searchKey</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">boolean</span></td>
+        <td><em>findOne</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T | T[] | undefined</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">&#31867;&#22411;&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>T</em></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><em>K</em></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_getOptionsByLabel_function_1_" data-uid="OptionsUtils!getOptionsByLabel:function(1)">getOptionsByLabel(optionList, searchName)</h4>
+  <div class="markdown level1 summary"><p>使用关键字从optionList中获取匹配的option</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function getOptionsByLabel&lt;T = Option, K = string&gt;(optionList: T[], searchName: SearchKey&lt;K&gt;): T[];</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T[]</span></td>
+        <td><em>optionList</em></td>
+        <td>
+          <p>待搜索的Options数组</p>
+
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">SearchKey</span>&lt;K&gt;</td>
+        <td><em>searchName</em></td>
+        <td>
+          <p>label关键字</p>
+
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T[]</span></td>
+        <td><p>返回匹配的Option</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">&#31867;&#22411;&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>T</em></td>
+        <td><p>Option对象类型</p>
+</td>
+      </tr>
+      <tr>
+        <td><em>K</em></td>
+        <td><p>Option关键标识符</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="OptionsUtils_getOptionsByLabel_function_1__remarks">&#22791;&#27880;</h5>
+  <div class="markdown level1 remarks"><p>相关api： <a class="xref" href="optionsutils.html#OptionsUtils_getOptions_function_1_">getOptions()</a></p>
+</div>
+  
+  
+  <h4 id="OptionsUtils_getOptionsByLabel_function_2_" data-uid="OptionsUtils!getOptionsByLabel:function(2)">getOptionsByLabel(optionList, searchName, findOne)</h4>
+  <div class="markdown level1 summary"><p>使用关键字从optionList中获取匹配的option</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function getOptionsByLabel&lt;T = Option, K = string&gt;(optionList: T[], searchName: SearchKey&lt;K&gt;, findOne: true): T | undefined;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T[]</span></td>
+        <td><em>optionList</em></td>
+        <td>
+          <p>待搜索的Options数组</p>
+
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">SearchKey</span>&lt;K&gt;</td>
+        <td><em>searchName</em></td>
+        <td>
+          <p>label关键字</p>
+
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">true</span></td>
+        <td><em>findOne</em></td>
+        <td>
+          <p>是否只返回第一个（默认为返回数组）</p>
+
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T | undefined</span></td>
+        <td><p>返回匹配的Option</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">&#31867;&#22411;&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>T</em></td>
+        <td><p>Option对象类型</p>
+</td>
+      </tr>
+      <tr>
+        <td><em>K</em></td>
+        <td><p>Option关键标识符</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="OptionsUtils_getOptionsByLabel_function_2__remarks">&#22791;&#27880;</h5>
+  <div class="markdown level1 remarks"><p>相关api： <a class="xref" href="optionsutils.html#OptionsUtils_getOptions_function_1_">getOptions()</a></p>
+</div>
+  
+  
+  <h4 id="OptionsUtils_getOptionsByValue_function_1_" data-uid="OptionsUtils!getOptionsByValue:function(1)">getOptionsByValue(optionList, searchValue)</h4>
+  <div class="markdown level1 summary"><p>使用关键字从optionList中获取匹配的option</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function getOptionsByValue&lt;T = Option, K = string&gt;(optionList: T[], searchValue: SearchKey&lt;K&gt;): T[];</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T[]</span></td>
+        <td><em>optionList</em></td>
+        <td>
+          <p>待搜索的Options数组</p>
+
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">SearchKey</span>&lt;K&gt;</td>
+        <td><em>searchValue</em></td>
+        <td>
+          <p>value关键字</p>
+
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T[]</span></td>
+        <td><p>返回匹配的Option</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">&#31867;&#22411;&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>T</em></td>
+        <td><p>Option对象类型</p>
+</td>
+      </tr>
+      <tr>
+        <td><em>K</em></td>
+        <td><p>Option关键标识符</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="OptionsUtils_getOptionsByValue_function_1__remarks">&#22791;&#27880;</h5>
+  <div class="markdown level1 remarks"><p>相关api： <a class="xref" href="optionsutils.html#OptionsUtils_getOptions_function_1_">getOptions()</a></p>
+</div>
+  
+  
+  <h4 id="OptionsUtils_getOptionsByValue_function_2_" data-uid="OptionsUtils!getOptionsByValue:function(2)">getOptionsByValue(optionList, searchValue, findOne)</h4>
+  <div class="markdown level1 summary"><p>使用关键字从optionList中获取匹配的option</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function getOptionsByValue&lt;T = Option, K = string&gt;(optionList: T[], searchValue: SearchKey&lt;K&gt;, findOne: true): T | undefined;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T[]</span></td>
+        <td><em>optionList</em></td>
+        <td>
+          <p>待搜索的Options数组</p>
+
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">SearchKey</span>&lt;K&gt;</td>
+        <td><em>searchValue</em></td>
+        <td>
+          <p>value关键字</p>
+
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">true</span></td>
+        <td><em>findOne</em></td>
+        <td>
+          <p>是否只返回第一个（默认为返回数组）</p>
+
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T | undefined</span></td>
+        <td><p>返回匹配的Option</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">&#31867;&#22411;&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>T</em></td>
+        <td><p>Option对象类型</p>
+</td>
+      </tr>
+      <tr>
+        <td><em>K</em></td>
+        <td><p>Option关键标识符</p>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 id="OptionsUtils_getOptionsByValue_function_2__remarks">&#22791;&#27880;</h5>
+  <div class="markdown level1 remarks"><p>相关api： <a class="xref" href="optionsutils.html#OptionsUtils_getOptions_function_1_">getOptions()</a></p>
+</div>
+  
+  
+  <h4 id="OptionsUtils_getOptionsSelectedMatch_function_1_" data-uid="OptionsUtils!getOptionsSelectedMatch:function(1)">getOptionsSelectedMatch(option, searchName)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function getOptionsSelectedMatch&lt;T, K&gt;(option: T[], searchName: SearchKey&lt;K&gt;): KeywordMatcher;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T[]</span></td>
+        <td><em>option</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">SearchKey</span>&lt;K&gt;</td>
+        <td><em>searchName</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">KeywordMatcher</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">&#31867;&#22411;&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>T</em></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><em>K</em></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_getSafeMapOptions_function_1_" data-uid="OptionsUtils!getSafeMapOptions:function(1)">getSafeMapOptions(options, defaultValue)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function getSafeMapOptions(options?: string[] | IKeyValueMap&lt;boolean&gt;, defaultValue?: IKeyValueMap&lt;boolean&gt;): IKeyValueMap&lt;boolean&gt;;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>string[] | <span class="xref">IKeyValueMap</span>&lt;boolean&gt;</td>
+        <td><em>options</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">IKeyValueMap</span>&lt;boolean&gt;</td>
+        <td><em>defaultValue</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">IKeyValueMap</span>&lt;boolean&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_getValueAndPath_function_1_" data-uid="OptionsUtils!getValueAndPath:function(1)">getValueAndPath(values, allowPath)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function getValueAndPath(values: any, allowPath?: string[] | {
+    [path: string]: boolean;
+}): [string, any][];</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">any</span></td>
+        <td><em>values</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">string[] | {
+    [path: string]: boolean;
+}</span></td>
+        <td><em>allowPath</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">[string, any][]</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_getValuePath_function_1_" data-uid="OptionsUtils!getValuePath:function(1)">getValuePath(values, allowPath)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function getValuePath(values: any, allowPath?: string[] | {
+    [path: string]: boolean;
+}): any[];</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">any</span></td>
+        <td><em>values</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">string[] | {
+    [path: string]: boolean;
+}</span></td>
+        <td><em>allowPath</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">any[]</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_getValuePathIterator_function_1_" data-uid="OptionsUtils!getValuePathIterator:function(1)">getValuePathIterator(values, allowPath)</h4>
+  <div class="markdown level1 summary"><p>迭代器</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function getValuePathIterator(values: any, allowPath?: string[] | {
+    [path: string]: boolean;
+}): Generator&lt;[string, any], any, unknown&gt;;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">any</span></td>
+        <td><em>values</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">string[] | {
+    [path: string]: boolean;
+}</span></td>
+        <td><em>allowPath</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Generator</span>&lt;[string, any], any, unknown&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_getValuePathIteratorRunner_function_1_" data-uid="OptionsUtils!getValuePathIteratorRunner:function(1)">getValuePathIteratorRunner(values, allowPath, parentKey)</h4>
+  <div class="markdown level1 summary"><p>迭代器(递归版本)</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function getValuePathIteratorRunner(values: any, allowPath?: string[] | {
+    [path: string]: boolean;
+}, parentKey?: string): Generator&lt;[string, any], void, [string, any]&gt;;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">any</span></td>
+        <td><em>values</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">string[] | {
+    [path: string]: boolean;
+}</span></td>
+        <td><em>allowPath</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">string</span></td>
+        <td><em>parentKey</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Generator</span>&lt;[string, any], void, [string, any]&gt;</td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_isLabelMatchedItem_function_1_" data-uid="OptionsUtils!isLabelMatchedItem:function(1)">isLabelMatchedItem(labelSearcher, item)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function isLabelMatchedItem&lt;V extends string, D extends string&gt;(labelSearcher: SearchKey&lt;string&gt;, item: Option&lt;V, D&gt;): boolean;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">SearchKey</span>&lt;string&gt;</td>
+        <td><em>labelSearcher</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">Option</span>&lt;V, D&gt;</td>
+        <td><em>item</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">&#31867;&#22411;&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>V</em></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><em>D</em></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_isLabelMatchedItemByMatcher_function_1_" data-uid="OptionsUtils!isLabelMatchedItemByMatcher:function(1)">isLabelMatchedItemByMatcher(keyMatcher, item)</h4>
+  <div class="markdown level1 summary"><p>ttttttt</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function isLabelMatchedItemByMatcher(keyMatcher: KeywordMatcher, item: Option): boolean;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">KeywordMatcher</span></td>
+        <td><em>keyMatcher</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">Option</span></td>
+        <td><em>item</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_isOptionsItemSelected_function_1_" data-uid="OptionsUtils!isOptionsItemSelected:function(1)">isOptionsItemSelected(option, searchName, selectedValue)</h4>
+  <div class="markdown level1 summary"><p>判断是否选择项</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function isOptionsItemSelected&lt;T, K&gt;(option: T[], searchName: SearchKey&lt;K&gt;, selectedValue: SearchKey&lt;K&gt;): boolean;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T[]</span></td>
+        <td><em>option</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">SearchKey</span>&lt;K&gt;</td>
+        <td><em>searchName</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">SearchKey</span>&lt;K&gt;</td>
+        <td><em>selectedValue</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">&#31867;&#22411;&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>T</em></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><em>K</em></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_isValueMatchedItem_function_1_" data-uid="OptionsUtils!isValueMatchedItem:function(1)">isValueMatchedItem(valueSearcher, item)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function isValueMatchedItem(valueSearcher: SearchKey&lt;string&gt;, item: Option): boolean;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">SearchKey</span>&lt;string&gt;</td>
+        <td><em>valueSearcher</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">Option</span></td>
+        <td><em>item</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_isValueMatchedItemByMatcher_function_1_" data-uid="OptionsUtils!isValueMatchedItemByMatcher:function(1)">isValueMatchedItemByMatcher(keyMatcher, item)</h4>
+  <div class="markdown level1 summary"><p>ttttttt</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function isValueMatchedItemByMatcher(keyMatcher: KeywordMatcher, item: Option): boolean;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">KeywordMatcher</span></td>
+        <td><em>keyMatcher</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">Option</span></td>
+        <td><em>item</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">boolean</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_labelsToValues_function_1_" data-uid="OptionsUtils!labelsToValues:function(1)">labelsToValues(options, label)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function labelsToValues(options: Option[], label: SearchKey&lt;string&gt;): string[];</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Option</span>[]</td>
+        <td><em>options</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">SearchKey</span>&lt;string&gt;</td>
+        <td><em>label</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">string[]</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_labelsToValues_function_2_" data-uid="OptionsUtils!labelsToValues:function(2)">labelsToValues(options, label, joinKey)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function labelsToValues(options: Option[], label: SearchKey&lt;string&gt;, joinKey: string): string;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Option</span>[]</td>
+        <td><em>options</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">SearchKey</span>&lt;string&gt;</td>
+        <td><em>label</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">string</span></td>
+        <td><em>joinKey</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">string</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_labelToValue_function_1_" data-uid="OptionsUtils!labelToValue:function(1)">labelToValue(optionList, label)</h4>
+  <div class="markdown level1 summary"><p>转换value为label</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function labelToValue(optionList: Option[], label: SearchKey&lt;string&gt;): string | undefined;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Option</span>[]</td>
+        <td><em>optionList</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">SearchKey</span>&lt;string&gt;</td>
+        <td><em>label</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">string | undefined</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_Setter_setTrue___function_1_" data-uid="OptionsUtils!Setter.setTrue$$:function(1)">Setter.setTrue$$(o, key)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">function setTrue$$&lt;T&gt;(o: T, key: TKey): T;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><em>o</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">TKey</span></td>
+        <td><em>key</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">&#31867;&#22411;&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>T</em></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_Setter_setValue___function_1_" data-uid="OptionsUtils!Setter.setValue$$:function(1)">Setter.setValue$$(o, key, value)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">function setValue$$&lt;T&gt;(o: T, key: TKey, value: any): T;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><em>o</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">TKey</span></td>
+        <td><em>key</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">any</span></td>
+        <td><em>value</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">&#31867;&#22411;&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>T</em></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_Setter_setWith___function_1_" data-uid="OptionsUtils!Setter.setWith$$:function(1)">Setter.setWith$$(target, source, keywordKey, keywordVal)</h4>
+  <div class="markdown level1 summary"><p>设置目标map或对象属性并返回目标自身</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">function setWith$$&lt;T extends {} | Map&lt;any, any&gt;&gt;(target: T, source: any, keywordKey: TKey, keywordVal: TKey): T;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><em>target</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">any</span></td>
+        <td><em>source</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">TKey</span></td>
+        <td><em>keywordKey</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">TKey</span></td>
+        <td><em>keywordVal</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">&#31867;&#22411;&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>T</em></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_Setter_setWithEntries___function_1_" data-uid="OptionsUtils!Setter.setWithEntries$$:function(1)">Setter.setWithEntries$$(o, option)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">function setWithEntries$$&lt;T&gt;(o: T, option: [string, string]): T;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><em>o</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">[string, string]</span></td>
+        <td><em>option</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">&#31867;&#22411;&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>T</em></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_Setter_setWithEntriesReverse___function_1_" data-uid="OptionsUtils!Setter.setWithEntriesReverse$$:function(1)">Setter.setWithEntriesReverse$$(o, option)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">function setWithEntriesReverse$$&lt;T, K extends string, V extends string&gt;(o: T, option: [K, V]): T;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><em>o</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">[K, V]</span></td>
+        <td><em>option</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">&#31867;&#22411;&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>T</em></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><em>K</em></td>
+        <td></td>
+      </tr>
+      <tr>
+        <td><em>V</em></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_Setter_setWithKeyValue___function_1_" data-uid="OptionsUtils!Setter.setWithKeyValue$$:function(1)">Setter.setWithKeyValue$$(target, source)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">function setWithKeyValue$$&lt;T&gt;(target: T, source: {
+        key: any;
+        value: any;
+    }): T;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><em>target</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">{
+        key: any;
+        value: any;
+    }</span></td>
+        <td><em>source</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">&#31867;&#22411;&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>T</em></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_Setter_setWithLabelValue___function_1_" data-uid="OptionsUtils!Setter.setWithLabelValue$$:function(1)">Setter.setWithLabelValue$$(target, source)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">function setWithLabelValue$$&lt;T&gt;(target: T, source: {
+        label: string;
+        value: any;
+    }): T;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><em>target</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">{
+        label: string;
+        value: any;
+    }</span></td>
+        <td><em>source</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">&#31867;&#22411;&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>T</em></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_Setter_setWithValueLabel___function_1_" data-uid="OptionsUtils!Setter.setWithValueLabel$$:function(1)">Setter.setWithValueLabel$$(target, source)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">function setWithValueLabel$$&lt;T&gt;(target: T, source: {
+        label: any;
+        value: any;
+    }): T;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td><em>target</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">{
+        label: any;
+        value: any;
+    }</span></td>
+        <td><em>source</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">T</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="typeParameters">&#31867;&#22411;&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><em>T</em></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_valuesToLabels_function_1_" data-uid="OptionsUtils!valuesToLabels:function(1)">valuesToLabels(options, value)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function valuesToLabels(options: Option[], value: SearchKey&lt;string&gt;): string[];</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Option</span>[]</td>
+        <td><em>options</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">SearchKey</span>&lt;string&gt;</td>
+        <td><em>value</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">string[]</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_valuesToLabels_function_2_" data-uid="OptionsUtils!valuesToLabels:function(2)">valuesToLabels(options, value, joinKey)</h4>
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function valuesToLabels(options: Option[], value: SearchKey&lt;string&gt;, joinKey: string): string;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Option</span>[]</td>
+        <td><em>options</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">SearchKey</span>&lt;string&gt;</td>
+        <td><em>value</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">string</span></td>
+        <td><em>joinKey</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">string</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  
+  
+  <h4 id="OptionsUtils_valueToLabel_function_1_" data-uid="OptionsUtils!valueToLabel:function(1)">valueToLabel(optionList, value)</h4>
+  <div class="markdown level1 summary"><p>转换value为label</p>
+</div>
+  <div class="markdown level1 conceptual"></div>
+  <h5 class="decalaration">&#22768;&#26126;</h5>
+  <div class="codewrapper">
+    <pre><code class="lang-typeScript hljs">export declare function valueToLabel(optionList: Option[], value: SearchKey&lt;string&gt;): string | undefined;</code></pre>
+  </div>
+  <h5 class="parameters">&#21442;&#25968;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#21517;&#31216;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">Option</span>[]</td>
+        <td><em>optionList</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+      <tr>
+        <td><span class="xref">SearchKey</span>&lt;string&gt;</td>
+        <td><em>value</em></td>
+        <td>
+          
+          
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <h5 class="returns">&#36820;&#22238;</h5>
+  <table class="table table-bordered table-striped table-condensed">
+    <thead>
+      <tr>
+        <th>&#31867;&#22411;</th>
+        <th>&#25551;&#36848;</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><span class="xref">string | undefined</span></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+</article>
+          </div>
+          
+          <div class="hidden-sm col-md-2" role="complementary">
+            <div class="sideaffix">
+              <div class="contribution">
+                <ul class="nav">
+                </ul>
+              </div>
+              <nav class="bs-docs-sidebar hidden-print hidden-xs hidden-sm affix" id="affix">
+              <!-- <p><a class="back-to-top" href="#top">Back to top</a><p> -->
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <footer>
+        <div class="grad-bottom"></div>
+        <div class="footer">
+          <div class="container">
+            <span class="pull-right">
+              <a href="#top">Back to top</a>
+            </span>
+            
+            <span>Generated by <strong>DocFX</strong></span>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script type="text/javascript" src="../styles/docfx.vendor.js"></script>
+    <script type="text/javascript" src="../styles/docfx.js"></script>
+    <script type="text/javascript" src="../styles/main.js"></script>
+  </body>
+</html>
