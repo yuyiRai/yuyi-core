@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/utils",
-  "version": "0.0.61",
+  "version": "0.0.62",
   "description": "",
   "keywords": [
     "mobx",
@@ -57,7 +57,7 @@
     "start:all": "yarn start && yarn run docs:watch",
     "benchmark": "yuyi -c ttypescript exec test/benchmark/forEach.ts",
     "test": "jest",
-    "test:cover": "jest --coverage",
+    "test:cover": "jest --coverage --all",
     "test:watch": "jest --coverage --watch",
     "test:prod": "npm run lint && npm run test -- --no-cache",
     "report-coverage": "cat ./coverage/lcov.info | coveralls",
