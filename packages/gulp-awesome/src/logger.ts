@@ -4,7 +4,7 @@ import * as GulpUtils from './GulpUtils';
 import stream from 'stream'
 
 function log(msg: string, type?: string) {
-  console.log(`[${colors.gray(moment().format("HH:mm:ss"))}]${type && ` ${type} ` || ""}${log.format(msg)}`);
+  console.error(`[${colors.gray(moment().format("HH:mm:ss"))}]${type && ` ${type} ` || ""}${log.format(msg)}`);
 }
 log.format = function (msg: string) {
   return msg.replace(/'(.*?)'/g, "'" + colors.cyan('$1') + "'");

@@ -6,7 +6,7 @@ import jeditor from 'gulp-json-editor';
 import JSON5 from 'json5';
 
 import convert from 'gulp-convert';
-import { resolveTmpDir, projectName } from './resolve';
+import { resolveTmpDir, projectName, paths } from './resolve';
 
 JSON.parse = JSON5.parse;
 export namespace ApiExtractorFix {
@@ -21,14 +21,14 @@ export namespace ApiExtractorFix {
           set(json, 'name', name);
           return json;
         }))
-        .pipe(gulp.dest(resolveTmpDir(`./etc/`)));
+        .pipe(gulp.dest(paths.tmpEtcDir));
     };
   }
 
   let files = [];
   function getFiles() {
     if (files.length === 0) {
-      files = fs.readdirSync(resolveTmpDir(`./etc/`))
+      files = fs.readdirSync(paths.tmpEtcDir)
         .filter(name => new RegExp(`^(.*?)${escapeRegExp(suffix)}$`).test(name))
         .map(name => name.replace(suffix, ''));
     }

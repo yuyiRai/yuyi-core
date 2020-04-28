@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "private": true,
   "scripts": {
+    "doc": "yuyi-doc",
     "build": "tsdx build --target node --format cjs",
     "build:bin": "yuyi-builder -i scripts/bin.js -n yuyiGulp"
   },

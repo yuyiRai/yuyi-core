@@ -15,29 +15,30 @@ const folder = fs.readdirSync(
 const mainTemplate = fs.readFileSync(paths.mainTemplate).toString('utf8');
 const template = fs.readFileSync(paths.template).toString('utf8')
 
-if (!fs.pathExistsSync('./etc')) {
-  fs.mkdirSync('./etc')
+if (!fs.pathExistsSync(paths.tmpEtcDir)) {
+  fs.mkdirSync(paths.tmpEtcDir)
 }
 
-const requiredMainPoint = requireResolve(DOC_MAIN_POINT)
+const requiredMainPoint = requireResolve(DOC_MAIN_POINT);
+function replacer(template: string, dir = '<projectFolder>') {
+  template = template.replace(/\$\{projectFolder\}/ig, CWD);
+  template = template.replace(/\<projectFolder\>\/lib\/index.d.ts/ig, requiredMainPoint);
+  template = template.replace(/\<projectFolder\>\/dist/ig, `${dir}/${process.env.dist || 'dist'}`);
+  template = template.replace(/\<projectFolder\>\/etc/ig, `${dir}/${process.env.etc || 'etc'}`);
+  template = template.replace(/\<projectFolder\>/ig, dir);
+  return template;
+}
 export function createMainApiTask() {
-  function replacer(template: string, dir = '<projectFolder>') {
-    template = template.replace(/\$\{projectFolder\}/ig, CWD);
-    template = template.replace(/\<projectFolder\>\/lib\/index.d.ts/ig, requiredMainPoint);
-    template = template.replace(/\<projectFolder\>\/dist/ig, `${dir}/${process.env.dist || 'dist'}`);
-    template = template.replace(/\<projectFolder\>\/etc/ig, `${dir}/${process.env.etc || 'etc'}`);
-    template = template.replace(/\<projectFolder\>/ig, dir);
-    return template;
-  }
   return function () {
     const filePath = resolveTmpDir(`index.api.json`);
     if (!fs.existsSync(filePath)) {
       fs.createFileSync(filePath);
     }
     fs.writeFileSync(filePath, replacer(mainTemplate, paths.tmpProjectDir));
+    console.debug('project_name: ' + process.env.DOC_PROJECT_NAME)
     return gulp.src(filePath)
       .pipe(logger.log('project_name: ' + process.env.DOC_PROJECT_NAME))
-      .pipe(shell(`api-extractor run -c ${filePath} --local --verbose`))
+      .pipe(shell(`api-extractor run -c ${filePath} --local`))
   }
 }
 
@@ -58,12 +59,18 @@ export function createApiTask(folderName?: string) {
       fs.createFileSync(filePath)
     }
     fs.writeFileSync(filePath, replacer(template, paths.tmpProjectDir))
-    return gulp.src(filePath).pipe(shell(`api-extractor run -c ${filePath} --local --verbose`))
+    return gulp.src(filePath)
+      .pipe(logger.log('project_name: ' + process.env.DOC_PROJECT_NAME))
+      .pipe(shell(`api-extractor run -c ${filePath} --local`))
   }
 }
 
 export default function () {
-  const list = folder.map(folderName => createApiTask(folderName));
+  if (folder.length === 0) {
+    return () => gulp.src('.')
+      .pipe(logger.log('no tree'))
+  }
+  const list = folder.map(createApiTask);
   // console.log('folder', list);
   return gulp.parallel(list)
 }

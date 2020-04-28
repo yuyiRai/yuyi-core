@@ -32,6 +32,7 @@ export function requireResolve(target: string, extname = '.d.ts') {
 export const paths = {
   mainTemplate: resolve('./config/api-extractor.main.template.json'),
   template: resolve('./config/api-extractor.template.json'),
-  tmpProjectDir: resolveTmpDir()
+  tmpProjectDir: resolveTmpDir(),
+  tmpEtcDir: resolveTmpDir('./etc')
 };
 export { CWD, projectName, DOC_MAIN_POINT }
