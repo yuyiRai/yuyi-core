@@ -17,7 +17,7 @@ etc
 etc/*.*
 document/articles/**
 document/src/**
-document/obj/**
+document/obj/.cache/**
 .tmp
 
 markdown

@@ -20,14 +20,14 @@ gulp.task('doc:fix', docFix);
 
 gulp.task('doc:template', () => gulp.src(resolve('./config/document/**')).pipe(gulp.dest('./document')))
 gulp.task('default', gulp.series(
-  'doc:template',
-  // apiMain,
-  // apiTree,
+  apiMain,
+  apiTree,
   // apiFix,
-  gulp.parallel(
-    shell.task(`api-documenter markdown -i ${resolveTmpDir(`./etc`)} -o ${`./document/articles`}`),
-    // shell.task("api-documenter yaml -i ./etc -o ./document/src"),
-    shell.task(`api-documenter yaml -i ${resolveTmpDir(`./etc`)} -o ${`./document/src`}`)
-  ),
+  // 'doc:template',
+  // gulp.parallel(
+  //   shell.task(`api-documenter markdown -i ${resolveTmpDir(`./etc`)} -o ${`./document/articles`}`),
+  //   // shell.task("api-documenter yaml -i ./etc -o ./document/src"),
+  //   shell.task(`api-documenter yaml -i ${resolveTmpDir(`./etc`)} -o ${`./document/src`}`)
+  // ),
   // docFix
 ));
