@@ -1,0 +1,157 @@
+{
+  "name": "@yuyi919/ts-api-docs",
+  "version": "0.0.61",
+  "description": "",
+  "keywords": [
+    "mobx",
+    "lodash",
+    "typescript"
+  ],
+  "private": true,
+  "main": "dist/index.js",
+  "types": "lib/index.export.d.ts",
+  "typings": "lib/index.export.d.ts",
+  "files": [
+    "dist",
+    "lib"
+  ],
+  "author": "yuyiRai",
+  "license": "MIT",
+  "engines": {
+    "node": ">=6.0.0"
+  },
+  "bin": {
+    "yuyi-doc": "bin.js"
+  },
+  "scripts": {
+    "gulp": "yuyi-gulp --gulpfile ./config/gulpfile.ts",
+    "api:main": "api-extractor run -c ./config/api-extractor.json --local --verbose",
+    "api:rx": "api-extractor run -c ./config/api-extractor-rxjs.json --local --verbose",
+    "api:depend": "yarn api:rx",
+    "api:tree": "yarn gulp",
+    "api2": "yarn api:main && yarn api:depend && yarn api:tree",
+    "tsc": "ttsc --build",
+    "tsc:watch": "ttsc --build --watch",
+    "build:api": "yarn tsc && yarn api",
+    "doc:output": "yarn build:api && yarn docfx:serve",
+    "presave": "yarn api",
+    "addTemplate": "nuget install memberpage -OutputDirectory config/template",
+    "markdown": "api-documenter markdown -i ./etc -o ./document/articles/docs",
+    "yaml": "api-documenter yaml -i ./etc -o ./document/src",
+    "docfx": "yarn docfx:build",
+    "docfx:build": "rimraf ./docs/**/* && docfx build ./document/docfx.json",
+    "docfx:serve": "rimraf ./docs/**/* && docfx ./document/docfx.json --serve",
+    "predeploy-docs": "yarn run docs:full",
+    "deploy-docs": "gh-pages -d docs",
+    "lint": "tslint --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
+    "prebuild": "rimraf dist/**",
+    "test": "jest",
+    "test:cover": "jest --coverage --all",
+    "test:watch": "jest --coverage --watch",
+    "test:prod": "npm run lint && npm run test -- --no-cache",
+    "rimraf": "rimraf"
+  },
+  "lint-staged": {
+    "{src,test}/**/*.ts": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "ts-jest"
+    },
+    "testEnvironment": "node",
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "moduleNameMapper": {
+      "^react-native$": "react-native-web",
+      "^.+\\.module\\.(css|sass|scss)$": "identity-obj-proxy",
+      "^@/(.*)$": "<rootDir>/src/$1",
+      "^src/(.*)$": "<rootDir>/src/$1"
+    },
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "/test/"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 90,
+        "functions": 95,
+        "lines": 95,
+        "statements": 95
+      }
+    },
+    "collectCoverageFrom": [
+      "src/*.{js,ts}"
+    ]
+  },
+  "prettier": {
+    "semi": false,
+    "singleQuote": true
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^8.0.0",
+    "@commitlint/config-conventional": "^8.0.0",
+    "@types/argparse": "^1.0.36",
+    "@types/benchmark": "^1.0.31",
+    "@types/gulp": "^4.0.6",
+    "@types/jest": "^24.0.23",
+    "@types/lodash": "^4.14.149",
+    "argparse": "^1.0.10",
+    "benchmark": "^2.1.4",
+    "colors": "^1.4.0",
+    "coveralls": "^3.0.2",
+    "cross-env": "^5.2.0",
+    "dayjs": "^1.8.15",
+    "gulp": "^4.0.2",
+    "gulp-cached": "^1.1.1",
+    "gulp-convert": "^0.2.0",
+    "gulp-shell": "^0.7.1",
+    "gulp-yml-merge": "^0.0.2",
+    "husky": "^3.1.0",
+    "immer": "^5.0.0",
+    "jest": "^24.9.0",
+    "jest-config": "^24.9.0",
+    "lint-staged": "^8.0.0",
+    "lodash": "^4.17.15",
+    "lodash-decorators": "^6.0.1",
+    "lodash.camelcase": "^4.3.0",
+    "lodash.get": "^4.4.2",
+    "lodash.pick": "^4.4.0",
+    "mobx": "^4.15.0",
+    "mobx-utils": "^5.5.2",
+    "prettier": "^1.18.2",
+    "replace-in-file": "^4.1.0",
+    "rimraf": "^3.0.0",
+    "rollup": "^1.27.8",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-dts": "^1.1.12",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-peer-deps-external": "^2.2.0",
+    "rollup-plugin-sourcemaps": "^0.4.2",
+    "rollup-plugin-terser": "^5.1.3",
+    "rollup-plugin-visualizer": "^3.0.0",
+    "rxjs": "^6.5.3",
+    "shelljs": "^0.8.3",
+    "travis-deploy-once": "^5.0.9",
+    "ts-jest": "^24.0.2",
+    "ts-node": "^8.5.4",
+    "tslint": "^5.18.0",
+    "tslint-config-prettier": "^1.15.0",
+    "tslint-config-standard": "^8.0.1",
+    "typescript": "^3.6.4",
+    "typescriptcollectionsframework": "^4.4.10"
+  },
+  "gitHead": "597143961bd701bb3522727988cb256d97025955"
+}

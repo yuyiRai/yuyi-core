@@ -63,7 +63,7 @@ export function convertMap2UnieqArray<
     : map(obj, (r, key) => Setter.setValue$$(r, defineKey, key))
 }
 
-export function convertArr2Map(arr: string[]): IKeyValueMap<boolean> {
+export function convertArr2Map(arr: string[]): IKeyValueMap<true> {
   return arr ? REDUCE(arr, Setter.setTrue$$, {}) as any : {}
 }
 

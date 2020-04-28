@@ -1,0 +1,335 @@
+
+<div id="sidetoggle">
+  <div>
+    <div class="sidefilter">
+      <form class="toc-filter">
+        <span class="glyphicon glyphicon-filter filter-icon"></span>
+        <input type="text" id="toc_filter_input" placeholder="Enter here to filter..." onkeypress="if(event.keyCode==13) {return false;}">
+      </form>
+    </div>
+    <div class="sidetoc">
+      <div class="toc" id="toc">
+          
+          <ul class="nav level1">
+                <li>
+                    <span class="expand-stub"></span>
+                    <a href="../overview/sharepoint.html" name="" title="SharePoint Framework reference">SharePoint Framework reference</a>
+                    
+                    <ul class="nav level2">
+                          <li>
+                              <span class="expand-stub"></span>
+                              <a href="utils.html" name="" title="utils">utils</a>
+                              
+                              <ul class="nav level3">
+                                    <li>
+                                        <a href="utils/autorunclass.html#_yuyi919_utils_AutoRunClass_class" name="" title="AutoRunClass">AutoRunClass</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/decoratorcontextbase.html#_yuyi919_utils_DecoratorContextBase_interface" name="" title="DecoratorContextBase">DecoratorContextBase</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/deeppathupdateoptions.html#_yuyi919_utils_DeepPathUpdateOptions_interface" name="" title="DeepPathUpdateOptions">DeepPathUpdateOptions</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/edateformatter.html#_yuyi919_utils_EDateFormatter_enum" name="" title="EDateFormatter">EDateFormatter</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/eventemitter.html#_yuyi919_utils_EventEmitter_class" name="" title="EventEmitter">EventEmitter</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/eventstore.html#_yuyi919_utils_EventStore_class" name="" title="EventStore">EventStore</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/eventstoreprovider.html#_yuyi919_utils_EventStoreProvider_class" name="" title="EventStoreProvider">EventStoreProvider</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/expector.html#_yuyi919_utils_Expector_interface" name="" title="Expector">Expector</a>
+                                    </li>
+                                    <li>
+                                        <a>FilterFunction (Namespace)</a>
+                                    </li>
+                                    <li>
+                                        <a>filterTo (Namespace)</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/httpbox.html#_yuyi919_utils_HttpBox_class" name="" title="HttpBox">HttpBox</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/icommonformcontainer.html#_yuyi919_utils_ICommonFormContainer_interface" name="" title="ICommonFormContainer">ICommonFormContainer</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/icommonformcontainertarget.html#_yuyi919_utils_ICommonFormContainerTarget_interface" name="" title="ICommonFormContainerTarget">ICommonFormContainerTarget</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/iescapeconvert.html#_yuyi919_utils_IEscapeConvert_interface" name="" title="IEscapeConvert">IEscapeConvert</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/ieventstore.html#_yuyi919_utils_IEventStore_interface" name="" title="IEventStore">IEventStore</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/ieventstorebase.html#_yuyi919_utils_IEventStoreBase_interface" name="" title="IEventStoreBase">IEventStoreBase</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/igetpathresult.html#_yuyi919_utils_IGetPathResult_interface" name="" title="IGetPathResult">IGetPathResult</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/iitemconfig.html#_yuyi919_utils_IItemConfig_interface" name="" title="IItemConfig">IItemConfig</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/imaptransformer.html#_yuyi919_utils_IMapTransformer_interface" name="" title="IMapTransformer">IMapTransformer</a>
+                                    </li>
+                                    <li>
+                                        <a>isEqual (Namespace)</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/itypefilterutils.html#_yuyi919_utils_ITypeFilterUtils_interface" name="" title="ITypeFilterUtils">ITypeFilterUtils</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/itypeutils.html#_yuyi919_utils_ITypeUtils_interface" name="" title="ITypeUtils">ITypeUtils</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/list-class.html#_yuyi919_utils_List_class" name="" title="List (Class)">List (Class)</a>
+                                    </li>
+                                    <li>
+                                        <a>List (Namespace)</a>
+                                    </li>
+                                    <li>
+                                        <a>Observable$$</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/pathupdateoptions.html#_yuyi919_utils_PathUpdateOptions_interface" name="" title="PathUpdateOptions">PathUpdateOptions</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/pathupdateresult.html#_yuyi919_utils_PathUpdateResult_interface" name="" title="PathUpdateResult">PathUpdateResult</a>
+                                    </li>
+                                    <li>
+                                        <a>pipe (Namespace)</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/recordmapstore.html#_yuyi919_utils_RecordMapStore_class" name="" title="RecordMapStore">RecordMapStore</a>
+                                    </li>
+                                    <li>
+                                        <a>Setter</a>
+                                    </li>
+                                    <li>
+                                        <a>shiftKeyGroup (Namespace)</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/trackmergeoptions.html#_yuyi919_utils_TrackMergeOptions_interface" name="" title="TrackMergeOptions">TrackMergeOptions</a>
+                                    </li>
+                                    <li>
+                                        <a>Trasaction (Namespace)</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/trasactiongenerator.html#_yuyi919_utils_TrasactionGenerator_interface" name="" title="TrasactionGenerator">TrasactionGenerator</a>
+                                    </li>
+                                    <li>
+                                        <a href="utils/valuepathiteratoroptions.html#_yuyi919_utils_ValuePathIteratorOptions_interface" name="" title="ValuePathIteratorOptions">ValuePathIteratorOptions</a>
+                                    </li>
+                              </ul>
+                          </li>
+                          <li>
+                              <span class="expand-stub"></span>
+                              <a href="customutils.html" name="" title="CustomUtils">CustomUtils</a>
+                              
+                              <ul class="nav level3">
+                                    <li>
+                                        <a>pipe (Namespace)</a>
+                                    </li>
+                                    <li>
+                                        <a>shiftKeyGroup (Namespace)</a>
+                                    </li>
+                              </ul>
+                          </li>
+                          <li>
+                              <span class="expand-stub"></span>
+                              <a href="dateutils.html" name="" title="DateUtils">DateUtils</a>
+                              
+                              <ul class="nav level3">
+                                    <li>
+                                        <a href="dateutils/edateformatter.html#DateUtils_EDateFormatter_enum" name="" title="EDateFormatter">EDateFormatter</a>
+                                    </li>
+                              </ul>
+                          </li>
+                          <li>
+                              <span class="expand-stub"></span>
+                              <a href="decoratorutils.html" name="" title="DecoratorUtils">DecoratorUtils</a>
+                              
+                              <ul class="nav level3">
+                                    <li>
+                                        <a href="decoratorutils/decoratorcontextbase.html#DecoratorUtils_DecoratorContextBase_interface" name="" title="DecoratorContextBase">DecoratorContextBase</a>
+                                    </li>
+                                    <li>
+                                        <a>Trasaction (Namespace)</a>
+                                    </li>
+                                    <li>
+                                        <a href="decoratorutils/trasactiongenerator.html#DecoratorUtils_TrasactionGenerator_interface" name="" title="TrasactionGenerator">TrasactionGenerator</a>
+                                    </li>
+                              </ul>
+                          </li>
+                          <li>
+                              <span class="expand-stub"></span>
+                              <a href="eventemitter.html" name="" title="EventEmitter">EventEmitter</a>
+                              
+                              <ul class="nav level3">
+                                    <li>
+                                        <a href="eventemitter/eventemitter.html#EventEmitter_EventEmitter_class" name="" title="EventEmitter">EventEmitter</a>
+                                    </li>
+                                    <li>
+                                        <a>Observable$$</a>
+                                    </li>
+                              </ul>
+                          </li>
+                          <li>
+                              <span class="expand-stub"></span>
+                              <a href="lodashextra.html" name="" title="LodashExtra">LodashExtra</a>
+                              
+                              <ul class="nav level3">
+                                    <li>
+                                        <a href="lodashextra/iescapeconvert.html#LodashExtra_IEscapeConvert_interface" name="" title="IEscapeConvert">IEscapeConvert</a>
+                                    </li>
+                                    <li>
+                                        <a>isEqual (Namespace)</a>
+                                    </li>
+                                    <li>
+                                        <a href="lodashextra/trackmergeoptions.html#LodashExtra_TrackMergeOptions_interface" name="" title="TrackMergeOptions">TrackMergeOptions</a>
+                                    </li>
+                              </ul>
+                          </li>
+                          <li>
+                              <span class="expand-stub"></span>
+                              <a href="mobxutils.html" name="" title="MobxUtils">MobxUtils</a>
+                              
+                              <ul class="nav level3">
+                                    <li>
+                                        <a href="mobxutils/autorunclass.html#MobxUtils_AutoRunClass_class" name="" title="AutoRunClass">AutoRunClass</a>
+                                    </li>
+                                    <li>
+                                        <a href="mobxutils/deeppathupdateoptions.html#MobxUtils_DeepPathUpdateOptions_interface" name="" title="DeepPathUpdateOptions">DeepPathUpdateOptions</a>
+                                    </li>
+                                    <li>
+                                        <a href="mobxutils/eventstore.html#MobxUtils_EventStore_class" name="" title="EventStore">EventStore</a>
+                                    </li>
+                                    <li>
+                                        <a href="mobxutils/eventstoreprovider.html#MobxUtils_EventStoreProvider_class" name="" title="EventStoreProvider">EventStoreProvider</a>
+                                    </li>
+                                    <li>
+                                        <a href="mobxutils/ieventstore.html#MobxUtils_IEventStore_interface" name="" title="IEventStore">IEventStore</a>
+                                    </li>
+                                    <li>
+                                        <a href="mobxutils/ieventstorebase.html#MobxUtils_IEventStoreBase_interface" name="" title="IEventStoreBase">IEventStoreBase</a>
+                                    </li>
+                                    <li>
+                                        <a href="mobxutils/imaptransformer.html#MobxUtils_IMapTransformer_interface" name="" title="IMapTransformer">IMapTransformer</a>
+                                    </li>
+                                    <li>
+                                        <a href="mobxutils/list-class.html#MobxUtils_List_class" name="" title="List (Class)">List (Class)</a>
+                                    </li>
+                                    <li>
+                                        <a>List (Namespace)</a>
+                                    </li>
+                                    <li>
+                                        <a href="mobxutils/pathupdateoptions.html#MobxUtils_PathUpdateOptions_interface" name="" title="PathUpdateOptions">PathUpdateOptions</a>
+                                    </li>
+                                    <li>
+                                        <a href="mobxutils/pathupdateresult.html#MobxUtils_PathUpdateResult_interface" name="" title="PathUpdateResult">PathUpdateResult</a>
+                                    </li>
+                                    <li>
+                                        <a href="mobxutils/recordmapstore.html#MobxUtils_RecordMapStore_class" name="" title="RecordMapStore">RecordMapStore</a>
+                                    </li>
+                              </ul>
+                          </li>
+                          <li>
+                              <span class="expand-stub"></span>
+                              <a href="nodeutils.html" name="" title="NodeUtils">NodeUtils</a>
+                              
+                              <ul class="nav level3">
+                                    <li>
+                                        <a href="nodeutils/args.html#NodeUtils_Args_class" name="" title="Args">Args</a>
+                                    </li>
+                                    <li>
+                                        <a href="nodeutils/argumentoptionsfixed.html#NodeUtils_ArgumentOptionsFixed_interface" name="" title="ArgumentOptionsFixed">ArgumentOptionsFixed</a>
+                                    </li>
+                                    <li>
+                                        <a href="nodeutils/argumentparserfixed.html#NodeUtils_ArgumentParserFixed_interface" name="" title="ArgumentParserFixed">ArgumentParserFixed</a>
+                                    </li>
+                              </ul>
+                          </li>
+                          <li>
+                              <span class="expand-stub"></span>
+                              <a href="optionsutils.html" name="" title="OptionsUtils">OptionsUtils</a>
+                              
+                              <ul class="nav level3">
+                                    <li>
+                                        <a>Setter</a>
+                                    </li>
+                                    <li>
+                                        <a href="optionsutils/valuepathiteratoroptions.html#OptionsUtils_ValuePathIteratorOptions_interface" name="" title="ValuePathIteratorOptions">ValuePathIteratorOptions</a>
+                                    </li>
+                              </ul>
+                          </li>
+                          <li>
+                              <span class="expand-stub"></span>
+                              <a href="propertyutils.html" name="" title="PropertyUtils">PropertyUtils</a>
+                              
+                              <ul class="nav level3">
+                                    <li>
+                                        <a href="propertyutils/igetpathresult.html#PropertyUtils_IGetPathResult_interface" name="" title="IGetPathResult">IGetPathResult</a>
+                                    </li>
+                              </ul>
+                          </li>
+                          <li>
+                              <span class="expand-stub"></span>
+                              <a href="testutils.html" name="" title="TestUtils">TestUtils</a>
+                              
+                              <ul class="nav level3">
+                                    <li>
+                                        <a>BenchmarkUtils</a>
+                                    </li>
+                              </ul>
+                          </li>
+                          <li>
+                              <span class="expand-stub"></span>
+                              <a href="tsutils.html" name="" title="TsUtils">TsUtils</a>
+                              
+                              <ul class="nav level3">
+                                    <li>
+                                        <a href="tsutils/base.html#TsUtils_Base_class" name="" title="Base">Base</a>
+                                    </li>
+                                    <li>
+                                        <a href="tsutils/ifunction.html#TsUtils_IFunction_interface" name="" title="IFunction">IFunction</a>
+                                    </li>
+                              </ul>
+                          </li>
+                          <li>
+                              <span class="expand-stub"></span>
+                              <a href="typelib.html" name="" title="TypeLib">TypeLib</a>
+                              
+                              <ul class="nav level3">
+                                    <li>
+                                        <a href="typelib/expector.html#TypeLib_Expector_interface" name="" title="Expector">Expector</a>
+                                    </li>
+                                    <li>
+                                        <a>FilterFunction (Namespace)</a>
+                                    </li>
+                                    <li>
+                                        <a>filterTo (Namespace)</a>
+                                    </li>
+                                    <li>
+                                        <a href="typelib/itypefilterutils.html#TypeLib_ITypeFilterUtils_interface" name="" title="ITypeFilterUtils">ITypeFilterUtils</a>
+                                    </li>
+                                    <li>
+                                        <a href="typelib/itypeutils.html#TypeLib_ITypeUtils_interface" name="" title="ITypeUtils">ITypeUtils</a>
+                                    </li>
+                              </ul>
+                          </li>
+                          <li>
+                              <a href="wasmloader.html" name="" title="WasmLoader">WasmLoader</a>
+                          </li>
+                    </ul>
+                </li>
+          </ul>
+      </div>
+    </div>
+  </div>
+</div>

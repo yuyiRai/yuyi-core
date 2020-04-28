@@ -14,15 +14,15 @@ export function test(a: any, b: any) {
 }
 export const a = tsKeys<ISearchInputProps>()
 export const Thing = () => {
-  const [t, st] = useState()
-  const [useLazy, reset] = useState(true)
+  const [t, st] = useState<any>()
+  const [useLazy, reset] = useState<any>(true)
   console.log(Button)
   return (
     <div>
       the snozzberries taste like snozzberrie
       <VirtualizedList></VirtualizedList>
       <SearchInput value={t} onChange={st} useLazyHandler={useLazy} />
-      <Button onClick={() => reset(v => !v)}>{(useLazy ? '懒' : '完全') + '监听'}</Button>
+      <Button onClick={() => reset((v: any) => !v)}>{(useLazy ? '懒' : '完全') + '监听'}</Button>
       <VTree />
     </div>
   );

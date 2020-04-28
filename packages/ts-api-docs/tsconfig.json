@@ -1,0 +1,48 @@
+{
+  "extends": "../../tsconfig.json",
+  "references": [
+    {
+      "path": "../env"
+    }
+  ],
+  "compilerOptions": {
+    "composite": true,
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@wasm/*": [
+        "../wasm/*"
+      ],
+      "@": [
+        "./"
+      ]
+    },
+    "outDir": "./lib",
+    "declarationDir": "./lib",
+    "tsBuildInfoFile": "../.tsBuildInfo/utils.json",
+    "resolveJsonModule": true,
+    "incremental": true,
+    "target": "es5",
+    "noEmitHelpers": false,
+    "noUnusedLocals": false,
+    "importHelpers": true,
+    "module": "esnext",
+    "typeRoots": [
+      "../env/types",
+      "node_modules/@types",
+      "../../node_modules/@types"
+    ]
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "tools",
+    "lib",
+    "../../node_modules",
+    "node_modules"
+  ]
+}

@@ -21,6 +21,7 @@
     "node": ">=6.0.0"
   },
   "scripts": {
+    "doc": "yuyi-doc",
     "gulp": "yuyi-gulp --gulpfile ./config/gulpfile.ts",
     "td": "yuyi-gulp --gulpfile ./config/devoutput.js",
     "td2": "yarn td watch",
