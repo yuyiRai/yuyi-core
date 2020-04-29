@@ -40,9 +40,8 @@
     "fileMetadataFiles": [],
     "template": [
       "default",
-      // "default(zh-cn)",
-      "../config/template/memberpage.2.43.2/content",
-      // "../config/template/material/material"
+      "templates/material/material"
+      // "default(zh-cn)"
     ],
     "postProcessors": [],
     "markdownEngineName": "markdig",

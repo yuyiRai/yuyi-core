@@ -1,10 +1,7 @@
-import { trackMergePipe, pipe, trackMerge, expect$ } from '../../src'
+import { trackMerge, trackMergePipe } from '../../src';
 
-test('trackMerge', () => {
-  expect(pipe.filter(1, expect$.isNil.not, expect$.isNumber)).toBe(1);
-  expect(pipe.filter([], expect$.isArray, expect$.isObject)).toEqual([])
-  expect(pipe.filter([], expect$.isArray, expect$.isNotEmptyArray)).toEqual(undefined)
-})
+// test('trackMerge', () => {
+// })
 
 const func = (a: number) => a + 1
 test('trackMerge', () => {

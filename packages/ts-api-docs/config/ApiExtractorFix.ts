@@ -6,7 +6,7 @@ import jeditor from 'gulp-json-editor';
 import JSON5 from 'json5';
 
 import convert from 'gulp-convert';
-import { resolveTmpDir, projectName, paths } from './resolve';
+import { resolveTmpDir, resolveConfigDir, projectName, paths } from './resolve';
 
 JSON.parse = JSON5.parse;
 export namespace ApiExtractorFix {
@@ -85,12 +85,12 @@ export namespace ApiExtractorFix {
     return gulp.parallel(
       gulp.series(
         function templateInit() {
-          markdownList = fs.readdirSync('./document/articles/')
-          return gulp.src('./config/template/apiDoc/**/*').pipe(gulp.dest('./document'))
+          markdownList = fs.readdirSync(resolveTmpDir('./document/articles/'))
+          return gulp.src(resolveConfigDir('./template/apiDoc/**/*')).pipe(gulp.dest(resolveTmpDir('./document')))
         },
         function apiTocFixed() {
           const files = getFiles()
-          return editYml('./document/articles/toc.yml', './document/articles', function (json) {
+          return editYml(resolveTmpDir('./document/articles/toc.yml'), resolveTmpDir('./document/articles'), function (json) {
             console.log(json);
             const children = files.map(name => mapTree(name, markdownList))
             return merge(json, {
@@ -105,7 +105,7 @@ export namespace ApiExtractorFix {
         }
       ),
       function srcTocFixed() {
-        return editYml('./document/src/toc.yml', './document/src', function (json) {
+        return editYml(resolveTmpDir('./document/src/toc.yml'), resolveTmpDir('./document/src'), function (json) {
           console.log(json, get(json, 'items[0].name'));
           jsonTmp = merge(json, jsonTmp)
           return jsonTmp;

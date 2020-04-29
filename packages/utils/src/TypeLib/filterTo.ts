@@ -1,7 +1,13 @@
+import { Constant$, FunctionFactory } from '../Constransts';
 import { EventEmitter } from '../EventEmitter';
 import { IKeyValueMap, IsAny, IsArray, IsBaseType, IsClasses, IsObject, IsUnknown } from '../TsUtils';
-import { FunctionFactory, Constant$ } from '../Constransts';
 
+/**
+ * 提供一个断言函数和若干个值，以此对这些值进行校验，并返回首个校验通过的值
+ * @param expect - 断言函数
+ * @param values - @rest 需要校验的值
+ * @returns 首个通过校验的值，如果全都未通过则返回undefined
+ */
 // tslint:disable: one-variable-per-declaration
 // tslint:disable: curly
 export function filterTo<Target>(expect: (target: any) => boolean, ...values: any[]): Target | undefined;
@@ -12,13 +18,24 @@ export function filterTo<Target>(expect: (target: any) => boolean): Target | voi
   return;
 }
 // @ts-ignore
-filterTo[Constant$.KEY_EXTEND] = function <T>(expect: (value: any) => boolean): FilterFunction<T> {
+filterTo[Constant$.KEY_EXTEND] = function <T>(expect: (value: any) => boolean): FilterGenerator<T> {
   return Constant$.BindArg$$(filterTo, expect) as any
 }
 
+/**
+ * @param expect 断言函数
+ * @returns 返回一个断言Filter函数
+ */
+export function extendToFilter<T>(expect: (value: any) => boolean): FilterGenerator<T> {
+  return Constant$.BindArg$$(filterTo, expect) as any;
+}
+
+/**
+ * @internal
+ */
 export declare namespace filterTo {
   // @ts-ignore
-  var extend: <T>(expect: (value: any) => boolean) => FilterFunction<T>;
+  var extend: <T>(expect: (value: any) => boolean) => FilterGenerator<T>;
 }
 
 // function filterToExtra<Target>(expect: (target: any) => boolean, ...values: any[]): Target | undefined;
@@ -33,9 +50,9 @@ export declare namespace filterTo {
 
 // export type AA = IsArray<any>
 /**
- * 过滤函数类型
+ * Filter函数类型生成器
  */
-export type FilterFunction<Target> = <Expect extends (
+export type FilterGenerator<Target> = <Expect extends (
   IsBaseType<Target, Target, (
     IsArray<Target, any, (
       IsObject<Target, any, (
@@ -61,24 +78,24 @@ export type FilterFunction<Target> = <Expect extends (
   )>
   ) | undefined
 
-export namespace FilterFunction {
+export namespace FilterTypes {
 
-  export type isNumber = FilterFunction<number>
+  export type isNumber = FilterGenerator<number>
 
-  export type isBoolean = FilterFunction<boolean>
+  export type isBoolean = FilterGenerator<boolean>
 
-  export type isString = FilterFunction<string>
+  export type isString = FilterGenerator<string>
 
-  export type isArray = FilterFunction<Array<any>>
+  export type isArray = FilterGenerator<Array<any>>
 
-  export type isObject = FilterFunction<object>
+  export type isObject = FilterGenerator<object>
 
-  export type isFunction = FilterFunction<FunctionFactory.Base>
+  export type isFunction = FilterGenerator<FunctionFactory.Base>
 
-  export type isEmptyObject = FilterFunction<Record<string, never>>
+  export type isEmptyObject = FilterGenerator<Record<string, never>>
 
-  export type isObjectStrict<T extends {}> = FilterFunction<T>
+  export type isObjectStrict<T extends {}> = FilterGenerator<T>
 
-  export type isTyped<T> = FilterFunction<T>
+  export type isTyped<T> = FilterGenerator<T>
 
 }

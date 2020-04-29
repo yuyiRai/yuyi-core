@@ -1,18 +1,15 @@
 import { Constant$ } from "../Constransts";
 
-/**
- * {@inheritDoc sleep}
- * @deprecated 该方法迟早被弃用，使用 {@link sleep | sleep()} 代替
- */
-export const waitingPromise = sleep
 
 const { CREATE_PROMISE, delay$$ } = Constant$
+
 /**
  * 异步等候
  * @param time - 等候时间
  * @param emitValue - 默认不需要
  * @param isError - 是否以reject
- * @returns 返回Promise<emitValue>
+ * @typeParam V - Promise.resolve的值类型
+ * @returns 返回Promise<V>
  * @public
  */
 export function sleep<V = void>(time: number, emitValue?: V, isError = false): Promise<V> {
@@ -22,6 +19,13 @@ export function sleep<V = void>(time: number, emitValue?: V, isError = false): P
     delay$$(resolve, time, emitValue);
   });
 }
+
+/**
+ * {@inheritDoc sleep}
+ * @deprecated 该方法迟早被弃用，使用 {@link sleep | sleep()} 代替
+ */
+export function waitingPromise<V = void>(time: number, emitValue?: V, isError?: boolean): Promise<V>;
+export function waitingPromise(a,b,c) { return sleep(a, b, c) }
 
 /* istanbul ignore next */
 /**

@@ -43,7 +43,7 @@ type CompletedEvent<EventType> = () => void;
 /**
  * 事件发射器
  * 
- * 订阅事件 见{@link rxjs#Subscribable}.subscribe()
+ * 订阅事件 见{@link rxjs#Subscription | Subscription}.subscribe()
  *
  * 发射事件 见{@link EventEmitter.emit | emit()}
  *

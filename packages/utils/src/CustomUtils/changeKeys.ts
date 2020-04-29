@@ -13,6 +13,13 @@ export const enum ShiftMode {
   /** 剪切模式 */
   Cut
 }
+
+/**
+ * @internal
+ */
+function defaultShifter(key: string, map: any) {
+  return key in map ? map[key] : undefined;
+}
 /**
  * 
  * @param obj 对象
@@ -42,7 +49,7 @@ export function shiftKeyGroup<
 
   /** 是否使用自定义替换方法 */
   var useCustomReplacer = (replacer instanceof Constant$.FUNCTION)
-  var todo: Function = useCustomReplacer ? replacer as any : shiftKeyGroup.defaultShifter
+  var todo: Function = useCustomReplacer ? replacer as any : defaultShifter
 
   Constant$.FOR_EACH(Constant$.OBJ_KEYS(obj), (sourceKey) => {
     /** sourceKey是否是已知键（存在于待替换map中） */
@@ -85,9 +92,7 @@ export function shiftKeyGroup<
   })
   return Constant$.OBJ_ASSIGN(obj, replaceValues)
 }
-shiftKeyGroup.defaultShifter = function (key: string, map: any) {
-  return key in map ? map[key] : undefined
-}
+
 
 /**
  * `交换`一个对象中的两个`key`的`value`

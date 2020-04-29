@@ -3,7 +3,7 @@
  */
 
 import { zipEmptyData } from './zipEmptyData';
-import { pipe } from './pipe';
+export * from './pipe';
 import { uuid } from './uuid';
 import { downloadFile } from './downloadFile';
 import { createObjectKey } from './createObjectKey';
@@ -13,12 +13,11 @@ import { connectTo } from './connectTo';
 import { likeArray } from './likeArray';
 import { getRealLength } from './getRealLength'
 import { MultipleSplit } from './MultipleSplit'
-import { shiftKeyGroup } from './changeKeys';
+export * from './changeKeys';
 export * from './waitingPromise';
 export * from './autobind'
 
 export {
-  pipe,
   uuid,
   downloadFile,
   zipEmptyData,
@@ -28,7 +27,6 @@ export {
   connectTo,
   // jsGetAge,
   likeArray,
-  MultipleSplit,
-  shiftKeyGroup
+  MultipleSplit
 }
-export * from './getTimeProfile'
+// export * from './getTimeProfile'

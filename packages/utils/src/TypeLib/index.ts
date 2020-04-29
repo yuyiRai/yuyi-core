@@ -1,60 +1,81 @@
 /**
  * @module TypeUtils
  */
-import { Constant$, FunctionFactory } from '../Constransts';
+import { Constant$ } from '../Constransts';
 import { EventEmitter } from '../EventEmitter';
-import { typeUtils } from './expect';
-import { FilterFunction, filterTo } from './filterTo';
+import { typeUtils as typeUtilsBase } from './expect';
+import { extendToFilter, FilterGenerator, filterTo, FilterTypes } from './filterTo';
 
-export { typeUtils, filterTo, FilterFunction }
-export * from './expect'
+export * from './expect';
+export { filterTo, extendToFilter, FilterGenerator };
 
-export type ITypeMetaFilters = {
-  isNumber: FilterFunction.isNumber;
-  isBoolean: FilterFunction.isBoolean;
-  isString: FilterFunction.isString;
-  isNotEmptyString: FilterFunction.isString;
-  isArray: FilterFunction.isArray;
-  isObject: FilterFunction.isObject;
-  isNotEmptyArray: FilterFunction.isArray;
-  isNotEmptyArrayStrict: FilterFunction.isArray;
-  isFunction: FilterFunction.isFunction;
-  isEventEmitter: FilterFunction.isTyped<EventEmitter>;
-  isEmptyObject: FilterFunction.isEmptyObject;
-  isNotEmptyObject: FilterFunction.isObjectStrict<{}>;
+interface ITypeMetaFilters {
+  isNumber: FilterTypes.isNumber;
+  isBoolean: FilterTypes.isBoolean;
+  isString: FilterTypes.isString;
+  isNotEmptyString: FilterTypes.isString;
+  isArray: FilterTypes.isArray;
+  isObject: FilterTypes.isObject;
+  isNotEmptyArray: FilterTypes.isArray;
+  isNotEmptyArrayStrict: FilterTypes.isArray;
+  isFunction: FilterTypes.isFunction;
+  isEventEmitter: FilterTypes.isTyped<EventEmitter>;
+  isEmptyObject: FilterTypes.isEmptyObject;
+  isNotEmptyObject: FilterTypes.isObjectStrict<{}>;
 }
-export type ITypeOtherFilters = {
-  [K in Exclude<keyof typeof typeUtils, keyof ITypeMetaFilters>]: FilterFunction<any>
+
+type ITypeOtherFilters = {
+  [K in Exclude<keyof typeof typeUtilsBase, keyof ITypeMetaFilters>]: FilterGenerator<any>
 }
-export type ITypeFilters = ITypeMetaFilters & ITypeOtherFilters
+interface ITypeFilters extends ITypeMetaFilters, ITypeOtherFilters { }
 
 // const t: IsBaseType<any, 'string', false> = null
-export interface ITypeFilterUtils extends ITypeMetaFilters {
-  isNumberFilter: FilterFunction<number>;
-  isBooleanFilter: FilterFunction<boolean>;
-  isStringFilter: FilterFunction<string>;
-  isNotEmptyStringFilter: FilterFunction<string>;
-  isArrayFilter: FilterFunction<Array<any>>;
-  isObjectFilter: FilterFunction<{}>;
-  isNotEmptyArrayFilter: FilterFunction<Array<any>>;
-  isNotEmptyValueFilter: FilterFunction<any>;
-  isFunctionFilter: FilterFunction<(...arg: any[]) => any>
+interface ITypeFiltersBase extends ITypeMetaFilters {
+  isNumberFilter: FilterGenerator<number>;
+  isBooleanFilter: FilterGenerator<boolean>;
+  isStringFilter: FilterGenerator<string>;
+  isNotEmptyStringFilter: FilterGenerator<string>;
+  isArrayFilter: FilterGenerator<Array<any>>;
+  isObjectFilter: FilterGenerator<{}>;
+  isNotEmptyArrayFilter: FilterGenerator<Array<any>>;
+  isNotEmptyValueFilter: FilterGenerator<any>;
+  isFunctionFilter: FilterGenerator<(...arg: any[]) => any>
 }
 type Type<T> = T
 
-export interface ITypeUtils extends Type<typeof typeUtils> {
-  filter: ITypeFilterUtils
+interface ITypeUtils extends Type<typeof typeUtilsBase> {
+  filter: ITypeFiltersBase
 }
+interface ITypeFilterUtils extends ITypeFiltersBase, ITypeMetaFilters, ITypeOtherFilters { }
 
 // console.log(typeUtils)
 var keyTmp: any;
-export const typeFilterUtils = Constant$.REDUCE<[string, (v: any) => boolean], ITypeFilterUtils & ITypeMetaFilters & ITypeOtherFilters>(
-  Constant$.ENTRIES(typeUtils),
+
+
+
+type MultipleExpector<Core = Type<typeof typeUtilsBase>> = {
+  [K in keyof Core]: Core[K] & {
+    filter: K extends keyof ITypeFilters ? ITypeFilters[K] : FilterGenerator<unknown>,
+    not(value: any): boolean;
+  };
+}
+
+export interface Expector<Core = Type<typeof typeUtilsBase>> extends MultipleExpector {
+  filter: ITypeFilters;
+  pure: MultipleExpector<Core>;
+}
+
+/**
+ * @deprecated
+ * @beta
+ */
+export const typeFilterUtils = Constant$.REDUCE<[string, (v: any) => boolean], ITypeFilterUtils>(
+  Constant$.ENTRIES(typeUtilsBase),
   function (target, keyAndValue) {
-    var execTmp: any = keyAndValue[1]
+    var execTmp: any = keyAndValue[1];
     execTmp.filter = Constant$.BindArg$$(filterTo, keyAndValue[1]);
     execTmp.not = function () {
-      return !execTmp.apply(null, arguments)
+      return !execTmp.apply(null, arguments);
     };
     return Constant$.OBJ_ASSIGN(target, {
       [keyTmp = keyAndValue[0]]: execTmp.filter,
@@ -65,23 +86,25 @@ export const typeFilterUtils = Constant$.REDUCE<[string, (v: any) => boolean], I
 );
 
 
-
-export type MultipleExpector<Core = Type<typeof typeUtils>> = {
-  [K in keyof Core]: Core[K] & {
-    filter: K extends keyof ITypeFilters ? ITypeFilters[K] : FilterFunction<unknown>,
-    not(value: any): boolean;
-  };
-}
-
-export interface Expector<Core = Type<typeof typeUtils>> extends MultipleExpector {
-  filter: ITypeFilters;
-  pure: MultipleExpector<Core>;
-}
-
-export const expect$: Expector = Constant$.OBJ_FREEZE(Constant$.OBJ_ASSIGN({}, typeUtils as any, {
+/**
+ * 类型断言工具函数集
+ * @beta
+ */
+export const expect$: Expector = Constant$.OBJ_FREEZE(Constant$.OBJ_ASSIGN({}, typeUtilsBase as any, {
   filter: typeFilterUtils,
-  pure: Constant$.OBJ_FREEZE(typeUtils)
-}))
+  pure: Constant$.OBJ_FREEZE(typeUtilsBase)
+}));
+
+/**
+ * @beta
+ * @deprecated
+ * {@inheritDoc expect$}
+ */
+export const typeUtils: ITypeUtils = expect$ as any
+
+export namespace TypeUtils {
+  export const isArray = typeUtils.isArray;
+}
 // typeFilterUtils.isObjectFilter<number>({}, [])
 // typeFilterUtils.isNumberFilter<number>({})
 // typeFilterUtils.isArrayFilter<number>({})

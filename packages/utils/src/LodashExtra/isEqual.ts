@@ -1,7 +1,6 @@
 /**
  * @module LodashExtraUtils
  */
-/** @internal */
 import isEqualLodash from 'lodash/isEqual'
 import { isNotEmptyValue } from './isNil'
 

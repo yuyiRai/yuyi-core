@@ -13,16 +13,11 @@ const args = new Args({
 
 })
   .addArgument('dir', {})
-  .addOption(["--cwd"], {
+  .addOption("cwd", {
     defaultValue: process.cwd()
   })
-  .addOption(['-d', '--distFolderName'], {
-    dest: 'dist',
-    defaultValue: 'dist'
-  })
-  .addOption(['-r', '--reportFolderName'], {
-    dest: 'etc',
-    defaultValue: 'etc'
+  .addOption('depends', {
+    dest: 'depends',
   })
 
 
@@ -36,6 +31,7 @@ const gulp = `cross-env `
   + `CWD=${options.cwd} `
   + `DOC_PROJECT_NAME=${projectName} `
   + `DOC_MAIN_POINT=${options.dir} `
+  + `DOC_DEPENDS=${options.depends} `
   + `yuyi-gulp --gulpfile ${resolve('./config/gulpfile.ts')}`
   
 try {

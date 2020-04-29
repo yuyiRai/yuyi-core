@@ -31,6 +31,10 @@ export function isLikeEquals(target: any, other: any) {
  * @remarks 
  * # **注意** 
  * 该方法的比较是相似而非相等
+ * @example
+ *```ts
+ * likeArray([1, 2, 3, 4], [4, 3, 2, 1])
+ *```=> true
  */
 export function likeArray(target: any[], other: any[]) {
   // if the other array is a falsy value, return

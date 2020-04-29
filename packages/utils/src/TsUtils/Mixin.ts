@@ -17,7 +17,7 @@
     works correctly
 */
 
-export class Base {
+class Base {
 
   initialize<T extends Base>(props?: Partial<T>) {
     props && Object.assign(this, props)

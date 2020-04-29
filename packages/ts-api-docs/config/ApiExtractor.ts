@@ -4,9 +4,10 @@ import { logger, shell } from '@yuyi919/gulp-awesome'
 // import shell from 'gulp-shell';
 import path from 'path';
 import { resolve, paths, requireResolve, resolveTmpDir } from './resolve';
-const { CWD, DOC_PROJECT_NAME: projectName, DOC_MAIN_POINT } = process.env
+const { CWD, DOC_MAIN_POINT } = process.env
 
-const folder = fs.readdirSync(
+/** 模块目录收集 */
+const folders = fs.readdirSync(
   resolve('./src', true)
 ).filter(name => fs.pathExistsSync(
   resolve(`./src/${name}/index.ts`, true)
@@ -20,11 +21,20 @@ if (!fs.pathExistsSync(paths.tmpEtcDir)) {
 }
 
 const requiredMainPoint = requireResolve(DOC_MAIN_POINT);
+/**
+ * 模板绑定
+ * @param template index.d.ts模板
+ * @param dir 输出目录
+ */
 function replacer(template: string, dir = '<projectFolder>') {
+  // 项目根目录
   template = template.replace(/\$\{projectFolder\}/ig, CWD);
+  // *.d.ts汇总入口文件
   template = template.replace(/\<projectFolder\>\/lib\/index.d.ts/ig, requiredMainPoint);
-  template = template.replace(/\<projectFolder\>\/dist/ig, `${dir}/${process.env.dist || 'dist'}`);
-  template = template.replace(/\<projectFolder\>\/etc/ig, `${dir}/${process.env.etc || 'etc'}`);
+  // *.d.ts汇总输出目录
+  template = template.replace(/\<projectFolder\>\/dist/ig, `${dir}/dist`);
+  // api-extractor输出目录
+  template = template.replace(/\<projectFolder\>\/etc/ig, `${dir}/etc`);
   template = template.replace(/\<projectFolder\>/ig, dir);
   return template;
 }
@@ -45,12 +55,22 @@ export function createMainApiTask() {
 
 export function createApiTask(folderName?: string) {
   const filePath = resolveTmpDir(`${folderName}.api.json`);
+  /**
+   * 树模板绑定
+   * @param template 树分支模板
+   * @param dir 输出目录
+   */
   function replacer(template: string, dir = '<projectFolder>') {
+    // 项目根目录
     template = template.replace(/\$\{projectFolder\}/ig, CWD);
+    // *.d.ts汇总入口文件
     template = template.replace(/\<projectFolder\>\/lib/ig, path.parse(requiredMainPoint).dir);
-    template = template.replace(/\<projectFolder\>\/dist/ig, `${dir}/${process.env.dist || 'dist'}`);
-    template = template.replace(/\<projectFolder\>\/etc/ig, `${dir}/${process.env.etc || 'etc'}`);
+    // *.d.ts汇总输出目录
+    template = template.replace(/\<projectFolder\>\/dist/ig, `${dir}/dist`);
+    // api-extractor输出目录
+    template = template.replace(/\<projectFolder\>\/etc/ig, `${dir}/etc`);
     template = template.replace(/\<projectFolder\>/ig, dir);
+    // 模块目录
     template = template.replace(/\$\{folderName\}/ig, folderName);
     return template;
   }
@@ -60,17 +80,50 @@ export function createApiTask(folderName?: string) {
     }
     fs.writeFileSync(filePath, replacer(template, paths.tmpProjectDir))
     return gulp.src(filePath)
-      .pipe(logger.log('project_name: ' + process.env.DOC_PROJECT_NAME))
+      .pipe(logger.log('Project Tree Api: ' + folderName))
       .pipe(shell(`api-extractor run -c ${filePath} --local`))
   }
 }
 
+export function createDependApiTask(moduleName: string, dtsPath: string) {
+  const filePath = resolveTmpDir(`${moduleName}.api.json`);
+  /**
+   * 依赖包的模板绑定
+   * @param template 树分支模板
+   * @param dir 输出目录
+   */
+  function replacer(template: string, dir = '<projectFolder>') {
+    // 项目根目录
+    template = template.replace(/\$\{projectFolder\}/ig, CWD);
+    // *.d.ts汇总入口文件
+    console.error(dtsPath)
+    template = template.replace(/\<projectFolder\>\/lib\/\$\{folderName\}\/index.d.ts/ig, dtsPath);
+    // *.d.ts汇总输出目录
+    template = template.replace(/\<projectFolder\>\/dist/ig, `${dir}/dist`);
+    // api-extractor输出目录
+    template = template.replace(/\<projectFolder\>\/etc/ig, `${dir}/etc`);
+    template = template.replace(/\<projectFolder\>/ig, dir);
+    // 模块目录
+    template = template.replace(/\$\{folderName\}/ig, moduleName);
+    return template;
+  }
+  return function () {
+    if (!fs.existsSync(filePath)) {
+      fs.createFileSync(filePath);
+    }
+    fs.writeFileSync(filePath, replacer(template, paths.tmpProjectDir));
+    return gulp.src(filePath)
+      .pipe(logger.log('Project Depends Api: ' + moduleName))
+      .pipe(shell(`api-extractor run -c ${filePath} --local`));
+  };
+}
+
 export default function () {
-  if (folder.length === 0) {
-    return () => gulp.src('.')
+  if (folders.length === 0) {
+    return () => gulp.src('.', { read: false })
       .pipe(logger.log('no tree'))
   }
-  const list = folder.map(createApiTask);
+  const list = folders.map(createApiTask);
   // console.log('folder', list);
   return gulp.parallel(list)
 }

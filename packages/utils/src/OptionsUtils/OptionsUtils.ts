@@ -4,9 +4,9 @@ import { castArray, escapeRegExp, filter, find, isArray, isEqual, isFunction, is
 import { IKeyValueMap, IsTrue } from '../TsUtils';
 import { expect$ } from '../TypeLib';
 import { isNotEmptyArray, isNotEmptyArrayStrict, isNotEmptyString } from '../TypeLib/expect';
-import { KeyMatcherFunc, KeywordMatcher, Option, OptionSearcher, RemoteSearcher, SearchKey } from './interface';
+import { KeyMatcherFunc, KeywordMatcher, IOption, OptionSearcher, RemoteSearcher, SearchKey } from './interface';
 
-export { SearchKey, KeywordMatcher as keyMatcher, KeyMatcherFunc, Option, OptionSearcher, RemoteSearcher };
+export { SearchKey, KeywordMatcher as keyMatcher, KeyMatcherFunc, IOption as Option, OptionSearcher, RemoteSearcher };
 
 // /**
 //  * 操作Options的工具集合
@@ -52,7 +52,7 @@ export function createEqualsMatcher<K = any>(searchKey: SearchKey<K>): KeywordMa
  * @param labelSearcher 
  * @param item 
  */
-export function isLabelMatchedItem<V extends string, D extends string>(labelSearcher: SearchKey<string>, item: Option<V, D>): boolean {
+export function isLabelMatchedItem<V extends string, D extends string>(labelSearcher: SearchKey<string>, item: IOption<V, D>): boolean {
   if (expect$.isNotEmptyValue(item)) {
     var { label, value } = item;
     var name = expect$.isNotEmptyValue.filter(label, value, item);
@@ -66,7 +66,7 @@ export function isLabelMatchedItem<V extends string, D extends string>(labelSear
  * @param valueSearcher 
  * @param item 
  */
-export function isValueMatchedItem(valueSearcher: SearchKey<string>, item: Option): boolean {
+export function isValueMatchedItem(valueSearcher: SearchKey<string>, item: IOption): boolean {
   if (expect$.isNotEmptyValue(item)) {
     var { label } = item;
     var value = expect$.isNotEmptyValue.filter(item.value, item);
@@ -80,7 +80,7 @@ export function isValueMatchedItem(valueSearcher: SearchKey<string>, item: Optio
  * @param keyMatcher 
  * @param item 
  */
-export function isValueMatchedItemByMatcher(keyMatcher: KeywordMatcher, item: Option): boolean {
+export function isValueMatchedItemByMatcher(keyMatcher: KeywordMatcher, item: IOption): boolean {
   if (isNotEmptyValue(item)) {
     const { label } = item;
     const value = expect$.isNotEmptyValue.filter(item.value, item);
@@ -94,7 +94,7 @@ export function isValueMatchedItemByMatcher(keyMatcher: KeywordMatcher, item: Op
  * @param keyMatcher 
  * @param item 
  */
-export function isLabelMatchedItemByMatcher(keyMatcher: KeywordMatcher, item: Option): boolean {
+export function isLabelMatchedItemByMatcher(keyMatcher: KeywordMatcher, item: IOption): boolean {
   // console.error('isNotEmptyValueFilter', item);
   if (isNotEmptyValue(item)) {
     const { label, value } = item;
@@ -127,7 +127,7 @@ export function isLabelMatchedItemByMatcher(keyMatcher: KeywordMatcher, item: Op
  * {@link getOptions | getOptions()}
  */
 export function getOptions<
-  TOption extends Option = Option,
+  TOption extends IOption = IOption,
   FindOne extends boolean = false,
   TResult = IsTrue<FindOne, TOption | undefined, TOption[]>
 >(
@@ -149,22 +149,22 @@ export function getOptions<
 }
 
 /** {@inheritDoc getOptions} */
-export function getOptionsByLabel<T = Option, K = string>(optionList: T[], searchName: SearchKey<K>): T[];
+export function getOptionsByLabel<T = IOption, K = string>(optionList: T[], searchName: SearchKey<K>): T[];
 
 /** {@inheritDoc getOptions} */
-export function getOptionsByLabel<T = Option, K = string>(optionList: T[], searchName: SearchKey<K>, findOne: true): T | undefined;
+export function getOptionsByLabel<T = IOption, K = string>(optionList: T[], searchName: SearchKey<K>, findOne: true): T | undefined;
 
-export function getOptionsByLabel<T extends Option, K = string, O extends boolean = false>(optionList: T[], searchName: SearchKey<K>, findOne?: O) {
+export function getOptionsByLabel<T extends IOption, K = string, O extends boolean = false>(optionList: T[], searchName: SearchKey<K>, findOne?: O) {
   return getOptions(optionList, searchName, isLabelMatchedItemByMatcher, findOne)
 }
 
 /** {@inheritDoc getOptions} */
-export function getOptionsByValue<T = Option, K = string>(optionList: T[], searchValue: SearchKey<K>): T[]
+export function getOptionsByValue<T = IOption, K = string>(optionList: T[], searchValue: SearchKey<K>): T[]
 
 /** {@inheritDoc getOptions} */
-export function getOptionsByValue<T = Option, K = string>(optionList: T[], searchValue: SearchKey<K>, findOne: true): T | undefined
+export function getOptionsByValue<T = IOption, K = string>(optionList: T[], searchValue: SearchKey<K>, findOne: true): T | undefined
 
-export function getOptionsByValue<T extends Option, K = string>(optionList: T[], searchValue: SearchKey<K>, findOne?: boolean) {
+export function getOptionsByValue<T extends IOption, K = string>(optionList: T[], searchValue: SearchKey<K>, findOne?: boolean) {
   return getOptions(optionList, searchValue, isValueMatchedItemByMatcher, findOne)
 }
 
@@ -175,7 +175,7 @@ export function getOptionsByValue<T extends Option, K = string>(optionList: T[],
  * @param searchValue - 
  * @param findOne - 
  */
-export function getOptionsByKey<T extends Option, K = string>(optionList: T[], searchKey: SearchKey<K>, findOne: boolean = false): T | T[] | undefined {
+export function getOptionsByKey<T extends IOption, K = string>(optionList: T[], searchKey: SearchKey<K>, findOne: boolean = false): T | T[] | undefined {
   return getOptions(optionList, searchKey, function (keyMatcher, item) {
     return isLabelMatchedItemByMatcher(keyMatcher, item) || isValueMatchedItemByMatcher(keyMatcher, item)
   }, findOne)
@@ -218,8 +218,8 @@ export function getOptionsSelectedMatch<T, K>(option: T[], searchName: SearchKey
  * @param optionList 数据项
  * @param label 允许为查询器
  */
-export function labelToValue(optionList: Option[], label: SearchKey<string>): string | undefined {
-  const i: Option | undefined = getOptionsByLabel<Option, string>(optionList, label, true)
+export function labelToValue(optionList: IOption[], label: SearchKey<string>): string | undefined {
+  const i: IOption | undefined = getOptionsByLabel<IOption, string>(optionList, label, true)
   return ((i instanceof Object) && !isArray(i)) ? i.value : undefined
 }
 
@@ -228,21 +228,21 @@ export function labelToValue(optionList: Option[], label: SearchKey<string>): st
  * @param optionList 数据项
  * @param value 允许为查询器
  */
-export function valueToLabel(optionList: Option[], value: SearchKey<string>): string | undefined {
-  const i: Option | undefined = getOptionsByValue<Option, string>(optionList, value, true)
+export function valueToLabel(optionList: IOption[], value: SearchKey<string>): string | undefined {
+  const i: IOption | undefined = getOptionsByValue<IOption, string>(optionList, value, true)
   return ((i instanceof Object) && !isArray(i)) ? i.label : undefined
 }
 
 
-export function valuesToLabels(options: Option[], value: SearchKey<string>): string[];
-export function valuesToLabels(options: Option[], value: SearchKey<string>, joinKey: string): string;
+export function valuesToLabels(options: IOption[], value: SearchKey<string>): string[];
+export function valuesToLabels(options: IOption[], value: SearchKey<string>, joinKey: string): string;
 /**
  * 批量转换value到label
  * @param options 
  * @param value 
  * @param joinKey 
  */
-export function valuesToLabels(options: Option[], value: SearchKey<string>, joinKey?: string): string | string[] {
+export function valuesToLabels(options: IOption[], value: SearchKey<string>, joinKey?: string): string | string[] {
   const result: string[] = expect$.isArray.filter(
     mapToKeyValues(
       getOptionsByValue(options, value) || [],
@@ -252,8 +252,8 @@ export function valuesToLabels(options: Option[], value: SearchKey<string>, join
   return !isNil(joinKey) ? join(result, joinKey) : result
 }
 
-export function labelsToValues(options: Option[], label: SearchKey<string>): string[];
-export function labelsToValues(options: Option[], label: SearchKey<string>, joinKey: string): string
+export function labelsToValues(options: IOption[], label: SearchKey<string>): string[];
+export function labelsToValues(options: IOption[], label: SearchKey<string>, joinKey: string): string
 
 /**
  * 批量转换label到value
@@ -261,7 +261,7 @@ export function labelsToValues(options: Option[], label: SearchKey<string>, join
  * @param label 
  * @param joinKey 
  */
-export function labelsToValues(options: Option[], label: SearchKey<string>, joinKey?: string): string | string[] {
+export function labelsToValues(options: IOption[], label: SearchKey<string>, joinKey?: string): string | string[] {
   const result: string[] = expect$.isArray.filter(
     mapToKeyValues(
       getOptionsByLabel(options, label) || [],
@@ -273,25 +273,25 @@ export function labelsToValues(options: Option[], label: SearchKey<string>, join
 
 
 
-export function getCodeListByKey(codeType: Option[]): RemoteSearcher
-export function getCodeListByKey(codeType: OptionSearcher, optionFactory?: ArrayIterator<IKeyValueMap, Option>): RemoteSearcher
+export function getCodeListByKey(codeType: IOption[]): RemoteSearcher
+export function getCodeListByKey(codeType: OptionSearcher, optionFactory?: ArrayIterator<IKeyValueMap, IOption>): RemoteSearcher
 /**
  * 根据关键字查询OptionsList
  * @param codeType 
  * @param valueLabel 
  * @param valueKey 
  */
-export function getCodeListByKey(codeType: Option[] | OptionSearcher, optionFactory?: ArrayIterator<IKeyValueMap, Option>): RemoteSearcher {
+export function getCodeListByKey(codeType: IOption[] | OptionSearcher, optionFactory?: ArrayIterator<IKeyValueMap, IOption>): RemoteSearcher {
   // debugger
   if (isArray(codeType)) {
-    return async function (keyWord: string, isOnlySearch?: boolean): Promise<Option[]> {
+    return async function (keyWord: string, isOnlySearch?: boolean): Promise<IOption[]> {
       if (isOnlySearch && !isNotEmptyString(keyWord)) {
         return codeType
       }
       return castArray(getOptionsByKey(codeType, new RegExp(escapeRegExp(keyWord))))
     }
   } else if (isFunction(codeType)) {
-    return async function (keyWord: string, isOnlySearch?: boolean): Promise<Option[]> {
+    return async function (keyWord: string, isOnlySearch?: boolean): Promise<IOption[]> {
       const res = expect$.isArray.filter(await codeType(keyWord, isOnlySearch)) || [];
       return optionFactory ? map(res, optionFactory) : res
     }
@@ -303,7 +303,7 @@ export function getCodeListByKey(codeType: Option[] | OptionSearcher, optionFact
  * @param valueList 
  * @param useLabel 是否提供label，是则label同value
  */
-export function convertValueOption(valueList: (string | number)[], useLabel?: boolean): Option[] {
+export function convertValueOption(valueList: (string | number)[], useLabel?: boolean): IOption[] {
   return map(valueList, function (value) {
     value = value + ''
     return Constant$.OBJ_ASSIGN({ [Constant$.KEY_VAL]: value }, useLabel ? { label: value } : {})
