@@ -1,8 +1,9 @@
 
 import createApiTask, { createMainApiTask } from './ApiExtractor';
 import ApiExtractorFix from './ApiExtractorFix';
-import replace from 'gulp-replace'
-import { logger, shell } from '@yuyi919/gulp-awesome'
+import replace from 'gulp-replace';
+import colors from 'colors';
+import { logger, shell, shellTask, task } from '@yuyi919/gulp-awesome'
 import * as gulp from 'gulp';
 import { projectName, resolve, resolveTmpDir } from './resolve';
 const apiMain = createMainApiTask();
@@ -14,35 +15,38 @@ const docFix = ApiExtractorFix.createApiFixedTask({
   ]
 });
 
-gulp.task('api:main', apiMain);
-gulp.task('api:all', apiTree);
-gulp.task('api:fix', apiFix);
-gulp.task('doc:fix', docFix);
+task('api:main', apiMain);
+task('api:all', apiTree);
+task('api:fix', apiFix);
+task('doc:fix', docFix);
 
-gulp.task('build', () => {
+const build = task('build', () => {
   gulp.src('.', { read: false })
+    .pipe(logger('Exec')(`api-documenter markdown -i ${resolveTmpDir(`./etc`)} -o ${resolveTmpDir(`./document/articles`)}`))
+    .pipe(logger('Exec')(`api-documenter yaml -i ${resolveTmpDir(`./etc`)} -o ${resolveTmpDir(`./document/src`)}`))
     .pipe(shell(`docfx build ${resolveTmpDir('./document/docfx.json')}`))
-    .pipe(logger.log(`run server with: docfx serve ./docs`))
-    .pipe(shell('docfx serve ./docs'))
+    .pipe(logger('Run server with:')(colors.cyan(colors.underline(`docfx serve ./docs`))))
+    // .pipe(shell('docfx serve ./docs'))
   
 })
 
-gulp.task('doc:templateTmp', () =>
+
+const tmpTemplate = task('doc:templateTmp', () =>
   gulp.src(resolve('./config/document/**'))
     .pipe(replace('"../docs"', `"${resolve('./docs', true)}"`))
     .pipe(gulp.dest(resolveTmpDir('./document')))
 )
-gulp.task('doc:template', () => gulp.src(resolve('./config/document/**')).pipe(gulp.dest('./document')))
+const outputTemplate = task('doc:template', () => gulp.src(resolve('./config/document/**')).pipe(gulp.dest('./document')))
 gulp.task('default', gulp.series(
-  // apiMain,
-  // apiTree,
-  // apiFix,
-  'doc:templateTmp',
-  // gulp.parallel(
-  //   shellTask.task(`api-documenter markdown -i ${resolveTmpDir(`./etc`)} -o ${resolveTmpDir(`./document/articles`)}`),
-  //   // shell.task("api-documenter yaml -i ./etc -o ./document/src"),
-  //   shellTask.task(`api-documenter yaml -i ${resolveTmpDir(`./etc`)} -o ${resolveTmpDir(`./document/src`)}`)
-  // ),
-  'build'
+  apiMain,
+  apiTree,
+  apiFix,
+  tmpTemplate,
+  gulp.parallel(
+    shellTask(`api-documenter markdown -i ${resolveTmpDir(`./etc`)} -o ${resolveTmpDir(`./document/articles`)}`),
+    // shell.task("api-documenter yaml -i ./etc -o ./document/src"),
+    shellTask(`api-documenter yaml -i ${resolveTmpDir(`./etc`)} -o ${resolveTmpDir(`./document/src`)}`)
+  ),
+  build
   // docFix
 ));

@@ -16,7 +16,7 @@ const mainTemplate = fs.readFileSync(paths.mainTemplate).toString('utf8');
 const template = fs.readFileSync(paths.template).toString('utf8')
 
 if (!fs.pathExistsSync(paths.tmpEtcDir)) {
-  fs.mkdirSync(paths.tmpEtcDir)
+  fs.ensureDirSync(paths.tmpEtcDir)
 }
 
 const requiredMainPoint = requireResolve(DOC_MAIN_POINT);

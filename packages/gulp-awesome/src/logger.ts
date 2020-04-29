@@ -10,6 +10,10 @@ log.format = function (msg: string) {
   return msg.replace(/'(.*?)'/g, "'" + colors.cyan('$1') + "'");
 };
 
+/**
+ * 执行过程中输出log
+ * @param type 
+ */
 export function logger<T extends string>(type: T): Logger<T> {
   return GulpUtils.createTemplateStrHandler((msg: string) => log(msg, type)) as any;
 }

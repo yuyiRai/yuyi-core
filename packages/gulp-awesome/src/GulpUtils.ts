@@ -37,6 +37,9 @@ export function parallel(...tasks: (string | TaskHandler | TaskFunction | (strin
 export type FileTemplateRaw<R = string> = (file: FileParam) => R;
 export type FileTemplateRaws<R = string> = (FileTemplateRaw<R> | R)[];
 export type FileRawsOptions = TemplateStringsArray | string | FileTemplateRaw;
+export interface TemplateStreamPlugin {
+  (msg: FileRawsOptions, ...raws: FileTemplateRaws<string>): stream.Transform
+}
 export function getThrouth(callback: (this: stream.Transform, chunk: Buffer & FileParam, enc: string, callback: throuth.TransformCallback) => void) {
   return throuth.obj((file: any, encode, done) => {
     const paths: string[] = file.history.map((p: string) => path.relative(process.cwd(), p));
@@ -84,11 +87,11 @@ export function convertTemplates(file: FileParam, msg: FileRawsOptions, ...raws:
 }
 
 /**
- * 创建入参为模板字符串的插件
+ * 创建入参为模板字符串的gulp插件
  * @param haneler 接受完成的参数，入参为file
  * @param paramTo 入参转换函数
  */
-export function createTemplateStrHandler(haneler: (str: string) => any, paramTo?: FileTemplateRaw<FileParam>) {
+export function createTemplateStrHandler(haneler: (str: string) => any, paramTo?: FileTemplateRaw<FileParam>): TemplateStreamPlugin {
   return function templated(msg: FileRawsOptions, ...raws: FileTemplateRaws) {
     return getThrouth(async function (file, encode, done) {
       const message: string = convertTemplates(paramTo ? paramTo(file) : file, msg, ...raws);
