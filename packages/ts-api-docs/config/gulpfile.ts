@@ -44,7 +44,7 @@ const outputTemplate = task('doc:template', () => gulp.src(resolve('./config/doc
 
 gulp.task('default', gulp.series(
   // apiMain,
-  // apiTree,
+  apiTree,
   // (async (done) => {
   //   const tasks = [];
   //   const results = await Promise.all(depends.map(resolveModuleDTS));
@@ -54,21 +54,21 @@ gulp.task('default', gulp.series(
   //   console.error(tasks);
   //   return gulp.parallel(tasks)(done);
   // }),
-  // apiFix,
-  // cleanDocTmp,
-  // tmpTemplate,
+  apiFix,
+  cleanDocTmp,
+  tmpTemplate,
   gulp.parallel(
     task('markdown:articles', async () => {
       const action = new MarkdownAction(resolveTmpDir(`./etc`), resolveTmpDir(`./document/articles`))
       return await action.onExecute(resolve('.', true))
     }),
-    // task('ymlfile:src', async () => {
-    //   const action = new YamlAction(resolveTmpDir(`./etc`), resolveTmpDir(`./document/src`));
-    //   return await action.onExecute();
-    // }),
+    task('ymlfile:src', async () => {
+      const action = new YamlAction(resolveTmpDir(`./etc`), resolveTmpDir(`./document/src`));
+      return await action.onExecute();
+    }),
     // shellTask(`api-documenter markdown -i ${resolveTmpDir(`./etc`)} -o ${resolveTmpDir(`./document/articles`)}`),
     // shellTask(`api-documenter yaml -i ${resolveTmpDir(`./etc`)} -o ${resolveTmpDir(`./document/src`)}`)
   ),
-  // docFix,
-  // build
+  docFix,
+  build
 ));

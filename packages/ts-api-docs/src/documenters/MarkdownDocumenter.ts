@@ -350,8 +350,8 @@ export class MarkdownDocumenter {
             text, filePath
           );
           const readFile = FileSystem.readFile(filePath);
-          const code = /test\(['"](.*?)['"], (.[\s\S]*)\)/.exec(readFile);
-          console.log(code);
+          // const code = /test\(['"](.*?)['"], (.[\s\S]*)\)/.exec(readFile);
+          // console.log(code);
           parentNode.clearNodes();
           // output.appendNodeInParagraph()
           return new DocFencedCode({ code: readFile, language: 'ts', configuration: this._tsdocConfiguration })

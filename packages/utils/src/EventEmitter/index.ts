@@ -46,8 +46,8 @@ const { CREATE_PROMISE } = Constant$
  *
  * 销毁 见{@link EventEmitter.dispose | EventEmitter.dispose()}
  * 
- * {@link [EventEmitter](/articles/eventemitter.html)}
- * @includeSnippet {@link ~/tests/Rx/EventEmitter.test.ts#"EventEmitter 基本使用"}
+ * @includeSnippet ~/test/Rx/EventEmitter.test.ts#"EventEmitter 基本使用"
+ * 
  * @typeParam T - 事件类型
  * @example
  *```ts

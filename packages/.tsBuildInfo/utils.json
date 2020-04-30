@@ -966,8 +966,8 @@
         "signature": "8965ab0b0db6fca2222fe13a317e3480cf2c664ef7af42c2ff3e5a86bc049888"
       },
       "../utils/src/eventemitter/index.ts": {
-        "version": "f56f49ff2403396565b1e1b6a81cef992472e829c099c7d22a372a4d2229920d",
-        "signature": "055b0d65b8502f3feaca91004412388e66e63d93e748b1a213c6a20d43843d02"
+        "version": "d01be77b9d6ec667b2b9afafb04058392d5049b2537acdc3f37cc45335f61800",
+        "signature": "c516e6c86f1d84d06e95472653593d2a12ef16bc7f11535d1f25e3930f7d1c24"
       },
       "../utils/src/typelib/expect.ts": {
         "version": "b5722023231b873274faeab40c6868334fdcac7357343c40d44c22e741acffbf",
