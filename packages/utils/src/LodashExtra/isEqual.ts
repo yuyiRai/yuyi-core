@@ -1,7 +1,7 @@
 /**
  * @module LodashExtraUtils
  */
-import isEqualLodash from 'lodash/isEqual'
+import { isEqual as isEqualLodash} from 'lodash'
 import { isNotEmptyValue } from './isNil'
 
 /**

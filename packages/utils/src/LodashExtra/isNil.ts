@@ -4,7 +4,7 @@ import { isNaN } from './isNumber';
 /**
   * 检查`value`是否为 `null` 或 `undefined`
   * @param value 检查的`value`
-  * @return 是则返回`true`，不是则返回`false`
+  * @returns 是则返回`true`，不是则返回`false`
   * @example
   * isNotNil(null);
   * // => false

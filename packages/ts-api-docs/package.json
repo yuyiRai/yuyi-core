@@ -24,32 +24,7 @@
     "yuyi-doc": "bin.js"
   },
   "scripts": {
-    "gulp": "yuyi-gulp --gulpfile ./config/gulpfile.ts",
-    "api:main": "api-extractor run -c ./config/api-extractor.json --local --verbose",
-    "api:rx": "api-extractor run -c ./config/api-extractor-rxjs.json --local --verbose",
-    "api:depend": "yarn api:rx",
-    "api:tree": "yarn gulp",
-    "api2": "yarn api:main && yarn api:depend && yarn api:tree",
-    "tsc": "ttsc --build",
-    "tsc:watch": "ttsc --build --watch",
-    "build:api": "yarn tsc && yarn api",
-    "doc:output": "yarn build:api && yarn docfx:serve",
-    "presave": "yarn api",
-    "addTemplate": "nuget install memberpage -OutputDirectory config/template",
-    "markdown": "api-documenter markdown -i ./etc -o ./document/articles/docs",
-    "yaml": "api-documenter yaml -i ./etc -o ./document/src",
-    "docfx": "yarn docfx:build",
-    "docfx:build": "rimraf ./docs/**/* && docfx build ./document/docfx.json",
-    "docfx:serve": "rimraf ./docs/**/* && docfx ./document/docfx.json --serve",
-    "predeploy-docs": "yarn run docs:full",
-    "deploy-docs": "gh-pages -d docs",
-    "lint": "tslint --project tsconfig.json -t codeFrame 'src/**/*.ts' 'test/**/*.ts'",
-    "prebuild": "rimraf dist/**",
-    "test": "jest",
-    "test:cover": "jest --coverage --all",
-    "test:watch": "jest --coverage --watch",
-    "test:prod": "npm run lint && npm run test -- --no-cache",
-    "rimraf": "rimraf"
+    "test": "cross-env CWD=D:/WorkSpace/@yuyi/packages/utils DOC_PROJECT_NAME=@yuyi919/utils DOC_MAIN_POINT=lib DOC_DEPENDS=core-decorators,rxjs yuyi-gulp --gulpfile D:/WorkSpace/@yuyi/packages/ts-api-docs/config/gulpfile.ts"
   },
   "lint-staged": {
     "{src,test}/**/*.ts": [
@@ -153,5 +128,8 @@
     "typescript": "^3.6.4",
     "typescriptcollectionsframework": "^4.4.10"
   },
-  "gitHead": "597143961bd701bb3522727988cb256d97025955"
+  "gitHead": "597143961bd701bb3522727988cb256d97025955",
+  "dependencies": {
+    "@microsoft/api-extractor-model": "^7.7.11"
+  }
 }

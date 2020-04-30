@@ -30,6 +30,8 @@ exports[`TypeUtils test 测试 expect$.filters - isEmptyData 1`] = `NaN`;
 
 exports[`TypeUtils test 测试 expect$.filters - isEmptyObject 1`] = `Object {}`;
 
+exports[`TypeUtils test 测试 expect$.filters - isEmptyString 1`] = `undefined`;
+
 exports[`TypeUtils test 测试 expect$.filters - isEmptyValue 1`] = `NaN`;
 
 exports[`TypeUtils test 测试 expect$.filters - isEventEmitter 1`] = `undefined`;

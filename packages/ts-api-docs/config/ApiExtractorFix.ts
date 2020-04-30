@@ -6,7 +6,7 @@ import jeditor from 'gulp-json-editor';
 import JSON5 from 'json5';
 
 import convert from 'gulp-convert';
-import { resolveTmpDir, resolveConfigDir, projectName, paths } from './resolve';
+import { resolveTmpDir, resolve, projectName, paths } from './resolve';
 
 JSON.parse = JSON5.parse;
 export namespace ApiExtractorFix {
@@ -39,7 +39,7 @@ export namespace ApiExtractorFix {
     return function (a) {
       const files = getFiles()
       const list = files.map(name => taskFactroy(name === 'index' ? projectName : name))
-      console.log('createApiTask', list);
+      console.error('createApiTask', files);
       return gulp.parallel(list)(a)
     };
   }
@@ -61,7 +61,7 @@ export namespace ApiExtractorFix {
 
   function mapTree(name: string, list: string[]) {
     const fileName = name + ".md"
-    const md = fs.readFileSync('./document/articles/' + fileName).toString()
+    const md = fs.readFileSync(resolveTmpDir('./document/articles/' + fileName)).toString()
 
 
     // 通过正则从源文件匹配准确大小写
@@ -82,23 +82,28 @@ export namespace ApiExtractorFix {
 
   export function createApiFixedTask(jsonTmp = {}) {
     let markdownList = []
+    let indexFile: string = ""
     return gulp.parallel(
       gulp.series(
         function templateInit() {
-          markdownList = fs.readdirSync(resolveTmpDir('./document/articles/'))
-          return gulp.src(resolveConfigDir('./template/apiDoc/**/*')).pipe(gulp.dest(resolveTmpDir('./document')))
+          markdownList = fs.readdirSync(resolveTmpDir('./document/articles/'));
+          indexFile = fs.readFileSync(resolveTmpDir('./document/articles/index.md')).toString().replace('Package', 'Module')
+          return gulp.src(resolve('./config/template/apiDoc/**/*'))
+            .pipe(gulp.dest(resolveTmpDir('./document')))
         },
         function apiTocFixed() {
-          const files = getFiles()
+          const files = getFiles();
+          indexFile = fs.readFileSync(resolveTmpDir('./document/articles/index.md')).toString() + "\n\n" + indexFile
+          fs.writeFileSync(resolveTmpDir('./document/articles/index.md'), indexFile)
           return editYml(resolveTmpDir('./document/articles/toc.yml'), resolveTmpDir('./document/articles'), function (json) {
-            console.log(json);
-            const children = files.map(name => mapTree(name, markdownList))
+            // console.error(json);
+            const children = files.filter(name => name !== 'index').map(name => mapTree(name, markdownList))
             return merge(json, {
               items: [
                 get(json, 'items[0]')
               ].concat({
                 items: children,
-                homepage: children[0].homepage
+                homepage: 'index.md'
               })
             });
           })
@@ -106,7 +111,7 @@ export namespace ApiExtractorFix {
       ),
       function srcTocFixed() {
         return editYml(resolveTmpDir('./document/src/toc.yml'), resolveTmpDir('./document/src'), function (json) {
-          console.log(json, get(json, 'items[0].name'));
+          // console.log(json, get(json, 'items[0].name'));
           jsonTmp = merge(json, jsonTmp)
           return jsonTmp;
         })

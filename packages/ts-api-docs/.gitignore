@@ -20,7 +20,7 @@ document/src/**
 document/obj/.cache/**
 .tmp
 
-markdown
+markdown/**/*.md
 *.d.ts
 *.map
 

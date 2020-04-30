@@ -40,7 +40,7 @@
     "fileMetadataFiles": [],
     "template": [
       "default",
-      "templates/material/material"
+      "templates/material"
       // "default(zh-cn)"
     ],
     "postProcessors": [],

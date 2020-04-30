@@ -1,5 +1,5 @@
 items:
   - name: Indroduction
     homepage: index.md
-  - name: Packages
+  - name: Modules
     homepage: index.md

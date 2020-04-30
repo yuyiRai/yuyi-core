@@ -29,7 +29,7 @@
     "noEmitHelpers": false,
     "noUnusedLocals": false,
     "importHelpers": true,
-    "module": "esnext",
+    "module": "commonjs",
     "typeRoots": [
       "../env/types",
       "node_modules/@types",

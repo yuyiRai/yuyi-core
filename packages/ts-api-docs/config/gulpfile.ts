@@ -3,6 +3,8 @@ import createApiTask, { createMainApiTask, createDependApiTask } from './ApiExtr
 import ApiExtractorFix from './ApiExtractorFix';
 import replace from 'gulp-replace';
 import colors from 'colors';
+import { MarkdownAction } from '../src/cli/MarkdownAction';
+import { YamlAction } from '../src/cli/YamlAction'
 import { logger, shell, shellTask, task } from '@yuyi919/gulp-awesome'
 import * as gulp from 'gulp';
 import { projectName, resolve, resolveTmpDir, depends, resolveModuleDTS, paths } from './resolve';
@@ -37,26 +39,36 @@ const tmpTemplate = task('doc:templateTmp', () =>
     .pipe(replace('"../docs"', `"${resolve('./docs', true)}"`))
     .pipe(gulp.dest(resolveTmpDir('./document')))
 )
+const cleanDocTmp = task('clean:doctmp', shellTask(`rimraf ${resolveTmpDir('./document/**')}`))
 const outputTemplate = task('doc:template', () => gulp.src(resolve('./config/document/**')).pipe(gulp.dest('./document')))
+
 gulp.task('default', gulp.series(
   // apiMain,
-  apiTree,
-  (async (done) => {
-    const tasks = [];
-    const results = await Promise.all(depends.map(resolveModuleDTS));
-    for (const [moduleName, dtsPath] of results) {
-      tasks.push(createDependApiTask(moduleName, dtsPath));
-    }
-    console.error(tasks);
-    return gulp.parallel(tasks)(done);
-  }),
-  apiFix,
-  tmpTemplate,
+  // apiTree,
+  // (async (done) => {
+  //   const tasks = [];
+  //   const results = await Promise.all(depends.map(resolveModuleDTS));
+  //   for (const [moduleName, dtsPath] of results) {
+  //     tasks.push(createDependApiTask(moduleName, dtsPath));
+  //   }
+  //   console.error(tasks);
+  //   return gulp.parallel(tasks)(done);
+  // }),
+  // apiFix,
+  // cleanDocTmp,
+  // tmpTemplate,
   gulp.parallel(
-    shellTask(`api-documenter markdown -i ${resolveTmpDir(`./etc`)} -o ${resolveTmpDir(`./document/articles`)}`),
-    // shell.task("api-documenter yaml -i ./etc -o ./document/src"),
-    shellTask(`api-documenter yaml -i ${resolveTmpDir(`./etc`)} -o ${resolveTmpDir(`./document/src`)}`)
+    task('markdown:articles', async () => {
+      const action = new MarkdownAction(resolveTmpDir(`./etc`), resolveTmpDir(`./document/articles`))
+      return await action.onExecute(resolve('.', true))
+    }),
+    // task('ymlfile:src', async () => {
+    //   const action = new YamlAction(resolveTmpDir(`./etc`), resolveTmpDir(`./document/src`));
+    //   return await action.onExecute();
+    // }),
+    // shellTask(`api-documenter markdown -i ${resolveTmpDir(`./etc`)} -o ${resolveTmpDir(`./document/articles`)}`),
+    // shellTask(`api-documenter yaml -i ${resolveTmpDir(`./etc`)} -o ${resolveTmpDir(`./document/src`)}`)
   ),
-  build,
-  docFix
+  // docFix,
+  // build
 ));
