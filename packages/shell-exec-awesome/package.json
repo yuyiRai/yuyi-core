@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/shell-exec-awesome",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
