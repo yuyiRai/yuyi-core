@@ -97,7 +97,6 @@
     "@microsoft/api-extractor": "^7.7.13",
     "@microsoft/api-extractor-model": "^7.7.11",
     "@yuyi919/gulp-awesome": "^0.0.8",
-    "@yuyi919/shell-exec-awesome": "^0.0.4",
     "colors": "^1.4.0",
     "cross-env": "^5.2.0",
     "gulp": "^4.0.2",
