@@ -5,7 +5,6 @@ import path from 'path';
 import publish from '../src/modules/publish';
 import { main } from './params';
 import { Register } from 'ts-node'
-// console.log(version, description)
 
 function join(str: string, ...arr: string[]) {
   return arr.filter(i => i).join(str)
@@ -36,9 +35,9 @@ export function requireCwdFile(pathStr: string, action: 'require' | 'exec' | 're
 
 export default (tsconfig: string, loader: Register) => {
   try {
+    console.log(main)
     if (main.debug) {
       logger('use `debug` mode (123)')
-      console.log(main)
     }
     logger(`loaded tsconfig: [${tsconfig}]`)
     const r = main

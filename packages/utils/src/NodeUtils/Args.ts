@@ -54,12 +54,13 @@ export class Args<T = any> {
     this.options.push([name, option])
     return this;
   }
+  _parser: ArgumentParserFixed<T>;
   get parser(): ArgumentParserFixed<T> {
-    const parser = new argparse.ArgumentParser(this.config) as ArgumentParserFixed<T>;
+    const parser = this._parser || new argparse.ArgumentParser(this.config) as ArgumentParserFixed<T>;
     this.options.forEach((option) => {
       parser.addArgument(option[0], option[1]);
-    })
-    return parser
+    });
+    return (this._parser = parser)
   }
   public init(args?: string[], ns?: object | Namespace, allowUnknown?: false): [T, any[]];
   public init(args?: string[], ns?: object | Namespace, allowUnknown?: true): T;
@@ -68,6 +69,14 @@ export class Args<T = any> {
     return allowUnknown ? parser.parseKnownArgs(args, ns) : parser.parseArgs(args, ns)
   }
 
+  public registerSubArgs<T>(args: Args<T>, { name, ...option }: { name: string; } & SubparserOptions) {
+    const sub = args.parser.addSubparsers(option);
+    const parser = sub.addParser(name, this.config);
+    this.options.forEach((option) => {
+      parser.addArgument(option[0], option[1]);
+    });
+    return args;
+  }
   public registerSub<T>(parse: ArgumentParserFixed<T>, { name, ...option }: { name: string } & SubparserOptions) {
     const sub = parse.addSubparsers(option);
     const parser = sub.addParser(name, this.config)

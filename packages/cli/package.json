@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/cli",
-  "version": "0.0.56",
+  "version": "0.0.57",
   "description": "yuyi919's test",
   "main": "src/index.ts",
   "types": "types/index.d.ts",
@@ -9,7 +9,7 @@
   "scripts": {
     "pub": "node ./scripts/exec.js pub -g -c ttypescript -d",
     "h": "node ./scripts/exec.js -h",
-    "dev": "node -r ./scripts/exec.js",
+    "dev": "yuyi",
     "tsc": "ttsc --build",
     "clean": "rimraf src/**/*.js && rimraf src/**/*.map && rimraf src/**/*.d.ts"
   },
