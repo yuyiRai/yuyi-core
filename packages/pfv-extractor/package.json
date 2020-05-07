@@ -9,6 +9,7 @@
     "scripts"
   ],
   "scripts": {
+    "doc": "cross-env NODE_ENV=development yuyi-doc dist",
     "dev": "tsdx watch",
     "build:prod": "cross-env NODE_ENV=production yarn build:js && yarn build:bin -u",
     "build": "yarn build:js && yarn build:bin",

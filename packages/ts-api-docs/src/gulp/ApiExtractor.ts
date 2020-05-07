@@ -1,6 +1,7 @@
 import fs from 'fs-extra'
 import * as gulp from 'gulp'
-import { logger, shell } from '@yuyi919/gulp-awesome'
+import { sleep } from '@yuyi919/utils'
+import { logger, shell, task } from '@yuyi919/gulp-awesome'
 // import shell from 'gulp-shell';
 import path from 'path';
 import { resolve, paths, requireResolve, resolveTmpDir } from '../resolve';
@@ -118,10 +119,17 @@ export function createDependApiTask(moduleName: string, dtsPath: string) {
   };
 }
 
+export const getEmptyTask = (msg: string) => task(
+  'empty',
+  async () => {
+    await sleep(100)
+    return gulp.src('.', { read: false }).pipe(logger.log(msg))
+  }
+)
+
 export default function () {
   if (folders.length === 0) {
-    return () => gulp.src('.', { read: false })
-      .pipe(logger.log('no tree'))
+    return createMainApiTask()
   }
   const list = folders.map(createApiTask);
   // console.log('folder', list);

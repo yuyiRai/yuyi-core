@@ -7,6 +7,7 @@ import JSON5 from 'json5';
 
 import convert from 'gulp-convert';
 import { resolveTmpDir, resolve, projectName, paths } from '../resolve';
+import { getEmptyTask } from './ApiExtractor';
 
 JSON.parse = JSON5.parse;
 export namespace ApiExtractorFix {
@@ -37,7 +38,11 @@ export namespace ApiExtractorFix {
 
   export function createApiTask() {
     return function (a) {
-      const files = getFiles()
+      const files = getFiles();
+      if (files.length === 0) {
+        return getEmptyTask('- 无模块目录 -')(a);
+      }
+      console.log(files)
       const list = files.map(name => taskFactroy(name === 'index' ? projectName : name))
       console.error('createApiTask', files);
       return gulp.parallel(list)(a)
