@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/ts-api-docs",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "",
   "keywords": [
     "mobx",
@@ -94,15 +94,15 @@
   },
   "gitHead": "597143961bd701bb3522727988cb256d97025955",
   "dependencies": {
-    "@microsoft/api-extractor-model": "^7.7.11",
     "@microsoft/api-extractor": "^7.7.13",
-    "cross-env": "^5.2.0",
+    "@microsoft/api-extractor-model": "^7.7.11",
     "colors": "^1.4.0",
-    "lodash": "^4.17.15",
+    "cross-env": "^5.2.0",
     "gulp": "^4.0.2",
     "gulp-cached": "^1.1.1",
     "gulp-convert": "^0.2.0",
     "gulp-shell": "^0.7.1",
-    "gulp-yml-merge": "^0.0.2"
+    "gulp-yml-merge": "^0.0.2",
+    "lodash": "^4.17.15"
   }
 }

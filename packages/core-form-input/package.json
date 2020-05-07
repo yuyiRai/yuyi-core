@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/core-form-input",
-  "version": "0.1.8",
+  "version": "0.1.9",
   "license": "MIT",
   "author": "yuyiRai",
   "main": "dist/index.js",
