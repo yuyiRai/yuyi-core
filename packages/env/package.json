@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/env",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
   "license": "MIT",
