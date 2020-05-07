@@ -8,6 +8,9 @@
     "bb": "yuyi-builder -i ./index.js",
     "test": "tsdx test"
   },
+  "files": [
+    "dist"
+  ],
   "author": "yuyi919",
   "license": "ISC",
   "gitHead": "5efd00d519e197a9e9ec8e67985fc1f67ae736f0",
