@@ -42,7 +42,7 @@
   },
   "gitHead": "b6a439f1d79269da2843d054887dd42e7a7555c7",
   "dependencies": {
-    "@yuyi919/utils": "^0.0.64",
+    "@yuyi919/utils": "^0.0.66",
     "argparse": "^1.0.10",
     "encoding-japanese": "^1.0.29",
     "kuromojin": "^2.0.0",

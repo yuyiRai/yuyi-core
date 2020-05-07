@@ -58,7 +58,7 @@
     "@types/react-loadable": "^5.5.1",
     "@types/styled-components": "^4.1.18",
     "@yuyi919/env": "^0.0.9",
-    "@yuyi919/utils": "^0.0.64",
+    "@yuyi919/utils": "^0.0.66",
     "amap-js": "^1.1.0",
     "core-decorators": "^0.20.0",
     "cross-env": "^5.1.4",

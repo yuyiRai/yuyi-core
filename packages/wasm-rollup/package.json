@@ -32,6 +32,6 @@
     "emscripten"
   ],
   "dependencies": {
-    "@yuyi919/utils": "^0.0.64"
+    "@yuyi919/utils": "^0.0.66"
   }
 }

@@ -30,7 +30,7 @@
   },
   "gitHead": "597143961bd701bb3522727988cb256d97025955",
   "dependencies": {
-    "@yuyi919/utils": "^0.0.64",
+    "@yuyi919/utils": "^0.0.66",
     "typescript": "^3.6.4"
   }
 }
