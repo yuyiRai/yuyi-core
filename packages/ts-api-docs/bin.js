@@ -1,11 +1,9 @@
 #!/usr/bin/env node
 const { Args } = require('@yuyi919/utils/dist/NodeUtils');
-const { shell } = require('@yuyi919/shell-exec-awesome')
-const { execSync } = require('child_process')
-const crossEnv = require('cross-env')
-const { name: CLI_NAME, scripts } = require('./package.json')
-const fs = require('fs-extra')
-const path = require('path')
+const crossEnv = require('cross-env');
+const { name: CLI_NAME, scripts } = require('./package.json');
+const fs = require('fs-extra');
+const path = require('path');
 
 function resolve(target) {
   return path.join(__dirname, target).replace(/\\/g, '/')
