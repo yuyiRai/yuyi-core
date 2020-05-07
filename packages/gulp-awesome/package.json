@@ -5,8 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "doc": "yuyi-doc",
-    "build": "tsdx build --target node --format cjs",
-    "build:bin": "yuyi-builder -i scripts/bin.js -n yuyiGulp"
+    "build": "tsdx build --target node --format cjs"
   },
   "bin": {
     "yuyi-gulp": "scripts/bin.js"

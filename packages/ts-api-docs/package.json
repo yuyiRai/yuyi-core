@@ -25,6 +25,7 @@
     "yuyi-doc": "bin.js"
   },
   "scripts": {
+    "postpublish": "yarn global add @yuyi919/ts-api-docs@latest",
     "build": "tsdx build",
     "build:bin": "yuyi-builder -i ./bin.js -n ts-api-docs",
     "test": "cross-env CWD=D:/WorkSpace/@yuyi/packages/utils DOC_PROJECT_NAME=@yuyi919/utils DOC_MAIN_POINT=lib DOC_DEPENDS=core-decorators,rxjs yuyi-gulp --gulpfile D:/WorkSpace/@yuyi/packages/ts-api-docs/config/gulpfile.ts"
@@ -69,7 +70,6 @@
     "@types/jest": "^24.0.23",
     "@types/lodash": "^4.14.149",
     "coveralls": "^3.0.2",
-    "husky": "^3.1.0",
     "jest": "^24.9.0",
     "jest-config": "^24.9.0",
     "lint-staged": "^8.0.0",
@@ -79,7 +79,6 @@
     "lodash.pick": "^4.4.0",
     "mobx": "^4.15.0",
     "mobx-utils": "^5.5.2",
-    "replace-in-file": "^4.1.0",
     "rimraf": "^3.0.0",
     "rollup": "^1.27.8",
     "shelljs": "^0.8.3",
