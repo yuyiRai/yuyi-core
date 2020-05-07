@@ -12,7 +12,7 @@
   },
   "author": "yuyi919",
   "license": "ISC",
-  "gitHead": "bdec46a35774a06a8e7d08cc34061f0b56077bb2",
+  "gitHead": "5efd00d519e197a9e9ec8e67985fc1f67ae736f0",
   "devDependencies": {
     "gulp-luaminify": "^0.0.1",
     "gulp-luapack": "^1.0.0",
