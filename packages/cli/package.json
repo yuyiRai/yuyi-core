@@ -25,7 +25,7 @@
   ],
   "dependencies": {
     "@types/normalize-package-data": "^2.4.0",
-    "@yuyi919/utils": "^0.0.60",
+    "@yuyi919/utils": "^0.0.64",
     "argparse": "^1.0.10",
     "gulp-convert-encoding": "^2.0.1",
     "colors": "^1.4.0",

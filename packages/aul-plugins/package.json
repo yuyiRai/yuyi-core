@@ -39,6 +39,6 @@
     "typescript": "^3.6.4"
   },
   "dependencies": {
-    "@yuyi919/utils": "^0.0.60"
+    "@yuyi919/utils": "^0.0.64"
   }
 }
