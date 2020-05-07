@@ -1,6 +1,6 @@
 {
   "name": "@yuyi/pfv-extractor",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "将pfv转化为便利的aul脚本",
   "private": true,
   "main": "dist/index.js",
