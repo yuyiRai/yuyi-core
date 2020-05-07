@@ -92,7 +92,7 @@
   },
   "gitHead": "5efd00d519e197a9e9ec8e67985fc1f67ae736f0",
   "peerDependencies": {
-    "@yuyi919/gulp-awesome": "^0.0.15"
+    "@yuyi919/gulp-awesome": "^0.0.16"
   },
   "dependencies": {
     "@microsoft/api-extractor": "^7.7.13",
