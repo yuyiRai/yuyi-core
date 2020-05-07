@@ -2,7 +2,7 @@
   "name": "@yuyi/wasm-rollup",
   "description": "Import WebAssembly code with Rollup",
   "main": "dist/rollup-plugin-wasm.js",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "license": "MIT",
   "private": true,
   "files": [
@@ -32,6 +32,6 @@
     "emscripten"
   ],
   "dependencies": {
-    "@yuyi919/utils": "^0.0.67"
+    "@yuyi919/utils": "^0.0.68"
   }
 }
