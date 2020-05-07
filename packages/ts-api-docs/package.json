@@ -104,6 +104,7 @@
     "gulp": "^4.0.2",
     "gulp-cached": "^1.1.1",
     "gulp-convert": "^0.2.0",
+    "gulp-json-editor": "^2.5.3",
     "gulp-replace": "^1.0.0",
     "gulp-shell": "^0.7.1",
     "gulp-yml-merge": "^0.0.2",
