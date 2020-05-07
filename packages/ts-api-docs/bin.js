@@ -32,7 +32,7 @@ const gulp = `cross-env `
   + `DOC_PROJECT_NAME=${projectName} `
   + `DOC_MAIN_POINT=${options.dir} `
   + `DOC_DEPENDS=${options.depends} `
-  + `yuyi-gulp  --gulpfile ${resolve('./config/gulpfile.ts')}`
+  + `yuyi-gulp --gulpfile ${resolve('./config/gulpfile.ts')}`
   
 try {
   const script = `${gulp}`

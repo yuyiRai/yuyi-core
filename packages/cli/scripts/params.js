@@ -11,9 +11,15 @@ const args = new Args({
 
 const sub = args.parser.addSubparsers({ title: 'actions', description: 'anothers' })
 
+
 const commitParser = sub.addParser("commit", {
   help: 'dev commit',
   version
+})
+commitParser.addArgument(["-p", "--push"], {
+  action: 'storeTrue',
+  dest: "push",
+  defaultValue: false
 })
 
 const pubParser = sub.addParser("pub", {
@@ -53,7 +59,8 @@ for (const p of [args.parser, execParser, commitParser, pubParser]) {
   })
 }
 
-const [main, other] = args.init()
+const [main, other] = args.parser.parseKnownArgs()
+
 exports.main = main
 exports.other = other
 

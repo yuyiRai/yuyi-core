@@ -35,7 +35,6 @@ export function requireCwdFile(pathStr: string, action: 'require' | 'exec' | 're
 
 export default (tsconfig: string, loader: Register) => {
   try {
-    console.log(main)
     if (main.debug) {
       logger('use `debug` mode (123)')
     }
