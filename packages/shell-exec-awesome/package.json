@@ -20,6 +20,6 @@
   },
   "dependencies": {
     "@yuyi919/utils": "^0.0.68",
-    "iconv-lite": "^0.5.0"
+    "iconv-lite": "^0.4.24"
   }
 }
