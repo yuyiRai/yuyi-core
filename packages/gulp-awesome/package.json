@@ -24,6 +24,7 @@
     "typescript": "^3.6.4"
   },
   "dependencies": {
+    "@yuyi919/env": "^0.0.12",
     "@yuyi919/utils": "^0.0.68"
   }
 }

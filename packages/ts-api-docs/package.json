@@ -91,11 +91,12 @@
     "typescriptcollectionsframework": "^4.4.10"
   },
   "gitHead": "5efd00d519e197a9e9ec8e67985fc1f67ae736f0",
+  "peerDependencies": {
+    "@yuyi919/gulp-awesome": "^0.0.15"
+  },
   "dependencies": {
     "@microsoft/api-extractor": "^7.7.13",
     "@microsoft/api-extractor-model": "^7.7.11",
-    "@yuyi919/gulp-awesome": "^0.0.15",
-    "@yuyi919/shell-exec-awesome": "^0.0.8",
     "colors": "^1.4.0",
     "cross-env": "^5.2.1",
     "gulp": "^4.0.2",
