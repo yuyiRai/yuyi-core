@@ -22,8 +22,7 @@
     "node": ">=6.0.0"
   },
   "bin": {
-    "yuyi-doc": "bin.js",
-    "yuyi-gulp": "../gulp-awesome/scripts/bin.js"
+    "yuyi-doc": "bin.js"
   },
   "scripts": {
     "build": "tsdx build",
