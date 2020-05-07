@@ -3,8 +3,7 @@ import createApiTask, { createMainApiTask, createDependApiTask } from './ApiExtr
 import ApiExtractorFix from './ApiExtractorFix';
 import replace from 'gulp-replace';
 import colors from 'colors';
-import { MarkdownAction } from '../src/cli/MarkdownAction';
-import { YamlAction } from '../src/cli/YamlAction'
+import { MarkdownAction, YamlAction } from '..';
 import { logger, shell, shellTask, task } from '@yuyi919/gulp-awesome'
 import * as gulp from 'gulp';
 import { projectName, resolve, resolveTmpDir, depends, resolveModuleDTS, paths } from './resolve';

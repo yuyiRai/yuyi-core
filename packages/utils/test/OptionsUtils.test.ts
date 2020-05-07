@@ -102,7 +102,7 @@ describe('Nested-object', () => {
     ["a.c.d", 4],
     ["b.c.d", 1]
   ]);
-  expect(OptionsUtils.getValueAndPath(testObject, { commlizeArray: false, allowPath: null })).toEqual([
+  expect(OptionsUtils.getValueAndPath(testObject, { deepArray: false, allowPath: null })).toEqual([
     ["a.a", 2],
     ["a.b.a", 1],
     ["a.c.a", 2],
@@ -111,7 +111,7 @@ describe('Nested-object', () => {
   ]);
 
 
-  expect(OptionsUtils.getValueAndPath(testObject, { commlizeArray: true })).toEqual([
+  expect(OptionsUtils.getValueAndPath(testObject, { deepArray: true })).toEqual([
     ["a.a", 2],
     ["a.b.a", 1],
     ["a.c.a", 2],
@@ -125,13 +125,13 @@ describe('Nested-object', () => {
       { a: 2, b: 3 }
     ]
   }
-  expect(OptionsUtils.getValueAndPath(listTestObj, { commlizeArray: false })).toEqual([
+  expect(OptionsUtils.getValueAndPath(listTestObj, { deepArray: false })).toEqual([
     ["list", [
       { a: 1, b: [1, 2] },
       { a: 2, b: 3 }
     ]]
   ]);
-  expect(OptionsUtils.getValueAndPath(listTestObj, { commlizeArray: true })).toEqual([
+  expect(OptionsUtils.getValueAndPath(listTestObj, { deepArray: true })).toEqual([
     ["list[0].a", 1],
     ["list[0].b[0]", 1],
     ["list[0].b[1]", 2],
@@ -140,13 +140,13 @@ describe('Nested-object', () => {
   ]);
 
   expect(OptionsUtils.getValueAndPath(listTestObj, {
-    commlizeArray: true, allowPath: ['list[0].b']
+    deepArray: true, allowPath: ['list[0].b']
   })).toEqual([
     ["list[0].b", [1, 2]]
   ]);
   
   expect(OptionsUtils.getValueAndPath(listTestObj, {
-    commlizeArray: true,
+    deepArray: true,
     allowPath: /list\[([0-9]+)\]\.([a-z])/
   })).toEqual([
     ["list[0].a", 1],
@@ -156,7 +156,7 @@ describe('Nested-object', () => {
   ]);
 
   expect(OptionsUtils.getValueAndPath(listTestObj, {
-    commlizeArray: true,
+    deepArray: true,
     allowPath: (path, value, key) => {
       return /list\[([0-9]+)\]\.([a-z])$/.test(path) && typeof value === 'number'
     }
@@ -167,7 +167,7 @@ describe('Nested-object', () => {
   ]);
 
   expect(OptionsUtils.getValueAndPath(listTestObj, {
-    commlizeArray: true,
+    deepArray: true,
     allowPath: (path, value, key, arrKeys) => {
       return arrKeys.length === 3;
     }
@@ -179,14 +179,14 @@ describe('Nested-object', () => {
   ]);
 
   expect(OptionsUtils.getValueAndPath(listTestObj, {
-    commlizeArray: false,
+    deepArray: false,
     allowPath: { 'list': true }
   })).toEqual([
     ["list", listTestObj.list]
   ]);
 
   expect(OptionsUtils.getValueAndPath(listTestObj, {
-    commlizeArray: true,
+    deepArray: true,
     allowPath: { 'list[0].b': true }
   })).toEqual([
     ["list[0].b", listTestObj.list[0].b]
@@ -194,7 +194,7 @@ describe('Nested-object', () => {
 
 
   expect(OptionsUtils.getValueAndPath({ a: { b: { c: 1 }}}, {
-    commlizeArray: false,
+    deepArray: false,
     allowPath: { 'a.b': true }
   })).toEqual([
     ["a.b", { c: 1 }]

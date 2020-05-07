@@ -1,19 +1,20 @@
 {
   "name": "@yuyi919/ts-api-docs",
-  "version": "0.0.61",
+  "version": "0.0.1",
   "description": "",
   "keywords": [
     "mobx",
     "lodash",
     "typescript"
   ],
-  "private": true,
   "main": "dist/index.js",
-  "types": "lib/index.export.d.ts",
-  "typings": "lib/index.export.d.ts",
   "files": [
     "dist",
-    "lib"
+    "lib",
+    "bin.js",
+    "config",
+    "schemas",
+    "yaml"
   ],
   "author": "yuyiRai",
   "license": "MIT",
@@ -24,13 +25,9 @@
     "yuyi-doc": "bin.js"
   },
   "scripts": {
+    "build": "tsdx build",
+    "build:bin": "yuyi-builder -i ./bin.js -n ts-api-docs",
     "test": "cross-env CWD=D:/WorkSpace/@yuyi/packages/utils DOC_PROJECT_NAME=@yuyi919/utils DOC_MAIN_POINT=lib DOC_DEPENDS=core-decorators,rxjs yuyi-gulp --gulpfile D:/WorkSpace/@yuyi/packages/ts-api-docs/config/gulpfile.ts"
-  },
-  "lint-staged": {
-    "{src,test}/**/*.ts": [
-      "prettier --write",
-      "git add"
-    ]
   },
   "jest": {
     "transform": {
@@ -65,59 +62,26 @@
       "src/*.{js,ts}"
     ]
   },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true
-  },
-  "commitlint": {
-    "extends": [
-      "@commitlint/config-conventional"
-    ]
-  },
   "devDependencies": {
-    "@commitlint/cli": "^8.0.0",
-    "@commitlint/config-conventional": "^8.0.0",
     "@types/argparse": "^1.0.36",
     "@types/benchmark": "^1.0.31",
     "@types/gulp": "^4.0.6",
     "@types/jest": "^24.0.23",
     "@types/lodash": "^4.14.149",
-    "argparse": "^1.0.10",
-    "benchmark": "^2.1.4",
-    "colors": "^1.4.0",
     "coveralls": "^3.0.2",
-    "cross-env": "^5.2.0",
-    "dayjs": "^1.8.15",
-    "gulp": "^4.0.2",
-    "gulp-cached": "^1.1.1",
-    "gulp-convert": "^0.2.0",
-    "gulp-shell": "^0.7.1",
-    "gulp-yml-merge": "^0.0.2",
     "husky": "^3.1.0",
-    "immer": "^5.0.0",
     "jest": "^24.9.0",
     "jest-config": "^24.9.0",
     "lint-staged": "^8.0.0",
-    "lodash": "^4.17.15",
     "lodash-decorators": "^6.0.1",
     "lodash.camelcase": "^4.3.0",
     "lodash.get": "^4.4.2",
     "lodash.pick": "^4.4.0",
     "mobx": "^4.15.0",
     "mobx-utils": "^5.5.2",
-    "prettier": "^1.18.2",
     "replace-in-file": "^4.1.0",
     "rimraf": "^3.0.0",
     "rollup": "^1.27.8",
-    "rollup-plugin-commonjs": "^10.1.0",
-    "rollup-plugin-dts": "^1.1.12",
-    "rollup-plugin-json": "^4.0.0",
-    "rollup-plugin-node-resolve": "^5.2.0",
-    "rollup-plugin-peer-deps-external": "^2.2.0",
-    "rollup-plugin-sourcemaps": "^0.4.2",
-    "rollup-plugin-terser": "^5.1.3",
-    "rollup-plugin-visualizer": "^3.0.0",
-    "rxjs": "^6.5.3",
     "shelljs": "^0.8.3",
     "travis-deploy-once": "^5.0.9",
     "ts-jest": "^24.0.2",
@@ -130,6 +94,15 @@
   },
   "gitHead": "597143961bd701bb3522727988cb256d97025955",
   "dependencies": {
-    "@microsoft/api-extractor-model": "^7.7.11"
+    "@microsoft/api-extractor-model": "^7.7.11",
+    "@microsoft/api-extractor": "^7.7.13",
+    "cross-env": "^5.2.0",
+    "colors": "^1.4.0",
+    "lodash": "^4.17.15",
+    "gulp": "^4.0.2",
+    "gulp-cached": "^1.1.1",
+    "gulp-convert": "^0.2.0",
+    "gulp-shell": "^0.7.1",
+    "gulp-yml-merge": "^0.0.2"
   }
 }

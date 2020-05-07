@@ -18,7 +18,7 @@ export interface ValuePathIteratorOptions {
    * 是否侵入数组下标
    * @default false
    */
-  commlizeArray?: boolean;
+  deepArray?: boolean;
 }
 type Arg = ValuePathIteratorOptions | AllowPath
 
@@ -55,13 +55,13 @@ export function getValuePathIterator(values: any, arg: Arg) {
   if (arg instanceof Array) {
     return getValuePathIterator0(values, arg)
   }
-  if (arg instanceof Object && 'commlizeArray' in arg) {
-    const { commlizeArray, allowPath } = arg;
+  if (arg instanceof Object && 'deepArray' in arg) {
+    const { deepArray: deepArray, allowPath } = arg;
     if (allowPath instanceof Array) {
       return getValuePathIterator0(values, allowPath);
     }
     // console.log('see array');
-    if (commlizeArray)
+    if (deepArray)
       return getValuePathIterator2(values, allowPath as any);
     if (allowPath)
       return getValuePathIterator1(values, allowPath as any);

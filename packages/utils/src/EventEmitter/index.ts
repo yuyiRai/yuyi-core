@@ -183,10 +183,11 @@ export class EventEmitter<T = any> {
    * 设置条件注销
    * @param emit - 条件observable，发射任意值即注销
    */
-  public takeUntil(emit: null): EventEmitter
-  public takeUntil(emit: Observable<any>): EventEmitter
   public takeUntil(emit: Observable<any>) {
-    emit.subscribe(() => this.dispose(true));
+    const sub = emit.subscribe(() => {
+      this.dispose(true)
+      sub.unsubscribe()
+    });
     return this;
   }
 
@@ -207,6 +208,7 @@ export class EventEmitter<T = any> {
    * 转化成标准Promise
    */
   public toPromise() {
+    this.init()
     return CREATE_PROMISE<T>(r => {
       const sub = subscribe$$(this.$, data => {
         r(data);
