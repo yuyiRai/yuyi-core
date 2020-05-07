@@ -3,7 +3,7 @@ import * as gulp from 'gulp'
 import { logger, shell } from '@yuyi919/gulp-awesome'
 // import shell from 'gulp-shell';
 import path from 'path';
-import { resolve, paths, requireResolve, resolveTmpDir } from './resolve';
+import { resolve, paths, requireResolve, resolveTmpDir } from '../resolve';
 const { CWD, DOC_MAIN_POINT } = process.env
 
 /** 模块目录收集 */

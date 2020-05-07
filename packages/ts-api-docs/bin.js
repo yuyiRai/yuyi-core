@@ -32,7 +32,11 @@ const cmd = `CWD=${options.cwd} ` +
   `DOC_PROJECT_NAME=${projectName} ` +
   `DOC_MAIN_POINT=${options.dir} ` +
   `DOC_DEPENDS=${options.depends} ` +
-  `node ${require.resolve('../gulp-awesome/scripts/bin.js', { paths: [__dirname] })} --gulpfile ${resolve('./config/gulpfile.ts')}`
+  `node ${resolve('../gulp-awesome/scripts/bin.js')} ` +
+  `--gulpfile ${
+  //resolve('./config/gulpfile.ts')
+  resolve(process.env.NODE_ENV !== 'development' ? './gulpfile.js' : './test/gulpfile.ts')
+}`
 const cmds = cmd.split(' ')
 try {
   console.log(cmd)

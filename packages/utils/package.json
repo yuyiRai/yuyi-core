@@ -21,13 +21,13 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "doc": "yuyi-doc lib -d core-decorators,rxjs",
+    "doc": "cross-env NODE_ENV=development2 yuyi-doc lib -d core-decorators,rxjs",
+    "doc:serve": "ttsc --build && yarn doc && docfx serve ./docs -p 8008",
     "gulp": "yuyi-gulp --gulpfile ./config/gulpfile.ts",
     "td": "yuyi-gulp --gulpfile ./config/devoutput.js",
     "td2": "yarn td watch",
     "tsc": "ttsc --build",
     "tsc:watch": "ttsc --build --watch",
-    "doc:serve": "ttsc --build && yarn doc && docfx serve ./docs -p 8008",
     "presave": "yarn api",
     "addTemplate": "nuget install memberpage -OutputDirectory config/template",
     "markdown": "api-documenter markdown -i ./etc -o ./document/articles/docs",

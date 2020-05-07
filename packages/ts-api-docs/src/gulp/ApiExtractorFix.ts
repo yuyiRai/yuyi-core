@@ -6,7 +6,7 @@ import jeditor from 'gulp-json-editor';
 import JSON5 from 'json5';
 
 import convert from 'gulp-convert';
-import { resolveTmpDir, resolve, projectName, paths } from './resolve';
+import { resolveTmpDir, resolve, projectName, paths } from '../resolve';
 
 JSON.parse = JSON5.parse;
 export namespace ApiExtractorFix {

@@ -12,6 +12,7 @@
     "dist",
     "lib",
     "bin.js",
+    "gulpfile.js",
     "config",
     "schemas",
     "yaml"
@@ -27,7 +28,7 @@
   "scripts": {
     "build": "tsdx build",
     "build:bin": "yuyi-builder -i ./bin.js -n ts-api-docs",
-    "test": "cross-env CWD=D:/WorkSpace/@yuyi/packages/utils DOC_PROJECT_NAME=@yuyi919/utils DOC_MAIN_POINT=lib DOC_DEPENDS=core-decorators,rxjs yuyi-gulp --gulpfile D:/WorkSpace/@yuyi/packages/ts-api-docs/config/gulpfile.ts"
+    "test": "cross-env NODE_ENV=development node bin.js"
   },
   "jest": {
     "transform": {
@@ -102,6 +103,7 @@
     "cross-env": "^5.2.1",
     "gulp": "^4.0.2",
     "gulp-cached": "^1.1.1",
+    "gulp-replace": "^1.0.0",
     "gulp-convert": "^0.2.0",
     "gulp-shell": "^0.7.1",
     "gulp-yml-merge": "^0.0.2",
