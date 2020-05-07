@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 const { Args } = require('@yuyi919/utils/dist/NodeUtils');
 const crossEnv = require('cross-env');
-const { name: CLI_NAME, scripts } = require('./package.json');
+const { name: CLI_NAME, description, version } = require('./package.json');
 const fs = require('fs-extra');
 const path = require('path');
 
@@ -9,7 +9,9 @@ function resolve(target) {
   return path.join(__dirname, target).replace(/\\/g, '/')
 }
 const args = new Args({
-
+  name: CLI_NAME,
+  description,
+  version
 })
   .addArgument('dir', {})
   .addOption("cwd", {
@@ -23,7 +25,8 @@ const args = new Args({
 const [options] = args.init()
 options.cwd = options.cwd.replace(/\\/g, '/')
 const { name: projectName } = require(`${options.cwd}/package.json`)
-console.log('yuyi-api-docs', options)
+
+console.log(CLI_NAME, options)
 
 const cmd = `CWD=${options.cwd} ` +
   `DOC_PROJECT_NAME=${projectName} ` +
