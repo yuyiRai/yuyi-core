@@ -1,7 +1,7 @@
 {
   "name": "@yuyi/docs",
   "description": "Documentation Theme for Yuyi-core",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "private": true,
   "homepage": "http://typedoc.org/",
   "main": "bin/plugin.js",
