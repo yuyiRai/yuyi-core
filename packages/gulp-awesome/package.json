@@ -7,6 +7,10 @@
     "doc": "yuyi-doc",
     "build": "tsdx build --target node --format cjs"
   },
+  "files": [
+    "dist",
+    "scripts"
+  ],
   "bin": {
     "yuyi-gulp": "scripts/bin.js"
   },
