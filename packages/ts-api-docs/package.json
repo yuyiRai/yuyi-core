@@ -92,7 +92,7 @@
     "typescript": "^3.6.4",
     "typescriptcollectionsframework": "^4.4.10"
   },
-  "gitHead": "597143961bd701bb3522727988cb256d97025955",
+  "gitHead": "bdec46a35774a06a8e7d08cc34061f0b56077bb2",
   "dependencies": {
     "@microsoft/api-extractor": "^7.7.13",
     "@microsoft/api-extractor-model": "^7.7.11",
