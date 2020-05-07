@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/ts-api-docs",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "",
   "keywords": [
     "mobx",
@@ -98,13 +98,13 @@
   "dependencies": {
     "@microsoft/api-extractor": "^7.7.13",
     "@microsoft/api-extractor-model": "^7.7.11",
-    "@yuyi919/gulp-awesome": "^0.0.17",
+    "@yuyi919/gulp-awesome": "^0.0.18",
     "colors": "^1.4.0",
     "cross-env": "^5.2.1",
     "gulp": "^4.0.2",
     "gulp-cached": "^1.1.1",
-    "gulp-replace": "^1.0.0",
     "gulp-convert": "^0.2.0",
+    "gulp-replace": "^1.0.0",
     "gulp-shell": "^0.7.1",
     "gulp-yml-merge": "^0.0.2",
     "lodash": "^4.17.15"
