@@ -47,6 +47,7 @@ export function init() {
   // const outputTemplate = task('doc:template', () => gulp.src(resolve('./config/document/**')).pipe(gulp.dest('./document')));
 
   gulp.task('default', gulp.series(
+    task('cleanApiJson', shellTask(`rimraf ${resolveTmpDir('./*.api.json')}`)),
     // apiMain,
     apiTree,
     // (async (done) => {

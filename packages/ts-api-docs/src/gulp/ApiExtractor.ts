@@ -7,13 +7,14 @@ import path from 'path';
 import { resolve, paths, requireResolve, resolveTmpDir } from '../resolve';
 const { CWD, DOC_MAIN_POINT } = process.env;
 
+const DOC_MAIN_DIR = path.parse(DOC_MAIN_POINT).ext ? path.dirname(DOC_MAIN_POINT) : path.basename(DOC_MAIN_POINT)
 /** 模块目录收集 */
 const folders = fs.readdirSync(
-  resolve('./src', true)
+  resolve(DOC_MAIN_DIR, true)
 ).filter(name => fs.pathExistsSync(
-  resolve(`./src/${name}/index.ts`, true)
+  resolve(path.join('.', DOC_MAIN_DIR, `${name}/index.d.ts`), true)
 ));
-
+console.log(DOC_MAIN_DIR, folders)
 const mainTemplate = fs.readFileSync(paths.mainTemplate).toString('utf8');
 const template = fs.readFileSync(paths.template).toString('utf8');
 
