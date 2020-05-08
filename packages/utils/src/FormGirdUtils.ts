@@ -38,43 +38,43 @@ export function defaultFromKey<T>(target: T, key: string, source: T) {
   return defaultsDeep(get(target, key), get(source, key))
 }
 
-export function formatterCol(col: ColProps): IColProps {
+export function formatterCol(col: ColConfig): IColConfig {
   return isNumber(col) ? { span: col } : expect$.isObject.filter(col) || {}
 }
 
 
 
-interface IColProps {
+export interface IColConfig {
   span?: number;
   sm?: number;
   lx?: number;
   lg?: number;
   xl?: number;
 }
-type ColProps = IColProps | number;
+type ColConfig = IColConfig | number;
 
-export interface ICommonFormContainerTarget {
-  labelCol?: IColProps;
-  wrapperCol?: IColProps;
-  col?: IColProps;
+export interface IGirdConfig {
+  labelCol?: IColConfig;
+  wrapperCol?: IColConfig;
+  col?: IColConfig;
   colon?: boolean;
 }
 
-export interface ICommonFormContainer {
-  labelCol?: ColProps;
-  wrapperCol?: ColProps;
+type IGirdParamsBase = {
+  labelCol?: ColConfig;
+  wrapperCol?: ColConfig;
   /** labelCol的别名 */
-  label?: ColProps;
+  label?: ColConfig;
   /** warpperCol的别名 */
-  content?: ColProps;
-  col?: ColProps;
+  content?: ColConfig;
+  col?: ColConfig;
   colon?: boolean;
 }
 
-export interface IItemConfig {
-  container: ICommonFormContainer;
+export interface IGridParams {
+  container: IGirdParamsBase;
   colon?: boolean;
-  col?: ColProps;
+  col?: ColConfig;
 }
 
 // interface IItemConfigTarget {
@@ -116,10 +116,10 @@ const defaultKeys = [
   [_labelCol, _label]
 ]
 export function getItemContainer(
-  item: Partial<IItemConfig>,
-  defaultContainer: ICommonFormContainer,
+  item: Partial<IGridParams>,
+  defaultContainer: IGirdParamsBase,
   ...appendKeys: string[]
-): ICommonFormContainerTarget & {
+): IGirdConfig & {
   [key: string]: any;
 } {
   const target = { item, default: defaultContainer };
