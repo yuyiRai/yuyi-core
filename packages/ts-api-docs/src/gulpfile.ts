@@ -4,10 +4,13 @@ import ApiExtractorFix from './gulp/ApiExtractorFix';
 import replace from 'gulp-replace';
 import colors from 'colors';
 import { MarkdownAction, YamlAction } from './cli';
-import { logger, shell, shellTask, task } from '@yuyi919/gulp-awesome'
+import { logger, shell, shellTask, task } from '@yuyi919/gulp-awesome';
 import * as gulp from 'gulp';
 import { projectName, resolve, resolveTmpDir, depends, resolveModuleDTS, paths } from './resolve';
 
+/**
+ * 注册gulp.task
+ */
 export function init() {
   const apiMain = createMainApiTask();
   const apiTree = createApiTask();
@@ -41,7 +44,7 @@ export function init() {
       .pipe(gulp.dest(resolveTmpDir('./document')))
   );
   const cleanDocTmp = task('clean:doctmp', shellTask(`rimraf ${resolveTmpDir('./document/**')}`));
-  const outputTemplate = task('doc:template', () => gulp.src(resolve('./config/document/**')).pipe(gulp.dest('./document')));
+  // const outputTemplate = task('doc:template', () => gulp.src(resolve('./config/document/**')).pipe(gulp.dest('./document')));
 
   gulp.task('default', gulp.series(
     // apiMain,

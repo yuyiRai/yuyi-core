@@ -1,24 +1,24 @@
-import fs from 'fs-extra'
-import * as gulp from 'gulp'
-import { sleep } from '@yuyi919/utils'
-import { logger, shell, task } from '@yuyi919/gulp-awesome'
+import fs from 'fs-extra';
+import * as gulp from 'gulp';
+import { sleep } from '@yuyi919/utils';
+import { logger, shell, task } from '@yuyi919/gulp-awesome';
 // import shell from 'gulp-shell';
 import path from 'path';
 import { resolve, paths, requireResolve, resolveTmpDir } from '../resolve';
-const { CWD, DOC_MAIN_POINT } = process.env
+const { CWD, DOC_MAIN_POINT } = process.env;
 
 /** 模块目录收集 */
 const folders = fs.readdirSync(
   resolve('./src', true)
 ).filter(name => fs.pathExistsSync(
   resolve(`./src/${name}/index.ts`, true)
-))
+));
 
 const mainTemplate = fs.readFileSync(paths.mainTemplate).toString('utf8');
-const template = fs.readFileSync(paths.template).toString('utf8')
+const template = fs.readFileSync(paths.template).toString('utf8');
 
 if (!fs.pathExistsSync(paths.tmpEtcDir)) {
-  fs.ensureDirSync(paths.tmpEtcDir)
+  fs.ensureDirSync(paths.tmpEtcDir);
 }
 
 const requiredMainPoint = requireResolve(DOC_MAIN_POINT);
@@ -46,11 +46,11 @@ export function createMainApiTask() {
       fs.createFileSync(filePath);
     }
     fs.writeFileSync(filePath, replacer(mainTemplate, paths.tmpProjectDir));
-    console.debug('project_name: ' + process.env.DOC_PROJECT_NAME)
+    console.debug('project_name: ' + process.env.DOC_PROJECT_NAME);
     return gulp.src(filePath)
       .pipe(logger.log('project_name: ' + process.env.DOC_PROJECT_NAME))
-      .pipe(shell(`api-extractor run -c ${filePath} --local`))
-  }
+      .pipe(shell(`api-extractor run -c ${filePath} --local`));
+  };
 }
 
 
@@ -77,13 +77,13 @@ export function createApiTask(folderName?: string) {
   }
   return function () {
     if (!fs.existsSync(filePath)) {
-      fs.createFileSync(filePath)
+      fs.createFileSync(filePath);
     }
-    fs.writeFileSync(filePath, replacer(template, paths.tmpProjectDir))
+    fs.writeFileSync(filePath, replacer(template, paths.tmpProjectDir));
     return gulp.src(filePath)
       .pipe(logger.log('Project Tree Api: ' + folderName))
-      .pipe(shell(`api-extractor run -c ${filePath} --local`))
-  }
+      .pipe(shell(`api-extractor run -c ${filePath} --local`));
+  };
 }
 
 export function createDependApiTask(moduleName: string, dtsPath: string) {
@@ -97,7 +97,7 @@ export function createDependApiTask(moduleName: string, dtsPath: string) {
     // 项目根目录
     template = template.replace(/\$\{projectFolder\}/ig, CWD);
     // *.d.ts汇总入口文件
-    console.error(dtsPath)
+    console.error(dtsPath);
     template = template.replace(/\<projectFolder\>\/lib\/\$\{folderName\}\/index.d.ts/ig, dtsPath);
     // *.d.ts汇总输出目录
     template = template.replace(/\<projectFolder\>\/dist/ig, `${dir}/dist`);
@@ -122,16 +122,16 @@ export function createDependApiTask(moduleName: string, dtsPath: string) {
 export const getEmptyTask = (msg: string) => task(
   'empty',
   async () => {
-    await sleep(100)
-    return gulp.src('.', { read: false }).pipe(logger.log(msg))
+    await sleep(100);
+    return gulp.src('.', { read: false }).pipe(logger.log(msg));
   }
-)
+);
 
 export default function () {
   if (folders.length === 0) {
-    return createMainApiTask()
+    return createMainApiTask();
   }
   const list = folders.map(createApiTask);
   // console.log('folder', list);
-  return gulp.parallel(list)
+  return gulp.parallel(list);
 }

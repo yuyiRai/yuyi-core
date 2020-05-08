@@ -1,17 +1,10 @@
 const rollup_plugin_typescript = require("rollup-plugin-typescript2");
-const external = require('rollup-plugin-peer-deps-external')
-const rollup_plugin_terser = require("rollup-plugin-terser");
-const resolve = require("rollup-plugin-node-resolve");
-// const { transformers } = require('./transformers')
 const utils_1 = require("tsdx/dist/utils");
 const commonjs = require("rollup-plugin-commonjs");
 const package = require('./package.json')
 const copy = require("rollup-plugin-copy-glob")
 
 
-const modulePathResolve = (moduleName, path) => {
-  return pathlib.resolve(require.resolve(moduleName).replace(/(src|dist)(.*)$/, ''), path)
-}
 const filter = [
   'babel-plugin-transform-async-to-promises/helpers'
 ]
@@ -34,7 +27,7 @@ module.exports = {
       if (p.name === "rpt2") {
         return r.concat([
           rollup_plugin_typescript({
-            typescript: require('ttypescript'),
+            typescript: require('typescript'),
             cacheRoot: `./node_modules/.cache/.rts2_cache_${options.format}`,
             tsconfig: options.tsconfig,
             rollupCommonJSResolveHack: false,
