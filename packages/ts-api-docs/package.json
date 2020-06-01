@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/ts-api-docs",
-  "version": "0.0.33",
+  "version": "0.0.34",
   "description": "",
   "keywords": [
     "mobx",
@@ -98,7 +98,7 @@
   "dependencies": {
     "@microsoft/api-extractor": "^7.7.13",
     "@microsoft/api-extractor-model": "^7.7.11",
-    "@yuyi919/gulp-awesome": "^0.0.21",
+    "@yuyi919/gulp-awesome": "^0.0.22",
     "colors": "^1.4.0",
     "cross-env": "^5.2.1",
     "gulp": "^4.0.2",
