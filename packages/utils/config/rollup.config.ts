@@ -137,7 +137,7 @@ const modeOptions = {
     mangle: minify,
     input: 'lib/index',
     output: [
-      { file: 'dist/index.production.umd.js', format: 'umd', exports: 'named', name: 'yuyiUtils', sourcemap: true },
+      { file: 'dist/index.umd.min.js', format: 'umd', exports: 'named', name: 'yuyiUtils', sourcemap: true },
     ]
   })
 };
@@ -246,7 +246,8 @@ const config = Object.assign([
   getConfig({ mode: 'cjs' }),
   getConfig({ mode: 'dev' }),
   getConfig({ mode: 'node' }),
-  // // getConfig({ mode: 'libs' }),
+  // getConfig({ mode: 'libs' }),
+  getConfig({ mode: 'umd' }),
   getConfig({ mode: 'testUtils' }),
   getConfig({ mode: 'helpersOnly' })
 ] as (InputOptions & ({ output: OutputOptions | OutputOptions[]; complieCache: Cache<RollupCache>; }))[], {
