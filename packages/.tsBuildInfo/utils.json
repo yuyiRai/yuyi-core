@@ -162,7 +162,7 @@
         "signature": "f51abe79559e8a2baeb6a88ce29d3b5537b14928b55f06cc5d588c3503895ff6"
       },
       "../utils/src/constransts.ts": {
-        "version": "ed252069268f459c8637d438fdb79ce571a7a82e3430ff9a872b104d0aa7ef2a",
+        "version": "ac226f408c7168b834ec3d251a94c89c2f03a27f398fea03d3f87412cd53c43b",
         "signature": "70879bde7888aef2b9fdbcdaddbd7a44c4df2e1e52f1e1ca4157951f3d455d55"
       },
       "../../node_modules/@types/lodash/ts3.1/common/common.d.ts": {
@@ -2384,7 +2384,6 @@
         "../utils/node_modules/@types",
         "../../node_modules/@types"
       ],
-      "watch": true,
       "configFilePath": "../utils/tsconfig.json"
     },
     "referencedMap": {
@@ -11166,8 +11165,8 @@
       "../../node_modules/typescript/lib/lib.es2020.symbol.wellknown.d.ts",
       "../../node_modules/typescript/lib/lib.esnext.intl.d.ts",
       "../../node_modules/typescript/lib/lib.esnext.bigint.d.ts",
-      "../../node_modules/tslib/tslib.d.ts",
       "../utils/src/constransts.ts",
+      "../../node_modules/tslib/tslib.d.ts",
       "../../node_modules/@types/lodash/ts3.1/common/common.d.ts",
       "../../node_modules/@types/lodash/ts3.1/common/array.d.ts",
       "../../node_modules/@types/lodash/ts3.1/common/collection.d.ts",
@@ -11526,6 +11525,7 @@
       "../../node_modules/ts-transformer-keys/index.d.ts",
       "../ts-transformer-awesome/env.d.ts",
       "../utils/src/env.d.ts",
+      "../utils/src/datacollectionutils/transformer.ts",
       "../utils/src/datacollectionutils/index.ts",
       "../../node_modules/dayjs/index.d.ts",
       "../../node_modules/moment/moment.d.ts",
@@ -11690,8 +11690,7 @@
       "../../node_modules/@types/webpack-sources/index.d.ts",
       "../../node_modules/@types/webpack/index.d.ts",
       "../../node_modules/@types/yargs-parser/index.d.ts",
-      "../../node_modules/@types/yargs/index.d.ts",
-      "../utils/src/datacollectionutils/transformer.ts"
+      "../../node_modules/@types/yargs/index.d.ts"
     ]
   },
   "version": "3.7.3"

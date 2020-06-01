@@ -137,18 +137,19 @@ const modeOptions = {
     mangle: minify,
     input: 'lib/index',
     output: [
-      { file: 'dist/index.umd.min.js', format: 'umd', exports: 'named', name: 'yuyiUtils', sourcemap: true },
-    ]
+      {
+        file: 'dist/index.umd.min.js', globals: { lodash: '_' }, format: 'umd', exports: 'named', name: 'yuyiUtils', sourcemap: true },
+    ] as OutputOptions[]
   })
 };
 
 type ConfigKey = keyof typeof modeOptions;
 
-function getConfig({ mode = 'cjs', ...other }: { mode: ConfigKey | ConfigKey[]; }) {
+function getConfig({ mode = 'cjs', ...other }: { mode: ConfigKey | ConfigKey[]; minify?: boolean; }) {
   if (mode instanceof Array) {
     return mode.map(mode => getConfig({ mode, ...other }));
   }
-  const { minify, mangle = minify, debug = false, ...assignOptions } = modeOptions[mode]() as any;
+  const { minify, mangle = minify, debug = false, ...assignOptions } = modeOptions[mode](other.minify) as any;
   const visualizerPlugin = (opt: { open: boolean; } = { open: false }) => {
     return visualizer({
       // summaryOnly: true,
@@ -180,7 +181,7 @@ function getConfig({ mode = 'cjs', ...other }: { mode: ConfigKey | ConfigKey[]; 
     treeshake: isProduction,
     // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
     external: (id) => {
-      if (filter.some(s => id.indexOf(s) > -1)) {
+      if (mode === 'umd' || filter.some(s => id.indexOf(s) > -1)) {
         return false;
       }
       return require("tsdx/dist/utils").external(id);
@@ -247,7 +248,7 @@ const config = Object.assign([
   getConfig({ mode: 'dev' }),
   getConfig({ mode: 'node' }),
   // getConfig({ mode: 'libs' }),
-  getConfig({ mode: 'umd' }),
+  getConfig({ mode: 'umd', minify: false }),
   getConfig({ mode: 'testUtils' }),
   getConfig({ mode: 'helpersOnly' })
 ] as (InputOptions & ({ output: OutputOptions | OutputOptions[]; complieCache: Cache<RollupCache>; }))[], {

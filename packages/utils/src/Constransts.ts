@@ -39,6 +39,7 @@ export namespace FunctionFactory {
   // }
   // export type Shift<T, A extends any[]> = T extends Bind<A, infer Args, infer Re> ? Base<Args, Re> : Function
 }
+// var global = window;
 
 export namespace Constant$ {
 
@@ -333,7 +334,7 @@ export namespace Constant$ {
     (reg: RegExp, str: string): boolean
   }
 
-  export const delay$$ = BIND(setTimeout, global);
+  export const delay$$ = BIND(setTimeout, null);
 
   /**
    *
