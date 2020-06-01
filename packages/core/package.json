@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/core",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "description": "",
   "private": true,
   "repository": {
@@ -38,6 +38,6 @@
   },
   "gitHead": "d9e779a608439044f594737686d3ea091f2d3227",
   "dependencies": {
-    "@yuyi919/utils": "^0.0.70"
+    "@yuyi919/utils": "^0.0.71"
   }
 }
