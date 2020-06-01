@@ -26,7 +26,7 @@
     "yuyi-doc": "bin.js"
   },
   "scripts": {
-    "build": "tsdx build",
+    "build": "tsc -p ./tsconfig.lib.json && tsdx build",
     "build:bin": "yuyi-builder -i ./bin.js -n ts-api-docs",
     "test": "cross-env NODE_ENV=development node bin.js"
   },

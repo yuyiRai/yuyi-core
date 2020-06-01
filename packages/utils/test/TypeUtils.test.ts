@@ -1,4 +1,4 @@
-import { EventEmitter, expect$, isFunction, FilterFunction, isEmptyObject, isNotEmptyObject, isNotEmptyValue, filterTo, isNilAll } from '../src'
+import { EventEmitter, expect$, isFunction, FilterGenerator, isEmptyObject, isNotEmptyObject, isNotEmptyValue, filterTo, isNilAll } from '../src'
 import { Constant$ } from '../src/Constransts'
 
 /**
@@ -29,7 +29,7 @@ describe('TypeUtils test', () => {
   Constant$.FOR_EACH(keys, (key) => {
     if (key !== 'filter' && key !== 'pure') {
       it(`测试 expect$.filters - ${key}`, () => {
-        expect((expect$[key].filter as FilterFunction<any>)(...testGroupA)).toMatchSnapshot()
+        expect((expect$[key].filter as FilterGenerator<any>)(...testGroupA)).toMatchSnapshot()
       })
     }
   })

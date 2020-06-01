@@ -8,8 +8,6 @@ import { IKeyValueMap, IsAny, IsArray, IsBaseType, IsClasses, IsObject, IsUnknow
  * @param values - @rest 需要校验的值
  * @returns 首个通过校验的值，如果全都未通过则返回undefined
  */
-// tslint:disable: one-variable-per-declaration
-// tslint:disable: curly
 export function filterTo<Target>(expect: (target: any) => boolean, ...values: any[]): Target | undefined;
 export function filterTo<Target>(expect: (target: any) => boolean): Target | void {
   var i = 0, length = arguments.length, v: any;

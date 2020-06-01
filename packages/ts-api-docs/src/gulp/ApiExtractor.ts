@@ -4,8 +4,7 @@ import { sleep } from '@yuyi919/utils';
 import { logger, shell, task } from '@yuyi919/gulp-awesome';
 // import shell from 'gulp-shell';
 import path from 'path';
-import { resolve, paths, requireResolve, resolveTmpDir } from '../resolve';
-const { CWD, DOC_MAIN_POINT } = process.env;
+import { CWD, DOC_MAIN_POINT, depends, resolve, paths, requireResolve, resolveTmpDir } from '../resolve';
 
 const DOC_MAIN_DIR = path.parse(DOC_MAIN_POINT).ext ? path.dirname(DOC_MAIN_POINT) : path.basename(DOC_MAIN_POINT)
 /** 模块目录收集 */
@@ -29,6 +28,8 @@ const requiredMainPoint = requireResolve(DOC_MAIN_POINT);
  * @param dir 输出目录
  */
 function replacer(template: string, dir = '<projectFolder>') {
+  // 依赖打包
+  template = template.replace(/\$\{depends\}/ig, depends.join("\",\""))
   // 项目根目录
   template = template.replace(/\$\{projectFolder\}/ig, CWD);
   // *.d.ts汇总入口文件
@@ -63,6 +64,8 @@ export function createApiTask(folderName?: string) {
    * @param dir 输出目录
    */
   function replacer(template: string, dir = '<projectFolder>') {
+    // 依赖打包
+    template = template.replace(/\$\{depends\}/ig, depends.join("\",\""))
     // 项目根目录
     template = template.replace(/\$\{projectFolder\}/ig, CWD);
     // *.d.ts汇总入口文件

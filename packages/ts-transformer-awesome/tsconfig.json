@@ -1,32 +1,49 @@
 {
-  "include": ["src", "types"],
+  "extends": "../../tsconfig.json",
+  "references": [
+    {
+      "path": "../env"
+    }
+  ],
   "compilerOptions": {
-    "target": "es5",
-    "module": "esnext",
-    "lib": ["dom", "esnext"],
-    "importHelpers": true,
-    "declaration": true,
-    "sourceMap": true,
-    "rootDir": "./",
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
-    "downlevelIteration": true,
-    "alwaysStrict": true,
-    "noUnusedLocals": false,
-    "allowSyntheticDefaultImports": true,
-    "noUnusedParameters": false,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "moduleResolution": "node",
-    "baseUrl": "./",
-    "allowJs": true,
+    "composite": true,
+    "rootDir": "./src",
+    "baseUrl": "./src",
     "paths": {
-      "*": ["src/*", "node_modules/*"]
+      "@/*": [
+        "./*"
+      ],
+      "@": [
+        "./"
+      ]
     },
-    "jsx": "react",
-    "esModuleInterop": true
-  }
+    "outDir": "./dist",
+    "declarationDir": "./dist",
+    "tsBuildInfoFile": "../.tsBuildInfo/transformer.json",
+    "resolveJsonModule": true,
+    "incremental": true,
+    "plugins": [],
+    "target": "es5",
+    "noEmitHelpers": false,
+    "noUnusedLocals": false,
+    "noImplicitReturns": false,
+    "importHelpers": true,
+    "module": "commonjs",
+    "strict": false,
+    "typeRoots": [
+      "../env/types",
+      "node_modules/@types",
+      "../../node_modules/@types"
+    ]
+  },
+  "include": [
+    "src"
+  ],
+  "exclude": [
+    "./**.d.ts",
+    "tools",
+    "lib",
+    "../../node_modules",
+    "node_modules"
+  ]
 }

@@ -1,6 +1,6 @@
-import { getItemContainer, ICommonFormContainerTarget } from '../src';
+import { getItemContainer, IGirdConfig } from '../src';
 
-export function TestFunction(): [any, any, ICommonFormContainerTarget] {
+export function TestFunction(): [any, any, IGirdConfig] {
   const testInput = {
     col: 1,
     container: {

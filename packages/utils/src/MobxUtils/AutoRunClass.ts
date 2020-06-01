@@ -168,7 +168,7 @@ export function deepPatchUpdate<T>(data: T, next: T, options?: DeepPathUpdateOpt
           decetePath[key] = isDeteced = true;
           isDiff = true
           if (__DEV__) {
-            console.error('add field', key);
+            console.debug('add field', key);
           }
         } else if (result !== data[key]) {
           set(data, key, result);

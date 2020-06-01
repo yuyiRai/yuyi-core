@@ -43,6 +43,9 @@
    * SUPPORTED TOKENS: <projectFolder>, <packageName>, <unscopedPackageName>
    */
   "mainEntryPointFilePath": "<projectFolder>/lib/index.d.ts",
+  "bundledPackages": [
+    "${depends}"
+  ],
   /**
    * Determines how the TypeScript compiler engine will be invoked by API Extractor.
    */
@@ -80,7 +83,7 @@
      *
      * DEFAULT VALUE: false
      */
-    // "skipLibCheck": true,
+    "skipLibCheck": true
   },
   /**
    * Configures how the API report file (*.api.md) will be generated.

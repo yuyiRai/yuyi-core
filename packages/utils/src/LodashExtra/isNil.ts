@@ -1,5 +1,6 @@
-import { isNil, isString, trim } from './lodash';
+import { isString, trim } from './lodash';
 import { isNaN } from './isNumber';
+import { isNil } from 'lodash';
 
 /**
   * 检查`value`是否为 `null` 或 `undefined`

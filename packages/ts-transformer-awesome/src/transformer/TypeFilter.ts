@@ -137,24 +137,7 @@ function visitNode(node: ts.Node, program: ts.Program, context: ts.Transformatio
 }
 
 function _isValidType(node: any): node is ts.CallExpression {
-  if (!node) {
-    return false;
-  }
-
-  // 交叉/联合类型时进行递归检查
-  if (ts.isIntersectionTypeNode(node) || ts.isUnionTypeNode(node)) {
-    return node.types.some((n) => _isValidType(n));
-  }
-  
-  if (ts.isTypeReferenceNode(node) && ts.isIdentifier(node.typeName)) {
-    if (node.typeName.escapedText === FUNCTION_SYMBOL) {
-      if (__DEV__)
-        console.log('escapedText', node.typeName.escapedText)
-      return true;
-    }
-  }
-
-  return false;
+  return AstUtils$$.isValidType(node, FUNCTION_SYMBOL)
 }
 
 const typedUtils = {

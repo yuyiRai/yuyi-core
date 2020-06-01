@@ -1,4 +1,4 @@
-import { createProgram, CustomTransformers, ModuleKind, ScriptTarget, WriteFileCallback, CompilerOptions } from 'typescript';
+import {createProgram, CustomTransformers, ModuleKind, ScriptTarget, WriteFileCallback, CompilerOptions, Program } from 'typescript';
 import fs from 'fs-extra';
 import { getCustomTransformers, AwesomeTsTransformerOptions } from './getCustomTransformers';
 
@@ -6,10 +6,11 @@ export type CustomCompilerOptions = Partial<AwesomeTsTransformerOptions> & {
   throwError?: boolean;
   compilerOptions?: Partial<CompilerOptions>,
   tsConfig?: string;
+  ts?: string
 }
 
 
-export function compile(filePaths: string[], writeFileCallback?: WriteFileCallback, { compilerOptions = {}, tsConfig: configPath = '', ...options }: CustomCompilerOptions = {}) {
+export function compile(filePaths: string[], writeFileCallback?: WriteFileCallback, { ts = 'typescript', compilerOptions = {}, tsConfig: configPath = '', ...options }: CustomCompilerOptions = {}) {
   if (fs.existsSync(configPath)) {
     try {
       const json = fs.readJSONSync(configPath);
@@ -18,7 +19,7 @@ export function compile(filePaths: string[], writeFileCallback?: WriteFileCallba
     catch (error) {
     }
   }
-  const program = createProgram(filePaths, {
+  const program = (require(ts).createProgram as typeof createProgram)(filePaths, {
     strict: true,
     noEmitOnError: false,
     suppressImplicitAnyIndexErrors: true,

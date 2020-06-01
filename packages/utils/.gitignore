@@ -18,6 +18,7 @@ etc/*.*
 document/articles/**
 document/src/**
 document/obj/.cache
+document/**
 
 markdown
 *.d.ts

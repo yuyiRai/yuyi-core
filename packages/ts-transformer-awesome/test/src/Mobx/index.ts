@@ -41,7 +41,7 @@ export function ccc () {
       this.app = '';
     }
   }
-  return App2
+  return App2 as any
 }
 
 const app = new App();

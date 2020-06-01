@@ -22,7 +22,7 @@
     },
     "outDir": "./lib",
     "declarationDir": "./lib",
-    "tsBuildInfoFile": "../.tsBuildInfo/utils.json",
+    "tsBuildInfoFile": "../.tsBuildInfo/ts-api-doc.json",
     "resolveJsonModule": true,
     "incremental": true,
     "target": "es5",

@@ -8,6 +8,7 @@ export default function (program: ts.Program, config?: Pick<AwesomeTsTransformer
     logger: true
   })
 
+
   return context => node => {
     before.forEach(fn => {
       var r: ts.Transformer<ts.SourceFile> | ts.CustomTransformer = fn(context) as any

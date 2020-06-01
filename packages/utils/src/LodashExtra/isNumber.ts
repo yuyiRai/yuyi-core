@@ -3,7 +3,7 @@ import { Constant$ } from "../Constransts";
 export function isNaN(value: any) {
   return typeof value === 'number' && value !== value
 }
-(global as any).isNaN = isNaN
+// (global as any).isNaN = isNaN
 
 const { KEY_NUM } = Constant$
 

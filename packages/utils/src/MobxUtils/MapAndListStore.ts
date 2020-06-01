@@ -112,7 +112,7 @@ export class RecordMapStore<
     const { getConfigKey: getKey } = this;
     // console.log('set', sourceData)
     this.mapToDiff(this.sourceMap,
-      reduce(sourceData, (object, nextConfig: SourceData, key: string | number) => {
+      reduce(sourceData as any, (object, nextConfig: SourceData, key: string | number) => {
         if (isNumber(key) && isNil(getKey(nextConfig))) {
           this.setConfigKey(nextConfig, (key + '') as SourceData[DataKey])
         }

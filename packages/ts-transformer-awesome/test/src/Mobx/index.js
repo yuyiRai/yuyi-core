@@ -1,7 +1,8 @@
 import { __decorate, __metadata } from "tslib";
-import { __decorate_all } from "@yuyi919/ts-transformer-awesome/tslib-extra";
-import { observable, computed, action, autorun } from 'mobx';
-import { readonly } from 'core-decorators';
+;
+;
+import autobind from "core-decorators/es/autobind";
+import readonly from "core-decorators/es/readonly";
 var App = /** @class */ (function () {
     function App() {
         var _this = this;
@@ -57,3 +58,4 @@ export function ccc() {
 var app = new App();
 app.setApp(2);
 console.log(app.app2);
+//# sourceMappingURL=index.js.map

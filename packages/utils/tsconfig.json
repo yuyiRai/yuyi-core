@@ -30,6 +30,7 @@
     "noUnusedLocals": false,
     "importHelpers": true,
     "module": "esnext",
+    "strict": true,
     "typeRoots": [
       "../env/types",
       "node_modules/@types",

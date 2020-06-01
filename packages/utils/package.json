@@ -21,11 +21,12 @@
     "node": ">=6.0.0"
   },
   "scripts": {
-    "doc": "cross-env NODE_ENV=development2 yuyi-doc lib -d core-decorators,rxjs",
-    "doc:serve": "ttsc --build && yarn doc && docfx serve ./docs -p 8008",
+    "doc": "node \"D:/WorkSpace/@yuyi/packages/ts-api-docs/bin.js\" lib --depends core-decorators,rxjs,typescriptcollectionsframework",
+    "doc:serve": "ttsc --build && cross-env NODE_ENV=development yarn doc --port 8009 --mode serve ",
     "gulp": "yuyi-gulp --gulpfile ./config/gulpfile.ts",
     "td": "yuyi-gulp --gulpfile ./config/devoutput.js",
     "td2": "yarn td watch",
+    "ttsc": "ttsc",
     "tsc": "ttsc --build",
     "tsc:watch": "ttsc --build --watch",
     "presave": "yarn api",

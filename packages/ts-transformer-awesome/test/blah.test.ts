@@ -4,11 +4,12 @@ import contextRequire from "require-context";
 import { compile } from '../src';
 import ts from 'typescript';
 
+let name = 'Macros'
 // import '@types/webpack'
-for (const p of contextRequire(path.join(__dirname, './src/Mobx'), true, /\.(ts|tsx)$/).keys()) {
+for (const p of contextRequire(path.join(__dirname, './src/' + name), true, /\.(ts|tsx)$/).keys()) {
   // test('work: ' + p, () => {
     // expect(
-  run(path.join(__dirname, './src/Mobx', p))
+  run(path.join(__dirname, './src/' + name, p))
       // ).toMatchSnapshot(p)
   // });
 }
@@ -34,7 +35,9 @@ export function run(path: string) {
     writeFileSync(fileName, fileText)
     r = fileText
   }, {
+      // ts: 'ttypescript',
       compilerOptions: {
+        jsx: ts.JsxEmit.React,
         target: ts.ScriptTarget.ES5,
         module: ts.ModuleKind.ESNext
       },
@@ -57,6 +60,7 @@ export function run(path: string) {
         ]
       },
     // importLibs: ['lodash'],
+      useTypeFilter: true,
     logger: true,
     // useEnumerate: false,
     // useTsxControlStatments: false,

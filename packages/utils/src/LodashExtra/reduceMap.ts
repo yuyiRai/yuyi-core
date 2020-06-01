@@ -9,6 +9,10 @@ export type ReduceMapObjectIterator<TSource = any, Result = TSource[keyof TSourc
   [K in keyof TSource]?: Result;
 }> = (curr: TSource[keyof TSource], key: keyof TSource, source: TSource, prev: TResult) => TResult;
 
+export type ReduceMapListIterator<TSource = any, Result = any, TResult = {
+  [key: string]: Result;
+}> = (curr: TSource, key: number, source: TSource, prev: TResult) => TResult;
+
 /**
  * 近似_.map，callback需返回一个Object，最后将所有返回的Object组合为一个Object
  * @param collection
@@ -21,7 +25,7 @@ export function reduceMap<T, Result extends IKeyValueMap, TResult = {
   [K in keyof T]?: Result;
 }>(
   collection: List<T> | T[] | null | undefined,
-  callback: ReduceMapObjectIterator<List<T> | T[] | null | undefined, Result, TResult>,
+  callback: ReduceMapListIterator<T | null | undefined, Result, TResult>,
   accumulator?: TResult
 ): TResult;
 

@@ -2,7 +2,7 @@ import { Constant$ } from '../Constransts';
 import { simpleTimeBufferInput } from '../TimeBuffer';
 var { V, C, W, G } = Constant$.DefPropDec$$
 /**
- *
+ * 时间缓冲
  * @param { number } time
  */
 export function timebuffer(time: number, mode = 'last') {

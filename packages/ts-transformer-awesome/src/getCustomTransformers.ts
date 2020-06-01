@@ -13,13 +13,23 @@ import transformerKeys from 'ts-transformer-keys/transformer';
 // import tsmacros from 'typescript-transform-macros'
 import tsMinifyPrivates from 'ts-transformer-minify-privates';
 import tsxControlStatments from 'tsx-control-statements/transformer';
-import { CustomTransformers, Program, SourceFile, TransformerFactory } from 'typescript';
+import ts, { CustomTransformers, Program, SourceFile, TransformerFactory } from 'typescript';
 import tsIsTransformer from 'typescript-is/lib/transform-inline/transformer';
 import typesmithTransformer from 'typesmith/transformer';
 import { Macros, MobxDecorateTransformer, TypeFilterTransformer } from './transformer';
 import { MobxDecorateTransformerOptions } from './transformer/MobxDecorate';
 // import { PluginCreator } from './PluginCreater'
 
+const logMap: any = {}
+console.log = () => { }
+function resolveMsg(msg: string, append: string, ...msg2: any[]) {
+  const r = [color.cyan(msg), color.green(append), ...(msg2 || []).map(i => color.yellow(i))].join(' ')
+  if (options.logger && !logMap[r]) {
+    console.info(r);
+    logMap[r] = r
+  }
+  return true;
+}
 const presetOptions = {
   'tsx-control-statements': tsxControlStatments,
   'ts-transformer-keys': transformerKeys,
@@ -62,10 +72,6 @@ export interface AwesomeTsTransformerOptions {
   useMobxDecorate?: boolean | MobxDecorateTransformerOptions;
   logger?: boolean;
 }
-function resolveMsg(msg: string, append: string, ...msg2: any[]) {
-  console.log(color.cyan(msg), color.green(append), ...(msg2 || []).map(i => color.yellow(i)))
-  return true
-}
 function findKey(factory: any) {
   for (const [key, f] of Object.entries(presetOptions)) {
     if (f === factory){
@@ -79,7 +85,7 @@ let options = {
 }
 memoize.Cache = WeakMap
 function use<T extends Function>(factory: T, ...msg: any): any {
-  options.logger && resolveMsg('use transformer:', findKey(factory), ...msg)
+  resolveMsg('use transformer:', findKey(factory), ...msg)
   return factory 
   // ((...args: any) => {
   //   return factory(...args)
@@ -107,6 +113,16 @@ export function getCustomTransformers({
   logger = false
 }: AwesomeTsTransformerOptions = {} as any) {
   options.logger = logger
+
+
+  resolveMsg("Typescript version: ", ts.version);
+  if (program.getCompilerOptions().module) {
+    resolveMsg("module: ", ts.ModuleKind[program.getCompilerOptions().module as ts.ModuleKind]);
+  }
+  if (program.getCompilerOptions().target) {
+    resolveMsg("target: ", ts.ScriptTarget[program.getCompilerOptions().target as ts.ScriptTarget]);
+  }
+
   const importConfig: ImportOptions[] = (importLibs || []).map(i => {
     if (typeof i === 'string') {
       return {

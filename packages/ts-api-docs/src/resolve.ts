@@ -2,18 +2,20 @@ import path from 'path';
 import glob from 'glob'
 import fs from 'fs-extra'
 
+
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
       CWD: string;
       DOC_PROJECT_NAME: string;
-      DOC_ACTION_TYPE: "html" | "serve" | "docfx";
+      DOC_ACTION_TYPE: "html" | "serve" | "docfx" | "md";
+      DOC_SERVE_PORT: string;
     }
   }
 }
 
 
-var { CWD, DOC_ACTION_TYPE = 'docfx', DOC_PROJECT_NAME: projectName, DOC_DEPENDS, DOC_MAIN_POINT } = process.env
+var { CWD, DOC_SERVE_PORT = '8009', DOC_ACTION_TYPE = 'docfx', DOC_PROJECT_NAME: projectName, DOC_DEPENDS, DOC_MAIN_POINT } = process.env
 var depends: string[] = (typeof DOC_DEPENDS === 'string' && DOC_DEPENDS.split(',') || [])
 
 export function resolve(target: string, out = false, ...paths: string[]) {
@@ -73,4 +75,4 @@ export const paths = {
   tmpProjectDir: resolveTmpDir(),
   tmpEtcDir: resolveTmpDir('./etc')
 };
-export { CWD, projectName, DOC_MAIN_POINT, DOC_ACTION_TYPE, depends }
+export { CWD, projectName, DOC_MAIN_POINT, DOC_ACTION_TYPE, DOC_SERVE_PORT, depends }

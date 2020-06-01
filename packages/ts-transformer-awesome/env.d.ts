@@ -1,12 +1,14 @@
-import 'ts-nameof';
 import { oc as _oc } from 'ts-optchain';
 import { keys } from 'ts-transformer-keys';
+declare type FilterFunction = <T>(...args: any[]) => T;
+declare type MacroFunction<T> = T extends Function ? T : never;
 declare global {
     var tsKeys: typeof keys;
     var oc: typeof _oc;
     var item: any;
     var itemIndex: any;
-    function MACRO<T>(t: T): T;
+    var filters: FilterFunction;
+    function MACRO<T extends Function>(t: T): MacroFunction<T>;
     function Choose(): any;
     function When(props: {
         condition: boolean;
@@ -31,8 +33,6 @@ declare global {
             children?: any;
         }
     }
-    type FilterFunction = <T>(...args: any[]) => T;
-    const filters: FilterFunction;
     namespace NodeJS {
         interface Global {
             filters: FilterFunction;
@@ -40,3 +40,4 @@ declare global {
         }
     }
 }
+export {};

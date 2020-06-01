@@ -101,6 +101,9 @@ export default function (program: ts.Program, { importName = 'mobx', includeDeco
   })
   
   return (context) => (file) => {
+    if (!file || !file.getFullText) {
+      return file
+    }
     const fulltext = file.getFullText()
     if (fulltext && (fulltext.indexOf('@') === -1 || fulltext.indexOf(importName) === -1)) {
       return file

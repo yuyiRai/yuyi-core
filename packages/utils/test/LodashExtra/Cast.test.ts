@@ -14,7 +14,7 @@ test('castArray', () => {
 test('castComputed', () => {
   expect([
     castComputed((a: number, b: number, c: number): number => a + b + c, 1, 2, 3),
-    castComputed(a => a),
+    castComputed(a => a, undefined),
     castComputed(1),
     castComputed(1, 2, 3)
   ]).toEqual([6, undefined, 1, 1])

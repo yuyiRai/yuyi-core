@@ -1,0 +1,45 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "baseUrl": "./src",
+    "composite": false,
+    "paths": {
+      "@/*": [
+        "./*"
+      ],
+      "@wasm/*": [
+        "../wasm/*"
+      ],
+      "@": [
+        "./"
+      ]
+    },
+    "tsBuildInfoFile": "../.tsBuildInfo/ts-api-doc.json",
+    "moduleResolution": "Node",
+    "declaration": true,
+    "outDir": "./lib",
+    "declarationDir": "./lib",
+    "resolveJsonModule": true,
+    "incremental": true,
+    "target": "es5",
+    "noEmitHelpers": false,
+    "noUnusedLocals": false,
+    "importHelpers": true,
+    "module": "commonjs",
+    "typeRoots": [
+      "../env/types",
+      "node_modules/@types",
+      "../../node_modules/@types"
+    ]
+  },
+  "include": [
+    "src/bin.ts",
+  ],
+  "exclude": [
+    "tools",
+    "lib",
+    "../../node_modules",
+    "node_modules"
+  ]
+}

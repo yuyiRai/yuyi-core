@@ -1,7 +1,6 @@
 import { Constant$ } from './Constransts';
 import { EventEmitter } from './EventEmitter';
 import { isEqual, isFunction, isRegExp, keys, property, values } from './LodashExtra';
-import { IFunction } from './TsUtils';
 import { expect$ } from './TypeLib';
 
 // const _ = {
@@ -55,7 +54,7 @@ export function argShifter(fn: (...values: any[]) => any) {
   }) : fn
 }
 
-export function modelValidator<T>(fieldName: string, validator: RegExp | IFunction | T) {
+export function modelValidator<T>(fieldName: string, validator: RegExp | Type.Function<any[]> | T) {
   const fieldSearcher = property<any, string>(fieldName)
   if (isRegExp(validator)) {
     return (model: T) => validator.test(fieldSearcher(model));

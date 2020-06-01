@@ -1,13 +1,9 @@
-/**
- * @module LodashExtraUtils
- */
-
 import { castArray as castArrayLodash, cloneDeep, toString } from 'lodash';
-import { Constant$ } from '../Constransts';
+import { Constant$, FunctionFactory } from '../Constransts';
+import { BaseType, KeyOf } from '../TsUtils';
 import { isFunction } from './isFunction';
 import { isNotEmptyValue, isNotNil } from './isNil';
-import { isObject, isNil } from './lodash';
-import { KeyOf, BaseType } from '../TsUtils'
+import { isObject } from './lodash';
 import { stubReturn } from './stub';
 // import '@yuyi919/env'
 
@@ -20,19 +16,23 @@ import { stubReturn } from './stub';
  * @returns 由输入值转化而来的数组
  * @example
  * * 允许为nil时
+ *```ts
  * castArray(null)
  * // => [null]
  * 
  * castArray([undefined, null])
+ *```
  * // => [undefined, null]
  * @remarks 注意，如果不允许空值（allowEmpty为false），即便输入值本身为数组也会进行过滤
  * @example
+ *```ts
  * * 不允许为nil时
  * castArray(null, false)
  * // => []
  * 
  * castArray([undefined, null], false)
  * // => []
+ *```
  */
 export function castArray<T = any>(value: T | T[], allowEmpty: boolean | 'strict' = true): T[] {
   return allowEmpty === true
@@ -49,55 +49,62 @@ export function castArray<T = any>(value: T | T[], allowEmpty: boolean | 'strict
  * @param checkRequired 判定时key是否必须存在
  * @example
  * const t = { a: 1, b: 2 }
+ *```ts
  * castObject(t, 'c')
  * //=> { a: 1, b: 2 }
+ *```
  * @example //! checkRequired的场合
+ *```ts
  * castObject(t, 'c', true)
  * //=> { c: { a: 1, b: 2 } }
+ *```
  */
 export function castObject<T, K extends KeyOf<T> | string>(target: T | BaseType, keyInObject: K, checkRequired = false): Exclude<T, BaseType> & {
   [Key in K]: T extends object ? (K extends KeyOf<T> ? T[K] : unknown) : unknown
 } {
-  return isObject(target) && (!checkRequired || (keyInObject in target)) ? target : { [keyInObject]: target } as any
+  return isObject(target) && (!checkRequired || (keyInObject in target)) ? target : { [keyInObject]: target } as any;
 }
 // const t = { a: 1, b: 2 };
 // castObject(t, 'c')
 
-export type NotFunction = string | symbol | object | number | boolean
-
 /**
- * 计算用函数
- * @param computedFunc - 计算用函数
- * @param computedArgs - 计算用参数
- * @returns computedFunc(...computedArgs) -> 计算结果
+ * 工具函数，执行一个computed计算函数
+ * @param target - 计算用函数，或非函数的值
+ * @param args - 计算用参数
+ * @returns 如果target为函数，返回 computedFunc(...computedArgs) -> 计算结果；否则原值返回
  * @example
+ * 基本使用
+ *```ts
  * castComputed((a, b, c) => a + b + c, 1, 2, 3);
  * // => 6
+ *```
  * @example
+ * 空参数
+ *```ts
  * castComputed(a => a);
  * // => undefined
- */
-export function castComputed<T, Args extends any[]>(computedFunc: Type.Function<Args, T>, ...computedArgs: Args): T;
-/**
- * 计算用函数（同一性）
- * @param nativeValue - 非函数的值
- * @param args - 可以传入参数不过没用
- * @returns 原值返回
+ *```
  * @example
+ * 原值返回
+ *```ts
  * castComputed(1, 2, 3);
- * // => 1 
+ * // => 1
+ *```
  */
-export function castComputed<T extends NotFunction>(nativeValue: T, ...args: any[]): T;
-export function castComputed<T, Args extends any[]>(functionOrValue: Type.Function<Args, T> | T, ...computedArgs: Args): T {
-  return isFunction(functionOrValue) ? (functionOrValue as Type.Function<Args>)(...computedArgs) : functionOrValue
+export function castComputed<T extends any>(target: T, ...args: FunctionFactory.ExtractArgs<T, any[]>): FunctionFactory.ReturnType<T, T> {
+  return isFunction(target) ? (target as FunctionFactory.Base<any>)(...args) : target;
 }
+
+// castComputed((a, b, c) => a + b + c, 1, 2, 3);
+// castComputed(1, 2, 3)\
+
 /**
  * 计算用管道函数，如果非函数则传递值自身
  * @param func
  * @param value 
  */
-export function castComputedPipe<V, T = V>(func: Type.Function<[V], T> | T, value: V): T {
-  return func instanceof Function ? (func as Type.Function<[V]>)(value) : value;
+export function castComputedPipe<V, T = V>(func: FunctionFactory.Base<[V], T> | T, value: V): T {
+  return func instanceof Function ? (func as FunctionFactory.Base<[V]>)(value) : value;
 }
 
 /**
@@ -109,13 +116,18 @@ export function castComputedPipe<V, T = V>(func: Type.Function<[V], T> | T, valu
  * 其他情况返回一个`function`，这个`function`会返回你的参数
  * @remarks `raw`为`true`时，返回的对象会进行深拷贝（完全解除和原对象的引用）
  */
-export function castFunction<T = any>(withFunction?: T, raw = false): Type.Function<any[], T> {
-  raw && (withFunction = cloneDeep(withFunction))
-  return isFunction(withFunction) ? withFunction : stubReturn.bind(null, withFunction);
+export function castFunction<T = any>(withFunction?: T, raw = false): FunctionFactory.Base<any[], T> {
+  raw && (withFunction = cloneDeep(withFunction));
+  return isFunction(withFunction) ? withFunction : stubReturn.bind(null, withFunction) as any;
 }
 
-export function castString(value: any) {
-  return typeof value === Constant$.KEY_STR ? value : toString(value)
+/**
+ * 转换为字符串
+ * @param target
+ * @returns 字符串 
+ */
+export function castString(target: any): string {
+  return typeof target === 'string' ? target : toString(target);
 }
 
 // /**

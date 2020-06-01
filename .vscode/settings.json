@@ -57,5 +57,6 @@
       "xtree": "cpp",
       "xutility": "cpp"
     },
-    "git.ignoreLimitWarning": true
+    "git.ignoreLimitWarning": true,
+    "typescript.tsdk": "node_modules\\typescript\\lib"
 }

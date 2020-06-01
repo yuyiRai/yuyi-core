@@ -15,12 +15,14 @@
   ],
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsdx build --noClean",
+    "build": "tsc --build",
     "build:p": "yarn build && yarn test",
     "build:lib": "tsc -p ./tsconfig.lib.json",
     "build:f": "yarn build && yarn build:lib",
     "test": "tsdx test",
-    "test2": "yuyi exec ./test/blah.test.ts",
+    "ttsc": "ttsc",
+    "test:complie": "yuyi exec ./test/blah.test.ts",
+    "test:ttsc": "yarn ttsc -p ./test/tsconfig.test.json",
     "lint": "tsdx lint"
   },
   "husky": {

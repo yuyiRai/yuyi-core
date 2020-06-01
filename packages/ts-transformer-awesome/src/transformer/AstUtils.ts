@@ -442,6 +442,67 @@ export namespace AstUtils$$ {
       ts.createStringLiteral(moduleName)
     )
   }
+
+  //@ts-ignore
+  export function isValidType(node: ts.TypeNode | undefined, typeName: string): node is ts.CallExpression {
+    if (!node) {
+      return false;
+    }
+
+    // 交叉/联合类型时进行递归检查
+    if (ts.isIntersectionTypeNode(node) || ts.isUnionTypeNode(node)) {
+      return node.types.some((n) => isValidType(n, typeName));
+    }
+
+    if (ts.isTypeReferenceNode(node) && ts.isIdentifier(node.typeName)) {
+      if (node.typeName.escapedText === typeName) {
+        if (__DEV__)
+          console.log('check type name: ', node.typeName.escapedText);
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  /**
+   * 检查并过滤特定的命名导入
+   * @param node 
+   * @param check 
+   * @returns
+   * 如果不为导入语句则不处理，返回false
+   * 如果被过滤后的命名导入内容为空集，且没有默认导入语句，将直接返回一个空Statement
+   * 否则返回经过过滤后的导入Statement
+   */
+  export function checkAndfilterNamedImports(node: ts.Node, check: (named: ts.ImportSpecifier, index?: number, names?: readonly ts.ImportSpecifier[]) => boolean): ts.ImportDeclaration | ts.EmptyStatement | false {
+    if (ts.isImportDeclaration(node) && node.importClause && node.importClause.namedBindings) {
+      var binds: ts.NamedImportBindings | undefined = node.importClause.namedBindings;
+      if (ts.isNamedImports(binds)) {
+        const nextElements = binds.elements.filter(check);
+        if (nextElements.length === 0) {
+          if (!node.importClause.name) {
+            return ts.createEmptyStatement();
+          } else {
+            binds = undefined;
+          }
+        } else {
+          binds = ts.updateNamedImports(binds, nextElements);
+        }
+      }
+      return ts.updateImportDeclaration(
+        node,
+        node.decorators,
+        node.modifiers,
+        ts.updateImportClause(
+          node.importClause,
+          node.importClause.name,
+          binds
+        ),
+        node.moduleSpecifier
+      );
+    }
+    return false;
+  }
   /**
    * 
    * @param expressList 

@@ -1,0 +1,135 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DataTransformer Deep Filters2 1`] = `
+Object {
+  "coreData": Object {
+    "dateEnd": undefined,
+    "dateStart": undefined,
+  },
+}
+`;
+
+exports[`DataTransformer Deep Filters2 2`] = `
+Object {
+  "coreData_$_$_date": Object {
+    "dateEnd": "2019",
+    "dateStart": "2018",
+  },
+  "other_$_$_a": Array [],
+}
+`;
+
+exports[`convertDataMap 设置cleanUnusedKey与否的区别 convertDataMap 不设置cleanUnusedKey 完全保留undefined的字段 1`] = `
+Object {
+  "coreData_$_$_dateEnd": "2019",
+  "coreData_$_$_dateStart": "2018",
+  "other_$_$_a": Array [],
+  "test_$_$_testNull": null,
+  "test_$_$_testUndefined": undefined,
+}
+`;
+
+exports[`convertDataMap 设置cleanUnusedKey与否的区别 convertDataMap 不设置cleanUnusedKey 完全保留undefined的字段 2`] = `
+Object {
+  "coreData": Object {
+    "dateEnd": "2019",
+    "dateStart": "2018",
+  },
+  "other": Object {
+    "a": Array [],
+  },
+  "test": Object {
+    "testNull": null,
+    "testUndefined": undefined,
+  },
+}
+`;
+
+exports[`convertDataMap 设置cleanUnusedKey与否的区别 convertDataMap 设置cleanUnusedKey为true 删除值为undefined的字段 1`] = `
+Object {
+  "coreData_$_$_dateEnd": "2019",
+  "coreData_$_$_dateStart": "2018",
+  "other_$_$_a": Array [],
+  "test_$_$_testNull": null,
+}
+`;
+
+exports[`convertDataMap 设置cleanUnusedKey与否的区别 convertDataMap 设置cleanUnusedKey为true 删除值为undefined的字段 2`] = `
+Object {
+  "coreData": Object {
+    "dateEnd": "2019",
+    "dateStart": "2018",
+  },
+  "other": Object {
+    "a": Array [],
+  },
+  "test": Object {
+    "testNull": null,
+  },
+}
+`;
+
+exports[`convertDataMap 设置cleanUnusedKey与否的区别 convertDataMap 设置cleanUnusedKey，如果value为null|undefined则视作不用的字段进行清理 1`] = `
+Object {
+  "coreData_$_$_dateEnd": "2019",
+  "coreData_$_$_dateStart": "2018",
+  "other_$_$_a": Array [],
+}
+`;
+
+exports[`convertDataMap 设置cleanUnusedKey与否的区别 convertDataMap 设置cleanUnusedKey，如果value为null|undefined则视作不用的字段进行清理 2`] = `
+Object {
+  "coreData": Object {
+    "dateEnd": "2019",
+    "dateStart": "2018",
+  },
+  "other": Object {
+    "a": Array [],
+  },
+}
+`;
+
+exports[`convertDataMap 设置cleanUnusedKey与否的区别 使用log记录 1`] = `
+Array [
+  Array [
+    Array [],
+    "other.a",
+    "other_$_$_a",
+  ],
+  Array [
+    "2018",
+    "coreData.dateStart",
+    "coreData_$_$_dateStart",
+  ],
+  Array [
+    "2019",
+    "coreData.dateEnd",
+    "coreData_$_$_dateEnd",
+  ],
+  Array [
+    undefined,
+    "test.testUndefined",
+    "test_$_$_testUndefined",
+  ],
+  Array [
+    null,
+    "test.testNull",
+    "test_$_$_testNull",
+  ],
+  Array [
+    Array [],
+    "other_$_$_a",
+    "other.a",
+  ],
+  Array [
+    "2018",
+    "coreData_$_$_dateStart",
+    "coreData.dateStart",
+  ],
+  Array [
+    "2019",
+    "coreData_$_$_dateEnd",
+    "coreData.dateEnd",
+  ],
+]
+`;
