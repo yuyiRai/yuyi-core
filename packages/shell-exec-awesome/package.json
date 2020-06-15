@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/shell-exec-awesome",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "description": "",
   "main": "dist/index.js",
   "scripts": {
@@ -19,7 +19,7 @@
     "typescript": "^3.6.4"
   },
   "dependencies": {
-    "@yuyi919/utils": "^0.0.75",
+    "@yuyi919/utils": "^0.0.76",
     "iconv-lite": "^0.4.24"
   }
 }
