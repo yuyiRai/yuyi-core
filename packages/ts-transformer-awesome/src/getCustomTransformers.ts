@@ -17,7 +17,7 @@ import tsxControlStatments from 'tsx-control-statements/transformer';
 import ts, { CustomTransformers, Program, SourceFile, TransformerFactory } from 'typescript';
 import tsIsTransformer from 'typescript-is/lib/transform-inline/transformer';
 import typesmithTransformer from 'typesmith/transformer';
-import { Macros, MobxDecorateTransformer, TypeFilterTransformer } from './transformer';
+import { DEV, Macros, MobxDecorateTransformer, TypeFilterTransformer } from './transformer';
 import { MobxDecorateTransformerOptions } from './transformer/MobxDecorate';
 // import { PluginCreator } from './PluginCreater'
 
@@ -156,7 +156,8 @@ export function getCustomTransformers({
     useHoistObjectInProps && use(hoistObjectsInProps)(program, {
       propRegex: /.*/,
     }),
-    use(paths)(),
+    DEV(program),
+    use(paths)(program),
     useTypeFilter && use(TypeFilterTransformer)(program),
     useNameof && use(nameofTransformer) as TransformerFactory<SourceFile>,
     useMiniftyPrivate && use(tsMinifyPrivates)(program, { prefix: '_$$' }),

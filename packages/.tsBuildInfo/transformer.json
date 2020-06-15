@@ -966,12 +966,16 @@
         "version": "1ffaebc467d1e5c315354f52d679a47af17ba57d5bb0677afbed974a404a0bfd",
         "signature": "469bcc7c91f951fa09e3e4e1ccb3bef83a5fa2bd79d893c9c4bc02e41adba1ba"
       },
+      "../ts-transformer-awesome/src/transformer/dev.ts": {
+        "version": "2bad6f3a8563cfa4a68dfd806ddfbdbfd0de3d8b6c6e309d46fbe15ee42bd2a3",
+        "signature": "6d3dfbf998f2e88228677f94a60f8dc23b8dcca7ab8a59a6ba2312267e8df479"
+      },
       "../ts-transformer-awesome/src/transformer/index.ts": {
-        "version": "9df810677fe0401ed558276dafdd3bdd5a1acf77273494846c31f2de3dbcacac",
-        "signature": "18ddfa82da1939ed570c736c2dea8376f00ee743db81b66e5c64c0ef49aceb1c"
+        "version": "ed5fb67ed2f6fd38b5446296f359408d83cfbf08e4b5319a88e13a548478e060",
+        "signature": "8863a28720e5c3074afe1f7e0e9a947a9dfebd3220d390bb6ce09db2b82e0611"
       },
       "../ts-transformer-awesome/src/getcustomtransformers.ts": {
-        "version": "f1e50ff7804f962112a87051ec505fe68828961ff7e00bb25e1212165a49106f",
+        "version": "4c728aa3b12597a64c1b37e20289634f18064c95866bc010898f86d61962f5e5",
         "signature": "479d22791ef6bf40aa45643834d56514e0a0aa0f502c581af4a94395a3742e72"
       },
       "../ts-transformer-awesome/src/compile.ts": {
@@ -979,7 +983,7 @@
         "signature": "56e5dbd471695ac9df899275d002ffecd24f14b74638e212c27e9695c3dead07"
       },
       "../ts-transformer-awesome/src/d.ts": {
-        "version": "e46785689e6652c5201e0afc762917ea73a815b296eb9c943cf2d3c1b219e4d7",
+        "version": "a08950faf517fd0e20c8b80259223bf96f8f386b00df6f49512c3296b2ac3c25",
         "signature": "b4f3b19af34bcd17ab7c8b1e50d98f412b87e56d6d413c686de2cbed39a5e64e"
       },
       "../ts-transformer-awesome/src/env.ts": {
@@ -3586,11 +3590,19 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "../ts-transformer-awesome/src/transformer/dev.ts": [
+        "../../node_modules/typescript/lib/typescript.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "../ts-transformer-awesome/src/transformer/index.ts": [
         "../ts-transformer-awesome/src/transformer/astutils.ts",
         "../ts-transformer-awesome/src/transformer/typefilter.ts",
         "../ts-transformer-awesome/src/transformer/mobxdecorate.ts",
         "../ts-transformer-awesome/src/transformer/macros.ts",
+        "../ts-transformer-awesome/src/transformer/dev.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -5252,6 +5264,13 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "../../node_modules/typescript-transform-paths/lib/index.d.ts": [
+        "../../node_modules/typescript/lib/typescript.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "../../node_modules/ts-nameof/ts-nameof.d.ts": [
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
@@ -6431,7 +6450,8 @@
         "../ts-transformer-awesome/src/transformer/astutils.ts",
         "../ts-transformer-awesome/src/transformer/typefilter.ts",
         "../ts-transformer-awesome/src/transformer/mobxdecorate.ts",
-        "../ts-transformer-awesome/src/transformer/macros.ts"
+        "../ts-transformer-awesome/src/transformer/macros.ts",
+        "../ts-transformer-awesome/src/transformer/dev.ts"
       ],
       "../ts-transformer-awesome/src/getcustomtransformers.ts": [
         "../../node_modules/ts-import-plugin/lib/index.d.ts",
@@ -6898,6 +6918,13 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "../../node_modules/@types/react-dom/index.d.ts": [
+        "../../node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "../../node_modules/@types/react-loadable/index.d.ts": [
         "../../node_modules/@types/react/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
@@ -7146,19 +7173,8 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "../../node_modules/typescript-transform-paths/lib/index.d.ts": [
-        "../../node_modules/typescript/lib/typescript.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/@types/react-dom/index.d.ts": [
-        "../../node_modules/@types/react/index.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
+      "../ts-transformer-awesome/src/transformer/dev.ts": [
+        "../../node_modules/typescript/lib/typescript.d.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -7201,6 +7217,7 @@
       "../../node_modules/typescript/lib/lib.es2020.symbol.wellknown.d.ts",
       "../../node_modules/typescript/lib/lib.esnext.intl.d.ts",
       "../../node_modules/typescript/lib/lib.esnext.bigint.d.ts",
+      "../../node_modules/tslib/tslib.d.ts",
       "../../node_modules/@types/node/globals.d.ts",
       "../../node_modules/@types/node/assert.d.ts",
       "../../node_modules/@types/node/async_hooks.d.ts",
@@ -7269,6 +7286,7 @@
       "../../node_modules/@types/lodash/ts3.1/memoize.d.ts",
       "../../node_modules/ts-import-plugin/lib/index.d.ts",
       "../../node_modules/ts-import-plugin/index.d.ts",
+      "../../node_modules/typescript-transform-paths/lib/index.d.ts",
       "../../node_modules/ts-nameof/ts-nameof.d.ts",
       "../../node_modules/ts-plugin-mmlpx/index.d.ts",
       "../../node_modules/ts-transform-react-constant-elements/dist/transform.d.ts",
@@ -7398,11 +7416,10 @@
       "../ts-transformer-awesome/src/transformer/visitnodeandchildren.ts",
       "../ts-transformer-awesome/src/transformer/typefilter.ts",
       "../../node_modules/ts-is-kind/index.d.ts",
+      "../ts-transformer-awesome/src/tslib-extra.ts",
       "../ts-transformer-awesome/src/transformer/mobxdecorate.ts",
       "../ts-transformer-awesome/src/transformer/macrosmap.ts",
       "../ts-transformer-awesome/src/transformer/macros.ts",
-      "../ts-transformer-awesome/src/transformer/index.ts",
-      "../ts-transformer-awesome/src/d.ts",
       "../ts-transformer-awesome/src/env.ts",
       "../../node_modules/@types/prettier/index.d.ts",
       "../ts-transformer-awesome/src/runcommontests.ts",
@@ -7466,6 +7483,7 @@
       "../../node_modules/@types/object-path/index.d.ts",
       "../../node_modules/@types/parse-json/index.d.ts",
       "../../node_modules/@types/q/index.d.ts",
+      "../../node_modules/@types/react-dom/index.d.ts",
       "../../node_modules/@types/react-loadable/index.d.ts",
       "../../node_modules/@types/react-native/globals.d.ts",
       "../../node_modules/@types/react-native/legacy-properties.d.ts",
@@ -7499,14 +7517,13 @@
       "../../node_modules/@types/webpack/index.d.ts",
       "../../node_modules/@types/yargs-parser/index.d.ts",
       "../../node_modules/@types/yargs/index.d.ts",
-      "../../node_modules/tslib/tslib.d.ts",
-      "../ts-transformer-awesome/src/tslib-extra.ts",
-      "../../node_modules/typescript-transform-paths/lib/index.d.ts",
+      "../ts-transformer-awesome/src/transformer/dev.ts",
+      "../ts-transformer-awesome/src/transformer/index.ts",
       "../ts-transformer-awesome/src/getcustomtransformers.ts",
-      "../ts-transformer-awesome/src/index.ts",
-      "../ts-transformer-awesome/src/plugin.ts",
+      "../ts-transformer-awesome/src/d.ts",
       "../ts-transformer-awesome/src/compile.ts",
-      "../../node_modules/@types/react-dom/index.d.ts"
+      "../ts-transformer-awesome/src/plugin.ts",
+      "../ts-transformer-awesome/src/index.ts"
     ]
   },
   "version": "3.7.3"
