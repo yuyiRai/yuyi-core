@@ -310,7 +310,7 @@ const TreePresenter: React.FunctionComponent<TreePresenterProps> = ({
       <Tree<ExtendedData>
         ref={tree}
         itemData={{ itemSize, selectedId, onSelect }}
-        treeWalker={treeWalker}
+        treeWalker={treeWalker as any}
         height={height}
         width={500}
         initialScrollOffset={0}
@@ -370,9 +370,6 @@ export function NestedList() {
 export default function E() {
   
   return (
-    <>
-      {/* <NestedList /> */}
-      <TreePresenter itemSize={50} />
-    </>
+    <TreePresenter itemSize={50} />
   );
 }

@@ -1,10 +1,10 @@
 /**
  * @module MobxUtils
  */
-import { observable, computed, observe, runInAction, ObservableMap, ObservableSet, action, autorun, reaction, set as $set, get as $get, keys as $keys, values as $values, toJS, IReactionOptions } from 'mobx'
-import { createTransformer, expr } from 'mobx-utils'
-import { defaultTo } from 'lodash'
-export { createTransformer, expr, observable, computed, ObservableMap, ObservableSet, action, autorun, observe, runInAction, reaction, $set, $get, $keys, $values, toJS }
+import { defaultTo } from 'lodash';
+import { action, autorun, computed, get as $get, keys as $keys, observable, ObservableMap, ObservableSet, observe, reaction, runInAction, set as $set, toJS, values as $values } from 'mobx';
+import { createTransformer, expr } from 'mobx-utils';
+export { createTransformer, expr, observable, computed, ObservableMap, ObservableSet, action, autorun, observe, runInAction, reaction, $set, $get, $keys, $values, toJS };
 
 // export namespace _mobxUtils {
 //   export var get$$ = $get

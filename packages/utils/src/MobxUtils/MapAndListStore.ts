@@ -3,6 +3,7 @@ import { action, computed, $get, $keys, observable, ObservableMap, toJS, $values
 import { Constant$, IKeyValueMap } from '../Constransts';
 import { isNil, isNumber, isString, reduce } from '../LodashExtra';
 import { CommonStore } from './CommonStore';
+import { ForEachMacro } from '../Utils.macro';
 
 export type IKeyData<Key extends string> = IKeyValueMap<any> & {
   readonly [K in Key]-?: string;
@@ -73,12 +74,12 @@ export class RecordMapStore<
   @action
   public mapValueWithSource<VT = any>(valueKey: string, autoZip = false): IKeyValueMap<VT> {
     const obj = {}
-    for (const key of this.keyList) {
-      const value = this.getSourceData(key)[valueKey]
+    ForEachMacro(this.keyList, key => {
+      const value = this.getSourceData(key)[valueKey];
       if ((autoZip && value) || autoZip) {
-        obj[key] = value
+        obj[key] = value;
       }
-    }
+    })
     return obj;
   }
 
@@ -96,27 +97,24 @@ export class RecordMapStore<
     return this.targetMap.get(keyValue) 
   }
 
-  @autobind
-  public getConfigKey(config: SourceData | TargetData): (SourceData | TargetData)[DataKey] {
+  private getConfigKey(config: SourceData | TargetData): (SourceData | TargetData)[DataKey] {
     return config[this.keyProperty]
   }
 
-  @autobind
-  public setConfigKey(config: SourceData | TargetData, keyValue: string) {
+  private setConfigKey(config: SourceData | TargetData, keyValue: string) {
     return config[this.keyProperty] = keyValue as (SourceData | TargetData)[DataKey]
   }
 
   @action.bound
   @readonly
   public setSourceData(sourceData: SourceData[] | IKeyValueMap<SourceData>) {
-    const { getConfigKey: getKey } = this;
     // console.log('set', sourceData)
     this.mapToDiff(this.sourceMap,
       reduce(sourceData as any, (object, nextConfig: SourceData, key: string | number) => {
-        if (isNumber(key) && isNil(getKey(nextConfig))) {
+        if (isNumber(key) && isNil(this.getConfigKey(nextConfig))) {
           this.setConfigKey(nextConfig, (key + '') as SourceData[DataKey])
         }
-        const keyValue = getKey(nextConfig)
+        const keyValue = this.getConfigKey(nextConfig)
         if (isString(keyValue)) {
           const patch: { [key: string]: SourceData } = {}
           patch[keyValue] = nextConfig
@@ -129,13 +127,20 @@ export class RecordMapStore<
     // console.log(this.sourceMap)
   }
 
-  constructor(private readonly keyProperty: DataKey, private transformer: IMapTransformer<DataKey, SourceData, TargetData>) {
+
+  @observable
+  private transformer: IMapTransformer<DataKey, SourceData, TargetData> = {
+    create(source) { return source; },
+    update(newSource, prevTarget) { return Object.assign(prevTarget, newSource) }
+  }
+  constructor(private readonly keyProperty: DataKey, transformer: IMapTransformer<DataKey, SourceData, TargetData>) {
     super()
+    Object.assign(this.transformer, transformer)
     this.registerDisposer(() => {
       // console.error('registerDisposer', this);
-      for (const key of this.keyList) {
-        this.sourceMap.delete(key)
-      }
+      ForEachMacro(this.keyList, key => {
+        this.sourceMap.delete(key);
+      })
       this.sourceMap.clear()
       this.targetMap.clear()
       this.transformer = null
@@ -147,12 +152,12 @@ export class RecordMapStore<
         console.error('this.sourceMap', listener.type, listener.name, listener.newValue)
       }
       if (listener.type === 'add') {
-        this.targetMap.set(listener.name, transformer.create(listener.newValue))
-      } else if (listener.type === 'delete') {
-        transformer.delete(this.getTargetData(listener.name), this.getSourceData(listener.name))
+        this.targetMap.set(listener.name, this.transformer.create(listener.newValue))
+      } else if (this.transformer.delete && listener.type === 'delete') {
+        this.transformer.delete(this.getTargetData(listener.name), this.getSourceData(listener.name))
         this.targetMap.delete(listener.name)
       } else {
-        transformer.update(listener.newValue, this.getTargetData(listener.name))
+        this.transformer.update(listener.newValue, this.getTargetData(listener.name))
       }
       return listener
     })
@@ -160,7 +165,7 @@ export class RecordMapStore<
 }
 
 export interface IMapTransformer<DataKey extends string, SourceData extends IKeyData<DataKey>, TargetData extends IKeyData<DataKey> = SourceData> {
-  create(source: Readonly<SourceData>): TargetData;
-  update(newSource: Readonly<SourceData>, prevTarget: TargetData): TargetData;
+  create?(source: Readonly<SourceData>): TargetData;
+  update?(newSource: Readonly<SourceData>, prevTarget: TargetData): TargetData;
   delete?(target: TargetData, source?: SourceData): void;
 }

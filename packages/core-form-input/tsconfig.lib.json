@@ -1,0 +1,47 @@
+{
+  "include": ["src", "types"],
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "incremental": true,
+    "target": "es6",
+    "module": "es6",
+    "outDir": "lib",
+    "tsBuildInfoFile": "./node_modules/tsbuildinfo.json",
+    "lib": [
+      "es6",
+      "dom",
+      "dom.iterable",
+      "scripthost",
+      "esnext"
+    ],
+    "importHelpers": true,
+    "declaration": true,
+    "sourceMap": true,
+    "baseUrl": "./src",
+    "rootDir": "./src",
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "noImplicitReturns": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "noStrictGenericChecks": true,
+    "noFallthroughCasesInSwitch": true,
+    "allowUmdGlobalAccess": true,
+    "moduleResolution": "node",
+    "paths": {
+      "@": ["./src"],
+      "@/*": [
+        "./src/*"
+      ]
+    },
+    "jsx": "react",
+    "esModuleInterop": true
+  }
+}

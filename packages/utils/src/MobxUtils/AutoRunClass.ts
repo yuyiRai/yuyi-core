@@ -1,11 +1,11 @@
-import { action, autorun, computed, has, IReactionOptions, isObservable, observable, reaction, set, IReactionDisposer } from 'mobx';
+import { action, autorun, computed, has, IReactionDisposer, IReactionOptions, isObservable, observable, reaction, set } from 'mobx';
 import { ITransformer } from 'mobx-utils';
+import { Constant$, IKeyValueMap } from '../Constransts';
+import { stubObjectReturn } from '../LodashExtra';
+import { getSafeMapOptions } from '../OptionsUtils';
 import { expect$ } from '../TypeLib';
 import { BaseStore } from "./BaseStore";
 import { createTransformer } from './mobx.export';
-import { stubObjectReturn, isObject, isArray } from '../LodashExtra';
-import { convertArr2Map, getSafeMapOptions } from '../OptionsUtils';
-import { Constant$, IKeyValueMap } from '../Constransts';
 
 export const tmpTransformerWeak = new WeakMap()
 function setterWithGetter<K, V>(map: Map<K, V>, key: K, value: V) {
@@ -17,11 +17,11 @@ function cloneDeep<T extends IKeyValueMap<any>>(values: T): T {
     var r = values instanceof Array ? [] : {}, key: string, value: any;
     var tmp: Map<any, any>;
     for ([key, value] of Object.entries(values)) {
-      r[key] = value instanceof Object ? (
+      r[key] = expect$.isPureObj(value) ? (
         // @ts-ignore
         tmp = tmp || setterWithGetter(tmpTransformerWeak, values, new Map()),
         setterWithGetter(tmp, key, createTransformer(cloneDeep))(value)
-      ) : value
+      ) : (value instanceof Array ? [...value] : value)
     }
     return r as any
   }
@@ -138,7 +138,7 @@ const defaultOptions = {
   },
   set(target: any, key: string, value: any) {
     return (target[key] = value);
-  },
+  }
 }
 
 export function patchUpdate<T>(data: T, next: T, options?: PathUpdateOptions): PathUpdateResult<T> {
@@ -151,12 +151,12 @@ export function deepPatchUpdate<T>(data: T, next: T, options?: DeepPathUpdateOpt
 export function deepPatchUpdate<T>(data: T, next: T, options?: DeepPathUpdateOptions, parentKey?: string, currentDeep: number = 0): PathUpdateResult<T> {
   options = options || {}
   options.deep = expect$.isNumber.filter(options.deep, 10);
-  if (currentDeep < options.deep && expect$.isObject(next) && expect$.isObject(data)) {
+  if (currentDeep < options.deep && expect$.isPureObj(next) && expect$.isObject(data)) {
     let decetePath: Record<string, boolean> = {};
     let isDeteced = false;
     let isDiff = false
     options.filterCodes = getSafeMapOptions(options.filterCodes)
-    const { filterCodes, has, keys = Constant$.OBJ_KEYS, set } = Constant$.OBJ_ASSIGN(defaultOptions, options)
+    const { filterCodes, has, keys = Constant$.OBJ_KEYS, set } = Constant$.OBJ_ASSIGN({ ...defaultOptions }, options)
     const objKeys = keys(next);
     objKeys.forEach(key => {
       const deepKey = parentKey ? parentKey + '.' + key : key;

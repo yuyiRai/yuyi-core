@@ -20,10 +20,10 @@ export const Thing = () => {
   return (
     <div>
       the snozzberries taste like snozzberrie
-      <VirtualizedList></VirtualizedList>
+      {/* <VirtualizedList></VirtualizedList> */}
       <SearchInput value={t} onChange={st} useLazyHandler={useLazy} />
       <Button onClick={() => reset((v: any) => !v)}>{(useLazy ? '懒' : '完全') + '监听'}</Button>
-      <VTree />
+      {/* <VTree /> */}
     </div>
   );
 };

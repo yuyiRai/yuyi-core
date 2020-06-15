@@ -9,8 +9,9 @@
   "files": [
     "dist",
     "env.js",
-    "env.ts",
+    "env.d.ts",
     "tslib-extra.js",
+    "tslib-extra.d.ts",
     "README.md"
   ],
   "scripts": {

@@ -10,13 +10,15 @@
     "dist"
   ],
   "scripts": {
-    "start": "tsdx watch",
+    "tsdx": "tsdx",
+    "start": "tsdx watch --entry ./lib/index.js",
     "preview": "cd example && yarn start",
     "build": "tsdx build --noClean",
     "test": "tsdx test --env=jsdom",
     "test:w": "tsdx test --watch --env=jsdom .\\dist\\*.development.js",
     "jest:h": "jest -h",
     "lint": "tsdx lint",
+    "dev": "yarn ttsc -p tsconfig.lib.json --watch",
     "pub": "yuyi pub"
   },
   "peerDependencies": {
@@ -48,7 +50,8 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.23",
-    "@types/react": "^16.9.15",
+    "@types/react": "^16.9.36",
+    "@types/react-dom": "^16.9.8",
     "@types/react-virtualized-auto-sizer": "^1.0.0",
     "@types/react-window": "^1.8.1",
     "@wessberg/rollup-plugin-ts": "^1.1.73",

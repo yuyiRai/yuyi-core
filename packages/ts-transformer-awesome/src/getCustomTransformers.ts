@@ -4,6 +4,7 @@ import color from 'colors';
 import memoize from 'lodash/memoize';
 import tsImportPluginFactory from 'ts-import-plugin';
 import { Options as ImportOptions2 } from 'ts-import-plugin/lib/index';
+import paths from 'typescript-transform-paths';
 import nameofTransformer from 'ts-nameof';
 import ocTransformer from 'ts-optchain/transform';
 import mmlpxTransformer from 'ts-plugin-mmlpx';
@@ -45,7 +46,8 @@ const presetOptions = {
   'typescript-is': tsIsTransformer,
   'typesmith': typesmithTransformer,
   '@yuyi919/TypeFilterTransformer': TypeFilterTransformer,
-  '@yuyi919/MobxDecorateTransformer': MobxDecorateTransformer
+  '@yuyi919/MobxDecorateTransformer': MobxDecorateTransformer,
+  'typescript-transform-paths': paths
 }
 export type PresetKeys = keyof typeof presetOptions;
 
@@ -154,6 +156,7 @@ export function getCustomTransformers({
     useHoistObjectInProps && use(hoistObjectsInProps)(program, {
       propRegex: /.*/,
     }),
+    use(paths)(),
     useTypeFilter && use(TypeFilterTransformer)(program),
     useNameof && use(nameofTransformer) as TransformerFactory<SourceFile>,
     useMiniftyPrivate && use(tsMinifyPrivates)(program, { prefix: '_$$' }),
