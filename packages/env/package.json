@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/env",
-  "version": "0.0.21",
+  "version": "0.0.22",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
   "license": "MIT",
@@ -29,7 +29,7 @@
   },
   "gitHead": "847675940ab1dad55de9516bb03e4c21808b5153",
   "dependencies": {
-    "@yuyi919/utils": "^0.0.76",
+    "@yuyi919/utils": "^0.0.77",
     "typescript": "^3.6.4"
   }
 }
