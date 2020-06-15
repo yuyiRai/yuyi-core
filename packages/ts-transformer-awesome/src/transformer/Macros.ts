@@ -42,26 +42,26 @@ class Transformer {
         return undefined;
       }
     }
-    return AstUtils$$.visitEachChild(node, this.extractMacros, this.context);
+    return ts.visitEachChild(node, this.extractMacros, this.context);
   };
   resolveMacros = (node: ts.Node): ts.Node | undefined => {
     if (ts.isBlock(node) || ts.isSourceFile(node)) {
       const newBlock = this.replaceMacros(node.statements, this.rootMacros);
       if (ts.isBlock(node)) {
-        return AstUtils$$.visitEachChild(
+        return ts.visitEachChild(
           ts.updateBlock(node, newBlock),
           this.resolveMacros,
           this.context
         );
       } else {
-        return AstUtils$$.visitEachChild(
+        return ts.visitEachChild(
           ts.updateSourceFileNode(node, newBlock),
           this.resolveMacros,
           this.context
         );
       }
     }
-    return AstUtils$$.visitEachChild(node, this.resolveMacros, this.context);
+    return ts.visitEachChild(node, this.resolveMacros, this.context);
   };
   cleanMacro = <T extends ts.Node>(node: T): [ts.Expression | undefined, T] => {
     const visit = (node: ts.Node): ts.Node | undefined => {
@@ -88,7 +88,7 @@ class Transformer {
       if (ts.isIdentifier(node) && variableMap.has(node.text)) {
         return variableMap.get(node.text)!;
       }
-      return AstUtils$$.visitEachChild(node, visit, this.context);
+      return ts.visitEachChild(node, visit, this.context);
     };
     const variableMap = new Map<string, ts.Identifier>();
     let result: ts.Expression | undefined = undefined;
@@ -202,10 +202,10 @@ class Transformer {
           )
         );
         result = result.concat(resultBlock.statements);
-        if (!resultName) return ts.createEmptyStatement();
+        if (!resultName) return ts.createIdentifier("");
         return resultName;
       }
-      return ts.isEmptyStatement(node) ? node : AstUtils$$.visitEachChild(node, visit, this.context);
+      return ts.visitEachChild(node, visit, this.context);
     };
     let result: ts.Statement[] = [];
     for (const statement of statements) {

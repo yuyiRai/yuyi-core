@@ -51,10 +51,6 @@ export namespace AstUtils$$ {
     );
   }
 
-  export const visitEachChild: typeof ts.visitEachChild = (node, visitor, context) => {
-    return ts.isEmptyStatement(node) ? node : ts.visitEachChild(node, visitor, context)
-  }
-
   export function createIs$$(sub: ts.Expression, target: ts.Expression, strict: boolean = true) {
     return ts.createBinary(
       sub,
