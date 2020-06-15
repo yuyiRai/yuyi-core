@@ -2,7 +2,7 @@
  * @module UtilClass
  */
 import { PartialObserver, NextObserver, ErrorObserver, CompletionObserver, ReplaySubject, BehaviorSubject } from 'rxjs';
-import { Observable } from 'rxjs/internal/observable';
+import { Observable } from 'rxjs/internal/Observable';
 import { OperatorFunction, SchedulerLike } from 'rxjs/internal/types';
 import { Subject } from 'rxjs/internal/Subject';
 import { queueScheduler, asapScheduler, asyncScheduler } from 'rxjs'
