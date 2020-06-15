@@ -158,8 +158,8 @@
         "signature": "0c9ea8c2028047f39a3f66752682604f543c08be8806258c3d95c93e75a43255"
       },
       "../../node_modules/tslib/tslib.d.ts": {
-        "version": "f51abe79559e8a2baeb6a88ce29d3b5537b14928b55f06cc5d588c3503895ff6",
-        "signature": "f51abe79559e8a2baeb6a88ce29d3b5537b14928b55f06cc5d588c3503895ff6"
+        "version": "4984b48a97160eac5282ffeae690315420a626de83ccf6045c36d934c5c957c0",
+        "signature": "4984b48a97160eac5282ffeae690315420a626de83ccf6045c36d934c5c957c0"
       },
       "../../node_modules/@types/node/globals.d.ts": {
         "version": "05c42320698cb6eb4052d68ef35a0f3b88291b9275f13e9a188b96119844c5b6",
@@ -432,6 +432,10 @@
       "../../node_modules/ts-import-plugin/index.d.ts": {
         "version": "26fcf12a53a95113b093efed23eea0568bb15617c3a26f33b4a9ad61f84a1a59",
         "signature": "26fcf12a53a95113b093efed23eea0568bb15617c3a26f33b4a9ad61f84a1a59"
+      },
+      "../../node_modules/typescript-transform-paths/lib/index.d.ts": {
+        "version": "b466b9053ef513ea18592a5345aa5be96ebbd0bf971fb5580d9ddd0f7c3313ae",
+        "signature": "b466b9053ef513ea18592a5345aa5be96ebbd0bf971fb5580d9ddd0f7c3313ae"
       },
       "../../node_modules/ts-nameof/ts-nameof.d.ts": {
         "version": "3256dde001cabd885ea436ea0ee61b2bd55cba03cdca0232533cdca601a4f530",
@@ -967,8 +971,8 @@
         "signature": "18ddfa82da1939ed570c736c2dea8376f00ee743db81b66e5c64c0ef49aceb1c"
       },
       "../ts-transformer-awesome/src/getcustomtransformers.ts": {
-        "version": "8bd60c3c44becaf60189cafb0249c010fb3696ddea005d1ea5c6b32a34799763",
-        "signature": "fefd8d71ef10a8b970b86d45a2655fbccbe12a98fea15d8e1127642253bb6e86"
+        "version": "f1e50ff7804f962112a87051ec505fe68828961ff7e00bb25e1212165a49106f",
+        "signature": "479d22791ef6bf40aa45643834d56514e0a0aa0f502c581af4a94395a3742e72"
       },
       "../ts-transformer-awesome/src/compile.ts": {
         "version": "0f0fec6b895448c6d2d73f327e772af936496393caffff213917dcd8cda4f88d",
@@ -1238,6 +1242,10 @@
         "version": "57427a9a368f8f0ee4ce03c36a762e19166756b95ab688948b29be553b24a78a",
         "signature": "57427a9a368f8f0ee4ce03c36a762e19166756b95ab688948b29be553b24a78a"
       },
+      "../../node_modules/@types/react-dom/index.d.ts": {
+        "version": "8483a29c17f7feb768a1f4333cf12ccf1e7341bd89dadcf407e012d5315228d0",
+        "signature": "8483a29c17f7feb768a1f4333cf12ccf1e7341bd89dadcf407e012d5315228d0"
+      },
       "../../node_modules/@types/react-loadable/index.d.ts": {
         "version": "e81feb7fe390e419820344560e9248308f9357cf80797fd2bb1a44607e54fb1b",
         "signature": "e81feb7fe390e419820344560e9248308f9357cf80797fd2bb1a44607e54fb1b"
@@ -1428,7 +1436,6 @@
         "../ts-transformer-awesome/node_modules/@types",
         "../../node_modules/@types"
       ],
-      "watch": true,
       "configFilePath": "../ts-transformer-awesome/tsconfig.json"
     },
     "referencedMap": {
@@ -2326,6 +2333,13 @@
       ],
       "../../node_modules/ts-import-plugin/index.d.ts": [
         "../../node_modules/ts-import-plugin/lib/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../../node_modules/typescript-transform-paths/lib/index.d.ts": [
+        "../../node_modules/typescript/lib/typescript.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -3588,6 +3602,7 @@
         "../../node_modules/@types/lodash/ts3.1/memoize.d.ts",
         "../../node_modules/ts-import-plugin/index.d.ts",
         "../../node_modules/ts-import-plugin/lib/index.d.ts",
+        "../../node_modules/typescript-transform-paths/lib/index.d.ts",
         "../../node_modules/ts-nameof/ts-nameof.d.ts",
         "../ts-transformer-awesome/src/d.ts",
         "../../node_modules/ts-plugin-mmlpx/index.d.ts",
@@ -4081,6 +4096,13 @@
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
       "../../node_modules/@types/q/index.d.ts": [
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../../node_modules/@types/react-dom/index.d.ts": [
+        "../../node_modules/@types/react/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -7123,6 +7145,20 @@
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../../node_modules/typescript-transform-paths/lib/index.d.ts": [
+        "../../node_modules/typescript/lib/typescript.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
+      "../../node_modules/@types/react-dom/index.d.ts": [
+        "../../node_modules/@types/react/index.d.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -7165,7 +7201,6 @@
       "../../node_modules/typescript/lib/lib.es2020.symbol.wellknown.d.ts",
       "../../node_modules/typescript/lib/lib.esnext.intl.d.ts",
       "../../node_modules/typescript/lib/lib.esnext.bigint.d.ts",
-      "../../node_modules/tslib/tslib.d.ts",
       "../../node_modules/@types/node/globals.d.ts",
       "../../node_modules/@types/node/assert.d.ts",
       "../../node_modules/@types/node/async_hooks.d.ts",
@@ -7363,16 +7398,12 @@
       "../ts-transformer-awesome/src/transformer/visitnodeandchildren.ts",
       "../ts-transformer-awesome/src/transformer/typefilter.ts",
       "../../node_modules/ts-is-kind/index.d.ts",
-      "../ts-transformer-awesome/src/tslib-extra.ts",
       "../ts-transformer-awesome/src/transformer/mobxdecorate.ts",
       "../ts-transformer-awesome/src/transformer/macrosmap.ts",
+      "../ts-transformer-awesome/src/transformer/macros.ts",
       "../ts-transformer-awesome/src/transformer/index.ts",
-      "../ts-transformer-awesome/src/getcustomtransformers.ts",
-      "../ts-transformer-awesome/src/compile.ts",
       "../ts-transformer-awesome/src/d.ts",
       "../ts-transformer-awesome/src/env.ts",
-      "../ts-transformer-awesome/src/plugin.ts",
-      "../ts-transformer-awesome/src/index.ts",
       "../../node_modules/@types/prettier/index.d.ts",
       "../ts-transformer-awesome/src/runcommontests.ts",
       "../../node_modules/@types/react/global.d.ts",
@@ -7468,7 +7499,14 @@
       "../../node_modules/@types/webpack/index.d.ts",
       "../../node_modules/@types/yargs-parser/index.d.ts",
       "../../node_modules/@types/yargs/index.d.ts",
-      "../ts-transformer-awesome/src/transformer/macros.ts"
+      "../../node_modules/tslib/tslib.d.ts",
+      "../ts-transformer-awesome/src/tslib-extra.ts",
+      "../../node_modules/typescript-transform-paths/lib/index.d.ts",
+      "../ts-transformer-awesome/src/getcustomtransformers.ts",
+      "../ts-transformer-awesome/src/index.ts",
+      "../ts-transformer-awesome/src/plugin.ts",
+      "../ts-transformer-awesome/src/compile.ts",
+      "../../node_modules/@types/react-dom/index.d.ts"
     ]
   },
   "version": "3.7.3"
