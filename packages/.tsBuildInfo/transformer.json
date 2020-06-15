@@ -923,8 +923,8 @@
         "signature": "2a8e1ce1ad3238934a448ac83a59176189bb30c2a72948b36eb4c8797ba23de5"
       },
       "../ts-transformer-awesome/src/transformer/astutils.ts": {
-        "version": "554560e206bd8e084b9c56838ff03e5491a91ff2031704a75e0414bab3bbcb05",
-        "signature": "de5aec5d2fa04e24f8f41b289cddb46645e46e4d990925ed5f8bea26c3486c6f"
+        "version": "24f06f66a7952f9bb7c2a6f09d56fa6410263e1ffb77b3cf47f3eb2ab2d670cf",
+        "signature": "23e435b9fdc01c86dbfe18cc216650e8cc41c5ee7759e3c3dee158a343db2d4e"
       },
       "../../node_modules/ts-optchain/index.d.ts": {
         "version": "e9207dae9dbce9914c4548ef0bb4be18bfed7c1584e43bde999ef52a52a368b3",
@@ -940,7 +940,7 @@
       },
       "../ts-transformer-awesome/src/transformer/visitnodeandchildren.ts": {
         "version": "75f3da0543cd5e3090f57254391a059b8c4ed6d3fdfed72fadc045500ec9c806",
-        "signature": "0a072af2732c70ab8a5cd90a6d82476ec330168a0d9aaa155b5a3705a59de82a"
+        "signature": "add6f78b31fb0fada153debf59bc2a8026d110d9a52c83404ca124ec6e1fa1d2"
       },
       "../ts-transformer-awesome/src/transformer/typefilter.ts": {
         "version": "b99acc5091f0076188feb5fcc1baa7c1c8845f39f63a460715122252ca23865e",
@@ -967,16 +967,16 @@
         "signature": "469bcc7c91f951fa09e3e4e1ccb3bef83a5fa2bd79d893c9c4bc02e41adba1ba"
       },
       "../ts-transformer-awesome/src/transformer/dev.ts": {
-        "version": "2bad6f3a8563cfa4a68dfd806ddfbdbfd0de3d8b6c6e309d46fbe15ee42bd2a3",
-        "signature": "6d3dfbf998f2e88228677f94a60f8dc23b8dcca7ab8a59a6ba2312267e8df479"
+        "version": "79e6d81a1a26d670ba82c36010b0c541dc2832a17a649d83a840633cca27e6fa",
+        "signature": "fdbe0552ccd4dcbaf12d7b854c3bac00d3a8c63e8d4294bfc8cad761ee860033"
       },
       "../ts-transformer-awesome/src/transformer/index.ts": {
         "version": "ed5fb67ed2f6fd38b5446296f359408d83cfbf08e4b5319a88e13a548478e060",
         "signature": "8863a28720e5c3074afe1f7e0e9a947a9dfebd3220d390bb6ce09db2b82e0611"
       },
       "../ts-transformer-awesome/src/getcustomtransformers.ts": {
-        "version": "4c728aa3b12597a64c1b37e20289634f18064c95866bc010898f86d61962f5e5",
-        "signature": "479d22791ef6bf40aa45643834d56514e0a0aa0f502c581af4a94395a3742e72"
+        "version": "409404848aa22e890171f12e7360ba43aa490384918c81eecda919c87bb59952",
+        "signature": "f33a72502402b8f92191c5b1de721f3202b7450e9412eb9feb0b5bbbdbdd1c39"
       },
       "../ts-transformer-awesome/src/compile.ts": {
         "version": "0f0fec6b895448c6d2d73f327e772af936496393caffff213917dcd8cda4f88d",
@@ -3592,6 +3592,7 @@
       ],
       "../ts-transformer-awesome/src/transformer/dev.ts": [
         "../../node_modules/typescript/lib/typescript.d.ts",
+        "../ts-transformer-awesome/src/transformer/astutils.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -6446,6 +6447,9 @@
       "../ts-transformer-awesome/src/transformer/macros.ts": [
         "../../node_modules/typescript/lib/typescript.d.ts"
       ],
+      "../ts-transformer-awesome/src/transformer/dev.ts": [
+        "../../node_modules/typescript/lib/typescript.d.ts"
+      ],
       "../ts-transformer-awesome/src/transformer/index.ts": [
         "../ts-transformer-awesome/src/transformer/astutils.ts",
         "../ts-transformer-awesome/src/transformer/typefilter.ts",
@@ -7172,9 +7176,6 @@
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../ts-transformer-awesome/src/transformer/dev.ts": [
-        "../../node_modules/typescript/lib/typescript.d.ts"
       ]
     },
     "semanticDiagnosticsPerFile": [
@@ -7409,17 +7410,13 @@
       "../../node_modules/typesmith/transformer/visitor-context.d.ts",
       "../../node_modules/typesmith/transformer/transformer.d.ts",
       "../../node_modules/typesmith/transformer/index.d.ts",
-      "../ts-transformer-awesome/src/transformer/astutils.ts",
       "../../node_modules/ts-optchain/index.d.ts",
       "../../node_modules/ts-transformer-keys/index.d.ts",
       "../ts-transformer-awesome/env.d.ts",
-      "../ts-transformer-awesome/src/transformer/visitnodeandchildren.ts",
-      "../ts-transformer-awesome/src/transformer/typefilter.ts",
       "../../node_modules/ts-is-kind/index.d.ts",
       "../ts-transformer-awesome/src/tslib-extra.ts",
-      "../ts-transformer-awesome/src/transformer/mobxdecorate.ts",
       "../ts-transformer-awesome/src/transformer/macrosmap.ts",
-      "../ts-transformer-awesome/src/transformer/macros.ts",
+      "../ts-transformer-awesome/src/d.ts",
       "../ts-transformer-awesome/src/env.ts",
       "../../node_modules/@types/prettier/index.d.ts",
       "../ts-transformer-awesome/src/runcommontests.ts",
@@ -7517,13 +7514,17 @@
       "../../node_modules/@types/webpack/index.d.ts",
       "../../node_modules/@types/yargs-parser/index.d.ts",
       "../../node_modules/@types/yargs/index.d.ts",
-      "../ts-transformer-awesome/src/transformer/dev.ts",
+      "../ts-transformer-awesome/src/transformer/astutils.ts",
       "../ts-transformer-awesome/src/transformer/index.ts",
+      "../ts-transformer-awesome/src/transformer/dev.ts",
+      "../ts-transformer-awesome/src/transformer/macros.ts",
+      "../ts-transformer-awesome/src/transformer/mobxdecorate.ts",
+      "../ts-transformer-awesome/src/transformer/typefilter.ts",
+      "../ts-transformer-awesome/src/transformer/visitnodeandchildren.ts",
       "../ts-transformer-awesome/src/getcustomtransformers.ts",
-      "../ts-transformer-awesome/src/d.ts",
-      "../ts-transformer-awesome/src/compile.ts",
+      "../ts-transformer-awesome/src/index.ts",
       "../ts-transformer-awesome/src/plugin.ts",
-      "../ts-transformer-awesome/src/index.ts"
+      "../ts-transformer-awesome/src/compile.ts"
     ]
   },
   "version": "3.7.3"

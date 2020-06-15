@@ -43,6 +43,7 @@ const presetOptions = {
   'ts-transformer-enumerate': tsEnumerate,
   'typescript-transform-macros': Macros,
   'ts-transformer-minify-privates': tsMinifyPrivates,
+  "DEV-Replacer": DEV,
   'typescript-is': tsIsTransformer,
   'typesmith': typesmithTransformer,
   '@yuyi919/TypeFilterTransformer': TypeFilterTransformer,
@@ -73,6 +74,10 @@ export interface AwesomeTsTransformerOptions {
   useTypesmith?: boolean;
   useMobxDecorate?: boolean | MobxDecorateTransformerOptions;
   logger?: boolean;
+  /**
+   * @default process.env.NODE_ENV === 'development'
+   */
+  isDev?: boolean;
 }
 function findKey(factory: any) {
   for (const [key, f] of Object.entries(presetOptions)) {
@@ -98,6 +103,7 @@ function use<T extends Function>(factory: T, ...msg: any): any {
 export function getCustomTransformers({
   program,
   importLibs = [],
+  isDev = process.env.NODE_ENV === 'development',
   useHoistObjectInProps = true,
   useReactConstantElements = true,
   useKeysOf = true,
@@ -145,6 +151,7 @@ export function getCustomTransformers({
     return null
   }).filter(option => option) as ImportOptions[]
   const allowList = [
+    use(DEV)(program, isDev),
     useTypescriptIs && use(tsIsTransformer)(program, {}),
     useTypesmith && use(typesmithTransformer)(program),
     useTsxControlStatments && use(tsxControlStatments)(program),
@@ -156,7 +163,6 @@ export function getCustomTransformers({
     useHoistObjectInProps && use(hoistObjectsInProps)(program, {
       propRegex: /.*/,
     }),
-    DEV(program),
     use(paths)(program),
     useTypeFilter && use(TypeFilterTransformer)(program),
     useNameof && use(nameofTransformer) as TransformerFactory<SourceFile>,

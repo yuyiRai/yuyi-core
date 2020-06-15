@@ -50,6 +50,13 @@ export namespace AstUtils$$ {
       target
     );
   }
+  export function createIs$$(sub: ts.Expression, target: ts.Expression, strict: boolean = true) {
+    return ts.createBinary(
+      sub,
+      strict ? ts.SyntaxKind.EqualsEqualsEqualsToken : ts.SyntaxKind.EqualsEqualsToken,
+      target
+    )
+  }
 
   /**
    * 创建typeof xx === target的判断语句
@@ -456,8 +463,6 @@ export namespace AstUtils$$ {
 
     if (ts.isTypeReferenceNode(node) && ts.isIdentifier(node.typeName)) {
       if (node.typeName.escapedText === typeName) {
-        if (__DEV__)
-          console.log('check type name: ', node.typeName.escapedText);
         return true;
       }
     }

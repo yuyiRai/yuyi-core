@@ -1,4 +1,4 @@
-import { __read, __spread } from "tslib";
+import { __spreadArrays } from "tslib";
 import '../../../env';
 var Utils = {
     a: filters,
@@ -8,7 +8,7 @@ var Utils = {
 };
 Utils.a = filters;
 var a = 1;
-var key = ["a", "b", "c", "dc"];
+var key = tsKeys();
 var _a = undefined;
 var _tempArr_2 = [null];
 var _tempLength_2 = 1;
@@ -31,22 +31,33 @@ while (_tempIndex_4 < _tempLength_4) {
 }
 _b = _tempResult_4 != null ? _tempResult_4 : undefined;
 console.log(_b); // filters(a, '3', 2, a && 1 || 0 + 2, a && 1 || 0 + 3, 5, 6)
-export function test(a, b) { function test() {
+export function test(a, b) {
+    if (process.env.NODE_ENV === "development") {
+        console.log('dev');
+    }
+    function test() {
+        var _a = undefined;
+        var _tempArr_6 = __spreadArrays([a], b, ['3', 2]);
+        var _tempLength_6 = _tempArr_6.length;
+        var _tempIndex_6 = 0;
+        var _tempResult_6;
+        while (_tempIndex_6 < _tempLength_6) {
+            if (typeof (_tempResult_6 = _tempArr_6[_tempIndex_6++]) === "number")
+                break;
+        }
+        _a = typeof _tempResult_6 === "number" ? _tempResult_6 : undefined;
+        var d = _a; // Utils.dc<number>(a, ...b, '3', 2)
+        return d;
+    }
     var _a = undefined;
-    var _tempArr_6 = __spread([a], b, ['3', 2]);
-    var _tempLength_6 = _tempArr_6.length;
-    var _tempIndex_6 = 0;
-    var _tempResult_6;
-    while (_tempIndex_6 < _tempLength_6) {
-        if (typeof (_tempResult_6 = _tempArr_6[_tempIndex_6++]) === "number")
+    var _tempArr_8 = [a, '3', 2, a && 1 || 0 + 2, a && 1 || 0 + 3, 5, 6];
+    var _tempLength_8 = 7;
+    var _tempIndex_8 = 0;
+    var _tempResult_8;
+    while (_tempIndex_8 < _tempLength_8) {
+        if ((_tempResult_8 = _tempArr_8[_tempIndex_8++]) != null)
             break;
     }
-    _a = typeof _tempResult_6 === "number" ? _tempResult_6 : undefined;
-    var d = _a; // Utils.dc<number>(a, ...b, '3', 2)
-    return d;
-} var _a = undefined; var _tempArr_8 = [a, '3', 2, a && 1 || 0 + 2, a && 1 || 0 + 3, 5, 6]; var _tempLength_8 = 7; var _tempIndex_8 = 0; var _tempResult_8; while (_tempIndex_8 < _tempLength_8) {
-    if ((_tempResult_8 = _tempArr_8[_tempIndex_8++]) != null)
-        break;
-} _a = _tempResult_8 != null ? _tempResult_8 : undefined; return _a && test(); // filters(a, '3', 2, a && 1 || 0 + 2, a && 1 || 0 + 3, 5, 6)
- }
-//# sourceMappingURL=number.js.map
+    _a = _tempResult_8 != null ? _tempResult_8 : undefined;
+    return _a && test(); // filters(a, '3', 2, a && 1 || 0 + 2, a && 1 || 0 + 3, 5, 6)
+}

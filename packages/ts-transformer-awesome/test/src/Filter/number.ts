@@ -21,6 +21,9 @@ console.log(
   filters(a, '3', 2, a && 1 || 0 + 2, a && 1 || 0 + 3, 5, 6)
 )
 export function test(a: any, b: any[]) {
+  if (__DEV__) {
+    console.log('dev')
+  }
   function test() {
     const d = Utils.dc<number>(a, ...b, '3', 2)
     return d;

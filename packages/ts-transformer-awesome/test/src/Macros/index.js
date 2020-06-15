@@ -20,13 +20,13 @@ function app() { var i; return __generator(this, function (_a) {
 }); }
 ;
 export function app2() {
-    var __generator, runner_1 = app();
-    while (__generator = runner_1.next(),
-        !__generator.done) {
-        console.log(__generator.value, __generator.done);
+    var loop_1, runner_1 = app();
+    while (loop_1 = runner_1.next(),
+        !loop_1.done) {
+        console.log(loop_1.value, loop_1.done);
         ;
     }
-    __generator.value;
+    loop_1.value;
     var arr = [1, 2, 3, 4, 5];
     var arr_1 = arr_1, len_1 = arr_1.length;
     var i_1 = 0, item_1;
@@ -37,4 +37,3 @@ export function app2() {
     }
     true;
 }
-//# sourceMappingURL=index.js.map

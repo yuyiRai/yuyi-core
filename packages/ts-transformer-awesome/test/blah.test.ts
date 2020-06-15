@@ -4,7 +4,7 @@ import contextRequire from "require-context";
 import { compile } from '../src';
 import ts from 'typescript';
 
-let name = 'Macros'
+let name = 'Filter'
 // import '@types/webpack'
 for (const p of contextRequire(path.join(__dirname, './src/' + name), true, /\.(ts|tsx)$/).keys()) {
   // test('work: ' + p, () => {

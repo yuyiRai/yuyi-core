@@ -17,4 +17,3 @@ export default function app() { var i; return __generator(this, function (_a) {
     }
 }); }
 ;
-//# sourceMappingURL=GeneratorForEach.js.map
