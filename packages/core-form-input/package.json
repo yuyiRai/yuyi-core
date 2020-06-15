@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/core-form-input",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "license": "MIT",
   "author": "yuyiRai",
   "main": "dist/index.js",
@@ -41,7 +41,7 @@
   "dependencies": {
     "@material-ui/core": "^4.7.1",
     "@material-ui/icons": "^4.5.1",
-    "@yuyi919/utils": "^0.0.73",
+    "@yuyi919/utils": "^0.0.74",
     "react-virtualized-auto-sizer": "^1.0.2",
     "react-vtree": "^1.0.0",
     "react-window": "^1.8.5",
