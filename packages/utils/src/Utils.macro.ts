@@ -36,7 +36,7 @@ export const MapMacro = MACRO(
       i = -1,
       len = _target.length - 1,
       item: T,
-      result: R[];
+      result: R[] = [];
     while (i < len) {
       item = _target[++i];
       result[result.length] = callbackfn(item, i, _target);

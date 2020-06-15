@@ -43,13 +43,18 @@ export namespace AstUtils$$ {
    * @param target 
    */
   export function createIsNot$$(sub: ts.Expression, target: ts.Expression = ts.createIdentifier('undefined'), strict: boolean = true) {
-    const { ExclamationEqualsToken, ExclamationEqualsEqualsToken } = ts.SyntaxKind
+    const { ExclamationEqualsToken, ExclamationEqualsEqualsToken } = ts.SyntaxKind;
     return ts.createBinary(
       sub,
       strict ? ExclamationEqualsEqualsToken : ExclamationEqualsToken,
       target
     );
   }
+
+  export const visitEachChild: typeof ts.visitEachChild = (node, visitor, context) => {
+    return ts.isEmptyStatement(node) ? node : ts.visitEachChild(node, visitor, context)
+  }
+
   export function createIs$$(sub: ts.Expression, target: ts.Expression, strict: boolean = true) {
     return ts.createBinary(
       sub,

@@ -923,8 +923,8 @@
         "signature": "2a8e1ce1ad3238934a448ac83a59176189bb30c2a72948b36eb4c8797ba23de5"
       },
       "../ts-transformer-awesome/src/transformer/astutils.ts": {
-        "version": "24f06f66a7952f9bb7c2a6f09d56fa6410263e1ffb77b3cf47f3eb2ab2d670cf",
-        "signature": "23e435b9fdc01c86dbfe18cc216650e8cc41c5ee7759e3c3dee158a343db2d4e"
+        "version": "9a00be400c54838af0b9f29ffd19ff84f6233827cea3e9d649dd64f676ea3782",
+        "signature": "b1bc6f4de79c346a694ee5463a3be00865de1d88aa2d84b35813063ee22e902e"
       },
       "../../node_modules/ts-optchain/index.d.ts": {
         "version": "e9207dae9dbce9914c4548ef0bb4be18bfed7c1584e43bde999ef52a52a368b3",
@@ -963,7 +963,7 @@
         "signature": "bb7a3ba92f23b30b80d7726238ffffbcb5d841e68a858519b70e56beda97a885"
       },
       "../ts-transformer-awesome/src/transformer/macros.ts": {
-        "version": "1ffaebc467d1e5c315354f52d679a47af17ba57d5bb0677afbed974a404a0bfd",
+        "version": "9ba434c321897d2575e7dd23f240e4748532d5e19437fcf1b621d21088178dcc",
         "signature": "469bcc7c91f951fa09e3e4e1ccb3bef83a5fa2bd79d893c9c4bc02e41adba1ba"
       },
       "../ts-transformer-awesome/src/transformer/dev.ts": {
@@ -7522,9 +7522,9 @@
       "../ts-transformer-awesome/src/transformer/typefilter.ts",
       "../ts-transformer-awesome/src/transformer/visitnodeandchildren.ts",
       "../ts-transformer-awesome/src/getcustomtransformers.ts",
-      "../ts-transformer-awesome/src/index.ts",
+      "../ts-transformer-awesome/src/compile.ts",
       "../ts-transformer-awesome/src/plugin.ts",
-      "../ts-transformer-awesome/src/compile.ts"
+      "../ts-transformer-awesome/src/index.ts"
     ]
   },
   "version": "3.7.3"
