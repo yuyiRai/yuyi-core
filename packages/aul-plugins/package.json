@@ -1,6 +1,6 @@
 {
   "name": "aul-plugins",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "description": "",
   "main": "index.js",
   "private": true,
@@ -39,6 +39,6 @@
     "typescript": "^3.6.4"
   },
   "dependencies": {
-    "@yuyi919/utils": "^0.0.77"
+    "@yuyi919/utils": "^0.0.78"
   }
 }
