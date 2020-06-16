@@ -219,9 +219,12 @@ export class EventEmitter<T = any> {
 
   /**
    * 转化成标准Promise，指定超时时间
+   * @param timeout 超时时间
+   * @param timeoutValue 超时时默认返回的值
+   * @param timeoutError 超市时是否返回错误，返回reject(timeoutValue)
    */
-  public toPromiseUntil(timeout: number) {
-    return Promise.race([this.toPromise(), sleep(timeout)]);
+  public toPromiseUntil<T>(timeout: number, timeoutValue?: T, timeoutError?: boolean) {
+    return Promise.race([this.toPromise(), sleep(timeout, timeoutValue, timeoutError)]);
   }
 
   

@@ -966,8 +966,8 @@
         "signature": "8965ab0b0db6fca2222fe13a317e3480cf2c664ef7af42c2ff3e5a86bc049888"
       },
       "../utils/src/eventemitter/index.ts": {
-        "version": "f254cafc16a973b6ea18d7b2c135b63a1c12f77aea0ef81a84b11a9b374088c5",
-        "signature": "4df199472e7bde860a854e8d04388e7fd1d42cd159fb0a792cf7d3b70815f8e3"
+        "version": "5b8db90b4b9d4eef04973ed3e56857d91d42bdb1c1524b38115336c6d8cced36",
+        "signature": "fa7e5a3c6e6223e960210a0e4bc3a0e6620a316abffaa15752ec97ffd0438960"
       },
       "../utils/src/typelib/expect.ts": {
         "version": "b5722023231b873274faeab40c6868334fdcac7357343c40d44c22e741acffbf",
@@ -990,7 +990,7 @@
         "signature": "a1eb236b8051318c21b66cb472f15e12042f1b4462b957e0729142e3267bba63"
       },
       "../utils/src/utils.macro.ts": {
-        "version": "f883c302cb6c22ef9251c79f068f384283a8d821c8f1a08e2fecf33674e64cb2",
+        "version": "e8c851ab0884d232853b070a84dcc4ecbaf76fd0901e2e6deb14807832386c5b",
         "signature": "0907bffb4ed9c0db845a2c657c532030fc78cc13da063a2e9a4b9c5ab92228ee"
       },
       "../../node_modules/typescriptcollectionsframework/definitions/src/collectable.d.ts": {
@@ -2285,6 +2285,7 @@
           "./"
         ],
         "*": [
+          "*",
           "*",
           "*",
           "*",
@@ -11399,7 +11400,6 @@
       "../../node_modules/rxjs/operators/index.d.ts",
       "../utils/src/customutils/waitingpromise.ts",
       "../utils/src/optionsutils/optionsutils.ts",
-      "../utils/src/utils.macro.ts",
       "../../node_modules/typescriptcollectionsframework/definitions/src/collectable.d.ts",
       "../../node_modules/typescriptcollectionsframework/definitions/src/allfieldcollectable.d.ts",
       "../../node_modules/typescriptcollectionsframework/definitions/src/hashable.d.ts",
@@ -11722,7 +11722,8 @@
       "../utils/src/commonutils.ts",
       "../utils/src/typelib/index.ts",
       "../utils/src/typelib/filterto.ts",
-      "../utils/src/typelib/expect.ts"
+      "../utils/src/typelib/expect.ts",
+      "../utils/src/utils.macro.ts"
     ]
   },
   "version": "3.7.3"
