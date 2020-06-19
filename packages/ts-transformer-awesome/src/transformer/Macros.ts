@@ -254,10 +254,15 @@ function getNameValueMap(
     const argValue = valuedArg || ts.createIdentifier('');
     let replacer: ts.Expression = argValue;
     if (valuedArg
-      && (ts.isIdentifier(valuedArg) && !['null', 'undefined'].includes(valuedArg.text))
-      && !ts.isArrowFunction(valuedArg)
-      && !ts.isFunctionExpression(valuedArg)
-      && !ts.isLiteralExpression(valuedArg)
+      && (
+        ts.isCallExpression(valuedArg)
+      || ts.isCallLikeExpression(valuedArg)
+      || ts.isObjectLiteralExpression(valuedArg)
+      || ts.isArrayLiteralExpression(valuedArg)
+      || ts.isCallOrNewExpression(valuedArg)
+      || ts.isCallChain(valuedArg)
+      || ts.isPropertyAccessExpression(valuedArg)
+    )
     ) {
       const id = ts.createUniqueName(argName.text);
       definedArgs.push([id, replacer]);

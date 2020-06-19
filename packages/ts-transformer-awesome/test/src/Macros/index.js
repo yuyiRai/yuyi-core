@@ -30,13 +30,11 @@ export function app2() {
     }
     loop_1.value;
     var arr = [1, 2, 3, 4, 5];
-    var target_1 = arr;
-    var arr_1 = target_1, len_1 = target_1.length;
+    var arr_1 = arr_1, len_1 = arr_1.length;
     var i_1 = 0, item_1;
     while (i_1 < len_1) {
         item_1 = arr_1[i_1++];
-        var value_1 = item_1;
-        console.log(value_1);
+        console.log(item_1);
         ;
     }
     true;
