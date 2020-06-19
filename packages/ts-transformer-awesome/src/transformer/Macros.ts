@@ -119,12 +119,12 @@ class Transformer {
       if (!this.rootMacros.has(node.name.escapedText as string)) {
         try {
           const moduleRef = node?.parent?.parent?.parent?.moduleSpecifier?.getText();
-          if (moduleRef && /.macro/.test(moduleRef)) {
+          if (moduleRef && /.macro/.test(moduleRef)) {  
             const filePath = path.join(path.dirname(node.getSourceFile()?.fileName), moduleRef?.replace(/('|")/g, ''));
             // console.log(this.program.getSourceFileByPath(node.getSourceFile()?.fileName as any), filePath);
             // this.program.emit(undefined, this.context.add
             // const sourceFile = node.getSourceFile();
-            // ts.updateSourceFileNode(sourceFile, )
+            // ts.updateSourceFileNode(sourceFile, ) 
             const append = ts.createSourceFile(
               filePath,
               fs.readFileSync(filePath + '.ts').toString(),
