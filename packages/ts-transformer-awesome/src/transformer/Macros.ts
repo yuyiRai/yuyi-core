@@ -1,8 +1,8 @@
 import * as ts from "typescript";
-import map from './MacrosMap'
+import map from './MacrosMap';
 import { AstUtils$$ } from './AstUtils';
-import fs from 'fs-extra'
-import path from 'path'
+import fs from 'fs-extra';
+import path from 'path';
 import { TSOCAny } from 'ts-optchain';
 class Transformer {
   rootMacros: Map<string, ts.FunctionExpression> = map as any;
@@ -39,7 +39,7 @@ class Transformer {
         }
         const value = matched.initializer.arguments[0];
         this.rootMacros.set(name.text, value as ts.FunctionExpression);
-        console.log('read macros', name.text)
+        console.log('read macros', name.text);
         return undefined;
       }
     }
@@ -78,7 +78,7 @@ class Transformer {
         );
       }
       if (node.getSourceFile() && ts.isNumericLiteral(node)) {
-        return ts.createNumericLiteral(node.getText())
+        return ts.createNumericLiteral(node.getText());
       }
       if (node.getSourceFile() && ts.isStringLiteral(node)) {
         return ts.createStringLiteral(node.getText().replace(/('|")/g, ''));
@@ -101,7 +101,7 @@ class Transformer {
    * 是否为Macros函数节点
    */
   checkNode = (node: ts.Node) => {
-    var r: ts.Type | undefined
+    var r: ts.Type | undefined;
     if (ts.isCallExpression(node)) {
       r = this.typeChecker?.getTypeAtLocation(node.expression);
       // console.log(this.program.getRootFileNames())
@@ -129,17 +129,17 @@ class Transformer {
             }
           }
         } catch (error) {
-          console.error(error)
+          console.error(error);
         }
       } else {
-        return true
+        return true;
       }
     }
     return AstUtils$$.isValidType(
       this.typeChecker?.typeToTypeNode(this.typeChecker?.getTypeAtLocation(node)),
       'MacroFunction'
-    )
-  }
+    );
+  };
   replaceMacros = (
     statements: ts.NodeArray<ts.Statement>,
     macros: Map<string, ts.Expression>,
@@ -157,7 +157,7 @@ class Transformer {
 
       const importReplacer = AstUtils$$.checkAndfilterNamedImports(node, importNode => {
         return !this.checkNode(importNode);
-      })
+      });
       if (importReplacer !== false) {
         return importReplacer;
       }
@@ -193,7 +193,7 @@ class Transformer {
         if (!ts.isArrowFunction(value) && !ts.isFunctionExpression(value)) {
           throw new Error("Expected function expression for macro value");
         }
-        appendStatments = new Set(appendStatments ? Array.from(appendStatments) : [])
+        appendStatments = new Set(appendStatments ? Array.from(appendStatments) : []);
         // const ArgMap
         const newMacros = new Map([
           ...macros.entries(),
@@ -206,7 +206,7 @@ class Transformer {
           )
         );
         result = result.concat(Array.from(appendStatments)).concat(resultBlock.statements);
-        appendStatments.clear()
+        appendStatments.clear();
         if (!resultName) return ts.createIdentifier("");
         return resultName;
       }
@@ -244,19 +244,22 @@ function getNameValueMap(
   appendStatments: Set<ts.VariableStatement>
 ) {
   const map = new Map<string, ts.Expression>();
-  const definedArgs: [ts.Identifier, ts.Expression][] = []
+  const definedArgs: [ts.Identifier, ts.Expression][] = [];
   for (let i = 0; i < args.length && i < args.length; i++) {
     const argName = args[i].name;
     if (!ts.isIdentifier(argName)) {
       throw new Error("Expected identifier in macro function definition");
     }
-    const valuedArg = values[i]
+    const valuedArg = values[i];
     const argValue = valuedArg || ts.createIdentifier('');
-    let replacer: ts.Expression = argValue
-    if (valuedArg && !ts.isArrowFunction(valuedArg) && !ts.isFunctionExpression(valuedArg) && !ts.isLiteralExpression(valuedArg)) {
+    let replacer: ts.Expression = argValue;
+    if (valuedArg && ts.isNonNullExpression(valuedArg) &&
+      !ts.isArrowFunction(valuedArg) &&
+      !ts.isFunctionExpression(valuedArg) &&
+      !ts.isLiteralExpression(valuedArg)) {
       const id = ts.createUniqueName(argName.text);
-      definedArgs.push([id, replacer])
-      replacer = id
+      definedArgs.push([id, replacer]);
+      replacer = id;
     }
     //@ts-ignore
     map.set(argName.text, replacer);
