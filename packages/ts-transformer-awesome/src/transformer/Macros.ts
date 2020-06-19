@@ -254,7 +254,7 @@ function getNameValueMap(
     const argValue = valuedArg || ts.createIdentifier('');
     let replacer: ts.Expression = argValue;
     if (valuedArg
-      && !['null', 'undefined'].includes(valuedArg.getText())
+      && (ts.isIdentifier(valuedArg) && !['null', 'undefined'].includes(valuedArg.text))
       && !ts.isArrowFunction(valuedArg)
       && !ts.isFunctionExpression(valuedArg)
       && !ts.isLiteralExpression(valuedArg)
