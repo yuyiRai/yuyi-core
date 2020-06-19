@@ -963,7 +963,7 @@
         "signature": "bb7a3ba92f23b30b80d7726238ffffbcb5d841e68a858519b70e56beda97a885"
       },
       "../ts-transformer-awesome/src/transformer/macros.ts": {
-        "version": "6e80489102db559c86638f48bcd90643c51ba2b9e202b872539ecfe20ace7ff5",
+        "version": "08d2c625b41fc9de4a691e65ac1d565aec7c7614269de74409e47df4fbe20a20",
         "signature": "469bcc7c91f951fa09e3e4e1ccb3bef83a5fa2bd79d893c9c4bc02e41adba1ba"
       },
       "../ts-transformer-awesome/src/transformer/dev.ts": {

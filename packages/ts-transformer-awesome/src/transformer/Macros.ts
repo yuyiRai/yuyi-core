@@ -253,10 +253,12 @@ function getNameValueMap(
     const valuedArg = values[i];
     const argValue = valuedArg || ts.createIdentifier('');
     let replacer: ts.Expression = argValue;
-    if (valuedArg && ts.isNonNullExpression(valuedArg) &&
-      !ts.isArrowFunction(valuedArg) &&
-      !ts.isFunctionExpression(valuedArg) &&
-      !ts.isLiteralExpression(valuedArg)) {
+    if (valuedArg
+      && !['null', 'undefined'].includes(valuedArg.getText())
+      && !ts.isArrowFunction(valuedArg)
+      && !ts.isFunctionExpression(valuedArg)
+      && !ts.isLiteralExpression(valuedArg)
+    ) {
       const id = ts.createUniqueName(argName.text);
       definedArgs.push([id, replacer]);
       replacer = id;
