@@ -15,7 +15,7 @@ export const GeneratorForEach = MACRO(
  * Macros 代替array.forEach
  */
 export const ForEachMacro = MACRO(
-  function <T>(target: T[], callbackfn: (value: T, index: number, array: T[]) => void) {
+  function <T>(target: T[], callbackfn: (value: T, index: number, array: T[]) => void, start?: boolean) {
     const arr = target, len = target.length;
     let i = 0, item: T;
     while (i < len) {
@@ -26,8 +26,14 @@ export const ForEachMacro = MACRO(
   }
 );
 
-export default function* app() {
-  for (var i = 0; i < 10; i++) {
-    yield i;
+/**
+ * Macros 代替array.forEach
+ */
+export const getter = MACRO(
+  function (target: any[], ccc: any, start?: boolean) {
+    return [target, ccc, start]
   }
+);
+export default function app() {
+  return getter([1, 2, 3], console.log)
 };

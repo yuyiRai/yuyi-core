@@ -3,8 +3,9 @@ import map from './MacrosMap'
 import { AstUtils$$ } from './AstUtils';
 import fs from 'fs-extra'
 import path from 'path'
+import { TSOCAny } from 'ts-optchain';
 class Transformer {
-  rootMacros = map;
+  rootMacros: Map<string, ts.FunctionExpression> = map as any;
   typeChecker: ts.TypeChecker | undefined;
   constructor(public context: ts.TransformationContext, public program: ts.Program) {
     this.typeChecker = program.getTypeChecker();
@@ -37,7 +38,7 @@ class Transformer {
           );
         }
         const value = matched.initializer.arguments[0];
-        this.rootMacros.set(name.text, value);
+        this.rootMacros.set(name.text, value as ts.FunctionExpression);
         console.log('read macros', name.text)
         return undefined;
       }
@@ -141,7 +142,8 @@ class Transformer {
   }
   replaceMacros = (
     statements: ts.NodeArray<ts.Statement>,
-    macros: Map<string, ts.Expression>
+    macros: Map<string, ts.Expression>,
+    appendStatments?: Set<ts.VariableStatement>
   ): ts.Statement[] => {
     const visit = (node: ts.Node): ts.Node => {
       if (
@@ -160,7 +162,7 @@ class Transformer {
         return importReplacer;
       }
       if (ts.isBlock(node)) {
-        return ts.createBlock(this.replaceMacros(node.statements, macros));
+        return ts.createBlock(this.replaceMacros(node.statements, macros, appendStatments));
       }
       if (ts.isIdentifier(node) && macros.has(node.text)) {
         return macros.get(node.text)!;
@@ -191,9 +193,11 @@ class Transformer {
         if (!ts.isArrowFunction(value) && !ts.isFunctionExpression(value)) {
           throw new Error("Expected function expression for macro value");
         }
+        appendStatments = new Set(appendStatments ? Array.from(appendStatments) : [])
+        // const ArgMap
         const newMacros = new Map([
           ...macros.entries(),
-          ...getNameValueMap(node.arguments, value.parameters).entries()
+          ...getNameValueMap(node.arguments, value.parameters, appendStatments).entries()
         ]);
         const [resultName, resultBlock] = this.cleanMacro(
           ts.visitNode(
@@ -201,7 +205,8 @@ class Transformer {
             visit
           )
         );
-        result = result.concat(resultBlock.statements);
+        result = result.concat(Array.from(appendStatments)).concat(resultBlock.statements);
+        appendStatments.clear()
         if (!resultName) return ts.createIdentifier("");
         return resultName;
       }
@@ -235,16 +240,31 @@ function getStatements(
 
 function getNameValueMap(
   values: ts.NodeArray<ts.Expression>,
-  args: ts.NodeArray<ts.ParameterDeclaration>
+  args: ts.NodeArray<ts.ParameterDeclaration>,
+  appendStatments: Set<ts.VariableStatement>
 ) {
   const map = new Map<string, ts.Expression>();
-  for (let i = 0; i < values.length && i < args.length; i++) {
+  const definedArgs: [ts.Identifier, ts.Expression][] = []
+  for (let i = 0; i < args.length && i < args.length; i++) {
     const argName = args[i].name;
     if (!ts.isIdentifier(argName)) {
       throw new Error("Expected identifier in macro function definition");
     }
-    const argValue = values[i];
-    map.set(argName.text, argValue);
+    const valuedArg = values[i]
+    const argValue = valuedArg || ts.createIdentifier('');
+    let replacer: ts.Expression = argValue
+    if (valuedArg && !ts.isArrowFunction(valuedArg) && !ts.isFunctionExpression(valuedArg) && !ts.isLiteralExpression(valuedArg)) {
+      const id = ts.createUniqueName(argName.text);
+      definedArgs.push([id, replacer])
+      replacer = id
+    }
+    //@ts-ignore
+    map.set(argName.text, replacer);
+  }
+  if (definedArgs.length > 0) {
+    appendStatments.add(
+      AstUtils$$.createMultipleVariableStatement$$(definedArgs)
+    );
   }
   return map;
 }

@@ -15,6 +15,21 @@ export namespace AstUtils$$ {
       ts.createVariableDeclaration(name, undefined, value)
     ]);
   }
+  /**
+   * 创建简单变量行
+   * @param name 名称
+   * @param value 表达式
+   */
+  export function createMultipleVariableStatement$$(id: [string | ts.Identifier | ts.ObjectBindingPattern | ts.ArrayBindingPattern, ts.Expression][], isLet = false, preModifier: ts.Modifier[] | ts.ModifiersArray = []) {
+    return ts.createVariableStatement([
+      ...preModifier,
+      ts.createToken((!isLet ? ts.SyntaxKind.ConstKeyword : ts.SyntaxKind.LetKeyword) as any)
+    ],
+      id.map(([name, value]) =>
+        ts.createVariableDeclaration(name, undefined, value)
+      )
+    )
+  }
 
   /**
    * 创建是否为null的判断语句
