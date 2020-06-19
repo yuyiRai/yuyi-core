@@ -3,8 +3,8 @@
  */
 export const GeneratorForEach = MACRO(
   function <T, R, N>(generator: Generator<T, R, N>, handle: (value: T, done?: boolean) => void): R {
-    let loop: IteratorResult<T, any>, runner = generator;
-    while (loop = runner.next(), !loop.done) {
+    let loop: IteratorResult<T, any>;
+    while (loop = generator.next(), !loop.done) {
       handle(loop.value, loop.done);
     }
     return loop.value;
@@ -16,11 +16,10 @@ export const GeneratorForEach = MACRO(
  */
 export const ForEachMacro = MACRO(
   function <T>(target: T[], callbackfn: (value: T, index: number, array: T[]) => void, start?: boolean) {
-    const arr = target, len = target.length;
-    let i = 0, item: T;
+    let len = target.length, i = 0, item: T;
     while (i < len) {
-      item = arr[i++];
-      callbackfn(item, i, arr);
+      item = target[i++];
+      callbackfn(item, i, target);
     }
     return true
   }

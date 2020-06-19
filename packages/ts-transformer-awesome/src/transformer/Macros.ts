@@ -39,7 +39,7 @@ class Transformer {
         }
         const value = matched.initializer.arguments[0];
         this.rootMacros.set(name.text, value as ts.FunctionExpression);
-        console.log('read macros', name.text);
+        // console.log('read macros', name.text);
         return undefined;
       }
     }
@@ -64,7 +64,13 @@ class Transformer {
     }
     return ts.visitEachChild(node, this.resolveMacros, this.context);
   };
-  cleanMacro = <T extends ts.Node>(node: T): [ts.Expression | undefined, T] => {
+
+  /**
+   * 
+   * @param node 遍历的节点
+   * @param outerName 外部引入的变量名
+   */
+  cleanMacro = <T extends ts.Node>(node: T, outerName: Set<string>): [ts.Expression | undefined, T] => {
     const visit = (node: ts.Node): ts.Node | undefined => {
       if (ts.isReturnStatement(node)) {
         if (!node.expression) throw new Error("Expected macro to return value");
@@ -84,8 +90,12 @@ class Transformer {
         return ts.createStringLiteral(node.getText().replace(/('|")/g, ''));
       }
       if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name)) {
-        variableMap.set(node.name.text, ts.createUniqueName(node.name.text));
-      }
+        console.error(node.name.text, ts.isTypeReferenceNode(node.name))
+        variableMap.set(
+          node.name.text,
+          outerName.has(node.name.text) ? node.name : ts.createUniqueName(node.name.text) as any
+        );
+      } 
       if (ts.isIdentifier(node) && variableMap.has(node.text)) {
         return variableMap.get(node.text)!;
       }
@@ -194,16 +204,19 @@ class Transformer {
           throw new Error("Expected function expression for macro value");
         }
         appendStatments = new Set(appendStatments ? Array.from(appendStatments) : []);
+        // 外部引用的变量名称集
+        const outerArgNameReferenceSet = new Set<string>()
         // const ArgMap
         const newMacros = new Map([
           ...macros.entries(),
-          ...getNameValueMap(node.arguments, value.parameters, appendStatments).entries()
+          ...getNameValueMap(node.arguments, value.parameters, appendStatments, outerArgNameReferenceSet).entries()
         ]);
         const [resultName, resultBlock] = this.cleanMacro(
           ts.visitNode(
             ts.createBlock(this.replaceMacros(getStatements(value), newMacros)),
             visit
-          )
+          ),
+          outerArgNameReferenceSet
         );
         result = result.concat(Array.from(appendStatments)).concat(resultBlock.statements);
         appendStatments.clear();
@@ -238,38 +251,53 @@ function getStatements(
   return ts.createNodeArray([ts.createReturn(node.body)]);
 }
 
+/**
+ * 
+ * @param values 传值定义序列
+ * @param args 参数定义序列
+ * @param appendStatments 要在顶部追加的行
+ * @param referenceName 外部引入名称
+ */
 function getNameValueMap(
   values: ts.NodeArray<ts.Expression>,
   args: ts.NodeArray<ts.ParameterDeclaration>,
-  appendStatments: Set<ts.VariableStatement>
+  appendStatments: Set<ts.VariableStatement>,
+  referenceName: Set<string>
 ) {
   const map = new Map<string, ts.Expression>();
   const definedArgs: [ts.Identifier, ts.Expression][] = [];
   for (let i = 0; i < args.length && i < args.length; i++) {
     const argName = args[i].name;
+    const valuedArg = values[i];
     if (!ts.isIdentifier(argName)) {
       throw new Error("Expected identifier in macro function definition");
     }
-    const valuedArg = values[i];
     const argValue = valuedArg || ts.createIdentifier('');
-    let replacer: ts.Expression = argValue;
-    if (valuedArg
-      && (
-        ts.isCallExpression(valuedArg)
-      || ts.isCallLikeExpression(valuedArg)
-      || ts.isObjectLiteralExpression(valuedArg)
-      || ts.isArrayLiteralExpression(valuedArg)
-      || ts.isCallOrNewExpression(valuedArg)
-      || ts.isCallChain(valuedArg)
-      || ts.isPropertyAccessExpression(valuedArg)
-    )
+    if (
+      valuedArg
+      //@ts-ignore
+        && !(ts.isIdentifier(valuedArg))
+        && (
+          ts.isCallExpression(valuedArg)
+          || ts.isCallLikeExpression(valuedArg)
+          || ts.isObjectLiteralExpression(valuedArg)
+          || ts.isArrayLiteralExpression(valuedArg)
+          || ts.isCallOrNewExpression(valuedArg)
+          || ts.isCallChain(valuedArg)
+          || ts.isPropertyAccessExpression(valuedArg)
+        )
     ) {
-      const id = ts.createUniqueName(argName.text);
-      definedArgs.push([id, replacer]);
-      replacer = id;
+      const tmp = ts.createUniqueName(argName.text)
+      definedArgs.push([tmp, argValue]);
+      //@ts-ignore
+      map.set(argName.text, tmp);
+    } else {
+      if (valuedArg && ts.isIdentifier(valuedArg)) {
+        referenceName.add(valuedArg.text)
+      }
+      //@ts-ignore
+      map.set(argName.text, argValue);
     }
-    //@ts-ignore
-    map.set(argName.text, replacer);
   }
   if (definedArgs.length > 0) {
     appendStatments.add(
