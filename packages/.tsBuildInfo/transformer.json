@@ -923,8 +923,8 @@
         "signature": "2a8e1ce1ad3238934a448ac83a59176189bb30c2a72948b36eb4c8797ba23de5"
       },
       "../ts-transformer-awesome/src/transformer/astutils.ts": {
-        "version": "17c6cdb8956b64c9e0f60036d16381a441c454180569a931922d051bb33941d1",
-        "signature": "23e435b9fdc01c86dbfe18cc216650e8cc41c5ee7759e3c3dee158a343db2d4e"
+        "version": "d649d79ebc99463540879128dc17d31dbca19ec3a2f0653e62eb06ea1d2eafbd",
+        "signature": "7e17a0783e30a40f2af92a4f8f79c09ec2315232f343f7466cbac8ca22137fbd"
       },
       "../../node_modules/ts-optchain/index.d.ts": {
         "version": "e9207dae9dbce9914c4548ef0bb4be18bfed7c1584e43bde999ef52a52a368b3",
@@ -963,7 +963,7 @@
         "signature": "bb7a3ba92f23b30b80d7726238ffffbcb5d841e68a858519b70e56beda97a885"
       },
       "../ts-transformer-awesome/src/transformer/macros.ts": {
-        "version": "f6449b2ed15fb5943041cb815abc0ecad7f99e8b816fbd54815cb7ee7ef38c71",
+        "version": "ae8afc547ac940f1ab7f45fa0396082ee5909a47ff59ec7dcd45e7963807c5d3",
         "signature": "469bcc7c91f951fa09e3e4e1ccb3bef83a5fa2bd79d893c9c4bc02e41adba1ba"
       },
       "../ts-transformer-awesome/src/transformer/dev.ts": {
@@ -3585,6 +3585,7 @@
         "../ts-transformer-awesome/src/transformer/astutils.ts",
         "../../node_modules/@types/fs-extra/index.d.ts",
         "../../node_modules/@types/node/path.d.ts",
+        "../../node_modules/ts-optchain/index.d.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
