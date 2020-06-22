@@ -195,7 +195,7 @@ class Transformer {
 
       const nodeName = node.name.escapedText as string;
       if (filePath && isMacroFile(filePath)) {
-        console.error(nodeName)
+        // console.error(nodeName)
         if (!this.rootMacros.has(nodeName)) {
           try {
             const append = ts.createSourceFile(
