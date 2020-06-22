@@ -90,7 +90,7 @@ class Transformer {
         return ts.createStringLiteral(node.getText().replace(/('|")/g, ''));
       }
       if (ts.isVariableDeclaration(node) && ts.isIdentifier(node.name)) {
-        console.error(node.name.text, ts.isTypeReferenceNode(node.name))
+        // console.error(node.name.text, ts.isTypeReferenceNode(node.name))
         variableMap.set(
           node.name.text,
           outerName.has(node.name.text) ? node.name : ts.createUniqueName(node.name.text) as any

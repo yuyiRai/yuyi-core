@@ -963,7 +963,7 @@
         "signature": "bb7a3ba92f23b30b80d7726238ffffbcb5d841e68a858519b70e56beda97a885"
       },
       "../ts-transformer-awesome/src/transformer/macros.ts": {
-        "version": "534689916a28402fa2f95145c17dabd6ace5357857a0501d21525ce2a5e12caa",
+        "version": "86da95774c7a6817bbacad016d6b937bf8d11b8791f614bb68dadaffb831bad4",
         "signature": "469bcc7c91f951fa09e3e4e1ccb3bef83a5fa2bd79d893c9c4bc02e41adba1ba"
       },
       "../ts-transformer-awesome/src/transformer/dev.ts": {
@@ -7421,11 +7421,11 @@
       "../ts-transformer-awesome/src/tslib-extra.ts",
       "../ts-transformer-awesome/src/transformer/mobxdecorate.ts",
       "../ts-transformer-awesome/src/transformer/macrosmap.ts",
-      "../ts-transformer-awesome/src/transformer/macros.ts",
       "../ts-transformer-awesome/src/transformer/dev.ts",
       "../ts-transformer-awesome/src/transformer/index.ts",
       "../ts-transformer-awesome/src/getcustomtransformers.ts",
       "../ts-transformer-awesome/src/compile.ts",
+      "../ts-transformer-awesome/src/d.ts",
       "../ts-transformer-awesome/src/env.ts",
       "../ts-transformer-awesome/src/plugin.ts",
       "../ts-transformer-awesome/src/index.ts",
@@ -7525,7 +7525,7 @@
       "../../node_modules/@types/webpack/index.d.ts",
       "../../node_modules/@types/yargs-parser/index.d.ts",
       "../../node_modules/@types/yargs/index.d.ts",
-      "../ts-transformer-awesome/src/d.ts"
+      "../ts-transformer-awesome/src/transformer/macros.ts"
     ]
   },
   "version": "3.7.3"
