@@ -1,18 +1,28 @@
-import * as ts from "typescript";
-import map from './MacrosMap';
-import { AstUtils$$ } from './AstUtils';
 import fs from 'fs-extra';
 import path from 'path';
-import { TSOCAny } from 'ts-optchain';
+import * as ts from "typescript";
+import { resolveMsgFactroy } from '../resolveMsg';
+import { AstUtils$$ } from './AstUtils';
+import colors from 'colors';
+import map from './MacrosMap';
+
+function isMacroFile(fileName: string) {
+  return /(\.tsmacro)/.test(fileName);
+}
 class Transformer {
-  rootMacros: Map<string, ts.FunctionExpression> = map as any;
+  rootMacros = map;
   typeChecker: ts.TypeChecker | undefined;
+  sourceFile: ts.SourceFile;
+
+  contextMacros: Map<string, ts.Expression> = new Map();
+
   constructor(public context: ts.TransformationContext, public program: ts.Program) {
     this.typeChecker = program.getTypeChecker();
   }
   transform(node: ts.Node): ts.Node {
+    this.sourceFile = node.getSourceFile();
     return ts.visitNode(
-      ts.visitNode(node, this.extractMacros),
+      isMacroFile(this.sourceFile.fileName) ? ts.visitNode(node, this.extractMacros) : node,
       this.resolveMacros
     );
   }
@@ -38,16 +48,49 @@ class Transformer {
           );
         }
         const value = matched.initializer.arguments[0];
-        this.rootMacros.set(name.text, value as ts.FunctionExpression);
+        if (!this.rootMacros.has(name.text)) {
+          resolveMsgFactroy(() => [
+            `tsMacro [${name.text}]:`,
+            `extract from`,
+            `"${path.relative(process.cwd(), this.sourceFile.fileName)}"`
+          ]);
+        }
+        this.putRootMacroMap(this.rootMacros, name.text, value);
         // console.log('read macros', name.text);
         return undefined;
       }
     }
     return ts.visitEachChild(node, this.extractMacros, this.context);
   };
+
+  /**
+   * 记录macros等缓存
+   * @param macros 
+   * @param key 
+   * @param value 
+   */
+  putRootMacroMap(macros: typeof map, key: string, value: ts.Expression) {
+    AstUtils$$.setSourceFile(value, this.sourceFile);
+    this.contextMacros.set(key, value);
+    return macros.set(key, {
+      ...(macros.get(key) || {}),
+      [this.sourceFile.fileName]: value as ts.FunctionExpression
+    });
+  }
+  /**
+   * 记录macros等缓存
+   * @param macros 
+   * @param key 
+   * @param value 
+   */
+  putMacroMap(macros: Map<string, ts.Expression>, key: string, value: ts.Expression) {
+    AstUtils$$.setSourceFile(value, this.sourceFile);
+    return macros.set(key, value);
+  }
+
   resolveMacros = (node: ts.Node): ts.Node | undefined => {
     if (ts.isBlock(node) || ts.isSourceFile(node)) {
-      const newBlock = this.replaceMacros(node.statements, this.rootMacros);
+      const newBlock = this.replaceMacros(node.statements, this.contextMacros);
       if (ts.isBlock(node)) {
         return ts.visitEachChild(
           ts.updateBlock(node, newBlock),
@@ -66,15 +109,19 @@ class Transformer {
   };
 
   /**
-   * 
+   * 遍历清理多余的return语句
    * @param node 遍历的节点
    * @param outerName 外部引入的变量名
    */
   cleanMacro = <T extends ts.Node>(node: T, outerName: Set<string>): [ts.Expression | undefined, T] => {
     const visit = (node: ts.Node): ts.Node | undefined => {
+      // 保留内部的临时function的完整定义
+      if ((ts.isArrowFunction(node) || ts.isFunctionExpression(node))) {
+        return node;
+      }
+      //@ts-ignore
       if (ts.isReturnStatement(node)) {
-        if (!node.expression) throw new Error("Expected macro to return value");
-        result = ts.visitNode(node.expression, visit);
+        if (node.expression) (result = ts.visitNode(node.expression, visit));
         return undefined;
       }
       if (ts.isPropertyAccessExpression(node)) {
@@ -95,7 +142,7 @@ class Transformer {
           node.name.text,
           outerName.has(node.name.text) ? node.name : ts.createUniqueName(node.name.text) as any
         );
-      } 
+      }
       if (ts.isIdentifier(node) && variableMap.has(node.text)) {
         return variableMap.get(node.text)!;
       }
@@ -103,9 +150,23 @@ class Transformer {
     };
     const variableMap = new Map<string, ts.Identifier>();
     let result: ts.Expression | undefined = undefined;
+
     const resultNode = ts.visitNode(node, visit);
     return [result, resultNode];
   };
+
+  appendContext(nodeName: string, filePath: string) {
+    if (!this.contextMacros.has(nodeName)) {
+      const macroFunc = (this.rootMacros.get(nodeName) || {})[filePath];
+      macroFunc && this.contextMacros.set(nodeName, macroFunc);
+      resolveMsgFactroy(() => [
+        `tsMacro [${nodeName}]:`,
+        `resolve ${colors.yellow(`"${path.relative(process.cwd(), this.sourceFile.fileName)}"`)}, source from`,
+        `${colors.yellow(`"${path.relative(process.cwd(), filePath)}"`)}`
+      ], false);
+      // console.error(nodeName, filePath, Object.keys((this.rootMacros.get(nodeName) || {})));
+    }
+  }
 
   /**
    * 是否为Macros函数节点
@@ -116,18 +177,29 @@ class Transformer {
       r = this.typeChecker?.getTypeAtLocation(node.expression);
       // console.log(this.program.getRootFileNames())
     } else if (ts.isImportSpecifier(node)) {
-      if (!this.rootMacros.has(node.name.escapedText as string)) {
-        try {
-          const moduleRef = node?.parent?.parent?.parent?.moduleSpecifier?.getText();
-          if (moduleRef && /.macro/.test(moduleRef)) {  
-            const filePath = path.join(path.dirname(node.getSourceFile()?.fileName), moduleRef?.replace(/('|")/g, ''));
-            // console.log(this.program.getSourceFileByPath(node.getSourceFile()?.fileName as any), filePath);
-            // this.program.emit(undefined, this.context.add
-            // const sourceFile = node.getSourceFile();
-            // ts.updateSourceFileNode(sourceFile, ) 
-            const append = ts.createSourceFile(
+      const moduleRef = node?.parent?.parent?.parent?.moduleSpecifier?.getText();
+      const filePath = moduleRef && (
+        path.join(
+          path.dirname(node.getSourceFile()?.fileName),
+          "/",
+          moduleRef.replace(/('|")/g, '')
+        )
+      ).replace(new RegExp(`\\${path.sep}`, 'g'), "/") + '.ts';
+
+      const nodeName = node.name.escapedText as string;
+      if (filePath && isMacroFile(filePath)) {
+        // console.error(node.getText(this.sourceFile), node.parent?.parent.parent.moduleSpecifier.getText(this.sourceFile))
+        if (!this.rootMacros.has(nodeName)) {
+          try {
+            const append = (function () {
+              try {
+                return this.program.getSourceFile(filePath);
+              } catch (error) {
+                return false;
+              }
+            }()) || ts.createSourceFile(
               filePath,
-              fs.readFileSync(filePath + '.ts').toString(),
+              fs.readFileSync(filePath).toString(),
               this.program.getCompilerOptions().target,
               true,
               ts.ScriptKind.TS
@@ -135,13 +207,13 @@ class Transformer {
             if (append) {
               // console.log(append?.getText());
               this.extractMacros(append);
-              return this.rootMacros.has(node.name.escapedText as string);
+              return this.rootMacros.has(nodeName);
             }
+          } catch (error) {
+            console.error(error);
           }
-        } catch (error) {
-          console.error(error);
         }
-      } else {
+        this.appendContext(nodeName, filePath)
         return true;
       }
     }
@@ -153,9 +225,17 @@ class Transformer {
   replaceMacros = (
     statements: ts.NodeArray<ts.Statement>,
     macros: Map<string, ts.Expression>,
-    appendStatments?: Set<ts.VariableStatement>
+    appendStatments?: Set<ts.VariableStatement>,
+    sourceMacros?: ts.FunctionExpression | ts.ArrowFunction
   ): ts.Statement[] => {
     const visit = (node: ts.Node): ts.Node => {
+      // 检查导入节点，收集上下文的Macro函数
+      const importReplacer = AstUtils$$.checkAndfilterNamedImports(node, importNode => {
+        return !this.checkNode(importNode);
+      });
+      if (importReplacer !== false) {
+        return importReplacer;
+      }
       if (
         [
           ts.SyntaxKind.InterfaceDeclaration,
@@ -165,17 +245,12 @@ class Transformer {
         return node;
       }
 
-      const importReplacer = AstUtils$$.checkAndfilterNamedImports(node, importNode => {
-        return !this.checkNode(importNode);
-      });
-      if (importReplacer !== false) {
-        return importReplacer;
-      }
       if (ts.isBlock(node)) {
-        return ts.createBlock(this.replaceMacros(node.statements, macros, appendStatments));
+        return ts.createBlock(this.replaceMacros(node.statements, macros, appendStatments, sourceMacros));
       }
       if (ts.isIdentifier(node) && macros.has(node.text)) {
-        return macros.get(node.text)!;
+        const target = macros.get(node.text)!;
+        return target;
       }
 
       if (
@@ -183,9 +258,6 @@ class Transformer {
         ts.isPropertyAccessExpression(node.expression) &&
         macros.has(node.expression.name.text)
       ) {
-        // if (this.checkNode(node)) {
-        //   console.log('isValidType');
-        // }
         return ts.visitNode(
           ts.updateCall(node, node.expression.name, node.typeArguments, [
             node.expression.expression,
@@ -199,27 +271,29 @@ class Transformer {
         ts.isIdentifier(node.expression) &&
         macros.has(node.expression.text)
       ) {
+        // console.error([...this.contextMacros.keys()], node.expression.text);
         const value = macros.get(node.expression.text)!;
         if (!ts.isArrowFunction(value) && !ts.isFunctionExpression(value)) {
           throw new Error("Expected function expression for macro value");
         }
-        appendStatments = new Set(appendStatments ? Array.from(appendStatments) : []);
+        const childrenAppendStatments = new Set([]);
+        
         // 外部引用的变量名称集
-        const outerArgNameReferenceSet = new Set<string>()
+        const outerArgNameReferenceSet = new Set<string>();
         // const ArgMap
         const newMacros = new Map([
           ...macros.entries(),
-          ...getNameValueMap(node.arguments, value.parameters, appendStatments, outerArgNameReferenceSet).entries()
+          ...this.getNameValueMap(node.arguments, value.parameters, childrenAppendStatments, outerArgNameReferenceSet).entries()
         ]);
         const [resultName, resultBlock] = this.cleanMacro(
           ts.visitNode(
-            ts.createBlock(this.replaceMacros(getStatements(value), newMacros)),
+            ts.createBlock(this.replaceMacros(getStatements(value), newMacros, appendStatments, value)),
             visit
           ),
           outerArgNameReferenceSet
         );
-        result = result.concat(Array.from(appendStatments)).concat(resultBlock.statements);
-        appendStatments.clear();
+        result = result.concat(Array.from(childrenAppendStatments)).concat(resultBlock.statements);
+        childrenAppendStatments.clear();
         if (!resultName) return ts.createIdentifier("");
         return resultName;
       }
@@ -232,6 +306,63 @@ class Transformer {
     }
     return result;
   };
+
+
+  /**
+   * 
+   * @param values 传值定义序列
+   * @param args 参数定义序列
+   * @param appendStatments 要在顶部追加的行
+   * @param referenceName 外部引入名称
+   */
+  getNameValueMap(
+    values: ts.NodeArray<ts.Expression>,
+    args: ts.NodeArray<ts.ParameterDeclaration>,
+    appendStatments: Set<ts.VariableStatement>,
+    referenceName: Set<string>
+  ) {
+    const map = new Map<string, ts.Expression>();
+    const definedArgs: [ts.Identifier, ts.Expression][] = [];
+    for (let i = 0; i < args.length && i < args.length; i++) {
+      const argName = args[i].name;
+      const valuedArg = values[i];
+      if (!ts.isIdentifier(argName)) {
+        throw new Error("Expected identifier in macro function definition");
+      }
+      const argValue = valuedArg || ts.createIdentifier('');
+      if (
+        valuedArg
+        //@ts-ignore
+        && !(ts.isIdentifier(valuedArg))
+        && (
+          ts.isCallExpression(valuedArg)
+          || ts.isCallLikeExpression(valuedArg)
+          || ts.isObjectLiteralExpression(valuedArg)
+          || ts.isArrayLiteralExpression(valuedArg)
+          || ts.isCallOrNewExpression(valuedArg)
+          || ts.isCallChain(valuedArg)
+          || ts.isPropertyAccessExpression(valuedArg)
+        )
+      ) {
+        const tmp = ts.createUniqueName(argName.text);
+        definedArgs.push([tmp, argValue]);
+        //@ts-ignore
+        this.putMacroMap(map, argName.text, tmp);
+      } else {
+        if (valuedArg && ts.isIdentifier(valuedArg)) {
+          referenceName.add(valuedArg.text);
+        }
+        //@ts-ignore
+        this.putMacroMap(map, argName.text, argValue);
+      }
+    }
+    if (definedArgs.length > 0) {
+      appendStatments.add(
+        AstUtils$$.createMultipleVariableStatement$$(definedArgs)
+      );
+    }
+    return map;
+  }
 }
 
 const transformer = (
@@ -246,65 +377,13 @@ function getStatements(
   node: ts.FunctionExpression | ts.ArrowFunction
 ): ts.NodeArray<ts.Statement> {
   if (ts.isBlock(node.body)) {
-    return node.body.statements;
+    // console.error(node.body.getFullText(node.getSourceFile()))
+    return ts.createNodeArray(
+      node.body.statements.map(child => AstUtils$$.setSourceFile(child, node.getSourceFile()))
+    );
   }
   return ts.createNodeArray([ts.createReturn(node.body)]);
 }
 
-/**
- * 
- * @param values 传值定义序列
- * @param args 参数定义序列
- * @param appendStatments 要在顶部追加的行
- * @param referenceName 外部引入名称
- */
-function getNameValueMap(
-  values: ts.NodeArray<ts.Expression>,
-  args: ts.NodeArray<ts.ParameterDeclaration>,
-  appendStatments: Set<ts.VariableStatement>,
-  referenceName: Set<string>
-) {
-  const map = new Map<string, ts.Expression>();
-  const definedArgs: [ts.Identifier, ts.Expression][] = [];
-  for (let i = 0; i < args.length && i < args.length; i++) {
-    const argName = args[i].name;
-    const valuedArg = values[i];
-    if (!ts.isIdentifier(argName)) {
-      throw new Error("Expected identifier in macro function definition");
-    }
-    const argValue = valuedArg || ts.createIdentifier('');
-    if (
-      valuedArg
-      //@ts-ignore
-        && !(ts.isIdentifier(valuedArg))
-        && (
-          ts.isCallExpression(valuedArg)
-          || ts.isCallLikeExpression(valuedArg)
-          || ts.isObjectLiteralExpression(valuedArg)
-          || ts.isArrayLiteralExpression(valuedArg)
-          || ts.isCallOrNewExpression(valuedArg)
-          || ts.isCallChain(valuedArg)
-          || ts.isPropertyAccessExpression(valuedArg)
-        )
-    ) {
-      const tmp = ts.createUniqueName(argName.text)
-      definedArgs.push([tmp, argValue]);
-      //@ts-ignore
-      map.set(argName.text, tmp);
-    } else {
-      if (valuedArg && ts.isIdentifier(valuedArg)) {
-        referenceName.add(valuedArg.text)
-      }
-      //@ts-ignore
-      map.set(argName.text, argValue);
-    }
-  }
-  if (definedArgs.length > 0) {
-    appendStatments.add(
-      AstUtils$$.createMultipleVariableStatement$$(definedArgs)
-    );
-  }
-  return map;
-}
 
 export default transformer;

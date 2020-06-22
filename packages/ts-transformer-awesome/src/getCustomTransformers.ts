@@ -1,6 +1,5 @@
 // const tsImportPluginFactory = require('ts-import-plugin');
 import hoistObjectsInProps from '@avensia-oss/ts-transform-hoist-objects-in-props';
-import color from 'colors';
 import memoize from 'lodash/memoize';
 import tsImportPluginFactory from 'ts-import-plugin';
 import { Options as ImportOptions2 } from 'ts-import-plugin/lib/index';
@@ -19,18 +18,11 @@ import tsIsTransformer from 'typescript-is/lib/transform-inline/transformer';
 import typesmithTransformer from 'typesmith/transformer';
 import { DEV, Macros, MobxDecorateTransformer, TypeFilterTransformer } from './transformer';
 import { MobxDecorateTransformerOptions } from './transformer/MobxDecorate';
-// import { PluginCreator } from './PluginCreater'
+import { resolveMsg } from './resolveMsg';
+import { options } from './options';
 
-const logMap: any = {}
 console.log = () => { }
-function resolveMsg(msg: string, append: string, ...msg2: any[]) {
-  const r = [color.cyan(msg), color.green(append), ...(msg2 || []).map(i => color.yellow(i))].join(' ')
-  if (options.logger && !logMap[r]) {
-    console.info(r);
-    logMap[r] = r
-  }
-  return true;
-}
+
 const presetOptions = {
   'tsx-control-statements': tsxControlStatments,
   'ts-transformer-keys': transformerKeys,
@@ -86,9 +78,6 @@ function findKey(factory: any) {
     }
   }
   return factory && factory.name
-}
-let options = {
-  logger: false
 }
 memoize.Cache = WeakMap
 function use<T extends Function>(factory: T, ...msg: any): any {

@@ -7,6 +7,7 @@
   ],
   "compilerOptions": {
     "composite": true,
+    "removeComments": true,
     "rootDir": "./src",
     "baseUrl": "./src",
     "paths": {
