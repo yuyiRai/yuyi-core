@@ -4,15 +4,16 @@ import contextRequire from "require-context";
 import { compile } from '../src';
 import ts from 'typescript';
 
-let name = 'Macros'
-// import '@types/webpack'
-for (const p of contextRequire(path.join(__dirname, './src/' + name), true, /\.(ts|tsx)$/).keys()) {
-  // test('work: ' + p, () => {
-    // expect(
-  run(path.join(__dirname, './src/' + name, p))
-      // ).toMatchSnapshot(p)
-  // });
-}
+run(path.join(__dirname, './src/Macros/a.ts'))
+// let name = 'Macros'
+// // import '@types/webpack'
+// for (const p of contextRequire(path.join(__dirname, './src/' + name), true, /\.(ts|tsx)$/).keys()) {
+//   // test('work: ' + p, () => {
+//     // expect(
+//   run(path.join(__dirname, './src/' + name, p))
+//       // ).toMatchSnapshot(p)
+//   // });
+// }
 
 // function runTest(
 //   text: string,

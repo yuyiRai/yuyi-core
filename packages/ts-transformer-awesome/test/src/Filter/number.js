@@ -1,5 +1,5 @@
-import { __spreadArrays } from "tslib";
-import '../../../env';
+import { __read, __spread } from "tslib";
+import "../../../env";
 var Utils = {
     a: filters,
     b: 1,
@@ -8,7 +8,7 @@ var Utils = {
 };
 Utils.a = filters;
 var a = 1;
-var key = tsKeys();
+var key = ["a", "b", "c", "dc"];
 var _a = undefined;
 var _tempArr_2 = [null];
 var _tempLength_2 = 1;
@@ -37,7 +37,7 @@ export function test(a, b) {
     }
     function test() {
         var _a = undefined;
-        var _tempArr_6 = __spreadArrays([a], b, ['3', 2]);
+        var _tempArr_6 = __spread([a], b, ['3', 2]);
         var _tempLength_6 = _tempArr_6.length;
         var _tempIndex_6 = 0;
         var _tempResult_6;
@@ -61,3 +61,4 @@ export function test(a, b) {
     _a = _tempResult_8 != null ? _tempResult_8 : undefined;
     return _a && test(); // filters(a, '3', 2, a && 1 || 0 + 2, a && 1 || 0 + 3, 5, 6)
 }
+//# sourceMappingURL=number.js.map

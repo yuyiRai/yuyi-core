@@ -10,7 +10,7 @@ function isMacroFile(fileName: string) {
   return /(\.tsmacro)/.test(fileName);
 }
 class Transformer {
-  rootMacros = map;
+  rootMacros: Map<string, ts.Expression> = map as any;
   typeChecker: ts.TypeChecker | undefined;
   sourceFile: ts.SourceFile;
 
@@ -18,12 +18,15 @@ class Transformer {
 
   constructor(public context: ts.TransformationContext, public program: ts.Program) {
     this.typeChecker = program.getTypeChecker();
+
   }
   transform(node: ts.Node): ts.Node {
     this.sourceFile = node.getSourceFile();
     return ts.visitNode(
-      isMacroFile(this.sourceFile.fileName) ? ts.visitNode(node, this.extractMacros) : node,
-      this.resolveMacros
+      // isMacroFile(this.sourceFile.fileName) ?
+      ts.visitNode(node, this.extractMacros)
+      // : node,
+      , this.resolveMacros
     );
   }
   extractMacros = (node: ts.Node): ts.Node | undefined => {
@@ -48,13 +51,6 @@ class Transformer {
           );
         }
         const value = matched.initializer.arguments[0];
-        if (!this.rootMacros.has(name.text)) {
-          resolveMsgFactroy(() => [
-            `tsMacro [${name.text}]:`,
-            `extract from`,
-            `"${path.relative(process.cwd(), this.sourceFile.fileName)}"`
-          ]);
-        }
         this.putRootMacroMap(this.rootMacros, name.text, value);
         // console.log('read macros', name.text);
         return undefined;
@@ -69,13 +65,22 @@ class Transformer {
    * @param key 
    * @param value 
    */
-  putRootMacroMap(macros: typeof map, key: string, value: ts.Expression) {
+  putRootMacroMap(macros: Transformer['rootMacros'], key: string, value: ts.Expression) {
     AstUtils$$.setSourceFile(value, this.sourceFile);
     this.contextMacros.set(key, value);
-    return macros.set(key, {
-      ...(macros.get(key) || {}),
-      [this.sourceFile.fileName]: value as ts.FunctionExpression
-    });
+    // const source = (macros.get(key) || {})
+    // if (!source[this.sourceFile.fileName]) {
+    //   resolveMsgFactroy(() => [
+    //     `tsMacro [${key}]:`,
+    //     `extract from`,
+    //     `"${path.relative(process.cwd(), this.sourceFile.fileName)}"`
+    //   ]);
+    // }
+    return macros.set(key, value)
+    // return macros.set(key, {
+    //   ...source,
+    //   [this.sourceFile.fileName]: value as ts.FunctionExpression
+    // });
   }
   /**
    * 记录macros等缓存
@@ -157,13 +162,15 @@ class Transformer {
 
   appendContext(nodeName: string, filePath: string) {
     if (!this.contextMacros.has(nodeName)) {
-      const macroFunc = (this.rootMacros.get(nodeName) || {})[filePath];
+      // const macroFunc = (this.rootMacros.get(nodeName) || {})[filePath];
+      const macroFunc = this.rootMacros.get(nodeName);
       macroFunc && this.contextMacros.set(nodeName, macroFunc);
-      resolveMsgFactroy(() => [
-        `tsMacro [${nodeName}]:`,
-        `resolve ${colors.yellow(`"${path.relative(process.cwd(), this.sourceFile.fileName)}"`)}, source from`,
-        `${colors.yellow(`"${path.relative(process.cwd(), filePath)}"`)}`
-      ], false);
+      // if (macroFunc)
+      //   resolveMsgFactroy(() => [
+      //     `tsMacro [${nodeName}]:`,
+      //     `resolve ${colors.yellow(`"${path.relative(process.cwd(), this.sourceFile.fileName)}"`)}, source from`,
+      //     `${colors.yellow(`"${path.relative(process.cwd(), filePath)}"`)}`
+      //   ], false);
       // console.error(nodeName, filePath, Object.keys((this.rootMacros.get(nodeName) || {})));
     }
   }
@@ -188,16 +195,10 @@ class Transformer {
 
       const nodeName = node.name.escapedText as string;
       if (filePath && isMacroFile(filePath)) {
-        // console.error(node.getText(this.sourceFile), node.parent?.parent.parent.moduleSpecifier.getText(this.sourceFile))
+        console.error(nodeName)
         if (!this.rootMacros.has(nodeName)) {
           try {
-            const append = (function () {
-              try {
-                return this.program.getSourceFile(filePath);
-              } catch (error) {
-                return false;
-              }
-            }()) || ts.createSourceFile(
+            const append = ts.createSourceFile(
               filePath,
               fs.readFileSync(filePath).toString(),
               this.program.getCompilerOptions().target,
@@ -207,13 +208,15 @@ class Transformer {
             if (append) {
               // console.log(append?.getText());
               this.extractMacros(append);
+              this.appendContext(nodeName, filePath);
               return this.rootMacros.has(nodeName);
             }
           } catch (error) {
             console.error(error);
           }
+          return false
         }
-        this.appendContext(nodeName, filePath)
+        this.appendContext(nodeName, filePath);
         return true;
       }
     }
@@ -277,7 +280,7 @@ class Transformer {
           throw new Error("Expected function expression for macro value");
         }
         const childrenAppendStatments = new Set([]);
-        
+
         // 外部引用的变量名称集
         const outerArgNameReferenceSet = new Set<string>();
         // const ArgMap

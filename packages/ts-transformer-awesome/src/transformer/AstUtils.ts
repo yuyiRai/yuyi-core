@@ -626,12 +626,9 @@ export namespace AstUtils$$ {
   }
 
   export function setSourceFile<T extends ts.Node>(node: T, sourceFile: ts.SourceFile): T {
-    Object.defineProperty(node, 'getSourceFile', {
-      configurable: false,
-      value() {
-        return sourceFile
-      }
-    })
+    node['getSourceFile'] = function () {
+      return sourceFile;
+    }
     return node;
   }
 }

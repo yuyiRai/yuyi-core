@@ -13,7 +13,7 @@ function test() {
   })
 
   const result2 = ForEachMacro([1, 2, 3, 4, 5], (value) => {
-    console.log(value)
+    console.log(3)
   })
 
   return {

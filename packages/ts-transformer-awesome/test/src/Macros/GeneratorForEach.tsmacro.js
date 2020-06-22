@@ -19,7 +19,7 @@ export default function app() { var target_1 = [1, 2, 3], ccc_1 = console.log; r
         return assert ? {
             loader: [
                 useLoaderMacro('rules', function (form, utils) {
-                    return __awaiter(this, void 0, void 0, function () { var used, _a, _b; return __generator(this, function (_c) {
+                    return __awaiter(this, void 0, void 0, function () { var used, _a, _b; return target_1(this, function (_c) {
                         switch (_c.label) {
                             case 0: return [4 /*yield*/, assert(form, utils)];
                             case 1:
@@ -47,7 +47,8 @@ export default function app() { var target_1 = [1, 2, 3], ccc_1 = console.log; r
                     }); });
                 })
             ]
-        } : { rules: [validate] };
+        } : { rules: [] };
     }
 }; }
 ;
+//# sourceMappingURL=GeneratorForEach.tsmacro.js.map

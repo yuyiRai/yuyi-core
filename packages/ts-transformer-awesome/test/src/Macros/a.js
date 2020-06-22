@@ -1,5 +1,5 @@
 import { __generator } from "tslib";
-import '../../../env';
+import "../../../env";
 ;
 function testGenerator() { var i; return __generator(this, function (_a) {
     switch (_a.label) {
@@ -20,9 +20,9 @@ function testGenerator() { var i; return __generator(this, function (_a) {
 }); }
 ;
 function test() {
-    var generator_1 = testGenerator();
+    var __generator = testGenerator();
     var loop_1;
-    while (loop_1 = generator_1.next(), !loop_1.done) {
+    while (loop_1 = __generator.next(), !loop_1.done) {
         var v_1 = loop_1.value, done_1 = loop_1.done;
         console.log(v_1, done_1);
         ;
@@ -32,7 +32,7 @@ function test() {
     var len_1 = target_1.length, i_1 = 0, item_1;
     while (i_1 < len_1) {
         item_1 = target_1[i_1++];
-        console.log(item_1);
+        console.log(3);
         ;
     }
     var result2 = true;
@@ -41,3 +41,4 @@ function test() {
         result2: result2
     };
 }
+//# sourceMappingURL=a.js.map
