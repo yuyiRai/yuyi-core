@@ -237,7 +237,7 @@ class Transformer {
         return !this.checkNode(importNode);
       });
       if (importReplacer !== false) {
-        return importReplacer;
+        return node;
       }
       if (
         [

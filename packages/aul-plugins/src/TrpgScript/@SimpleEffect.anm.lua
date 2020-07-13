@@ -99,6 +99,46 @@ obj.ox = obj.ox * (1 - p) + (obj.ox + x) * p - (obj.check0 and x or 0)
 obj.oy = obj.oy * (1 - p) + (obj.oy + y) * p - (obj.check0 and y or 0)
 obj.oz = obj.oz * (1 - p) + (obj.oz + z) * p - (obj.check0 and z or 0)
 
+----@相対移動2
+--track0:速さ(秒),0,5,0.50,0.01
+--track1:X,-2000,2000,0,0.1
+--track2:Y,-2000,2000,0,0.1
+--track3:Z,-2000,2000,0,0.1
+--dialog:加速/chk,local a=0;減速/chk,local b=1;登場/chk,local ein=1;退場/chk,local eout=1;
+--check0:逆の移動,0
+local TchieLib = require("./TachieLib")
+local x = obj.track1
+local y = obj.track2
+local z = obj.track3
+if obj.notfound then
+  obj.alpha = obj.alpha * obj.track2
+  return
+end
+local p, sp
+if obj.track0 > 0 then
+  local eofs = (obj.num-obj.index-1)*obj.track1
+  sp = ein == 0 and 1 or 1 - math.max(0, math.min(1, (obj.track0-obj.time+obj.index*obj.track1)/obj.track0))
+  local ep = eout == 0 and 1 or math.max(0, math.min(1, (obj.totaltime-obj.time-eofs)/obj.track0))
+  p = sp * ep
+else
+  p = obj.notfound and 0 or 1
+end
+if p ~= 0 and p ~= 1 then
+  if a == 1 and b == 1 then
+    p = p < 0.5 and YuyiCore.easein(p * 2) * 0.5 or YuyiCore.easeout((p - 0.5) * 2) * 0.5 + 0.5
+  elseif a == 1 then
+    p = sp < 1 and YuyiCore.easein(p) or YuyiCore.easeout(p)
+  elseif b == 1 then
+    p = sp < 1 and YuyiCore.easeout(p) or YuyiCore.easein(p)
+  end
+end
+--local function getValue(base, offset, offsetMax)
+-- return (base + offset) * p
+--end
+obj.ox = obj.ox * (1 - p) + (obj.ox + x) * p - (obj.check0 and x or 0)
+obj.oy = obj.oy * (1 - p) + (obj.oy + y) * p - (obj.check0 and y or 0)
+obj.oz = obj.oz * (1 - p) + (obj.oz + z) * p - (obj.check0 and z or 0)
+
 
 ----@ぼよん
 --track0:長さ(秒),0,5,0.30,0.01
