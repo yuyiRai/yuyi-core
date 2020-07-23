@@ -1,10 +1,7 @@
 import { get, has, isPlainObject } from 'lodash';
 import { Constant$ } from '../Constransts';
-import { convertArr2Map } from './base';
-import { createSearchMatcher } from './OptionsUtils';
-import { ForEachMacro, GeneratorForEachMacro } from '../Utils.macro';
-export { TreeMap, TreeSet } from 'typescriptcollectionsframework';
-
+import { ForEachMacro, GeneratorForEachMacro } from '../Utils.tsmacro';
+import { createSearchMatcher } from "./factory";
 
 
 

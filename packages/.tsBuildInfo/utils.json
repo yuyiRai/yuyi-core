@@ -985,173 +985,21 @@
         "version": "26de9539b7ff0ab8234068bf6818c07f9b264e0894dc285cf01bc5c169eb2375",
         "signature": "d25b9ea2e58b165b01e7fcd9c95ff4e24b8ba2f1d629d507432efd9a4426e6a2"
       },
+      "../utils/src/optionsutils/factory.ts": {
+        "version": "43dd497d7fb74ec7dc16c8ab56fc08ff6b8d6c24ab906a8624ece1e9f1664171",
+        "signature": "40d99c8a6fd55d36d8c2c413334a2fc1c18f7fee80fa1ee7f8a9350081b6bfb5"
+      },
       "../utils/src/optionsutils/optionsutils.ts": {
-        "version": "67de6fdd5911ae4a8d220fe83b761a11054ba89c21f72c248d4dd0b1dd40cd57",
-        "signature": "a1eb236b8051318c21b66cb472f15e12042f1b4462b957e0729142e3267bba63"
+        "version": "13a7a0b620e54e9077d0f3007bc8d940f02a76559a614d63f26b70beb802b469",
+        "signature": "2fee9411a1ff084dc9ff29ac68f488fa86c11d143f50fb103db100cdaaa11df8"
       },
-      "../utils/src/utils.macro.ts": {
+      "../utils/src/utils.tsmacro.ts": {
         "version": "e8c851ab0884d232853b070a84dcc4ecbaf76fd0901e2e6deb14807832386c5b",
-        "signature": "0907bffb4ed9c0db845a2c657c532030fc78cc13da063a2e9a4b9c5ab92228ee"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/collectable.d.ts": {
-        "version": "f9ec23684265d2207154937f6a16984ee3192faee724fe6a4705c20a3ff63da5",
-        "signature": "f9ec23684265d2207154937f6a16984ee3192faee724fe6a4705c20a3ff63da5"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/allfieldcollectable.d.ts": {
-        "version": "1cfaf392381f43abae9a309637ae0c774675becd5c5a513a27aa5a84b477fb85",
-        "signature": "1cfaf392381f43abae9a309637ae0c774675becd5c5a513a27aa5a84b477fb85"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/hashable.d.ts": {
-        "version": "38bf2b1f6d97f63ca412ec3241a1ac980b96001a02a00f175d53c7442c86392a",
-        "signature": "38bf2b1f6d97f63ca412ec3241a1ac980b96001a02a00f175d53c7442c86392a"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/allfieldhashable.d.ts": {
-        "version": "8ad6316690408c7841d2774826743efc86db44bfc61c4fd619469f4c249d77bc",
-        "signature": "8ad6316690408c7841d2774826743efc86db44bfc61c4fd619469f4c249d77bc"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts": {
-        "version": "e51be191250dc1955acef58fd96a66d737d767f3b51b40ccd2424fd70757087d",
-        "signature": "e51be191250dc1955acef58fd96a66d737d767f3b51b40ccd2424fd70757087d"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts": {
-        "version": "57c6b36046311ba95b76e3d7ac063dd21d8f533f45535cbd093f6c129fb9a5c9",
-        "signature": "57c6b36046311ba95b76e3d7ac063dd21d8f533f45535cbd093f6c129fb9a5c9"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts": {
-        "version": "809a167ee51d34d2d90645e82866d4aee4b3668ea92a333a92d0ffffefa74a9a",
-        "signature": "809a167ee51d34d2d90645e82866d4aee4b3668ea92a333a92d0ffffefa74a9a"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/collection.d.ts": {
-        "version": "43567f2b8c1dd0f70e50391363bdc3cfd463347882584bd82c6d69bbe3c5eb8e",
-        "signature": "43567f2b8c1dd0f70e50391363bdc3cfd463347882584bd82c6d69bbe3c5eb8e"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/queue.d.ts": {
-        "version": "15549643dd9765ea1568d8247b900c56f903a345c56b38999fe48264d081483b",
-        "signature": "15549643dd9765ea1568d8247b900c56f903a345c56b38999fe48264d081483b"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/deque.d.ts": {
-        "version": "b7995b83c312a039f94756c77d8eb58a56f2a87d314d2975a1c0faf2a0610860",
-        "signature": "b7995b83c312a039f94756c77d8eb58a56f2a87d314d2975a1c0faf2a0610860"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutablelist.d.ts": {
-        "version": "48a1b22260cfe52467b8b7814eee5e3b066fd9895a2bd48fc65a3c0bcdafa62a",
-        "signature": "48a1b22260cfe52467b8b7814eee5e3b066fd9895a2bd48fc65a3c0bcdafa62a"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/list.d.ts": {
-        "version": "1565c7fd97d749dc3bf57967b38caa36c6099b9aa521adb5698af35abe78af3e",
-        "signature": "1565c7fd97d749dc3bf57967b38caa36c6099b9aa521adb5698af35abe78af3e"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/arraylist.d.ts": {
-        "version": "aa71eea42937c118e21e46fe1069f2874eed4f2b4c9f2544a17a5710d0b439b3",
-        "signature": "aa71eea42937c118e21e46fe1069f2874eed4f2b4c9f2544a17a5710d0b439b3"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/comparator.d.ts": {
-        "version": "b5488a916d24e7e2eacff9e340dbc9833b60d4da703b4cdc935ea772d8525023",
-        "signature": "b5488a916d24e7e2eacff9e340dbc9833b60d4da703b4cdc935ea772d8525023"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts": {
-        "version": "6209fcc16caf40d5241dd829045b1288b56c6da826013706f7f2c72e1ff2bd34",
-        "signature": "6209fcc16caf40d5241dd829045b1288b56c6da826013706f7f2c72e1ff2bd34"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts": {
-        "version": "0f5e1f19f128ed86d2bfa49c6e725086e46cb20e01bec9d8850c99f432641742",
-        "signature": "0f5e1f19f128ed86d2bfa49c6e725086e46cb20e01bec9d8850c99f432641742"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemap.d.ts": {
-        "version": "966e01b4cb2ca5ec615fe881320f099e2076c4959f310b027e19e62cd68fe7f6",
-        "signature": "966e01b4cb2ca5ec615fe881320f099e2076c4959f310b027e19e62cd68fe7f6"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemultiset.d.ts": {
-        "version": "493c0cb72c818972b55bd1b3a4b638c50ded9726f10333ed93745649da48c0e1",
-        "signature": "493c0cb72c818972b55bd1b3a4b638c50ded9726f10333ed93745649da48c0e1"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/collections.d.ts": {
-        "version": "1f9bba070630b6dae8d67f80a9578065e3b71104b84d85c80b5ffad1d9d93a83",
-        "signature": "1f9bba070630b6dae8d67f80a9578065e3b71104b84d85c80b5ffad1d9d93a83"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/compositecollection.d.ts": {
-        "version": "999757b986abbf53c12d3609b3cfc574c08dcff717dba459f2f96919ad14c629",
-        "signature": "999757b986abbf53c12d3609b3cfc574c08dcff717dba459f2f96919ad14c629"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/basicmapentry.d.ts": {
-        "version": "4bdfb188edd4204423cc7f266768ca301ee2ffec1303a9314361dbc9901f8c2d",
-        "signature": "4bdfb188edd4204423cc7f266768ca301ee2ffec1303a9314361dbc9901f8c2d"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/jmap.d.ts": {
-        "version": "ec56061b80fd74d510791af6ab762b17c9b5b0f256cefb8c8f8c2c2949798b5c",
-        "signature": "ec56061b80fd74d510791af6ab762b17c9b5b0f256cefb8c8f8c2c2949798b5c"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/hashmap.d.ts": {
-        "version": "13223b0b6dab29f197524724db3d0b9bf52ff9f6e1235748c3379d8e66e92600",
-        "signature": "13223b0b6dab29f197524724db3d0b9bf52ff9f6e1235748c3379d8e66e92600"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/jset.d.ts": {
-        "version": "0c490ff42000e8c7a4f1a4d93c3bde0ce4eb1e322a52118a86bb43c7514fe24c",
-        "signature": "0c490ff42000e8c7a4f1a4d93c3bde0ce4eb1e322a52118a86bb43c7514fe24c"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/hashset.d.ts": {
-        "version": "233c2c0b653228a588925cb5fcd1bdf4fb12f2428d301621d5f8bf64d77e56c5",
-        "signature": "233c2c0b653228a588925cb5fcd1bdf4fb12f2428d301621d5f8bf64d77e56c5"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemultimap.d.ts": {
-        "version": "bf019ec2f0faea3725c28c874f51cbbcceff4847aca1a3d44bd2af893ec8418d",
-        "signature": "bf019ec2f0faea3725c28c874f51cbbcceff4847aca1a3d44bd2af893ec8418d"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/linkedhashmap.d.ts": {
-        "version": "3b7bd01d3bf3929eb8bc1b773efee71d5740fda7a8e6c76ea0dfd7004e2e1700",
-        "signature": "3b7bd01d3bf3929eb8bc1b773efee71d5740fda7a8e6c76ea0dfd7004e2e1700"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/linkedhashset.d.ts": {
-        "version": "cad546aad146974bdd60e9c05a5cacda01c13c43524087367d76c5d2b58ad693",
-        "signature": "cad546aad146974bdd60e9c05a5cacda01c13c43524087367d76c5d2b58ad693"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/linkedlist.d.ts": {
-        "version": "6c8b91cc08021e8f71b2fcdc27ed2a11cd2d53c2d312a055ac0f5cf91200a2cb",
-        "signature": "6c8b91cc08021e8f71b2fcdc27ed2a11cd2d53c2d312a055ac0f5cf91200a2cb"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/multimap.d.ts": {
-        "version": "9ddccfafeb6a0720d5e527becaa7b7fc0cdd91b1e73a4c57df41602a8e2d7433",
-        "signature": "9ddccfafeb6a0720d5e527becaa7b7fc0cdd91b1e73a4c57df41602a8e2d7433"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/multiset.d.ts": {
-        "version": "01d339ee20dccc8c1071c748a0039e1bce2b557bd10ea36273a67b93992a5b68",
-        "signature": "01d339ee20dccc8c1071c748a0039e1bce2b557bd10ea36273a67b93992a5b68"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/navigablemap.d.ts": {
-        "version": "61fbd4beffd2c1ae059637754e5c050b1e8f79f183ccbfbbebd3d2731a708740",
-        "signature": "61fbd4beffd2c1ae059637754e5c050b1e8f79f183ccbfbbebd3d2731a708740"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/navigableset.d.ts": {
-        "version": "a1e52935a964632fe68a4aff5ce80d343d4829ddaaa0e5e08b75ab1fbbba4e36",
-        "signature": "a1e52935a964632fe68a4aff5ce80d343d4829ddaaa0e5e08b75ab1fbbba4e36"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/navigablehash.d.ts": {
-        "version": "f1353462f338ef9ed8f90ff0e798fe74f89d2b56d8b931f7a61c066f9459fa74",
-        "signature": "f1353462f338ef9ed8f90ff0e798fe74f89d2b56d8b931f7a61c066f9459fa74"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/priorityqueue.d.ts": {
-        "version": "1b1c9dc918e3768bce3b7796e702c55825b89e089c34ad4bcf92de190cae8ef4",
-        "signature": "1b1c9dc918e3768bce3b7796e702c55825b89e089c34ad4bcf92de190cae8ef4"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/skiplist.d.ts": {
-        "version": "e72b530e9124e26f19c00403e98f63539b0c098a7ceb1b0f75784888d079bfae",
-        "signature": "e72b530e9124e26f19c00403e98f63539b0c098a7ceb1b0f75784888d079bfae"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/treemap.d.ts": {
-        "version": "7920ac41a325856430d1466150ca09f26d98ce10561685980d820ebdc48df5d6",
-        "signature": "7920ac41a325856430d1466150ca09f26d98ce10561685980d820ebdc48df5d6"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/src/treeset.d.ts": {
-        "version": "488f67a06a216df651441d9cd0e4f9adf58afc2b2e4befc0290f0c1f0af212a6",
-        "signature": "488f67a06a216df651441d9cd0e4f9adf58afc2b2e4befc0290f0c1f0af212a6"
-      },
-      "../../node_modules/typescriptcollectionsframework/definitions/index.d.ts": {
-        "version": "afbca65d0889b117e2295b44199cc1f01e7ce7372cf4f8d416996cb4b54358a0",
-        "signature": "afbca65d0889b117e2295b44199cc1f01e7ce7372cf4f8d416996cb4b54358a0"
+        "signature": "5ba81c58cdec44d141047ec3d7257bd86420f04c3a0d8e8f18ed54bdd28a5070"
       },
       "../utils/src/optionsutils/treedatautils.ts": {
-        "version": "a7bf4dc270003ef8d5412e0ed61726ba83e80fbe6d8e0c1dbd5832eb13d9a9eb",
-        "signature": "9423cb6e9e1ebe14d8e8eff1c1d1d84fa32966503555a7e0ade82a53303cf9d7"
+        "version": "c8e67f5861228424e3f5229d52f1a5ef7631c3815795a9e28e62a5bbb7fada2e",
+        "signature": "db6c08417c95e10f0d1011dd54bb3258c85c7ae43a72e548def801c7235a4256"
       },
       "../utils/src/optionsutils/index.ts": {
         "version": "22a2b85ece826eb59941f8dca8f4889e972952ac2d83bda6038b2e7bf4b3f22f",
@@ -1530,7 +1378,7 @@
         "signature": "2ff79fe1711244e0ca3f9db1ef0cfcf72f442d1b9473c80e0c5baceb13aee53c"
       },
       "../utils/src/mobxutils/mapandliststore.ts": {
-        "version": "02aea92baadba058e25582f0c23cc61b9826f455815ea04957249f6e1bcc1c6e",
+        "version": "02384462c58dcdc771170dcf5b52526e148a691c5a7bdd2d5ca6b70690773e10",
         "signature": "5200e915016286ae64c5818a86dcf82d2ef59df0d83879cec631ab925daf84ed"
       },
       "../utils/src/mobxutils/autorunclass.ts": {
@@ -1598,7 +1446,7 @@
         "signature": "ed54aaecface97430e07ed44b88d4e8ef3f860f3b123f51b4e36bde1ada5e429"
       },
       "../utils/src/datacollectionutils/transformer.ts": {
-        "version": "2a2d2b426dc2f59c01ae722031e6cd091ea02217345e7d5cd3b38eadb2b44171",
+        "version": "7ddb7775514bb900bc308a5e2613b13a17695ec2968a62694865bf2dde4e8e56",
         "signature": "ba63a906d4c24e4083eefd83f8bd10cd39fc1499a031405ef64103d8d4709b1d"
       },
       "../utils/src/datacollectionutils/index.ts": {
@@ -2285,15 +2133,6 @@
           "./"
         ],
         "*": [
-          "*",
-          "*",
-          "*",
-          "*",
-          "*",
-          "*",
-          "*",
-          "*",
-          "*",
           "*"
         ]
       },
@@ -4556,6 +4395,17 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
+      "../utils/src/optionsutils/factory.ts": [
+        "../utils/src/constransts.ts",
+        "../../node_modules/@types/lodash/ts3.1/index.d.ts",
+        "../utils/src/lodashextra/isfunction.ts",
+        "../utils/src/lodashextra/isequal.ts",
+        "../utils/src/optionsutils/interface.ts",
+        "../../node_modules/@types/node/fs.d.ts",
+        "../../node_modules/@types/node/ts3.2/fs.d.ts",
+        "../../node_modules/@types/node/util.d.ts",
+        "../../node_modules/@types/node/ts3.2/util.d.ts"
+      ],
       "../utils/src/optionsutils/optionsutils.ts": [
         "../utils/src/commonutils.ts",
         "../utils/src/constransts.ts",
@@ -4564,410 +4414,13 @@
         "../utils/src/typelib/index.ts",
         "../utils/src/typelib/expect.ts",
         "../utils/src/optionsutils/interface.ts",
+        "../utils/src/optionsutils/factory.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "../utils/src/utils.macro.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/collectable.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/allfieldcollectable.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collectable.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/hashable.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collectable.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/allfieldhashable.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashable.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/collection.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/queue.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collection.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/deque.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/queue.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutablelist.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/list.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablelist.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/arraylist.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collectable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/deque.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablelist.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/list.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/queue.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/comparator.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemap.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemultiset.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/collections.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collectable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/comparator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablelist.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemultiset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/compositecollection.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/basicmapentry.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/jmap.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemap.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/hashmap.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/basicmapentry.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jmap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/jset.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/hashset.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashmap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jset.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemultimap.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/linkedhashmap.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashmap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/linkedhashset.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/linkedlist.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collectable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/deque.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablelist.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/list.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/queue.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/multimap.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemultimap.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/multiset.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemultiset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/navigablemap.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jmap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/navigableset.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jset.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/navigablehash.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/arraylist.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/basicmapentry.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collectable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/comparator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/navigablemap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/navigableset.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/priorityqueue.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/comparator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/queue.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/skiplist.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/arraylist.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/basicmapentry.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collectable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/comparator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/navigablemap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/navigableset.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/treemap.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/comparator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/navigablemap.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/treeset.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/comparator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/navigableset.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/index.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/allfieldcollectable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/allfieldhashable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/arraylist.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collectable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collections.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/comparator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/compositecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashmap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablelist.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemultimap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemultiset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/linkedhashmap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/linkedhashset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/linkedlist.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/list.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jmap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/multimap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/multiset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/navigablehash.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/navigablemap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/navigableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/priorityqueue.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/queue.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/skiplist.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/treemap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/treeset.d.ts",
+      "../utils/src/utils.tsmacro.ts": [
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -4976,10 +4429,8 @@
       "../utils/src/optionsutils/treedatautils.ts": [
         "../../node_modules/@types/lodash/ts3.1/index.d.ts",
         "../utils/src/constransts.ts",
-        "../utils/src/optionsutils/base.ts",
-        "../utils/src/optionsutils/optionsutils.ts",
-        "../utils/src/utils.macro.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/index.d.ts",
+        "../utils/src/utils.tsmacro.ts",
+        "../utils/src/optionsutils/factory.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -5762,7 +5213,7 @@
         "../utils/src/constransts.ts",
         "../utils/src/lodashextra/index.ts",
         "../utils/src/mobxutils/commonstore.ts",
-        "../utils/src/utils.macro.ts",
+        "../utils/src/utils.tsmacro.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -5917,7 +5368,7 @@
         "../../node_modules/@types/lodash/ts3.1/index.d.ts",
         "../utils/src/lodashextra/index.ts",
         "../utils/src/optionsutils/index.ts",
-        "../utils/src/utils.macro.ts",
+        "../utils/src/utils.tsmacro.ts",
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
         "../../node_modules/@types/node/util.d.ts",
@@ -9126,404 +8577,6 @@
         "../../node_modules/@types/node/util.d.ts",
         "../../node_modules/@types/node/ts3.2/util.d.ts"
       ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/collectable.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/allfieldcollectable.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collectable.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/hashable.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collectable.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/allfieldhashable.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashable.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/collection.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/queue.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collection.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/deque.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/queue.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutablelist.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/list.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablelist.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/arraylist.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collectable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/deque.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablelist.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/list.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/queue.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/comparator.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts": [
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemap.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemultiset.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/collections.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collectable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/comparator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablelist.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemultiset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/compositecollection.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/basicmapentry.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/jmap.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemap.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/hashmap.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/basicmapentry.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jmap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/jset.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/hashset.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashmap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jset.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemultimap.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/linkedhashmap.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashmap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/linkedhashset.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/linkedlist.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collectable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/deque.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablelist.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/list.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/queue.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/multimap.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemultimap.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/multiset.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemultiset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/navigablemap.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jmap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/navigableset.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jset.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/navigablehash.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/arraylist.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/basicmapentry.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collectable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/comparator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/navigablemap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/navigableset.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/priorityqueue.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/comparator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/queue.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/skiplist.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/arraylist.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/basicmapentry.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collectable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/comparator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/navigablemap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/navigableset.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/treemap.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/comparator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/navigablemap.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/src/treeset.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/comparator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/navigableset.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
-      "../../node_modules/typescriptcollectionsframework/definitions/index.d.ts": [
-        "../../node_modules/typescriptcollectionsframework/definitions/src/allfieldcollectable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/allfieldhashable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/arraylist.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collectable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/collections.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/comparator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/compositecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashable.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashmap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/hashset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablelist.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemultimap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemultiset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/linkedhashmap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/linkedhashset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/linkedlist.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/list.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jmap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/jset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/multimap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/multiset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/navigablehash.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/navigablemap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/navigableset.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/priorityqueue.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/queue.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/skiplist.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/treemap.d.ts",
-        "../../node_modules/typescriptcollectionsframework/definitions/src/treeset.d.ts",
-        "../../node_modules/@types/node/fs.d.ts",
-        "../../node_modules/@types/node/ts3.2/fs.d.ts",
-        "../../node_modules/@types/node/util.d.ts",
-        "../../node_modules/@types/node/ts3.2/util.d.ts"
-      ],
       "../../node_modules/core-decorators/index.d.ts": [
         "../../node_modules/@types/node/fs.d.ts",
         "../../node_modules/@types/node/ts3.2/fs.d.ts",
@@ -11399,46 +10452,13 @@
       "../../node_modules/rxjs/internal/operators/zipall.d.ts",
       "../../node_modules/rxjs/operators/index.d.ts",
       "../utils/src/customutils/waitingpromise.ts",
+      "../utils/src/eventemitter/index.ts",
+      "../utils/src/typelib/expect.ts",
+      "../utils/src/typelib/filterto.ts",
+      "../utils/src/typelib/index.ts",
+      "../utils/src/commonutils.ts",
       "../utils/src/optionsutils/optionsutils.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/collectable.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/allfieldcollectable.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/hashable.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/allfieldhashable.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/consumer.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/jiterator.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutablecollection.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/collection.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/queue.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/deque.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutablelist.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/list.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/arraylist.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/comparator.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutableset.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/mapentry.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemap.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemultiset.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/collections.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/compositecollection.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/basicmapentry.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/jmap.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/hashmap.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/jset.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/hashset.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/immutablemultimap.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/linkedhashmap.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/linkedhashset.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/linkedlist.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/multimap.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/multiset.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/navigablemap.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/navigableset.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/navigablehash.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/priorityqueue.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/skiplist.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/treemap.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/src/treeset.d.ts",
-      "../../node_modules/typescriptcollectionsframework/definitions/index.d.ts",
+      "../utils/src/utils.tsmacro.ts",
       "../utils/src/optionsutils/treedatautils.ts",
       "../utils/src/optionsutils/index.ts",
       "../utils/src/lodashextra/trackmerge.ts",
@@ -11459,6 +10479,7 @@
       "../utils/src/customutils/multiplesplit.ts",
       "../utils/src/customutils/changekeys.ts",
       "../utils/src/customutils/index.ts",
+      "../utils/src/timebuffer.ts",
       "../utils/src/httpbox.ts",
       "../utils/src/parseutils.ts",
       "../../node_modules/mobx/lib/utils/utils.d.ts",
@@ -11529,6 +10550,7 @@
       "../../node_modules/mobx-utils/lib/mobx-utils.d.ts",
       "../utils/src/mobxutils/mobx.export.ts",
       "../utils/node_modules/immer/dist/immer.d.ts",
+      "../utils/src/mobxutils/eventstore.ts",
       "../utils/src/mobxutils/basestore.ts",
       "../utils/src/mobxutils/commonstore.ts",
       "../utils/src/mobxutils/liststore.ts",
@@ -11544,6 +10566,7 @@
       "../utils/src/decoratorutils/timebuffer.ts",
       "../utils/src/decoratorutils/trasaction/index.ts",
       "../utils/src/decoratorutils/index.ts",
+      "../utils/src/utils.ts",
       "../../node_modules/ts-optchain/index.d.ts",
       "../../node_modules/ts-transformer-keys/index.d.ts",
       "../ts-transformer-awesome/env.d.ts",
@@ -11553,6 +10576,7 @@
       "../../node_modules/dayjs/index.d.ts",
       "../../node_modules/moment/moment.d.ts",
       "../utils/src/dateutils/index.ts",
+      "../utils/src/index.ts",
       "../utils/src/index.export.ts",
       "../utils/src/customutils/gettimeprofile.ts",
       "../utils/src/customutils/jsgetage.ts",
@@ -11714,16 +10738,7 @@
       "../../node_modules/@types/webpack/index.d.ts",
       "../../node_modules/@types/yargs-parser/index.d.ts",
       "../../node_modules/@types/yargs/index.d.ts",
-      "../utils/src/eventemitter/index.ts",
-      "../utils/src/index.ts",
-      "../utils/src/utils.ts",
-      "../utils/src/mobxutils/eventstore.ts",
-      "../utils/src/timebuffer.ts",
-      "../utils/src/commonutils.ts",
-      "../utils/src/typelib/index.ts",
-      "../utils/src/typelib/filterto.ts",
-      "../utils/src/typelib/expect.ts",
-      "../utils/src/utils.macro.ts"
+      "../utils/src/optionsutils/factory.ts"
     ]
   },
   "version": "3.7.3"

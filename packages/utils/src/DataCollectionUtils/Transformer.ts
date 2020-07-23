@@ -1,7 +1,7 @@
 import { defaults, defaultTo, hasIn, merge } from 'lodash';
 import { cloneDeep, PathEscapeConvert, get, reduceMap, set, unset } from '../LodashExtra';
 import { TreeDataUtils } from '../OptionsUtils';
-import { ForEachMacro, GeneratorForEachMacro } from '../Utils.macro';
+import { ForEachMacro, GeneratorForEachMacro } from '../Utils.tsmacro';
 
 
 export const EscpeUtils = PathEscapeConvert.create("_$_$_");

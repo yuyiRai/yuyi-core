@@ -178,7 +178,10 @@ function getConfig({ mode = 'cjs', ...other }: { mode: ConfigKey | ConfigKey[]; 
     complieCache,
     cache: complieCache.read(),
     inlineDynamicImports: false,
-    treeshake: isProduction,
+    treeshake: {
+      propertyReadSideEffects: false,
+      moduleSideEffects: false
+    },
     // Indicate here external modules you don't wanna include in your bundle (i.e.: 'lodash')
     external: (id) => {
       if (mode === 'umd' || filter.some(s => id.indexOf(s) > -1)) {

@@ -3,7 +3,7 @@ import { action, computed, $get, $keys, observable, ObservableMap, toJS, $values
 import { Constant$, IKeyValueMap } from '../Constransts';
 import { isNil, isNumber, isString, reduce } from '../LodashExtra';
 import { CommonStore } from './CommonStore';
-import { ForEachMacro } from '../Utils.macro';
+import { ForEachMacro } from '../Utils.tsmacro';
 
 export type IKeyData<Key extends string> = IKeyValueMap<any> & {
   readonly [K in Key]-?: string;
