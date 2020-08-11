@@ -919,8 +919,8 @@
         "signature": "2a8e1ce1ad3238934a448ac83a59176189bb30c2a72948b36eb4c8797ba23de5"
       },
       "../ts-transformer-awesome/src/transformer/astutils.ts": {
-        "version": "15d4787dcfab9a8f600c8c18e8f4be41e44e68fb037d222fe370c543667a2ee4",
-        "signature": "d89a9e20575c5e41fc905dbc0a9313a7ceb493d717093147959f8e32bd27b98f"
+        "version": "d98ac740d675ab498cce1b0337a0718bbf1ada919b289543c862d62b4dab0636",
+        "signature": "1e3a88e9f10a395d74c691e70b90c13001e3797037f2df56af3dd16d14ff656b"
       },
       "../../node_modules/ts-optchain/index.d.ts": {
         "version": "e9207dae9dbce9914c4548ef0bb4be18bfed7c1584e43bde999ef52a52a368b3",
@@ -971,7 +971,7 @@
         "signature": "6d04704c2e013899551eebaea0e42fc32235403df05c4e16f43493c4a30ccc12"
       },
       "../ts-transformer-awesome/src/transformer/macros.ts": {
-        "version": "8a2c6b36233c22dd6a8e768f39d7997b515fd28ec2a16f82ea30c0145c616bef",
+        "version": "f7c7d4eb097ab5e0f3cb1034f66b034e91bec732c4316710d81ed4d88f247cfa",
         "signature": "469bcc7c91f951fa09e3e4e1ccb3bef83a5fa2bd79d893c9c4bc02e41adba1ba"
       },
       "../ts-transformer-awesome/src/transformer/dev.ts": {

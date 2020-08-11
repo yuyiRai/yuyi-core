@@ -236,6 +236,9 @@ class Transformer {
       const importReplacer = AstUtils$$.checkAndfilterNamedImports(node, importNode => {
         return !this.checkNode(importNode);
       });
+      if (importReplacer === true) {
+        return ts.createEmptyStatement();
+      }
       if (importReplacer !== false) {
         return node;
       }

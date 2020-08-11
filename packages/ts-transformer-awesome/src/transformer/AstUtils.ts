@@ -495,14 +495,14 @@ export namespace AstUtils$$ {
    * 如果被过滤后的命名导入内容为空集，且没有默认导入语句，将直接返回一个空Statement
    * 否则返回经过过滤后的导入Statement
    */
-  export function checkAndfilterNamedImports(node: ts.Node, check: (named: ts.ImportSpecifier, index?: number, names?: readonly ts.ImportSpecifier[]) => boolean): ts.ImportDeclaration | ts.EmptyStatement | false {
+  export function checkAndfilterNamedImports(node: ts.Node, check: (named: ts.ImportSpecifier, index?: number, names?: readonly ts.ImportSpecifier[]) => boolean): ts.ImportDeclaration | ts.EmptyStatement | boolean {
     if (ts.isImportDeclaration(node) && node.importClause && node.importClause.namedBindings) {
       var binds: ts.NamedImportBindings | undefined = node.importClause.namedBindings;
       if (ts.isNamedImports(binds)) {
         const nextElements = binds.elements.filter(check);
         if (nextElements.length === 0) {
           if (!node.importClause.name) {
-            return ts.createEmptyStatement();
+            return true;
           } else {
             binds = undefined;
           }
