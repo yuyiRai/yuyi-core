@@ -1,14 +1,11 @@
-/**
- * @module UtilClass
- */
-import { PartialObserver, NextObserver, ErrorObserver, CompletionObserver, ReplaySubject, BehaviorSubject } from 'rxjs';
+import { PartialObserver, NextObserver, ErrorObserver, CompletionObserver } from 'rxjs/internal/types';
 import { Observable } from 'rxjs/internal/Observable';
-import { OperatorFunction, SchedulerLike } from 'rxjs/internal/types';
+import { BehaviorSubject } from 'rxjs/internal/BehaviorSubject';
+import { ReplaySubject } from 'rxjs/internal/ReplaySubject';
 import { Subject } from 'rxjs/internal/Subject';
-import { queueScheduler, asapScheduler, asyncScheduler } from 'rxjs'
+import { OperatorFunction } from 'rxjs/internal/types';
 // @ts-ignore
 import { Subscription } from 'rxjs/internal/Subscription';
-import { share, observeOn } from 'rxjs/operators';
 import { Constant$ } from '../Constransts';
 import { sleep } from '../CustomUtils/waitingPromise';
 
