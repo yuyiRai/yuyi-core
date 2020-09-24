@@ -1,7 +1,7 @@
 {
   "name": "@yuyi/docs",
   "description": "Documentation Theme for Yuyi-core",
-  "version": "0.0.22",
+  "version": "0.0.23",
   "private": true,
   "homepage": "http://typedoc.org/",
   "main": "bin/plugin.js",
@@ -33,7 +33,7 @@
     "typedoc-plugin-toc-group": "^0.0.5"
   },
   "dependencies": {
-    "@yuyi919/utils": "^0.0.81",
+    "@yuyi919/utils": "^0.0.82",
     "typescript": "^3.6.4"
   }
 }

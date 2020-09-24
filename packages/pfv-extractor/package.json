@@ -1,6 +1,6 @@
 {
   "name": "@yuyi/pfv-extractor",
-  "version": "0.0.32",
+  "version": "0.0.33",
   "description": "将pfv转化为便利的aul脚本",
   "private": true,
   "main": "dist/index.js",
@@ -43,7 +43,7 @@
   },
   "gitHead": "b6a439f1d79269da2843d054887dd42e7a7555c7",
   "dependencies": {
-    "@yuyi919/utils": "^0.0.81",
+    "@yuyi919/utils": "^0.0.82",
     "argparse": "^1.0.10",
     "encoding-japanese": "^1.0.29",
     "kuromojin": "^2.0.0",
