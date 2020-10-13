@@ -6,7 +6,8 @@ const copy = require("rollup-plugin-copy-glob")
 
 
 const filter = [
-  'babel-plugin-transform-async-to-promises/helpers'
+  'babel-plugin-transform-async-to-promises/helpers',
+  '@yuyi919/'
 ]
 module.exports = {
   // This function will run for each entry/format/env combination

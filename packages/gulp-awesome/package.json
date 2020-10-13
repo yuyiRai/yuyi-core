@@ -3,11 +3,13 @@
   "version": "0.0.31",
   "description": "",
   "main": "dist/index.js",
+  "module": "lib/index.js",
   "scripts": {
     "build": "tsdx build --target node --format cjs"
   },
   "files": [
     "dist",
+    "lib",
     "scripts"
   ],
   "bin": {

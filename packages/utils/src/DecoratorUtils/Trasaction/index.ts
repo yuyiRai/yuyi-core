@@ -114,18 +114,18 @@ export function Trasaction(trasactionKey?: string) {
     if (value instanceof Function) {
       trasactionKey = trasactionKey || key;
       const namespaceKey = generateNamespace(target, '$$_trasaction_' + trasactionKey);
-      if (__DEV__) {
-        console.info('generateNamespace', namespaceKey);
-      }
+      // if (__DEV__) {
+      //   console.info('generateNamespace', namespaceKey);
+      // }
       return Object.defineProperty(target, key, {
         ...desc,
         value(...args: any[]) {
           const config = map.get(this) || {};
           const generated = config[trasactionKey] || (config[trasactionKey] = createTrasaction());
           map.set(this, config);
-          if (__DEV__) {
-            console.info('generateNamespace', namespaceKey, this);
-          }
+          // if (__DEV__) {
+          //   console.info('generateNamespace', namespaceKey, this);
+          // }
           if (!this[namespaceKey])
             this[namespaceKey] = value.bind(this);
           return generated.runInAsync.apply(this, [

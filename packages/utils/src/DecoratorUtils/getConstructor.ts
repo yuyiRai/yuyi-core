@@ -12,9 +12,9 @@ export function hackConstructor<T extends Function, Args extends any[]>(Target: 
     ClassTarget && ClassTarget.value && (ClassTarget.value as Function).apply(this, hack(args, r as any, this));
   }
   r = Constant$.OBJ_definePropertyNormal$(r, 'name', name)
-  if (__DEV__) {
-    console.log('getOwnPropertyNames', Target, Constant$.OBJ_getOwnPropertyNames$(Target))
-  }
+  // if (__DEV__) {
+  //   console.log('getOwnPropertyNames', Target, Constant$.OBJ_getOwnPropertyNames$(Target))
+  // }
   const { prototype } = Constant$.OBJ_getOwnPropertyDescriptors$(Target);
   Constant$.OBJ_defineProperties$(r, { prototype });
   return r as any;
