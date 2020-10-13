@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/gulp-awesome",
-  "version": "0.0.31",
+  "version": "0.0.32",
   "description": "",
   "main": "dist/index.js",
   "module": "lib/index.js",
@@ -25,7 +25,7 @@
     "typescript": "^3.6.4"
   },
   "dependencies": {
-    "@yuyi919/env": "^0.0.27",
-    "@yuyi919/utils": "^0.0.82"
+    "@yuyi919/env": "^0.0.28",
+    "@yuyi919/utils": "^0.0.83"
   }
 }
