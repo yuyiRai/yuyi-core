@@ -1,0 +1,17 @@
+{
+  "name": "@yuyi919/argparse-extra",
+  "version": "0.0.1",
+  "description": "argparse库的包装",
+  "main": "dist/index.js",
+  "module": "dist/argparse-extra.esm.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsdx build"
+  },
+  "author": "yuyiRai",
+  "license": "ISC",
+  "dependencies": {
+    "argparse": "^1.0.10",
+    "lodash": "^4.17.15"
+  }
+}
