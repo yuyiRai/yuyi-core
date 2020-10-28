@@ -14,5 +14,8 @@
     "argparse": "^1.0.10",
     "lodash": "^4.17.15"
   },
+  "files": [
+    "dist"
+  ],
   "gitHead": "331b8e2feabbb9c12d3b29efaa7455553d2068c2"
 }
