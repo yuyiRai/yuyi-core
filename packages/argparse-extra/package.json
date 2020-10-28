@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/argparse-extra",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "argparse库的包装",
   "main": "dist/index.js",
   "module": "dist/argparse-extra.esm.js",
