@@ -33,3 +33,4 @@ yarn-error.log*
 **/etc/**
 .rts2_cache_cjs
 .rts2_cache_esm
+**/src/**/*.js.map
