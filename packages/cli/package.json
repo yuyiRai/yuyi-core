@@ -1,6 +1,6 @@
 {
   "name": "@yuyi919/cli",
-  "version": "0.0.78",
+  "version": "0.0.79",
   "description": "yuyi919's test",
   "main": "src/index.ts",
   "types": "types/index.d.ts",
@@ -26,7 +26,7 @@
   ],
   "dependencies": {
     "@types/normalize-package-data": "^2.4.0",
-    "@yuyi919/utils": "^0.0.83",
+    "@yuyi919/utils": "^0.0.84",
     "argparse": "^1.0.10",
     "colors": "^1.4.0",
     "fs-extra": "^8.1.0",
