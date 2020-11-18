@@ -14,9 +14,7 @@ var Args = /** @class */ (function () {
             description: 'Argparse example'
         });
     }
-    Args.prototype.init = function () {
-        return this.parser.parseArgs();
-    };
+    Args.prototype.init = function (args, ns) { return this.parser.parseArgs(args, ns); };
     return Args;
 }());
 exports.default = Args;

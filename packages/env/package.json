@@ -5,6 +5,7 @@
   "types": "types/index.d.ts",
   "license": "MIT",
   "scripts": {
+    "build": "yarn tsc",
     "tsc": "ttsc --build && yarn tsc:env",
     "tsc:env": "ttsc -p tsconfig.env.json",
     "test": "yuyidocs",

@@ -16,10 +16,10 @@
   ],
   "scripts": {
     "start": "tsdx watch",
-    "build": "tsc --build",
+    "build": "yarn build:ts && yarn build:lib",
     "build:p": "yarn build && yarn test",
     "build:lib": "tsc -p ./tsconfig.lib.json",
-    "build:f": "yarn build && yarn build:lib",
+    "build:ts": "tsc --build",
     "test": "tsdx test",
     "ttsc": "ttsc",
     "test:complie": "yuyi exec ./test/blah.test.ts",

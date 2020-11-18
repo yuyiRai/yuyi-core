@@ -1,13 +1,29 @@
 "use strict";
+var __read = (this && this.__read) || function (o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 var shelljs_1 = require("shelljs");
-var args_1 = __importDefault(require("./args"));
+var argparse_extra_1 = require("@yuyi919/argparse-extra");
 var colors_1 = __importDefault(require("colors"));
 var type = ['patch', 'minor', 'major'];
-var args = new args_1.default().addArgument(['-t', '-type'], {
+var _a = __read(new argparse_extra_1.Args().addArgument(['-t', '-type'], {
     action: 'store',
     choices: type,
     dest: 'type',
@@ -17,7 +33,7 @@ var args = new args_1.default().addArgument(['-t', '-type'], {
 }).addArgument(['-p', '-push'], {
     action: 'storeTrue',
     dest: 'push'
-}).init();
+}).init(), 1), args = _a[0];
 console.log(args);
 if (!type.includes(args.type)) {
     throw new Error();
@@ -30,7 +46,5 @@ try {
     if (args.push) {
         shelljs_1.exec('git push --set-upstream origin master');
     }
-    // exec('yarn publish')
 }
-catch (error) {
-}
+catch (error) { }

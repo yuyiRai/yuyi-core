@@ -38,8 +38,7 @@
     "nexe": "^3.3.2",
     "rollup-plugin-copy": "^3.1.0",
     "rollup-plugin-copy-glob": "^0.3.1",
-    "typescript": "^3.6.4",
-    "windows-registry": "^0.1.5"
+    "typescript": "^3.6.4"
   },
   "gitHead": "b6a439f1d79269da2843d054887dd42e7a7555c7",
   "dependencies": {
