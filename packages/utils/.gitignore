@@ -21,7 +21,6 @@ document/obj/.cache
 document/**
 
 markdown
-*.d.ts
 *.map
 
 
