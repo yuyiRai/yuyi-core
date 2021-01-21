@@ -99,7 +99,7 @@
     "gulp-convert": "^0.2.0",
     "gulp-shell": "^0.7.1",
     "gulp-yml-merge": "^0.0.2",
-    "immer": "^5.0.0",
+    "immer": "^8.0.1",
     "jest": "^24.9.0",
     "jest-config": "^24.9.0",
     "lodash": "^4.17.15",
